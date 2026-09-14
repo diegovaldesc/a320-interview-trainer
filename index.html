@@ -636,7 +636,8 @@ function renderHome(){
   $("homeSystemsCount").textContent=totalQuestions()+" preguntas · FCOM 2025 ✓";
   $("homeOpsCount").textContent=operationsQuestions()+" preguntas · Airbus Tutorials Rev 15 ✓";
   $("homeInterviewCount").textContent=interviewTechnicalTotal()+" preguntas · banco de entrevista depurado";
-  $("homeDgacCount").textContent=dgacTotal()+" preguntas históricas · sin explicación";
+  const dgacExplained=(SYSTEMS[DGAC_KEY]?.questions||[]).filter(q=>q.expl).length;
+  $("homeDgacCount").textContent=dgacTotal()+(dgacExplained>=dgacTotal()?" preguntas históricas · explicadas":` preguntas históricas · ${dgacExplained} explicadas`);
   $("homeWeakCount").textContent=ov.wq?ov.wq+" preguntas por repasar":"Sin preguntas pendientes";
   $("folderSystemsCount").textContent=totalQuestions()+" preguntas";
 
@@ -668,7 +669,7 @@ function openSystem(k){
   $("detailTitle").textContent=systemName(k);
   if(dgac){
     const explained=pool.filter(q=>q.expl).length;
-    $("detailDesc").textContent=explained?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. ${explained} de ${pool.length} ya tienen explicación técnica verificada; seguimos completando el resto.`:`${pool.length} preguntas del examen DGAC A320 2018. Este banco se conserva para practicar el formato y las preguntas históricas. No forma parte del banco técnico validado y deliberadamente no muestra explicaciones.`;
+    $("detailDesc").textContent=explained>=pool.length?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. Las ${pool.length} tienen explicación técnica y referencia verificadas.`:explained?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. ${explained} de ${pool.length} ya tienen explicación técnica verificada; seguimos completando el resto.`:`${pool.length} preguntas del examen DGAC A320 2018. Este banco se conserva para practicar el formato y las preguntas históricas. No forma parte del banco técnico validado y deliberadamente no muestra explicaciones.`;
     $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas DGAC</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span><span class="pill"><b>${explained}</b> explicadas</span>`;
     $("studyModeDesc").textContent=explained?"Muestra la respuesta marcada en el examen; si ya fue auditada, incluye explicación técnica y cita FCOM.":"Muestra la respuesta marcada en el examen después de contestar. Sin explicación.";
     $("interviewModeCard").classList.add("hidden");

@@ -348,7 +348,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 </div>
 
 <div class="home-search">
-<div class="searchbox"><input autocomplete="off" id="searchInput" oninput="runSearch(this.value)" placeholder="Buscar temas o sistemas" aria-label="Buscar temas o sistemas"/><button aria-label="Limpiar búsqueda" class="search-clear hidden" id="searchClear" onclick="clearSearch()" type="button">×</button><span class="search-icon">⌕</span></div>
+<div class="searchbox"><input autocomplete="off" id="searchInput" oninput="debouncedSearch(this.value)" placeholder="Buscar temas o sistemas" aria-label="Buscar temas o sistemas"/><button aria-label="Limpiar búsqueda" class="search-clear hidden" id="searchClear" onclick="clearSearch()" type="button">×</button><span class="search-icon">⌕</span></div>
 <div class="search-results" id="searchResults"></div>
 </div>
 
@@ -874,6 +874,12 @@ function openSystem(k){
     b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} para repasar</b> · practicar solo preguntas falladas`;
   }
   show("detail");
+}
+let searchDebounceTimer=null;
+function debouncedSearch(v){
+  $("searchClear").classList.toggle("hidden",!v);
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer=setTimeout(()=>runSearch(v),150);
 }
 function runSearch(v){
   const q=norm(v),wrap=$("searchResults");

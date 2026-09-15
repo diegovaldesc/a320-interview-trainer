@@ -1192,22 +1192,23 @@ const ORAL_VOICE_BANK=[
  ]}
 ];
 
-const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{}};
+const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{},pool:[]};
 
 function startOralVoice(){
   stopEverythingOral();
   oralState.index=0;oralState.scores={};
+  oralState.pool=shuffle(ORAL_VOICE_BANK);
   show("oralVoice");
   loadOralVoiceQuestion();
 }
 function exitOralVoice(){stopEverythingOral();goHome()}
-function oralVoiceQuestion(){return ORAL_VOICE_BANK[oralState.index]}
+function oralVoiceQuestion(){return oralState.pool[oralState.index]}
 function loadOralVoiceQuestion(){
   const q=oralVoiceQuestion();
-  $("ovMeta").textContent=`ENTREVISTA ORAL · ${oralState.index+1} / ${ORAL_VOICE_BANK.length}`;
-  $("ovProgress").style.width=`${((oralState.index+1)/ORAL_VOICE_BANK.length)*100}%`;
+  $("ovMeta").textContent=`ENTREVISTA ORAL · ${oralState.index+1} / ${oralState.pool.length}`;
+  $("ovProgress").style.width=`${((oralState.index+1)/oralState.pool.length)*100}%`;
   $("ovPrevBtn").disabled=oralState.index===0;
-  $("ovNextBtn").textContent=oralState.index===ORAL_VOICE_BANK.length-1?"Finalizar":"Siguiente";
+  $("ovNextBtn").textContent=oralState.index===oralState.pool.length-1?"Finalizar":"Siguiente";
   $("ovNextBtn").disabled=oralState.scores[q.id]===undefined;
   loadQuestionFromA320Bank(q);
 }
@@ -1216,7 +1217,7 @@ function nextOralVoice(){
   const q=oralVoiceQuestion();
   if(oralState.scores[q.id]===undefined)return;
   stopEverythingOral();
-  if(oralState.index<ORAL_VOICE_BANK.length-1){oralState.index++;loadOralVoiceQuestion();return}
+  if(oralState.index<oralState.pool.length-1){oralState.index++;loadOralVoiceQuestion();return}
   toast("Simulacro completado");goHome();
 }
 

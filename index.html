@@ -158,15 +158,29 @@ main{padding:18px 18px calc(92px + env(safe-area-inset-bottom))}
 .interview-card .prompt{font-size:20px;line-height:1.42;margin:8px 0 5px}
 .interview-tip{font-size:12px;color:var(--muted);line-height:1.45}
 .oral-mic-box{margin-top:14px}
-.oral-mic-btn{width:100%;min-height:50px;border:1px solid var(--cyan);background:var(--panel2);color:var(--white);border-radius:11px;font-size:14px;font-weight:700;cursor:pointer}
+.oral-mic-btn{width:100%;min-height:54px;border:1px solid var(--cyan);background:var(--panel2);color:var(--white);border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .oral-mic-btn.recording{border-color:var(--red);background:rgba(140,80,80,.08);color:var(--red)}
-.oral-mic-status{margin:8px 2px;font-size:11px;color:var(--muted)}
-.oral-mic-status.listening{color:var(--red);font-weight:600}
-.oral-transcript{width:100%;min-height:140px;resize:vertical;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--white);font-family:var(--sans);font-size:14px;line-height:1.5;outline:none;margin-top:8px}
-.oral-transcript:focus{border-color:var(--cyan2)}
-.oral-clear-btn{margin-top:8px;border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+.oral-mic-btn.recording #oralMicIcon{animation:oralPulse 1.2s infinite}
+@keyframes oralPulse{0%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.55}100%{transform:scale(1);opacity:1}}
+.oral-status{text-align:center;margin:8px 2px;font-size:11px;color:var(--muted)}
+.oral-status.listening{color:var(--red);font-weight:600}
+.oral-time{text-align:center;margin-top:2px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 .oral-mic-fallback{margin-top:8px;font-size:11px;color:var(--amber);line-height:1.5;display:none}
 .oral-mic-fallback.show{display:block}
+.oral-text-fallback-btn{display:block;margin:8px auto 0;border:0;background:transparent;color:var(--cyan);font-size:11px;cursor:pointer;text-decoration:underline}
+.oral-transcript{width:100%;min-height:110px;resize:vertical;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--white);font-family:var(--sans);font-size:14px;line-height:1.5;outline:none;margin-top:8px}
+.oral-transcript:focus{border-color:var(--cyan2)}
+.oral-clear-btn{margin-top:8px;border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+.oral-result{margin-top:14px;padding:15px;border-radius:14px;border:1px solid var(--line2);background:var(--panel)}
+.oral-score-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.oral-result-label{font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:700}
+.oral-score{font-size:26px;line-height:1.3;font-weight:800;color:var(--white)}
+.oral-grade{font-size:12px;font-weight:700;padding:6px 10px;border-radius:30px;border:1px solid var(--line2);white-space:nowrap}
+.oral-feedback{margin-top:14px;font-size:13px;line-height:1.5}
+.oral-feedback-block{margin-top:10px}
+.oral-feedback-title{font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:5px}
+.oral-feedback-item{margin:4px 0}
+.oral-transcript-reveal{margin-top:10px;padding:10px;border-radius:10px;background:var(--panel3);font-size:12px;color:var(--muted);line-height:1.5}
 .rate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
 .rate{border:1px solid var(--line);background:var(--panel);color:var(--white);border-radius:10px;padding:10px 7px;font-size:11px;cursor:pointer}
 .rate.no{border-color:var(--red2)}.rate.partial{border-color:var(--amber2)}.rate.yes{border-color:var(--green2)}
@@ -374,6 +388,14 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
   <span class="module-chevron">›</span>
 </button>
 
+<button class="module-card interview" onclick="startOralVoice()" type="button">
+  <span class="module-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>
+  </span>
+  <span class="module-main"><strong>Simulacro Oral</strong><span id="homeOralVoiceCount">Habla y recibe evaluacion automatica por conceptos</span></span>
+  <span class="module-chevron">&rsaquo;</span>
+</button>
+
 <button class="module-card interview" onclick="startInterview(null)" type="button">
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="8" y="3" width="8" height="12" rx="4"/><path d="M5.5 11.5A6.5 6.5 0 0 0 18.5 11.5"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
@@ -472,13 +494,6 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <div class="prompt" id="iQuestion"></div>
 <div class="interview-tip" id="iTip">Intenta una respuesta corta, ordenada y segura. Cuando termines, revela la respuesta.</div>
 </div>
-<div class="oral-mic-box">
-<button class="oral-mic-btn" id="oralMicBtn" onclick="toggleOralMic()" type="button">🎙️ Responder con micrófono</button>
-<div class="oral-mic-status" id="oralMicStatus">Toca el micrófono para comenzar</div>
-<div class="oral-mic-fallback" id="oralMicFallback">El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Abre este sitio en Safari (no desde el ícono) para usar el micrófono, o escribe tu respuesta directamente aquí abajo.</div>
-<textarea class="oral-transcript" id="oralTranscript" placeholder="Tu respuesta aparecerá aquí (o escríbela tú mismo)..." rows="7"></textarea>
-<button class="oral-clear-btn" onclick="clearOralTranscript()" type="button">Borrar respuesta</button>
-</div>
 <div class="answer-wrap hidden" id="iAnswer"></div>
 <button class="btn green" id="revealBtn" onclick="revealInterview()" style="width:100%;margin-top:12px">Mostrar respuesta esperada</button>
 <div class="hidden" id="rateWrap">
@@ -492,6 +507,40 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <div class="bottom-nav">
 <button class="btn ghost" id="iPrevBtn" onclick="prevInterview()">Anterior</button>
 <button class="btn primary" disabled="" id="iNextBtn" onclick="nextInterview()">Siguiente</button>
+</div>
+</section>
+<section class="hidden" id="oralVoice">
+<button class="back" onclick="exitOralVoice()" type="button">&lsaquo; Salir</button>
+<div class="qtop"><div class="qmeta" id="ovMeta"></div></div>
+<div class="progress"><div id="ovProgress"></div></div>
+<div class="interview-card">
+<div class="eyebrow">SIMULACRO ORAL &middot; EVALUACION AUTOMATICA</div>
+<div class="prompt" id="oralQuestion"></div>
+</div>
+<div class="oral-mic-box">
+<button class="oral-mic-btn" id="oralMicBtn" onclick="toggleOralAnswer()" type="button"><span id="oralMicIcon">&#127908;</span><span id="oralMicText">Responder</span></button>
+<div class="oral-status" id="oralStatus">Toca el microfono cuando estes listo.</div>
+<div class="oral-time" id="oralTime" style="display:none">00:00</div>
+<div class="oral-mic-fallback" id="oralMicFallback"></div>
+<button class="oral-text-fallback-btn" onclick="showOralTextFallback()" type="button">Prefiero escribir mi respuesta</button>
+<div class="hidden" id="oralTextFallbackBox">
+<textarea class="oral-transcript" id="oralTextFallbackInput" placeholder="Escribe tu respuesta aqui..." rows="5"></textarea>
+<button class="btn primary" onclick="submitOralTextFallback()" style="width:100%;margin-top:8px" type="button">Evaluar respuesta</button>
+</div>
+<div class="oral-result hidden" id="oralResult">
+<div class="oral-score-row">
+<div><div class="oral-result-label">EVALUACION</div><div class="oral-score" id="oralScore">0/10</div></div>
+<div class="oral-grade" id="oralGrade"></div>
+</div>
+<div class="oral-feedback" id="oralFeedback"></div>
+<div class="oral-transcript-reveal hidden" id="oralTranscriptReveal"></div>
+<button class="oral-clear-btn" onclick="toggleOralTranscriptReveal()" type="button">Ver que se transcribio</button>
+<button class="oral-repeat-btn btn ghost" onclick="restartOralAnswer()" style="width:100%;margin-top:10px" type="button">&#127908; Responder nuevamente</button>
+</div>
+</div>
+<div class="bottom-nav">
+<button class="btn ghost" id="ovPrevBtn" onclick="prevOralVoice()">Anterior</button>
+<button class="btn primary" disabled="" id="ovNextBtn" onclick="nextOralVoice()">Siguiente</button>
 </div>
 </section>
 <section class="hidden" id="results">
@@ -636,11 +685,11 @@ function weakQuestions(key=null){
   });
 }
 function toast(t){const e=$("toast");e.textContent=t;e.classList.remove("hidden");clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.classList.add("hidden"),2200)}
-function screens(){return["home","systemsFolder","detail","quiz","interview","results","weak"]}
+function screens(){return["home","systemsFolder","detail","quiz","interview","oralVoice","results","weak"]}
 function show(id){screens().forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0)}
 function goHome(){session=null;show("home");renderHome()}
 function openSystemsFolder(){session=null;renderHome();show("systemsFolder")}
-function exitSession(){stopOralMic();if(session)persistResume();goHome()}
+function exitSession(){stopEverythingOral();if(session)persistResume();goHome()}
 
 let currentSystemKey=null;
 function renderHome(){
@@ -949,7 +998,6 @@ function renderInterview(){
   $("iTip").textContent=isScenario?"Explica qué está ocurriendo y cuál es la acción o criterio operacional que corresponde. Después compara tu razonamiento con la guía.":"Responde primero con una idea central y después justifícala. Evita recitar alternativas: habla como frente a un instructor.";
   $("iAnswer").classList.add("hidden");$("iAnswer").innerHTML="";$("revealBtn").classList.remove("hidden");$("rateWrap").classList.add("hidden");
   $("iPrevBtn").disabled=session.index===0;$("iNextBtn").disabled=r===null;$("iNextBtn").textContent=session.index===n-1?"Finalizar":"Siguiente";
-  resetOralMicBox();
   const wasRevealed=Array.isArray(session.revealed)&&!!session.revealed[session.index];
   if(r!==null||wasRevealed){revealInterview(true)}
 }
@@ -967,126 +1015,534 @@ function rateInterview(v){
   const s=appState.oral[q._id]||{a:0,total:0,low:0,last:0};s.a++;s.total+=v;if(v===0)s.low++;s.last=Date.now();appState.oral[q._id]=s;saveState();
   $("iNextBtn").disabled=false;persistResume();toast(v===2?"Sólida":v===1?"Parcial · conviene repetir":"Marcada para repaso");
 }
-function prevInterview(){if(session.index>0){stopOralMic();session.index--;renderInterview();persistResume()}}
+function prevInterview(){if(session.index>0){session.index--;renderInterview();persistResume()}}
 function nextInterview(){
   if(session.ratings[session.index]===null)return;
-  stopOralMic();
   if(session.index<session.questions.length-1){session.index++;renderInterview();persistResume();return}
   session.completed=true;appState.resume=null;saveState();
   const done=session.kind==="scenario"?"Escenarios completados":"Entrevista completada";goHome();toast(done)
 }
 
-let oralRecognition=null;
-let oralMicActive=false;
-let oralFinalTranscript="";
-let oralFatalError=false;
-let oralRestartCount=0;
-const ORAL_MAX_RESTARTS=20;
-
 function isStandaloneMode(){
   return window.navigator.standalone===true||(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches);
 }
-function speechRecognitionAvailable(){
-  return !!(window.SpeechRecognition||window.webkitSpeechRecognition);
+
+/* ==========================================================
+   SIMULACRO ORAL - banco curado con evaluacion por conceptos
+   ========================================================== */
+const ORAL_MAX_SECONDS=90;
+const ORAL_MAX_RESTARTS=25;
+const ORAL_AI_ENDPOINT="";
+
+const ORAL_VOICE_BANK=[
+{id:"ov_microburst",question:"¿Qué es un microburst?",
+ reference:"Un microburst es una corriente descendente intensa y localizada que al llegar al terreno se expande horizontalmente, produciendo cambios importantes en la dirección y velocidad del viento y generando windshear peligroso, especialmente cerca del terreno.",
+ concepts:[
+  {label:"Corriente descendente intensa",weight:2,terms:["corriente descendente","downdraft","aire descendente","aire que desciende","corriente de aire hacia abajo","masa de aire que baja","aire que baja","corriente que baja","columna de aire que cae","aire que cae con fuerza"]},
+  {label:"Fenómeno localizado",weight:1,terms:["localizado","localizada","zona pequena","area pequena","espacio reducido","fenomeno localizado"]},
+  {label:"Expansión horizontal al llegar al terreno",weight:2,terms:["se expande horizontalmente","se abre horizontalmente","se abre hacia los lados","se expande hacia los lados","diverge","divergencia al llegar al suelo","se dispersa hacia los lados"]},
+  {label:"Genera windshear",weight:2,terms:["windshear","wind shear","cizalladura","cizalladura del viento","cambio brusco de viento","cambios de direccion y velocidad del viento"]},
+  {label:"Peligroso cerca del terreno",weight:1,terms:["baja altura","cerca del terreno","cerca del suelo","despegue","aterrizaje","aproximacion","fase critica"]}
+ ],
+ criticalErrors:[{terms:["corriente ascendente","solo corriente ascendente"],feedback:"Un microburst se caracteriza principalmente por una corriente descendente, no ascendente."}]},
+
+{id:"ov_windshear",question:"¿Qué es el windshear y por qué es peligroso durante el despegue o la aproximación?",
+ reference:"El windshear es un cambio brusco de la velocidad y/o dirección del viento en una distancia relativamente corta. Es peligroso durante el despegue o la aproximación porque puede alterar rápidamente la sustentación y la trayectoria justo cuando hay poco margen de altura o energía para corregir.",
+ concepts:[
+  {label:"Cambio brusco de viento",weight:2,terms:["cambio brusco","cambio repentino","cambio subito","variacion rapida","cambia de direccion","cambia de velocidad"]},
+  {label:"En distancia/tiempo corto",weight:1,terms:["distancia corta","poco tiempo","en poco espacio","rapidamente"]},
+  {label:"Afecta sustentación/trayectoria",weight:2,terms:["sustentacion","performance","trayectoria","velocidad indicada","energia"]},
+  {label:"Peligroso en fases críticas de poco margen",weight:2,terms:["despegue","aterrizaje","aproximacion","baja altura","poco margen","fase critica"]}
+ ],
+ criticalErrors:[{terms:["viento constante","viento estable y sostenido"],feedback:"El windshear se define por el cambio brusco, no por un viento sostenido y estable."}]},
+
+{id:"ov_crm_windshear",question:"Antes del despegue detectas una condición de windshear que te hace pensar que la operación no es segura, pero el comandante quiere continuar. ¿Qué harías?",
+ reference:"Expresaría claramente mi preocupación citando datos o el procedimiento aplicable, verificaría los límites correspondientes, y si la seguridad sigue comprometida, escalaría la intervención con mayor firmeza hasta lograr que se reconsidere la decisión.",
+ concepts:[
+  {label:"Expresar la preocupación claramente",weight:2,terms:["expresar mi preocupacion","comunicar la duda","decir lo que pienso","hablar claramente","plantear la duda"]},
+  {label:"Apoyarse en datos/procedimiento",weight:2,terms:["datos","procedimiento","limites","referencia tecnica","apoyarme en el manual","criterio establecido"]},
+  {label:"Escalar si el riesgo persiste",weight:2,terms:["escalar","insistir","ser mas firme","tomar el control si es necesario","elevar la preocupacion","intervenir con mas fuerza"]}
+ ],
+ criticalErrors:[{terms:["aceptar sin decir nada","no digo nada","me quedo callado","no comento nada"],feedback:"Un buen CRM exige expresar la preocupación con datos, no guardar silencio ante el comandante."}]},
+
+{id:"ov_balanced_field",question:"¿Qué significa realmente el concepto de balanced field length en el despegue?",
+ reference:"Significa que se selecciona V1 de modo que la distancia requerida para acelerar y detenerse sea igual a la distancia requerida para acelerar y continuar el despegue con un motor inoperativo hasta 35 ft. No es una característica fija de la pista, sino el resultado de un cálculo de performance para ese peso y esas condiciones.",
+ concepts:[
+  {label:"V1 selecciona el balance",weight:2,terms:["v1","seleccion de v1","eligiendo v1","se calcula v1"]},
+  {label:"Distancia de aceleración-parada",weight:2,terms:["accelerate stop","aceleracion parada","abortar y detenerse","rechazar el despegue","distancia para frenar"]},
+  {label:"Distancia de aceleración-continuación con OEI hasta 35ft",weight:2,terms:["accelerate go","continuar el despegue","motor inoperativo","35 ft","un motor parado","oei"]},
+  {label:"Es cálculo de performance, no característica fija de la pista",weight:1,terms:["calculo","performance","depende del peso","no es la pista","no es asda"]}
+ ],
+ criticalErrors:[{terms:["asda es igual a toda","asda y toda son iguales","asda igual toda"],feedback:"Balanced field no es que ASDA y TODA sean iguales en la pista; es el resultado de elegir V1 para esa condición específica de peso y performance."}]},
+
+{id:"ov_stab_appr",question:"¿Qué elementos definen una aproximación estabilizada?",
+ reference:"Trayectoria, velocidad, configuración, potencia y razón de descenso dentro de los criterios establecidos por el operador, todos cumplidos a la altura de estabilización aplicable, normalmente 1000 ft en IMC o 500 ft en VMC.",
+ concepts:[
+  {label:"Trayectoria correcta",weight:1,terms:["trayectoria","senda","alineado con la pista"]},
+  {label:"Velocidad dentro del criterio",weight:2,terms:["velocidad","vapp","dentro del rango"]},
+  {label:"Configuración de aterrizaje",weight:1,terms:["configuracion","flaps","tren afuera","gear down"]},
+  {label:"Potencia y razón de descenso estables",weight:2,terms:["potencia","thrust","razon de descenso","vertical speed","rate of descent"]},
+  {label:"Altura de estabilización definida (1000/500 ft)",weight:2,terms:["1000 ft","500 ft","altura de estabilizacion","antes de cierta altura"]}
+ ]},
+
+{id:"ov_pax_sick",question:"Tienes un pasajero gravemente enfermo en vuelo. ¿Cuál es tu enfoque?",
+ reference:"Coordinaría con la tripulación de cabina, buscaría asistencia médica disponible, obtendría información clínica útil, evaluaría los aeropuertos y tiempos disponibles, y tomaría una decisión operacional coordinada con ATC y el soporte disponible.",
+ concepts:[
+  {label:"Coordinar con cabin crew",weight:2,terms:["cabin crew","tripulacion de cabina","auxiliares","sobrecargos"]},
+  {label:"Buscar asistencia médica",weight:2,terms:["asistencia medica","medico a bordo","medlink","soporte medico"]},
+  {label:"Evaluar aeropuertos y tiempos",weight:2,terms:["aeropuertos disponibles","desviar","tiempo de vuelo","alternos","aeropuerto mas cercano"]},
+  {label:"Coordinar con ATC",weight:1,terms:["atc","control de trafico","declarar la emergencia"]}
+ ],
+ criticalErrors:[{terms:["esperar hasta el final del vuelo","no hacer nada","esperar sin actuar"],feedback:"Un caso grave requiere evaluación y acción proactiva, no esperar sin actuar."}]},
+
+{id:"ov_sterile",question:"¿Qué significa 'sterile cockpit' y por qué es importante?",
+ reference:"Durante fases críticas del vuelo se restringen las conversaciones y actividades no relacionadas con la operación segura, para minimizar distracciones cuando la carga de trabajo y el riesgo son mayores.",
+ concepts:[
+  {label:"Restringe conversaciones no esenciales",weight:2,terms:["restringe conversaciones","solo temas operacionales","sin charla","conversaciones no relacionadas"]},
+  {label:"Durante fases críticas",weight:2,terms:["fases criticas","despegue","aterrizaje","rodaje","por debajo de cierta altura"]},
+  {label:"Reduce distracciones",weight:2,terms:["distracciones","carga de trabajo","concentracion"]}
+ ]},
+
+{id:"ov_fbw",question:"¿Qué significa que el A320 sea fly-by-wire?",
+ reference:"Que las órdenes del piloto en el sidestick se transmiten eléctricamente a computadores de control, que a su vez generan las órdenes a los actuadores de las superficies, dentro de las leyes de control aplicables según el estado del sistema.",
+ concepts:[
+  {label:"Órdenes eléctricas, no mecánicas directas",weight:2,terms:["electricamente","señal electrica","no mecanico","sidestick"]},
+  {label:"Computadores de control",weight:2,terms:["computadores","elac","sec","fac","calculan la orden"]},
+  {label:"Leyes de control",weight:1,terms:["normal law","alternate law","direct law","leyes de control"]}
+ ]},
+
+{id:"ov_tcas",question:"¿Por qué siempre se deben seguir las órdenes de una RA de TCAS, incluso si implica cruzar la altitud del tráfico?",
+ reference:"Porque las órdenes de la RA buscan la mejor separación vertical posible entre ambas aeronaves en tiempo real, coordinándose automáticamente con el TCAS de la otra aeronave, y tienen prioridad sobre cualquier instrucción de ATC en ese momento.",
+ concepts:[
+  {label:"Coordinación entre ambos TCAS",weight:2,terms:["coordinacion","ambos aviones","el otro trafico","se coordinan"]},
+  {label:"Prioridad sobre ATC",weight:2,terms:["prioridad","por sobre atc","aunque atc diga otra cosa","antes que atc"]},
+  {label:"Busca la mejor separación vertical",weight:2,terms:["separacion vertical","evitar colision","mejor solucion"]}
+ ]},
+
+{id:"ov_etops",question:"¿Qué es ETOPS y cuándo se exige históricamente?",
+ reference:"Es Extended-range Twin-engine Operations. Se exige cuando la ruta se aleja más de cierto tiempo de vuelo, a velocidad crucero con un motor inoperativo, típicamente 60 minutos, de un aeródromo adecuado para ese tipo de aeronave.",
+ concepts:[
+  {label:"Extended twin-engine operations",weight:2,terms:["extended range","dos motores","bimotor"]},
+  {label:"Tiempo de vuelo con un motor inoperativo",weight:2,terms:["un motor inoperativo","motor parado","oei"]},
+  {label:"Distancia a aeródromo adecuado (~60 min)",weight:2,terms:["aerodromo adecuado","alterno","60 minutos"]}
+ ]},
+
+{id:"ov_hydroplane",question:"¿Qué es el hidroplaneo y por qué es peligroso?",
+ reference:"Es la pérdida parcial o total del contacto efectivo entre el neumático y el pavimento debido a una película de agua, lo que degrada el frenado y el control direccional en tierra.",
+ concepts:[
+  {label:"Película de agua entre neumático y pista",weight:2,terms:["pelicula de agua","agua entre el neumatico","pista mojada"]},
+  {label:"Pérdida de contacto neumático-pavimento",weight:2,terms:["pierde contacto","no toca la pista","se separa del pavimento"]},
+  {label:"Degrada frenado y control direccional",weight:2,terms:["frenado","control direccional","direccion","no responde"]}
+ ]},
+
+{id:"ov_autobrake",question:"¿Cuál es el principio de funcionamiento del autobrake?",
+ reference:"Comanda automáticamente presión de frenado para alcanzar una desaceleración objetivo según el modo seleccionado, ajustándose a las condiciones reales de la pista y el peso del avión, en lugar de aplicar una presión fija.",
+ concepts:[
+  {label:"Objetivo de desaceleración, no presión fija",weight:2,terms:["desaceleracion objetivo","no presion fija","se ajusta"]},
+  {label:"Automático según modo seleccionado",weight:2,terms:["modo seleccionado","low","med","max","automatico"]},
+  {label:"Se adapta a condiciones reales",weight:1,terms:["se adapta","condiciones de pista","ajusta la presion"]}
+ ]},
+
+{id:"ov_engfire",question:"Camina conmigo por la secuencia de memory items ante un ENG 1(2) FIRE en vuelo, y explica por qué es ese orden.",
+ reference:"Primero se lleva el thrust lever del motor afectado a IDLE, luego ENG MASTER a OFF, después se presiona el ENG FIRE pushbutton para armar el extintor, y se descarga el AGENT 1 tras esperar unos 10 segundos, tiempo que permite que el N1 disminuya y mejora la eficacia del agente extintor.",
+ concepts:[
+  {label:"Thrust lever a IDLE primero",weight:2,terms:["thrust lever idle","palanca a idle","reducir empuje"]},
+  {label:"ENG MASTER OFF",weight:2,terms:["eng master off","apagar el motor","master off"]},
+  {label:"ENG FIRE pushbutton arma el extintor",weight:2,terms:["fire pushbutton","armar el extintor","fire pb"]},
+  {label:"Esperar ~10s antes de AGENT 1",weight:2,terms:["10 segundos","esperar antes del agente","agent 1"]},
+  {label:"Por qué: N1 disminuye, mejora eficacia",weight:1,terms:["n1 disminuye","mas eficaz","mejor efectividad"]}
+ ]},
+
+{id:"ov_allengfail",question:"En un ALL ENGINES FAILURE, ¿qué harías respecto de la velocidad y por qué es tan importante mantenerla?",
+ reference:"Mantendría la optimum relight speed publicada, aproximadamente 280 kt / Mach 0.77 para la mayoría de la flota, ya que esa velocidad favorece el reinicio de los motores y evita condiciones como el engine core lock tras una pérdida total de motores en operación de alta potencia.",
+ concepts:[
+  {label:"Optimum relight speed",weight:2,terms:["optimum relight speed","velocidad de relight","280 kt"]},
+  {label:"Favorece el reinicio de motores",weight:2,terms:["relight","reencender","reiniciar motores"]},
+  {label:"Evita engine core lock",weight:2,terms:["core lock","bloqueo del nucleo","engine core lock"]}
+ ]},
+
+{id:"ov_decompression",question:"Ante una descompresión que requiere un EMER DESCENT, ¿qué acciones tomarías y en qué orden general?",
+ reference:"Máscaras de oxígeno de la tripulación, establecer comunicación entre pilotos, thrust levers a IDLE, speed brakes a FULL, iniciar un giro y luego pull en el selector de altitud, dirigirse hacia FL100 o el MEA/MORA lo que sea mayor, y descender a la velocidad máxima apropiada.",
+ concepts:[
+  {label:"Máscaras de oxígeno",weight:2,terms:["mascaras de oxigeno","oxigeno"]},
+  {label:"Thrust idle y speed brakes full",weight:2,terms:["thrust idle","speed brakes full","spoilers"]},
+  {label:"Turn y luego pull en altitud",weight:2,terms:["turn","pull","girar","selector de altitud"]},
+  {label:"Objetivo FL100 o MEA/MORA",weight:2,terms:["fl100","mea","mora","el mayor"]}
+ ]},
+
+{id:"ov_smoke",question:"Si detectas humo o vapores en cockpit y no puedes identificar la fuente de inmediato, ¿qué harías?",
+ reference:"Iniciaría una diversión y un descenso hacia FL100 o el MEA/MORA aplicable, mientras se continúa intentando identificar y aislar la fuente del humo.",
+ concepts:[
+  {label:"Iniciar diversión",weight:2,terms:["diversion","desviar","aeropuerto mas cercano"]},
+  {label:"Descenso hacia FL100/MEA-MORA",weight:2,terms:["descenso","fl100","mea","mora"]},
+  {label:"Seguir intentando identificar la fuente",weight:1,terms:["identificar la fuente","aislar el humo"]}
+ ]},
+
+{id:"ov_stall",question:"Durante un stall recovery, ¿qué haces además de aplicar nose-down pitch, y por qué?",
+ reference:"Se nivelan las alas para evitar complicar la recuperación con una componente de bank, y una vez que la aeronave sale del stall se aumenta el empuje suavemente mientras se retraen los speed brakes si estaban extendidos.",
+ concepts:[
+  {label:"Nivelar las alas / wings level",weight:2,terms:["wings level","nivelar las alas","bank wings level"]},
+  {label:"Nose-down pitch",weight:1,terms:["nose down","pitch abajo","bajar la nariz"]},
+  {label:"Aumentar empuje al salir del stall",weight:2,terms:["aumentar empuje","thrust","potencia"]},
+  {label:"Retraer speed brakes",weight:1,terms:["retraer speed brakes","speed brakes in"]}
+ ]},
+
+{id:"ov_windshear_v1",question:"Ante un windshear detectado después de V1 durante el despegue, ¿qué harías con los thrust levers y el pitch si no tienes flight director?",
+ reference:"Llevaría los thrust levers a TOGA y seguiría el SRS; si no hay flight director disponible, usaría un pitch inicial de referencia de 17.5°.",
+ concepts:[
+  {label:"Thrust levers a TOGA",weight:2,terms:["toga","thrust toga","maximo empuje"]},
+  {label:"Seguir SRS",weight:2,terms:["srs","speed reference system"]},
+  {label:"Pitch de referencia 17.5° sin FD",weight:2,terms:["17.5","pitch de referencia","sin flight director"]}
+ ]},
+
+{id:"ov_pullup",question:"Si el TAWS genera un PULL UP, ¿qué acciones simultáneas realizas?",
+ reference:"Desconecto el autopilot, aplico pitch de pull up, llevo los thrust levers a TOGA, verifico speed brakes retraídos, y mantengo las alas niveladas o ajusto el bank según sea necesario.",
+ concepts:[
+  {label:"AP OFF",weight:2,terms:["ap off","desconectar el autopilot"]},
+  {label:"Pitch pull up",weight:2,terms:["pitch pull up","tirar de la nariz","subir la nariz"]},
+  {label:"Thrust TOGA",weight:2,terms:["thrust toga","maximo empuje"]},
+  {label:"Speed brake retracted",weight:1,terms:["speed brake retracted","verificar spoilers adentro"]},
+  {label:"Bank wings level o ajustar",weight:1,terms:["wings level","ajustar el bank"]}
+ ]},
+
+{id:"ov_elec_emer",question:"Si terminas en ELEC EMER CONFIG, ¿qué esperarías tener disponible y qué deberías extremar?",
+ reference:"Esperaría contar con el RAT desplegado alimentando la red esencial a través del emergency generator, con equipos de radio y navegación limitados, posible FUEL GRVTY FEED sin bombas evitando G negativas, y debería evitar volar por debajo de la velocidad mínima recomendada para no hacer stall al RAT.",
+ concepts:[
+  {label:"RAT desplegado / emergency generator",weight:2,terms:["rat","ram air turbine","emergency generator","generador de emergencia"]},
+  {label:"Equipos limitados (radio/nav)",weight:2,terms:["equipos limitados","radio limitado","navegacion limitada"]},
+  {label:"Fuel gravity feed sin bombas",weight:1,terms:["gravity feed","sin bombas","alimentacion por gravedad"]},
+  {label:"Evitar velocidad baja / G negativas",weight:2,terms:["velocidad minima","no bajar de","g negativas","evitar stall del rat"]}
+ ]}
+];
+
+const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{}};
+
+function startOralVoice(){
+  stopEverythingOral();
+  oralState.index=0;oralState.scores={};
+  show("oralVoice");
+  loadOralVoiceQuestion();
 }
-function createOralRecognition(){
-  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SpeechRecognition)return null;
-  const recognition=new SpeechRecognition();
-  recognition.lang="es-CL";
-  recognition.continuous=true;
-  recognition.interimResults=true;
-  recognition.maxAlternatives=1;
-  recognition.onstart=function(){
-    oralMicActive=true;
-    oralFatalError=false;
-    const btn=$("oralMicBtn"),status=$("oralMicStatus");
-    btn.classList.add("recording");btn.textContent="■ Detener respuesta";
-    status.classList.add("listening");status.textContent="Escuchando… habla normalmente";
-  };
-  recognition.onresult=function(event){
-    oralRestartCount=0;
-    let interimTranscript="";
-    for(let i=event.resultIndex;i<event.results.length;i++){
-      const text=event.results[i][0].transcript;
-      if(event.results[i].isFinal){oralFinalTranscript+=text.trim()+" "}else{interimTranscript+=text}
-    }
-    $("oralTranscript").value=oralFinalTranscript+interimTranscript;
-  };
-  recognition.onerror=function(event){
-    console.warn("Speech Recognition:",event.error);
-    const status=$("oralMicStatus");
-    if(event.error==="not-allowed"){status.textContent="Debes autorizar el acceso al micrófono.";oralFatalError=true}
-    else if(event.error==="audio-capture"){status.textContent="No se pudo acceder al micrófono.";oralFatalError=true}
-    else if(event.error==="network"||event.error==="service-not-allowed"){
-      status.textContent=isStandaloneMode()?"El reconocimiento de voz no está disponible en la app instalada. Abre el sitio en Safari.":"Problema de conexión con el reconocimiento de voz.";
-      if(isStandaloneMode())$("oralMicFallback").classList.add("show");
-      oralFatalError=true;
-    }
-    else if(event.error==="no-speech"){status.textContent="No detecté voz. Toca el micrófono para intentarlo de nuevo.";oralFatalError=true}
-    else if(event.error==="aborted"){/* user-initiated stop, not an error */}
-    else{status.textContent="No se pudo reconocer la respuesta.";oralFatalError=true}
-  };
-  recognition.onend=function(){
-    if(oralMicActive&&!oralFatalError&&oralRestartCount<ORAL_MAX_RESTARTS){
-      oralRestartCount++;
-      try{recognition.start();return}catch(e){console.log(e)}
-    }
-    oralMicActive=false;
-    if(oralRestartCount>=ORAL_MAX_RESTARTS){$("oralMicStatus").textContent="El micrófono se desconectó varias veces. Intenta de nuevo."}
-    oralRestartCount=0;
-    resetOralMicUI();
-  };
-  return recognition;
+function exitOralVoice(){stopEverythingOral();goHome()}
+function oralVoiceQuestion(){return ORAL_VOICE_BANK[oralState.index]}
+function loadOralVoiceQuestion(){
+  const q=oralVoiceQuestion();
+  $("ovMeta").textContent=`SIMULACRO ORAL · ${oralState.index+1} / ${ORAL_VOICE_BANK.length}`;
+  $("ovProgress").style.width=`${((oralState.index+1)/ORAL_VOICE_BANK.length)*100}%`;
+  $("ovPrevBtn").disabled=oralState.index===0;
+  $("ovNextBtn").textContent=oralState.index===ORAL_VOICE_BANK.length-1?"Finalizar":"Siguiente";
+  $("ovNextBtn").disabled=oralState.scores[q.id]===undefined;
+  loadQuestionFromA320Bank(q);
 }
-function toggleOralMic(){
-  if(!speechRecognitionAvailable()){alert("El reconocimiento de voz no está disponible en este navegador.");return}
-  if(oralMicActive){stopOralMic()}else{startOralMic()}
+function prevOralVoice(){if(oralState.index>0){stopEverythingOral();oralState.index--;loadOralVoiceQuestion()}}
+function nextOralVoice(){
+  const q=oralVoiceQuestion();
+  if(oralState.scores[q.id]===undefined)return;
+  stopEverythingOral();
+  if(oralState.index<ORAL_VOICE_BANK.length-1){oralState.index++;loadOralVoiceQuestion();return}
+  toast("Simulacro completado");goHome();
 }
-function startOralMic(){
-  if(!oralRecognition)oralRecognition=createOralRecognition();
-  if(!oralRecognition){alert("El reconocimiento de voz no está disponible en este navegador.");return}
-  oralFinalTranscript=$("oralTranscript").value.trim();
-  if(oralFinalTranscript)oralFinalTranscript+=" ";
-  oralMicActive=true;
-  oralFatalError=false;
-  oralRestartCount=0;
-  try{oralRecognition.start()}catch(error){console.warn("No se pudo iniciar reconocimiento:",error);oralMicActive=false;resetOralMicUI()}
-}
-function stopOralMic(){
-  oralMicActive=false;
-  if(oralRecognition){try{oralRecognition.stop()}catch(e){console.log(e)}}
-  resetOralMicUI();
-}
-function resetOralMicUI(){
-  const btn=$("oralMicBtn"),status=$("oralMicStatus");
-  if(!btn||!status)return;
-  btn.classList.remove("recording");btn.textContent="🎙️ Responder con micrófono";
-  status.classList.remove("listening");
-  if(oralFatalError)return;
-  status.textContent=$("oralTranscript")&&$("oralTranscript").value.trim()?"Respuesta guardada como texto":"Toca el micrófono para comenzar";
-}
-function clearOralTranscript(){
-  stopOralMic();oralFinalTranscript="";oralFatalError=false;
-  $("oralTranscript").value="";
-  $("oralMicStatus").textContent="Toca el micrófono para comenzar";
-}
-function resetOralMicBox(){
-  stopOralMic();
-  oralFinalTranscript="";oralFatalError=false;oralRestartCount=0;
-  const box=$("oralTranscript");if(box)box.value="";
-  const status=$("oralMicStatus");if(status){status.classList.remove("listening");status.textContent="Toca el micrófono para comenzar"}
+
+function setOralQuestion(question){
+  stopEverythingOral();
+  oralState.question=question;
+  oralState.transcript="";
+  $("oralQuestion").textContent=question.question||"Pregunta oral";
+  $("oralResult").classList.add("hidden");
+  $("oralTextFallbackBox").classList.add("hidden");
+  $("oralTextFallbackInput").value="";
+  setOralStatus("Toca el micrófono cuando estés listo.");
+  resetMicButton();
   const fallback=$("oralMicFallback"),micBtn=$("oralMicBtn");
-  if(!fallback||!micBtn)return;
-  if(!speechRecognitionAvailable()){
-    fallback.textContent="Tu navegador no soporta reconocimiento de voz. Escribe tu respuesta directamente aquí abajo.";
+  if(!speechRecognitionSupported()){
+    fallback.textContent="Tu navegador no soporta reconocimiento de voz. Usa la opción de escribir tu respuesta.";
     fallback.classList.add("show");micBtn.classList.add("hidden");
   }else if(isStandaloneMode()){
-    fallback.textContent="El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Si el botón no responde, abre este sitio en Safari (no desde el ícono) para usar el micrófono, o escribe tu respuesta directamente aquí abajo.";
+    fallback.textContent="El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Abre este sitio en Safari para usar el micrófono, o escribe tu respuesta abajo.";
     fallback.classList.add("show");micBtn.classList.remove("hidden");
   }else{
     fallback.classList.remove("show");micBtn.classList.remove("hidden");
   }
+}
+function getSpeechRecognitionClass(){return window.SpeechRecognition||window.webkitSpeechRecognition||null}
+function speechRecognitionSupported(){return !!getSpeechRecognitionClass()}
+
+function showOralTextFallback(){
+  $("oralTextFallbackBox").classList.remove("hidden");
+  $("oralTextFallbackInput").focus();
+}
+function submitOralTextFallback(){
+  const text=$("oralTextFallbackInput").value.trim();
+  if(!text){toast("Escribe algo antes de evaluar");return}
+  oralState.transcript=text;
+  evaluateCollectedOralAnswer();
+}
+
+async function toggleOralAnswer(){
+  if(oralState.listening){finishOralAnswer();return}
+  await startOralAnswer();
+}
+async function startOralAnswer(){
+  if(!oralState.question){alert("No hay una pregunta oral cargada.");return}
+  if(!window.isSecureContext&&location.hostname!=="localhost"){alert("El micrófono requiere que la aplicación se abra mediante HTTPS.");return}
+  if(!speechRecognitionSupported()){alert("El reconocimiento de voz no está disponible en este navegador. En iPhone abre la aplicación con Safari.");return}
+  try{
+    if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      stream.getTracks().forEach(track=>track.stop());
+    }
+  }catch(error){
+    console.warn("Permiso de micrófono:",error);
+    setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
+    return;
+  }
+  oralState.transcript="";
+  oralState.stopping=false;
+  oralState.listening=true;
+  oralState.startTime=Date.now();
+  oralState.restartCount=0;
+  $("oralResult").classList.add("hidden");
+  startOralTimer();
+  setRecordingButton();
+  setOralStatus("Escuchando… responde como si estuvieras en una entrevista.",true);
+  createRecognition();
+  startRecognitionInstance();
+  clearTimeout(oralState.maxTimer);
+  oralState.maxTimer=setTimeout(function(){if(oralState.listening){finishOralAnswer()}},ORAL_MAX_SECONDS*1000);
+}
+function createRecognition(){
+  const SpeechRecognition=getSpeechRecognitionClass();
+  if(!SpeechRecognition)return;
+  const recognition=new SpeechRecognition();
+  recognition.lang="es-CL";
+  recognition.continuous=false;
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
+  recognition.onresult=function(event){
+    for(let i=event.resultIndex;i<event.results.length;i++){
+      if(event.results[i]&&event.results[i][0]){
+        const text=event.results[i][0].transcript;
+        if(text&&text.trim())oralState.transcript+=" "+text.trim();
+      }
+    }
+  };
+  recognition.onerror=function(event){
+    const error=event.error||"unknown";
+    if(error==="no-speech"||error==="aborted")return;
+    console.warn("SpeechRecognition error:",error);
+    if(error==="not-allowed"||error==="audio-capture"||error==="network"||error==="service-not-allowed"){
+      oralState.listening=false;
+      stopOralTimer();
+      resetMicButton();
+      if(error==="not-allowed")setOralStatus("Debes autorizar el uso del micrófono.");
+      else if(error==="audio-capture")setOralStatus("No se pudo acceder al micrófono.");
+      else{
+        setOralStatus(isStandaloneMode()?"El reconocimiento de voz no está disponible en la app instalada. Abre el sitio en Safari.":"Problema de conexión con el reconocimiento de voz.");
+        if(isStandaloneMode())$("oralMicFallback").classList.add("show");
+      }
+    }
+  };
+  recognition.onend=function(){
+    if(oralState.listening&&!oralState.stopping){
+      oralState.restartCount=(oralState.restartCount||0)+1;
+      if(oralState.restartCount>ORAL_MAX_RESTARTS){
+        oralState.listening=false;stopOralTimer();resetMicButton();
+        setOralStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");
+        return;
+      }
+      clearTimeout(oralState.restartTimer);
+      oralState.restartTimer=setTimeout(function(){
+        if(oralState.listening&&!oralState.stopping){createRecognition();startRecognitionInstance()}
+      },350);
+      return;
+    }
+    if(oralState.stopping)evaluateCollectedOralAnswer();
+  };
+  oralState.recognition=recognition;
+}
+function startRecognitionInstance(){
+  if(!oralState.recognition||!oralState.listening)return;
+  try{oralState.recognition.start()}
+  catch(error){
+    clearTimeout(oralState.restartTimer);
+    oralState.restartCount=(oralState.restartCount||0)+1;
+    if(oralState.restartCount>ORAL_MAX_RESTARTS){
+      oralState.listening=false;stopOralTimer();resetMicButton();
+      setOralStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");
+      return;
+    }
+    oralState.restartTimer=setTimeout(function(){
+      if(oralState.listening){createRecognition();try{oralState.recognition.start()}catch(e){console.warn("SpeechRecognition restart:",e)}}
+    },500);
+  }
+}
+function finishOralAnswer(){
+  if(!oralState.listening)return;
+  oralState.stopping=true;
+  oralState.listening=false;
+  clearTimeout(oralState.restartTimer);
+  clearTimeout(oralState.maxTimer);
+  stopOralTimer();
+  setOralStatus("Analizando respuesta…");
+  const btn=$("oralMicBtn");
+  btn.classList.remove("recording");
+  $("oralMicIcon").textContent="⏳";
+  $("oralMicText").textContent="Analizando…";
+  if(oralState.recognition){
+    try{oralState.recognition.stop();return}
+    catch(error){console.warn("Stop recognition:",error)}
+  }
+  setTimeout(evaluateCollectedOralAnswer,300);
+}
+async function evaluateCollectedOralAnswer(){
+  oralState.stopping=false;
+  const transcript=oralState.transcript.trim();
+  if(!transcript){
+    resetMicButton();
+    setOralStatus("No pude reconocer una respuesta. Inténtalo nuevamente o escribe tu respuesta.");
+    return;
+  }
+  if(ORAL_AI_ENDPOINT){
+    try{const aiResult=await evaluateWithAI(oralState.question,transcript);showOralEvaluation(aiResult,transcript);return}
+    catch(error){console.warn("Evaluación IA falló. Se usa evaluación local.",error)}
+  }
+  const result=evaluateLocally(oralState.question,transcript);
+  showOralEvaluation(result,transcript);
+}
+function normalizeOralText(text){
+  return String(text||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9ñ\s]/gi," ").replace(/\s+/g," ").trim();
+}
+const ORAL_STOP_WORDS=new Set(["el","la","los","las","un","una","unos","unas","de","del","a","al","en","con","por","para","que","se","es","son","y","o","como","cuando","donde","lo","le","su","sus","este","esta","esto","esa","ese","muy","mas","tambien","puede","pueden","ser"]);
+function usefulTokens(text){return normalizeOralText(text).split(" ").filter(w=>w.length>2&&!ORAL_STOP_WORDS.has(w))}
+function textSimilarity(a,b){
+  const A=new Set(usefulTokens(a)),B=new Set(usefulTokens(b));
+  if(!A.size||!B.size)return 0;
+  let intersection=0;A.forEach(w=>{if(B.has(w))intersection++});
+  return (2*intersection)/(A.size+B.size);
+}
+function conceptDetected(transcriptNormalized,concept){
+  if(!concept||!Array.isArray(concept.terms))return false;
+  return concept.terms.some(term=>{const n=normalizeOralText(term);return n&&transcriptNormalized.includes(n)});
+}
+function evaluateLocally(question,transcript){
+  const normalized=normalizeOralText(transcript);
+  const concepts=Array.isArray(question.concepts)?question.concepts:[];
+  let totalWeight=0,achievedWeight=0;
+  const detected=[],missing=[];
+  concepts.forEach(concept=>{
+    const weight=Number(concept.weight)||1;totalWeight+=weight;
+    if(conceptDetected(normalized,concept)){achievedWeight+=weight;detected.push(concept.label)}else{missing.push(concept.label)}
+  });
+  const conceptScore=totalWeight>0?achievedWeight/totalWeight:0;
+  const similarity=question.reference?textSimilarity(transcript,question.reference):0;
+  const errors=[];
+  if(Array.isArray(question.criticalErrors)){
+    question.criticalErrors.forEach(item=>{
+      const terms=Array.isArray(item.terms)?item.terms:[];
+      if(terms.some(term=>normalized.includes(normalizeOralText(term))))errors.push(item.feedback||"Se detectó un error conceptual.");
+    });
+  }
+  let rawScore=totalWeight>0?(conceptScore*0.85+similarity*0.15)*10:similarity*10;
+  if(errors.length)rawScore-=Math.min(errors.length*1.5,4);
+  rawScore=Math.max(0,Math.min(10,rawScore));
+  return {score:Math.round(rawScore*10)/10,detected,missing,errors,similarity:Math.round(similarity*100),source:"local"};
+}
+async function evaluateWithAI(question,transcript){
+  const response=await fetch(ORAL_AI_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:question.question,reference:question.reference,concepts:question.concepts||[],answer:transcript})});
+  if(!response.ok)throw new Error("AI evaluation failed");
+  return await response.json();
+}
+function showOralEvaluation(result,transcript){
+  resetMicButton();
+  $("oralResult").classList.remove("hidden");
+  const score=Number(result.score)||0;
+  $("oralScore").textContent=score.toFixed(score%1?1:0)+"/10";
+  let grade;
+  if(score>=9)grade="Excelente";else if(score>=7.5)grade="Buena respuesta";else if(score>=6)grade="Aceptable";else if(score>=4)grade="Incompleta";else grade="Necesita repaso";
+  $("oralGrade").textContent=grade;
+  let html="";
+  if(result.detected&&result.detected.length){
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">✓ BIEN</div>';
+    result.detected.forEach(item=>{html+='<div class="oral-feedback-item">✓ '+esc(item)+'</div>'});
+    html+="</div>";
+  }
+  if(result.missing&&result.missing.length){
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">PODRÍAS AGREGAR</div>';
+    result.missing.forEach(item=>{html+='<div class="oral-feedback-item">• '+esc(item)+'</div>'});
+    html+="</div>";
+  }
+  if(result.errors&&result.errors.length){
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">⚠ REVISAR</div>';
+    result.errors.forEach(item=>{html+='<div class="oral-feedback-item">⚠ '+esc(item)+'</div>'});
+    html+="</div>";
+  }
+  if(result.feedback){
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">COMENTARIO</div><div class="oral-feedback-item">'+esc(result.feedback)+'</div></div>';
+  }
+  html+='<div class="oral-feedback-block"><div class="oral-feedback-title">RESPUESTA DE REFERENCIA</div><div class="oral-feedback-item">'+esc(oralState.question.reference||"")+'</div></div>';
+  $("oralFeedback").innerHTML=html;
+  const revealBox=$("oralTranscriptReveal");
+  revealBox.classList.add("hidden");
+  revealBox.dataset.transcript=transcript||"";
+  setOralStatus("Respuesta evaluada.");
+  const q=oralVoiceQuestion();
+  if(q&&oralState.question&&q.id===oralState.question.id){
+    oralState.scores[q.id]=score;
+    $("ovNextBtn").disabled=false;
+  }
+}
+function toggleOralTranscriptReveal(){
+  const box=$("oralTranscriptReveal");
+  if(box.classList.contains("hidden")){
+    box.textContent=box.dataset.transcript?("Se transcribió: “"+box.dataset.transcript+"”"):"No se guardó transcripción para esta respuesta.";
+    box.classList.remove("hidden");
+  }else{box.classList.add("hidden")}
+}
+function restartOralAnswer(){
+  oralState.transcript="";
+  $("oralResult").classList.add("hidden");
+  setOralStatus("Toca el micrófono cuando estés listo.");
+}
+function startOralTimer(){
+  stopOralTimer();
+  $("oralTime").style.display="block";
+  updateOralTimer();
+  oralState.timer=setInterval(updateOralTimer,1000);
+}
+function updateOralTimer(){
+  if(!oralState.startTime)return;
+  const seconds=Math.floor((Date.now()-oralState.startTime)/1000);
+  const mins=Math.floor(seconds/60),secs=seconds%60;
+  $("oralTime").textContent=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
+}
+function stopOralTimer(){clearInterval(oralState.timer);oralState.timer=null}
+function setRecordingButton(){
+  $("oralMicBtn").classList.add("recording");
+  $("oralMicIcon").textContent="●";
+  $("oralMicText").textContent="Terminar respuesta";
+}
+function resetMicButton(){
+  const btn=$("oralMicBtn");if(!btn)return;
+  btn.classList.remove("recording");
+  $("oralMicIcon").textContent="🎙️";
+  $("oralMicText").textContent="Responder";
+}
+function setOralStatus(text,listening){
+  const status=$("oralStatus");if(!status)return;
+  status.textContent=text;
+  status.classList.toggle("listening",!!listening);
+}
+function stopEverythingOral(){
+  oralState.listening=false;oralState.stopping=false;
+  clearTimeout(oralState.restartTimer);clearTimeout(oralState.maxTimer);
+  stopOralTimer();
+  if(oralState.recognition){try{oralState.recognition.abort()}catch(e){}}
+  oralState.recognition=null;
+}
+function loadQuestionFromA320Bank(q){
+  if(!q)return;
+  const oralQuestion={id:q.id||q._id||"",question:q.oralQuestion||q.question||q.q||"",reference:q.oralReference||q.reference||q.expl||"",concepts:q.oralConcepts||q.concepts||[],criticalErrors:q.oralCriticalErrors||q.criticalErrors||[]};
+  setOralQuestion(oralQuestion);
 }
 document.addEventListener("keydown",e=>{
   if($("quiz").classList.contains("hidden"))return;

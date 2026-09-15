@@ -175,11 +175,18 @@ main{padding:18px 18px calc(92px + env(safe-area-inset-bottom))}
 .oral-result{margin-top:14px;padding:15px;border-radius:14px;border:1px solid var(--line2);background:var(--panel)}
 .oral-score-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .oral-result-label{font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:700}
-.oral-score{font-size:26px;line-height:1.3;font-weight:800;color:var(--white)}
-.oral-grade{font-size:12px;font-weight:700;padding:6px 10px;border-radius:30px;border:1px solid var(--line2);white-space:nowrap}
+.oral-score{font-size:21px;line-height:1.3;font-weight:800;color:var(--white)}
+.oral-grade{font-size:12px;font-weight:700;padding:6px 10px;border-radius:30px;border:1px solid var(--line2);white-space:nowrap;color:var(--muted)}
+.oral-grade.good{color:var(--green);border-color:var(--green2)}
+.oral-grade.mid{color:var(--amber);border-color:var(--amber2)}
+.oral-grade.low{color:var(--red);border-color:var(--red2)}
+.oral-score-note{margin-top:8px;font-size:10.5px;line-height:1.45;color:var(--muted)}
 .oral-feedback{margin-top:14px;font-size:13px;line-height:1.5}
 .oral-feedback-block{margin-top:10px}
-.oral-feedback-title{font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:5px}
+.oral-feedback-title{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:5px}
+.oral-feedback-title.ok{color:var(--green)}
+.oral-feedback-title.warn{color:var(--amber)}
+.oral-feedback-title.bad{color:var(--red)}
 .oral-feedback-item{margin:4px 0}
 .oral-transcript-reveal{margin-top:10px;padding:10px;border-radius:10px;background:var(--panel3);font-size:12px;color:var(--muted);line-height:1.5}
 .rate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
@@ -523,9 +530,10 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 </div>
 <div class="oral-result hidden" id="oralResult">
 <div class="oral-score-row">
-<div><div class="oral-result-label">EVALUACION</div><div class="oral-score" id="oralScore">0/10</div></div>
+<div><div class="oral-result-label">ESTIMACIÓN</div><div class="oral-score" id="oralScore">0/10</div></div>
 <div class="oral-grade" id="oralGrade"></div>
 </div>
+<div class="oral-score-note">Estimación automática según los conceptos de tu respuesta que coinciden con la referencia — no reemplaza tu propio juicio ni el de un instructor.</div>
 <div class="oral-feedback" id="oralFeedback"></div>
 <div class="oral-transcript-reveal hidden" id="oralTranscriptReveal"></div>
 <button class="oral-clear-btn" onclick="toggleOralTranscriptReveal()" type="button">Ver que se transcribio</button>
@@ -1866,22 +1874,27 @@ function showOralEvaluation(result,transcript){
   $("oralResult").classList.remove("hidden");
   const score=Number(result.score)||0;
   $("oralScore").textContent=score.toFixed(score%1?1:0)+"/10";
-  let grade;
-  if(score>=9)grade="Excelente";else if(score>=7.5)grade="Buena respuesta";else if(score>=6)grade="Aceptable";else if(score>=4)grade="Incompleta";else grade="Necesita repaso";
+  let grade,gradeClass;
+  if(score>=9){grade="Cobertura muy alta";gradeClass="good"}
+  else if(score>=7.5){grade="Cobertura alta";gradeClass="good"}
+  else if(score>=6){grade="Cobertura media";gradeClass="mid"}
+  else if(score>=4){grade="Cobertura parcial";gradeClass="mid"}
+  else{grade="Cobertura baja";gradeClass="low"}
   $("oralGrade").textContent=grade;
+  $("oralGrade").className="oral-grade "+gradeClass;
   let html="";
   if(result.detected&&result.detected.length){
-    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">✓ BIEN</div>';
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title ok">✓ BIEN</div>';
     result.detected.forEach(item=>{html+='<div class="oral-feedback-item">✓ '+esc(item)+'</div>'});
     html+="</div>";
   }
   if(result.missing&&result.missing.length){
-    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">PODRÍAS AGREGAR</div>';
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title warn">PODRÍAS AGREGAR</div>';
     result.missing.forEach(item=>{html+='<div class="oral-feedback-item">• '+esc(item)+'</div>'});
     html+="</div>";
   }
   if(result.errors&&result.errors.length){
-    html+='<div class="oral-feedback-block"><div class="oral-feedback-title">⚠ REVISAR</div>';
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title bad">⚠ REVISAR</div>';
     result.errors.forEach(item=>{html+='<div class="oral-feedback-item">⚠ '+esc(item)+'</div>'});
     html+="</div>";
   }

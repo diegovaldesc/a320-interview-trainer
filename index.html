@@ -157,6 +157,16 @@ main{padding:18px 18px calc(92px + env(safe-area-inset-bottom))}
 .interview-card{border:1px solid var(--green2);background:linear-gradient(145deg,rgba(77,107,88,.06),var(--panel));border-radius:14px;padding:17px;margin-top:8px}
 .interview-card .prompt{font-size:20px;line-height:1.42;margin:8px 0 5px}
 .interview-tip{font-size:12px;color:var(--muted);line-height:1.45}
+.oral-mic-box{margin-top:14px}
+.oral-mic-btn{width:100%;min-height:50px;border:1px solid var(--cyan);background:var(--panel2);color:var(--white);border-radius:11px;font-size:14px;font-weight:700;cursor:pointer}
+.oral-mic-btn.recording{border-color:var(--red);background:rgba(140,80,80,.08);color:var(--red)}
+.oral-mic-status{margin:8px 2px;font-size:11px;color:var(--muted)}
+.oral-mic-status.listening{color:var(--red);font-weight:600}
+.oral-transcript{width:100%;min-height:140px;resize:vertical;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--white);font-family:var(--sans);font-size:14px;line-height:1.5;outline:none;margin-top:8px}
+.oral-transcript:focus{border-color:var(--cyan2)}
+.oral-clear-btn{margin-top:8px;border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+.oral-mic-fallback{margin-top:8px;font-size:11px;color:var(--amber);line-height:1.5;display:none}
+.oral-mic-fallback.show{display:block}
 .rate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
 .rate{border:1px solid var(--line);background:var(--panel);color:var(--white);border-radius:10px;padding:10px 7px;font-size:11px;cursor:pointer}
 .rate.no{border-color:var(--red2)}.rate.partial{border-color:var(--amber2)}.rate.yes{border-color:var(--green2)}
@@ -462,6 +472,13 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <div class="prompt" id="iQuestion"></div>
 <div class="interview-tip" id="iTip">Intenta una respuesta corta, ordenada y segura. Cuando termines, revela la respuesta.</div>
 </div>
+<div class="oral-mic-box">
+<button class="oral-mic-btn" id="oralMicBtn" onclick="toggleOralMic()" type="button">🎙️ Responder con micrófono</button>
+<div class="oral-mic-status" id="oralMicStatus">Toca el micrófono para comenzar</div>
+<div class="oral-mic-fallback" id="oralMicFallback">El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Abre este sitio en Safari (no desde el ícono) para usar el micrófono, o escribe tu respuesta directamente aquí abajo.</div>
+<textarea class="oral-transcript" id="oralTranscript" placeholder="Tu respuesta aparecerá aquí (o escríbela tú mismo)..." rows="7"></textarea>
+<button class="oral-clear-btn" onclick="clearOralTranscript()" type="button">Borrar respuesta</button>
+</div>
 <div class="answer-wrap hidden" id="iAnswer"></div>
 <button class="btn green" id="revealBtn" onclick="revealInterview()" style="width:100%;margin-top:12px">Mostrar respuesta esperada</button>
 <div class="hidden" id="rateWrap">
@@ -623,7 +640,7 @@ function screens(){return["home","systemsFolder","detail","quiz","interview","re
 function show(id){screens().forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0)}
 function goHome(){session=null;show("home");renderHome()}
 function openSystemsFolder(){session=null;renderHome();show("systemsFolder")}
-function exitSession(){if(session)persistResume();goHome()}
+function exitSession(){stopOralMic();if(session)persistResume();goHome()}
 
 let currentSystemKey=null;
 function renderHome(){
@@ -932,6 +949,7 @@ function renderInterview(){
   $("iTip").textContent=isScenario?"Explica qué está ocurriendo y cuál es la acción o criterio operacional que corresponde. Después compara tu razonamiento con la guía.":"Responde primero con una idea central y después justifícala. Evita recitar alternativas: habla como frente a un instructor.";
   $("iAnswer").classList.add("hidden");$("iAnswer").innerHTML="";$("revealBtn").classList.remove("hidden");$("rateWrap").classList.add("hidden");
   $("iPrevBtn").disabled=session.index===0;$("iNextBtn").disabled=r===null;$("iNextBtn").textContent=session.index===n-1?"Finalizar":"Siguiente";
+  resetOralMicBox();
   const wasRevealed=Array.isArray(session.revealed)&&!!session.revealed[session.index];
   if(r!==null||wasRevealed){revealInterview(true)}
 }
@@ -949,12 +967,126 @@ function rateInterview(v){
   const s=appState.oral[q._id]||{a:0,total:0,low:0,last:0};s.a++;s.total+=v;if(v===0)s.low++;s.last=Date.now();appState.oral[q._id]=s;saveState();
   $("iNextBtn").disabled=false;persistResume();toast(v===2?"Sólida":v===1?"Parcial · conviene repetir":"Marcada para repaso");
 }
-function prevInterview(){if(session.index>0){session.index--;renderInterview();persistResume()}}
+function prevInterview(){if(session.index>0){stopOralMic();session.index--;renderInterview();persistResume()}}
 function nextInterview(){
   if(session.ratings[session.index]===null)return;
+  stopOralMic();
   if(session.index<session.questions.length-1){session.index++;renderInterview();persistResume();return}
   session.completed=true;appState.resume=null;saveState();
   const done=session.kind==="scenario"?"Escenarios completados":"Entrevista completada";goHome();toast(done)
+}
+
+let oralRecognition=null;
+let oralMicActive=false;
+let oralFinalTranscript="";
+let oralFatalError=false;
+let oralRestartCount=0;
+const ORAL_MAX_RESTARTS=20;
+
+function isStandaloneMode(){
+  return window.navigator.standalone===true||(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches);
+}
+function speechRecognitionAvailable(){
+  return !!(window.SpeechRecognition||window.webkitSpeechRecognition);
+}
+function createOralRecognition(){
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SpeechRecognition)return null;
+  const recognition=new SpeechRecognition();
+  recognition.lang="es-CL";
+  recognition.continuous=true;
+  recognition.interimResults=true;
+  recognition.maxAlternatives=1;
+  recognition.onstart=function(){
+    oralMicActive=true;
+    oralFatalError=false;
+    const btn=$("oralMicBtn"),status=$("oralMicStatus");
+    btn.classList.add("recording");btn.textContent="■ Detener respuesta";
+    status.classList.add("listening");status.textContent="Escuchando… habla normalmente";
+  };
+  recognition.onresult=function(event){
+    oralRestartCount=0;
+    let interimTranscript="";
+    for(let i=event.resultIndex;i<event.results.length;i++){
+      const text=event.results[i][0].transcript;
+      if(event.results[i].isFinal){oralFinalTranscript+=text.trim()+" "}else{interimTranscript+=text}
+    }
+    $("oralTranscript").value=oralFinalTranscript+interimTranscript;
+  };
+  recognition.onerror=function(event){
+    console.warn("Speech Recognition:",event.error);
+    const status=$("oralMicStatus");
+    if(event.error==="not-allowed"){status.textContent="Debes autorizar el acceso al micrófono.";oralFatalError=true}
+    else if(event.error==="audio-capture"){status.textContent="No se pudo acceder al micrófono.";oralFatalError=true}
+    else if(event.error==="network"||event.error==="service-not-allowed"){
+      status.textContent=isStandaloneMode()?"El reconocimiento de voz no está disponible en la app instalada. Abre el sitio en Safari.":"Problema de conexión con el reconocimiento de voz.";
+      if(isStandaloneMode())$("oralMicFallback").classList.add("show");
+      oralFatalError=true;
+    }
+    else if(event.error==="no-speech"){status.textContent="No detecté voz. Toca el micrófono para intentarlo de nuevo.";oralFatalError=true}
+    else if(event.error==="aborted"){/* user-initiated stop, not an error */}
+    else{status.textContent="No se pudo reconocer la respuesta.";oralFatalError=true}
+  };
+  recognition.onend=function(){
+    if(oralMicActive&&!oralFatalError&&oralRestartCount<ORAL_MAX_RESTARTS){
+      oralRestartCount++;
+      try{recognition.start();return}catch(e){console.log(e)}
+    }
+    oralMicActive=false;
+    if(oralRestartCount>=ORAL_MAX_RESTARTS){$("oralMicStatus").textContent="El micrófono se desconectó varias veces. Intenta de nuevo."}
+    oralRestartCount=0;
+    resetOralMicUI();
+  };
+  return recognition;
+}
+function toggleOralMic(){
+  if(!speechRecognitionAvailable()){alert("El reconocimiento de voz no está disponible en este navegador.");return}
+  if(oralMicActive){stopOralMic()}else{startOralMic()}
+}
+function startOralMic(){
+  if(!oralRecognition)oralRecognition=createOralRecognition();
+  if(!oralRecognition){alert("El reconocimiento de voz no está disponible en este navegador.");return}
+  oralFinalTranscript=$("oralTranscript").value.trim();
+  if(oralFinalTranscript)oralFinalTranscript+=" ";
+  oralMicActive=true;
+  oralFatalError=false;
+  oralRestartCount=0;
+  try{oralRecognition.start()}catch(error){console.warn("No se pudo iniciar reconocimiento:",error);oralMicActive=false;resetOralMicUI()}
+}
+function stopOralMic(){
+  oralMicActive=false;
+  if(oralRecognition){try{oralRecognition.stop()}catch(e){console.log(e)}}
+  resetOralMicUI();
+}
+function resetOralMicUI(){
+  const btn=$("oralMicBtn"),status=$("oralMicStatus");
+  if(!btn||!status)return;
+  btn.classList.remove("recording");btn.textContent="🎙️ Responder con micrófono";
+  status.classList.remove("listening");
+  if(oralFatalError)return;
+  status.textContent=$("oralTranscript")&&$("oralTranscript").value.trim()?"Respuesta guardada como texto":"Toca el micrófono para comenzar";
+}
+function clearOralTranscript(){
+  stopOralMic();oralFinalTranscript="";oralFatalError=false;
+  $("oralTranscript").value="";
+  $("oralMicStatus").textContent="Toca el micrófono para comenzar";
+}
+function resetOralMicBox(){
+  stopOralMic();
+  oralFinalTranscript="";oralFatalError=false;oralRestartCount=0;
+  const box=$("oralTranscript");if(box)box.value="";
+  const status=$("oralMicStatus");if(status){status.classList.remove("listening");status.textContent="Toca el micrófono para comenzar"}
+  const fallback=$("oralMicFallback"),micBtn=$("oralMicBtn");
+  if(!fallback||!micBtn)return;
+  if(!speechRecognitionAvailable()){
+    fallback.textContent="Tu navegador no soporta reconocimiento de voz. Escribe tu respuesta directamente aquí abajo.";
+    fallback.classList.add("show");micBtn.classList.add("hidden");
+  }else if(isStandaloneMode()){
+    fallback.textContent="El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Si el botón no responde, abre este sitio en Safari (no desde el ícono) para usar el micrófono, o escribe tu respuesta directamente aquí abajo.";
+    fallback.classList.add("show");micBtn.classList.remove("hidden");
+  }else{
+    fallback.classList.remove("show");micBtn.classList.remove("hidden");
+  }
 }
 document.addEventListener("keydown",e=>{
   if($("quiz").classList.contains("hidden"))return;

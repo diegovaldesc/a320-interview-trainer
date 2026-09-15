@@ -1193,6 +1193,7 @@ const ORAL_VOICE_BANK=[
 ];
 
 const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{},pool:[]};
+let oralMicPermissionGranted=false;
 
 function startOralVoice(){
   stopEverythingOral();
@@ -1264,15 +1265,18 @@ async function startOralAnswer(){
   if(!oralState.question){alert("No hay una pregunta oral cargada.");return}
   if(!window.isSecureContext&&location.hostname!=="localhost"){alert("El micrófono requiere que la aplicación se abra mediante HTTPS.");return}
   if(!speechRecognitionSupported()){alert("El reconocimiento de voz no está disponible en este navegador. En iPhone abre la aplicación con Safari.");return}
-  try{
-    if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-      stream.getTracks().forEach(track=>track.stop());
+  if(!oralMicPermissionGranted){
+    try{
+      if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+        const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+        stream.getTracks().forEach(track=>track.stop());
+      }
+      oralMicPermissionGranted=true;
+    }catch(error){
+      console.warn("Permiso de micrófono:",error);
+      setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
+      return;
     }
-  }catch(error){
-    console.warn("Permiso de micrófono:",error);
-    setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
-    return;
   }
   oralState.transcript="";
   oralState.stopping=false;

@@ -609,12 +609,101 @@ const SYSTEMS=enrich();
 
 const KEY="a320-interview-prep:v8", LEGACY_KEY="a320-interview-prep:v7";
 let appState;
+
+/* Huella barata (no criptografica) del contenido del banco, para
+   detectar si una sesion "continuar" quedo desactualizada tras editar
+   una pregunta/explicacion. No es un hash de seguridad, solo deteccion
+   de cambio de contenido. */
+function cheapHash(str){
+  let h=0;
+  for(let i=0;i<str.length;i++){h=(Math.imul(31,h)+str.charCodeAt(i))|0}
+  return h.toString(36);
+}
+const BANK_FINGERPRINT=cheapHash(document.getElementById("systems-data").textContent);
+
+function isPlainObject(v){return !!v&&typeof v==="object"&&!Array.isArray(v)}
+function finiteNum(v,fallback=0){return Number.isFinite(v)?v:fallback}
+function sanitizeMapEntries(obj,fn){
+  const out={};
+  if(isPlainObject(obj)){
+    Object.keys(obj).forEach(k=>{
+      if(typeof k!=="string"||k.length>200)return;
+      const cleaned=fn(obj[k]);
+      if(cleaned!==null)out[k]=cleaned;
+    });
+  }
+  return out;
+}
+function sanitizeStatEntry(v){
+  if(!isPlainObject(v))return null;
+  return{a:finiteNum(v.a),c:finiteNum(v.c),w:finiteNum(v.w),last:finiteNum(v.last),streak:finiteNum(v.streak),lastResult:v.lastResult===true||v.lastResult===false?v.lastResult:null};
+}
+function sanitizeBestEntry(v){
+  if(!isPlainObject(v))return null;
+  return{score:finiteNum(v.score),total:finiteNum(v.total),date:finiteNum(v.date)};
+}
+function sanitizeOralEntry(v){
+  if(!isPlainObject(v))return null;
+  return{a:finiteNum(v.a),total:finiteNum(v.total),low:finiteNum(v.low),last:finiteNum(v.last)};
+}
+function sanitizeBookmarks(obj){
+  const out={};
+  if(isPlainObject(obj))Object.keys(obj).forEach(k=>{if(typeof k==="string"&&k.length<=200&&obj[k])out[k]=true});
+  return out;
+}
+function sanitizeResume(r){
+  if(!isPlainObject(r))return null;
+  const questions=Array.isArray(r.questions)?r.questions:null;
+  if(!questions||!questions.length)return null;
+  const total=questions.length;
+  const index=Number.isInteger(r.index)&&r.index>=0&&r.index<total?r.index:0;
+  const out={
+    mode:r.mode==="oral"?"oral":"technical",
+    type:typeof r.type==="string"?r.type.slice(0,40):"study",
+    systemKey:typeof r.systemKey==="string"||r.systemKey===null?r.systemKey:null,
+    questions,index,total,
+    label:typeof r.label==="string"?r.label.slice(0,200):"Sesión anterior",
+    bankFingerprint:typeof r.bankFingerprint==="string"?r.bankFingerprint:null
+  };
+  if(typeof r.kind==="string")out.kind=r.kind.slice(0,40);
+  if(Array.isArray(r.answers))out.answers=r.answers;
+  if(Array.isArray(r.counted))out.counted=r.counted;
+  if(Array.isArray(r.ratings))out.ratings=r.ratings;
+  if(Array.isArray(r.revealed))out.revealed=r.revealed;
+  return out;
+}
+function sanitizeState(raw){
+  const base=defaultState();
+  if(!isPlainObject(raw))return base;
+  return{
+    schema:STATE_SCHEMA,
+    stats:sanitizeMapEntries(raw.stats,sanitizeStatEntry),
+    best:sanitizeMapEntries(raw.best,sanitizeBestEntry),
+    bookmarks:sanitizeBookmarks(raw.bookmarks),
+    oral:sanitizeMapEntries(raw.oral,sanitizeOralEntry),
+    resume:sanitizeResume(raw.resume),
+    lastSystem:typeof raw.lastSystem==="string"?raw.lastSystem.slice(0,200):null
+  };
+}
+/* Distingue "el campo no viene" (aceptable, backups antiguos) de "el
+   campo viene con el tipo equivocado" (senal de archivo corrupto o
+   manipulado: se rechaza el import completo en vez de sanear en
+   silencio). */
+function looksLikeValidBackup(raw){
+  if(!isPlainObject(raw))return false;
+  for(const f of["stats","best","bookmarks","oral"]){
+    if(f in raw&&!isPlainObject(raw[f]))return false;
+  }
+  if("resume" in raw&&raw.resume!==null&&!isPlainObject(raw.resume))return false;
+  if("lastSystem" in raw&&raw.lastSystem!==null&&typeof raw.lastSystem!=="string")return false;
+  return true;
+}
 function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},resume:null,lastSystem:null}}
 function loadState(){
   try{
     const current=localStorage.getItem(KEY),legacy=localStorage.getItem(LEGACY_KEY);
     const raw=current||legacy||"{}";
-    const loaded={...defaultState(),...JSON.parse(raw)};
+    const loaded=sanitizeState(JSON.parse(raw));
     if(!current&&legacy){
       loaded.resume=null;
       loaded.lastSystem=null;
@@ -623,7 +712,14 @@ function loadState(){
     return loaded;
   }catch(e){return defaultState()}
 }
-function saveState(){try{localStorage.setItem(KEY,JSON.stringify(appState))}catch(e){}}
+let stateSaveWarned=false;
+function saveState(){
+  try{localStorage.setItem(KEY,JSON.stringify(appState));return true}
+  catch(e){
+    if(!stateSaveWarned){stateSaveWarned=true;toast("No se pudo guardar el progreso en este dispositivo")}
+    return false;
+  }
+}
 appState=loadState();
 
 function orderedKeys(){return SYSTEM_ORDER.filter(k=>SYSTEMS[k])}
@@ -681,7 +777,7 @@ function weakQuestions(key=null){
 function toast(t){const e=$("toast");e.textContent=t;e.classList.remove("hidden");clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.classList.add("hidden"),2200)}
 function screens(){return["home","systemsFolder","detail","quiz","interview","oralVoice","results","weak"]}
 function show(id){screens().forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0)}
-function goHome(){session=null;show("home");renderHome()}
+function goHome(){stopEverythingOral();session=null;show("home");renderHome()}
 function openSystemsFolder(){session=null;renderHome();show("systemsFolder")}
 function exitSession(){stopEverythingOral();if(session)persistResume();goHome()}
 
@@ -711,13 +807,13 @@ function renderHome(){
     :`Se detectaron ${health.issues} incidencias. Las preguntas con estructura inválida quedan fuera de las sesiones hasta corregirlas.`;
 
   const r=appState.resume;
-  $("resumeWrap").innerHTML=r?`<button type="button" class="resume-card" onclick="resumeSession()"><div class="resume-main"><div class="resume-label">Continuar</div><strong>${esc(r.label||"Sesión anterior")}</strong><span>Pregunta ${Math.min((r.index||0)+1,r.total||1)} de ${r.total||1}</span></div><div class="chev">›</div></button>`:"";
+  $("resumeWrap").innerHTML=r?`<button type="button" class="resume-card" onclick="resumeSession()"><div class="resume-main"><div class="resume-label">Continuar</div><strong>${esc(r.label||"Sesión anterior")}</strong><span>Pregunta ${Math.min(finiteNum(r.index)+1,finiteNum(r.total,1))} de ${finiteNum(r.total,1)}</span></div><div class="chev">›</div></button>`:"";
 
   const all=systemStats(null);
-  let html=`<button type="button" class="system-card all" onclick="openSystem(null)"><div class="ata">ALL</div><div class="sys-info"><h3>Todos los sistemas</h3><p>${totalQuestions()} preguntas · explicación y respaldo FCOM</p>${all.best?`<div class="sys-score">Mejor test: ${all.best.score}/${all.best.total}</div>`:""}</div><div class="chev">›</div></button>`;
+  let html=`<button type="button" class="system-card all" onclick="openSystem(null)"><div class="ata">ALL</div><div class="sys-info"><h3>Todos los sistemas</h3><p>${totalQuestions()} preguntas · explicación y respaldo FCOM</p>${all.best?`<div class="sys-score">Mejor test: ${finiteNum(all.best.score)}/${finiteNum(all.best.total)}</div>`:""}</div><div class="chev">›</div></button>`;
   html+=orderedKeys().map(k=>{
     const s=SYSTEMS[k],st=systemStats(k),count=(s.questions||[]).length;
-    return `<button type="button" class="system-card" data-search="${esc(norm((s.name||"")+" "+(s.ata||"")))}" onclick="openSystem('${esc(k)}')"><div class="ata">ATA<br>${esc(s.ata||"—")}</div><div class="sys-info"><h3>${esc(s.name||k)}</h3><p>${count} preguntas · FCOM 2025 ✓${st.a?` · ${st.p}% precisión`:""}</p>${st.best?`<div class="sys-score">Mejor test: ${st.best.score}/${st.best.total}</div>`:""}</div><div class="chev">›</div></button>`
+    return `<button type="button" class="system-card" data-search="${esc(norm((s.name||"")+" "+(s.ata||"")))}" onclick="openSystem('${esc(k)}')"><div class="ata">ATA<br>${esc(s.ata||"—")}</div><div class="sys-info"><h3>${esc(s.name||k)}</h3><p>${count} preguntas · FCOM 2025 ✓${st.a?` · ${st.p}% precisión`:""}</p>${st.best?`<div class="sys-score">Mejor test: ${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</div>`:""}</div><div class="chev">›</div></button>`
   }).join("");
   $("systemsList").innerHTML=html;
 }
@@ -783,7 +879,7 @@ function startWeakSession(k=null){
 function showWeak(){
   const p=weakQuestions(null),saved=savedQuestions(null);show("weak");
   $("weakActions").innerHTML=p.length?`<button type="button" class="btn primary" style="width:100%" onclick="startWeakSession(null)">Practicar ${Math.min(30,p.length)} prioritarias</button>`:"";
-  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${s.w||0} errores · ${s.c||0} correctas${(s.streak||0)>=2?" · recuperada":""}</div></button>`}).join(""):`<div class="empty">No tienes preguntas pendientes de refuerzo. Las preguntas salen de esta lista cuando demuestras recuperación con respuestas correctas consecutivas.</div>`;
+  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${finiteNum(s.w)} errores · ${finiteNum(s.c)} correctas${finiteNum(s.streak)>=2?" · recuperada":""}</div></button>`}).join(""):`<div class="empty">No tienes preguntas pendientes de refuerzo. Las preguntas salen de esta lista cuando demuestras recuperación con respuestas correctas consecutivas.</div>`;
   $("savedWrap").classList.toggle("hidden",saved.length===0);
   if(saved.length){
     $("savedActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="startSavedSession()">Practicar ${Math.min(30,saved.length)} guardadas</button>`;
@@ -794,6 +890,11 @@ function startSavedSession(){const p=savedQuestions(null);if(!p.length){toast("N
 
 let session=null;
 function buildSessionQ(q){
+  /* El banco DGAC conserva alternativas originales del examen 2018;
+     varias usan referencias posicionales como "BOTH A AND B", que
+     cambiarian de significado si se reordenan. Se mantiene su orden
+     original; el resto del banco si se mezcla. */
+  if(isDgacKey(q._sys))return{...q,_correctText:correctText(q)};
   const shuffled=shuffle(q.options.map((t,i)=>({t,orig:i})));
   return{...q,options:shuffled.map(o=>o.t),correct:shuffled.findIndex(o=>o.orig===q.correct),_correctText:correctText(q)};
 }
@@ -813,14 +914,16 @@ function persistResume(){
       mode:"oral",type:"interview",kind:session.kind,systemKey:session.systemKey,
       questions:session.questions,ratings:session.ratings,revealed:session.revealed,
       index:session.index,total:session.questions.length,
-      label:`${session.kind==="scenario"?"Escenarios":"Entrevista oral"} · ${systemName(session.systemKey)}`
+      label:`${session.kind==="scenario"?"Escenarios":"Entrevista oral"} · ${systemName(session.systemKey)}`,
+      bankFingerprint:BANK_FINGERPRINT
     };
   }else{
     appState.resume={
       mode:"technical",type:session.type,systemKey:session.systemKey,
       questions:session.questions,answers:session.answers,index:session.index,counted:session.counted,
       total:session.questions.length,
-      label:`${session.type==="test"?"Test":session.type==="weak"?"Repaso de errores":session.type==="saved"?"Guardadas":"Estudio"} · ${systemName(session.systemKey)}`
+      label:`${session.type==="test"?"Test":session.type==="weak"?"Repaso de errores":session.type==="saved"?"Guardadas":"Estudio"} · ${systemName(session.systemKey)}`,
+      bankFingerprint:BANK_FINGERPRINT
     };
   }
   saveState();
@@ -829,6 +932,11 @@ function resumeSession(){
   const r=appState.resume;if(!r)return;
   const qs=Array.isArray(r.questions)?r.questions:[];
   if(!qs.length){appState.resume=null;saveState();renderHome();toast("La sesión anterior ya no es válida");return}
+  if(r.bankFingerprint&&r.bankFingerprint!==BANK_FINGERPRINT){
+    appState.resume=null;saveState();renderHome();
+    toast("El banco se actualizó desde tu última sesión; empieza una nueva para ver el contenido vigente");
+    return;
+  }
   currentSystemKey=r.systemKey;
   if(r.mode==="oral"||r.type==="interview"){
     session={
@@ -1336,6 +1444,7 @@ async function startOralAnswer(){
   if(!oralState.question){alert("No hay una pregunta oral cargada.");return}
   if(!window.isSecureContext&&location.hostname!=="localhost"){alert("El micrófono requiere que la aplicación se abra mediante HTTPS.");return}
   if(!speechRecognitionSupported()){alert("El reconocimiento de voz no está disponible en este navegador. En iPhone abre la aplicación con Safari.");return}
+  const startGeneration=oralGeneration;
   if(!oralMicPermissionGranted){
     try{
       if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
@@ -1345,9 +1454,14 @@ async function startOralAnswer(){
       oralMicPermissionGranted=true;
     }catch(error){
       console.warn("Permiso de micrófono:",error);
-      setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
+      if(startGeneration===oralGeneration)setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
       return;
     }
+    /* Se salio de la entrevista, cambio de pregunta, o cualquier otra
+       ruta de navegacion invalido esta espera mientras se pedia
+       permiso del microfono: no iniciar reconocimiento en una
+       pantalla/pregunta que ya no esta activa. */
+    if(startGeneration!==oralGeneration)return;
   }
   oralState.transcript="";
   oralState.stopping=false;
@@ -1552,10 +1666,40 @@ function phraseFuzzyMatch(transcriptTokens,transcriptStr,term){
   }
   return (Math.max(...positions)-Math.min(...positions))<=(words.length+5);
 }
+/* Guardia de negacion: "no es una corriente descendente" contiene
+   literalmente "corriente descendente" y sin esto se marcaria como
+   detectado. Si el termino aceptado ya es en si una negacion (su
+   primera palabra normalizada es un marcador de negacion, ej. "no
+   presion fija", "no toca la pista"), no se aplica la guardia, para
+   no autoanular esas rubricas. Solo mira unos pocos tokens antes de
+   la primera palabra significativa del termino: no es un parser de
+   alcance de negacion completo, cubre el patron real "no/nunca/jamas/
+   tampoco + concepto" que aparece en respuestas orales cortas. */
+const ORAL_NEGATION_MARKERS=new Set(["no","nunca","jamas","tampoco"]);
+function negatedBeforeMatch(transcriptTokens,transcriptStr,term){
+  const termNorm=normalizeAeroText(term);
+  if(!termNorm)return false;
+  const termWords=termNorm.split(" ").filter(Boolean);
+  if(termWords.length&&ORAL_NEGATION_MARKERS.has(termWords[0]))return false;
+  let matchTokenPos=-1;
+  const idx=transcriptStr.indexOf(termNorm);
+  if(idx!==-1){
+    matchTokenPos=transcriptStr.slice(0,idx).split(" ").length-1;
+  }else{
+    const words=significantWords(termNorm);
+    if(!words.length)return false;
+    for(let i=0;i<transcriptTokens.length;i++){if(fuzzyWordMatch(transcriptTokens[i],words[0])){matchTokenPos=i;break}}
+  }
+  if(matchTokenPos===-1)return false;
+  for(let j=Math.max(0,matchTokenPos-3);j<matchTokenPos;j++){
+    if(ORAL_NEGATION_MARKERS.has(transcriptTokens[j]))return true;
+  }
+  return false;
+}
 function itemDetected(transcriptTokens,transcriptStr,item){
   const accepted=item&&(item.accepted||item.terms);
   if(!Array.isArray(accepted))return false;
-  return accepted.some(term=>phraseFuzzyMatch(transcriptTokens,transcriptStr,term));
+  return accepted.some(term=>phraseFuzzyMatch(transcriptTokens,transcriptStr,term)&&!negatedBeforeMatch(transcriptTokens,transcriptStr,term));
 }
 function detectCriticalErrors(transcriptTokens,transcriptStr,question){
   const errors=[];let penaltyTotal=0;
@@ -1712,7 +1856,9 @@ function setOralStatus(text,listening){
   status.textContent=text;
   status.classList.toggle("listening",!!listening);
 }
+let oralGeneration=0;
 function stopEverythingOral(){
+  oralGeneration++;
   oralState.listening=false;oralState.stopping=false;
   clearTimeout(oralState.restartTimer);clearTimeout(oralState.maxTimer);
   stopOralTimer();
@@ -1767,10 +1913,12 @@ function importProgress(event){
     try{
       const parsed=JSON.parse(reader.result);
       const incoming=parsed&&parsed.state?parsed.state:parsed;
-      if(!incoming||typeof incoming!=="object"||Array.isArray(incoming))throw new Error("Formato inválido");
+      if(!looksLikeValidBackup(incoming))throw new Error("Formato inválido");
       if(!confirm("Restaurar esta copia reemplazará el progreso guardado actualmente en este dispositivo. ¿Continuar?")){input.value="";return}
-      appState={...defaultState(),...incoming,schema:STATE_SCHEMA};
-      saveState();session=null;currentSystemKey=null;renderHome();show("home");toast("Progreso restaurado");
+      const candidate=sanitizeState(incoming);
+      const ok=(()=>{appState=candidate;return saveState()})();
+      session=null;currentSystemKey=null;renderHome();show("home");
+      toast(ok?"Progreso restaurado":"Progreso restaurado en esta sesión, pero no se pudo guardar en el dispositivo");
     }catch(e){toast("La copia no es válida")}
     input.value="";
   };

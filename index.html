@@ -459,7 +459,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <div class="mode-grid">
 <button class="mode-card study" id="studyModeCard" onclick="startTechnical('study')"><span class="mode-label">Estudio</span><h3>Aprender</h3><p id="studyModeDesc">Respuesta y explicación FCOM justo después de contestar.</p></button>
 <button class="mode-card test" id="testModeCard" onclick="startTechnical('test')"><span class="mode-label">Test</span><h3>Simular</h3><p>20 preguntas. Sin pistas hasta el resultado final.</p></button>
-<button class="mode-card interview" id="interviewModeCard" onclick="startInterview(currentSystemKey)"><span class="mode-label">Entrevista oral</span><h3>Responder sin alternativas</h3><p>La misma materia, pero como frente a un instructor: primero respondes tú, después revelas la respuesta.</p></button>
+<button class="mode-card interview" id="interviewModeCard" onclick="startInterview(currentSystemKey)"><span class="mode-label">Autoevaluación</span><h3>Responder sin alternativas</h3><p>La misma materia, pero como frente a un instructor: primero respondes tú, después revelas la respuesta y te autocalificas.</p></button>
 </div>
 <button class="weak-inline hidden" id="systemWeakBtn" onclick="startWeakSession(currentSystemKey)"></button>
 </section>
@@ -599,14 +599,11 @@ function isInterviewTechKey(k){return k===INTERVIEW_TECH_KEY}
 function systemName(k){return k===null?"Todos los sistemas":(SYSTEMS[k]?.name||k)}
 function systemAta(k){return k===null?"ALL":(SYSTEMS[k]?.ata||"—")}
 function correctText(q){return q.options?.[q.correct] ?? ""}
-function isDgac(q){return /DGAC/i.test(q.src||"")}
-function compactQuestion(s){return String(s||"").replace(/\s+/g," ").trim()}
 function isStructurallyValid(q){
   return !!q&&!!q.q&&Array.isArray(q.options)&&q.options.length>=2&&Number.isInteger(q.correct)&&q.correct>=0&&q.correct<q.options.length;
 }
 function safePool(pool){return (pool||[]).filter(isStructurallyValid)}
 
-function generatedExplanation(q){return "";}
 function enrich(){
   const out={};
   Object.entries(RAW_SYSTEMS).forEach(([k,s])=>{
@@ -655,6 +652,10 @@ function sanitizeOralEntry(v){
   if(!isPlainObject(v))return null;
   return{a:finiteNum(v.a),total:finiteNum(v.total),low:finiteNum(v.low),last:finiteNum(v.last)};
 }
+function sanitizeOralVoiceEntry(v){
+  if(!isPlainObject(v))return null;
+  return{score:Math.max(0,Math.min(10,finiteNum(v.score))),attempts:finiteNum(v.attempts,1),last:finiteNum(v.last)};
+}
 function sanitizeBookmarks(obj){
   const out={};
   if(isPlainObject(obj))Object.keys(obj).forEach(k=>{if(typeof k==="string"&&k.length<=200&&obj[k])out[k]=true});
@@ -690,6 +691,7 @@ function sanitizeState(raw){
     best:sanitizeMapEntries(raw.best,sanitizeBestEntry),
     bookmarks:sanitizeBookmarks(raw.bookmarks),
     oral:sanitizeMapEntries(raw.oral,sanitizeOralEntry),
+    oralVoice:sanitizeMapEntries(raw.oralVoice,sanitizeOralVoiceEntry),
     resume:sanitizeResume(raw.resume),
     lastSystem:typeof raw.lastSystem==="string"?raw.lastSystem.slice(0,200):null
   };
@@ -700,14 +702,14 @@ function sanitizeState(raw){
    silencio). */
 function looksLikeValidBackup(raw){
   if(!isPlainObject(raw))return false;
-  for(const f of["stats","best","bookmarks","oral"]){
+  for(const f of["stats","best","bookmarks","oral","oralVoice"]){
     if(f in raw&&!isPlainObject(raw[f]))return false;
   }
   if("resume" in raw&&raw.resume!==null&&!isPlainObject(raw.resume))return false;
   if("lastSystem" in raw&&raw.lastSystem!==null&&typeof raw.lastSystem!=="string")return false;
   return true;
 }
-function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},resume:null,lastSystem:null}}
+function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},oralVoice:{},resume:null,lastSystem:null}}
 function loadState(){
   try{
     const current=localStorage.getItem(KEY),legacy=localStorage.getItem(LEGACY_KEY);
@@ -739,10 +741,6 @@ function rawPool(key){
   return (SYSTEMS[key]?.questions||[]).map(q=>({...q,_sys:key,_id:qid(key,q)}));
 }
 function allLookupPool(){return [...allVerifiedPool(),...rawPool(DGAC_KEY)]}
-function uniquePool(pool){
-  const seen=new Set();
-  return pool.filter(q=>{const n=(q._sys||"")+"|"+stemKey(q.q);if(seen.has(n))return false;seen.add(n);return true});
-}
 function trainingPool(key){
   if(key===DGAC_KEY)return safePool(rawPool(DGAC_KEY));
   const base=safePool(key===null?rawPool(null):rawPool(key));
@@ -807,7 +805,7 @@ function renderHome(){
   $("mQuestions").textContent=totalQuestions();
   $("mAccuracy").textContent=ov.a?ov.p+"%":"—";
   $("mWeak").textContent=ov.wq;
-  $("bankChip").textContent=(totalQuestions()+operationsQuestions()+interviewTechnicalTotal())+" PREGUNTAS";
+  $("bankChip").textContent=(totalQuestions()+operationsQuestions()+interviewTechnicalTotal()+dgacTotal()+ORAL_VOICE_BANK.length)+" PREGUNTAS";
 
   $("homeSystemsCount").textContent=totalQuestions()+" preguntas · FCOM 2025 ✓";
   $("homeOpsCount").textContent=operationsQuestions()+" preguntas · Airbus Tutorials Rev 15 ✓";
@@ -820,7 +818,7 @@ function renderHome(){
   const health=bankIntegrity();
   $("bankStatus").textContent=health.ok?"Integridad estructural OK":health.issues+" incidencias";
   $("bankStatus").classList.toggle("warn",!health.ok);
-  $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas`;
+  $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas · ${ORAL_VOICE_BANK.length} entrevista oral`;
   $("integrityNote").classList.toggle("warn",!health.ok);
   $("integrityNote").textContent=health.ok
     ?"Comprobación estructural al iniciar: forma de preguntas y rúbricas orales válida, y explicación/referencia presente. La exactitud del contenido aeronáutico se audita aparte, contra el FCOM/FCTM."
@@ -882,7 +880,7 @@ function runSearch(v){
   $("searchClear").classList.toggle("hidden",!v);
   if(q.length<2){wrap.innerHTML="";return}
   const tokens=q.split(" ").filter(Boolean);
-  const hits=allVerifiedPool().filter(x=>{
+  const hits=allLookupPool().filter(x=>{
     const hay=norm(x.q+" "+x.options.join(" ")+" "+systemName(x._sys)+" "+(x.src||""));
     return tokens.every(t=>hay.includes(t));
   }).slice(0,40);
@@ -934,7 +932,7 @@ function persistResume(){
       mode:"oral",type:"interview",kind:session.kind,systemKey:session.systemKey,
       questions:session.questions,ratings:session.ratings,revealed:session.revealed,
       index:session.index,total:session.questions.length,
-      label:`${session.kind==="scenario"?"Escenarios":"Entrevista oral"} · ${systemName(session.systemKey)}`,
+      label:`${session.kind==="scenario"?"Escenarios":"Autoevaluación"} · ${systemName(session.systemKey)}`,
       bankFingerprint:BANK_FINGERPRINT
     };
   }else{
@@ -1418,7 +1416,10 @@ function nextOralVoice(){
   if(oralState.scores[q.id]===undefined)return;
   stopEverythingOral();
   if(oralState.index<oralState.pool.length-1){oralState.index++;loadOralVoiceQuestion();return}
-  toast("Simulacro completado");goHome();
+  const scores=Object.values(oralState.scores);
+  const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  toast(`Entrevista completada · promedio ${avg.toFixed(1)}/10 en ${scores.length} preguntas`);
+  goHome();
 }
 
 function setOralQuestion(question){
@@ -1868,6 +1869,9 @@ function showOralEvaluation(result,transcript){
   if(q&&oralState.question&&q.id===oralState.question.id){
     oralState.scores[q.id]=score;
     $("ovNextBtn").disabled=false;
+    const prevEntry=appState.oralVoice[q.id];
+    appState.oralVoice[q.id]={score,attempts:(prevEntry?.attempts||0)+1,last:Date.now()};
+    saveState();
   }
 }
 function toggleOralTranscriptReveal(){

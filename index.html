@@ -1224,7 +1224,40 @@ const ORAL_VOICE_BANK=[
   {label:"Pérdida de ambos generadores de motor: EMER GEN (circuito azul) alimenta la red esencial",weight:2,required:true,accepted:["emer gen","generador de emergencia","circuito azul","hidraulico azul","ambos generadores","red esencial","ac ess"]},
   {label:"STAT INV: respaldo final (batería a AC) si tampoco hay EMER GEN",weight:1,accepted:["stat inv","inversor estatico","static inverter","bateria a ac","invierte dc a ac"]}
  ],
- criticalErrors:[{accepted:["las baterias solo se conectan si fallan los generadores","las baterias estan desconectadas en operacion normal","las baterias no hacen nada mientras haya generadores"],penalty:3,feedback:"Las baterías quedan conectadas permanentemente a su HOT BUS incluso con todo apagado; no es algo que se active recién cuando fallan los generadores."}]}
+ criticalErrors:[{accepted:["las baterias solo se conectan si fallan los generadores","las baterias estan desconectadas en operacion normal","las baterias no hacen nada mientras haya generadores"],penalty:3,feedback:"Las baterías quedan conectadas permanentemente a su HOT BUS incluso con todo apagado; no es algo que se active recién cuando fallan los generadores."}]},
+
+{id:"ov_v1_reject",question:"Durante el despegue, antes de V1, se presenta una falla o anomalía. ¿Qué consideras para decidir si rechazas el despegue?",
+ reference:"Depende de la velocidad. Por debajo de 100 kt la decisión queda a criterio del comandante, y conviene considerar seriamente rechazar ante cualquier alerta ECAM. Entre 100 kt y V1 hay que estar go-minded: muy pocas condiciones justifican rechazar — básicamente fuego o daño severo, pérdida súbita de empuje de un motor, una indicación inequívoca de que el avión no volará de forma segura, o cualquier alerta ECAM. El llamado de V1 tiene precedencia sobre cualquier otro llamado, y la decisión de rechazar debe tomarse antes de V1: el comandante mantiene la mano en las palancas de empuje hasta V1, sea o no el piloto que está volando.",
+ concepts:[
+  {label:"Por debajo de 100 kt: criterio del comandante, considerar rechazar ante cualquier ECAM",weight:2,accepted:["100 kt","criterio del comandante","a discrecion","cualquier alerta ecam","por debajo de 100"]},
+  {label:"Entre 100 kt y V1: go-minded, muy pocas razones válidas (fuego/daño severo, pérdida súbita de empuje, indicación inequívoca de que no volará seguro, o alerta ECAM)",weight:2,required:true,accepted:["go minded","fuego","dano severo","perdida subita de empuje","no volara de forma segura","no va a volar seguro","alerta ecam","pocas razones","muy pocas condiciones"]},
+  {label:"Sobre V1: el llamado de V1 tiene precedencia sobre cualquier otro",weight:2,required:true,accepted:["v1 tiene precedencia","precedencia sobre cualquier otro llamado","por sobre cualquier otro llamado","tiene prioridad","va primero","antes que cualquier otro llamado","primero que cualquier otro"]},
+  {label:"La decisión debe tomarse antes de V1; el comandante mantiene la mano en las palancas hasta V1",weight:1,accepted:["mano en las palancas","antes de v1","hasta v1","antes de llegar a v1"]}
+ ],
+ criticalErrors:[{accepted:["se puede rechazar despues de v1","rechazar despues de v1 es seguro","despues de v1 igual se puede parar"],penalty:3,feedback:"Después de V1 el despegue debe continuarse; la decisión de rechazar solo puede tomarse antes de V1."}]},
+
+{id:"ov_v1_continue",question:"Si un motor falla justo después de V1, ¿qué harías y por qué es tan importante continuar el despegue en ese momento?",
+ reference:"Continuaría el despegue: sobre V1 no es seguro intentar detenerse porque puede no alcanzar la pista restante. Llevo los thrust levers a TOGA, en VR roto con una tasa de cabeceo continua hacia la actitud inicial, y sigo las órdenes de SRS, que apuntan a la velocidad a la que ocurrió la falla, entre V2 y V2+15 kt. La tarea esencial y prioritaria es volar el avión — estabilizar actitud y velocidad y establecer la trayectoria correcta — antes de empezar cualquier procedimiento ECAM.",
+ concepts:[
+  {label:"Continuar el despegue, no rechazar",weight:2,required:true,accepted:["continuar el despegue","continuo el despegue","seguir con el despegue","no rechazo","no abortar","sigo el despegue","continuo con el despegue","despego igual"]},
+  {label:"Por qué: sobre V1 puede no alcanzar a detenerse en la pista restante",weight:2,required:true,accepted:["no alcanza a detenerse","no alcanza la pista","pista restante","no es posible detener el avion","no se puede parar"]},
+  {label:"THR LEVERS a TOGA y seguir las órdenes de SRS (velocidad entre V2 y V2+15kt)",weight:2,accepted:["toga","srs","v2","v2 mas 15","ordenes de srs"]},
+  {label:"Prioridad: volar el avión (estabilizar actitud/velocidad/trayectoria) antes del ECAM",weight:2,required:true,accepted:["volar el avion","aviar primero","estabilizar la aeronave","antes del ecam","antes de empezar el ecam","tarea esencial es volar"]}
+ ],
+ criticalErrors:[{accepted:["intentaria rechazar el despegue","tratar de parar el avion","frenar y detenerme"],penalty:3,feedback:"Sobre V1 el despegue debe continuarse; intentar rechazar en ese punto es justo lo que la V1 busca evitar."}]},
+
+{id:"ov_pan_mayday",question:"¿Cuál es la diferencia entre declarar un PAN PAN y un MAYDAY, y qué información hay que entregar en un llamado de MAYDAY?",
+ reference:"PAN PAN se usa para una urgencia: una condición que afecta la seguridad de la aeronave o de alguien a bordo, pero sin peligro grave e inminente. MAYDAY se reserva para una situación de socorro, con peligro grave e inminente que requiere asistencia inmediata, y se declara diciendo MAYDAY, MAYDAY, MAYDAY; el material Airbus confirma este llamado triple y que se usa para las emergencias más serias. El contenido detallado del mensaje es fraseología estándar de radiotelefonía, no específica del FCOM: la estación a la que se llama, el callsign, la naturaleza de la emergencia, las intenciones de la tripulación, posición, nivel y rumbo, y si el tiempo lo permite, almas a bordo y combustible remanente.",
+ concepts:[
+  {label:"PAN PAN: urgencia, sin peligro grave e inminente",weight:2,required:true,accepted:["urgencia","sin peligro inminente","no es peligro grave","afecta la seguridad pero no es grave"]},
+  {label:"MAYDAY: socorro/distress, peligro grave e inminente, requiere asistencia inmediata",weight:2,required:true,accepted:["socorro","distress","peligro grave","peligro inminente","asistencia inmediata"]},
+  {label:"Triple llamado: MAYDAY MAYDAY MAYDAY",weight:1,accepted:["mayday mayday mayday","tres veces","llamado triple","se dice tres veces"]},
+  {label:"Naturaleza de la emergencia",weight:2,required:true,accepted:["naturaleza de la emergencia","que esta pasando","tipo de emergencia","cual es el problema"]},
+  {label:"Intenciones de la tripulación",weight:1,accepted:["intenciones","que van a hacer","plan de accion"]},
+  {label:"Posición, nivel y rumbo",weight:1,accepted:["posicion","nivel","rumbo","altitud","donde estan"]},
+  {label:"Almas a bordo y combustible remanente",weight:1,accepted:["almas a bordo","personas a bordo","combustible remanente","fuel remanente","cuanta gente"]}
+ ],
+ criticalErrors:[{accepted:["mayday es menos grave que pan pan","pan pan es mas grave que mayday","son lo mismo pan pan y mayday"],penalty:3,feedback:"Es al revés: MAYDAY es el llamado más grave (socorro/peligro inminente); PAN PAN es para una urgencia sin peligro inminente."}]}
 ];
 
 const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{},pool:[]};

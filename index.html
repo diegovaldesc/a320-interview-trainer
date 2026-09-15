@@ -336,7 +336,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <body>
 <div class="app">
 <header class="topbar">
-<button class="brand" onclick="goHome()"><strong>A320 INTERVIEW TRAINER</strong><span>FCOM · AIRBUS · DGAC · ORAL · OFFLINE</span></button>
+<button class="brand" onclick="goHome()"><strong>A320 INTERVIEW TRAINER</strong><span>FCOM · AIRBUS · DGAC · ORAL</span></button>
 <div class="bank-chip" id="bankChip">BANCO</div>
 </header>
 <main>
@@ -571,7 +571,16 @@ const APP_VERSION="1.6.0";
 const BANK_VERSION="2026.09.13 · Entrevista técnica v2";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
-const RAW_SYSTEMS=JSON.parse(document.getElementById("systems-data").textContent);
+let RAW_SYSTEMS;
+try{
+  const parsedBank=JSON.parse(document.getElementById("systems-data").textContent);
+  if(!parsedBank||typeof parsedBank!=="object"||Array.isArray(parsedBank))throw new Error("Estructura raíz del banco inválida");
+  RAW_SYSTEMS=parsedBank;
+}catch(bankLoadError){
+  document.body.innerHTML='<div style="padding:28px 20px;font-family:-apple-system,system-ui,sans-serif;max-width:420px;margin:15vh auto 0;text-align:center;color:#1B2329"><h1 style="font-size:17px;margin:0 0 8px">No se pudo cargar el banco de preguntas</h1><p style="color:#666;font-size:14px;line-height:1.5;margin:0 0 16px">Los datos de la aplicación no se leyeron correctamente. Recarga la página; si el problema sigue, es probable que la última actualización publicada tenga un error.</p><button onclick="location.reload()" style="padding:10px 22px;border-radius:10px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer">Recargar</button></div>';
+  console.error("Fallo al cargar systems-data:",bankLoadError);
+  throw bankLoadError;
+}
 const $=id=>document.getElementById(id);
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
@@ -798,13 +807,13 @@ function renderHome(){
   $("folderSystemsCount").textContent=totalQuestions()+" preguntas";
 
   const health=bankIntegrity();
-  $("bankStatus").textContent=health.ok?"Integridad OK":health.issues+" incidencias";
+  $("bankStatus").textContent=health.ok?"Integridad estructural OK":health.issues+" incidencias";
   $("bankStatus").classList.toggle("warn",!health.ok);
   $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas`;
   $("integrityNote").classList.toggle("warn",!health.ok);
   $("integrityNote").textContent=health.ok
-    ?"Banco comprobado al iniciar: estructura de preguntas válida y contenido verificado con explicación/referencia."
-    :`Se detectaron ${health.issues} incidencias. Las preguntas con estructura inválida quedan fuera de las sesiones hasta corregirlas.`;
+    ?"Comprobación estructural al iniciar: forma de preguntas y rúbricas orales válida, y explicación/referencia presente. La exactitud del contenido aeronáutico se audita aparte, contra el FCOM/FCTM."
+    :`Se detectaron ${health.issues} incidencias de estructura${health.oralIssues?` (incluye ${health.oralIssues} en el banco oral)`:""}. Las preguntas con estructura inválida quedan fuera de las sesiones hasta corregirlas.`;
 
   const r=appState.resume;
   $("resumeWrap").innerHTML=r?`<button type="button" class="resume-card" onclick="resumeSession()"><div class="resume-main"><div class="resume-label">Continuar</div><strong>${esc(r.label||"Sesión anterior")}</strong><span>Pregunta ${Math.min(finiteNum(r.index)+1,finiteNum(r.total,1))} de ${finiteNum(r.total,1)}</span></div><div class="chev">›</div></button>`:"";
@@ -1608,12 +1617,34 @@ const AERO_TERM_MAP={
   "el rat":"rat","erat":"rat",
   "adirus":"adirs","a dirs":"adirs"
 };
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
+/* Reemplazo con limite de palabra: sin esto, "tos"->"taws" convertia
+   "vientos" en "vientaws", y "erat"->"rat" convertia "operativa" en
+   "oprativa". Se exige que la variante este rodeada por inicio/fin de
+   cadena o espacio en ambos lados (una variante de varias palabras,
+   como "to ga", se compara como esa secuencia exacta). Precompilado
+   una vez porque AERO_TERM_MAP es estatico. */
+const AERO_TERM_PATTERNS=Object.keys(AERO_TERM_MAP).map(variant=>({
+  re:new RegExp("(^|\\s)"+escapeRegExp(variant)+"(?=\\s|$)","g"),
+  replacement:AERO_TERM_MAP[variant]
+}));
 function normalizeAeroText(text){
   let t=normalizeOralText(text);
-  for(const variant in AERO_TERM_MAP){
-    if(t.includes(variant))t=t.split(variant).join(AERO_TERM_MAP[variant]);
+  for(const{re,replacement}of AERO_TERM_PATTERNS){
+    re.lastIndex=0;
+    t=t.replace(re,(m,pre)=>pre+replacement);
   }
   return t;
+}
+function containsWholeWordPhrase(transcriptStr,termNorm){
+  if(!termNorm)return false;
+  return new RegExp("(^|\\s)"+escapeRegExp(termNorm)+"($|\\s)").test(transcriptStr);
+}
+function wholeWordIndexOf(transcriptStr,termNorm){
+  if(!termNorm)return -1;
+  const m=new RegExp("(^|\\s)"+escapeRegExp(termNorm)+"($|\\s)").exec(transcriptStr);
+  if(!m)return -1;
+  return m.index+(m[1]?m[1].length:0);
 }
 
 /* Distancia de edicion (Levenshtein) para tolerar errores de
@@ -1653,15 +1684,25 @@ function significantWords(termNormalized){return termNormalized.split(" ").filte
 function phraseFuzzyMatch(transcriptTokens,transcriptStr,term){
   const termNorm=normalizeAeroText(term);
   if(!termNorm)return false;
-  if(transcriptStr.includes(termNorm))return true;
+  if(containsWholeWordPhrase(transcriptStr,termNorm))return true;
   const words=significantWords(termNorm);
   if(!words.length)return false;
   if(words.length===1)return transcriptTokens.some(tok=>fuzzyWordMatch(tok,words[0]));
+  /* Cada palabra del termino debe calzar con un token distinto: sin
+     esto, un termino como "mayday mayday mayday" (3 repeticiones)
+     quedaba satisfecho con un solo "mayday" en la respuesta, porque
+     cada palabra buscaba desde el inicio sin recordar que un token ya
+     habia sido usado por otra palabra del mismo termino. */
+  const usedPositions=new Set();
   const positions=[];
   for(const w of words){
     let foundAt=-1;
-    for(let i=0;i<transcriptTokens.length;i++){if(fuzzyWordMatch(transcriptTokens[i],w)){foundAt=i;break}}
+    for(let i=0;i<transcriptTokens.length;i++){
+      if(usedPositions.has(i))continue;
+      if(fuzzyWordMatch(transcriptTokens[i],w)){foundAt=i;break}
+    }
     if(foundAt===-1)return false;
+    usedPositions.add(foundAt);
     positions.push(foundAt);
   }
   return (Math.max(...positions)-Math.min(...positions))<=(words.length+5);
@@ -1682,7 +1723,7 @@ function negatedBeforeMatch(transcriptTokens,transcriptStr,term){
   const termWords=termNorm.split(" ").filter(Boolean);
   if(termWords.length&&ORAL_NEGATION_MARKERS.has(termWords[0]))return false;
   let matchTokenPos=-1;
-  const idx=transcriptStr.indexOf(termNorm);
+  const idx=wholeWordIndexOf(transcriptStr,termNorm);
   if(idx!==-1){
     matchTokenPos=transcriptStr.slice(0,idx).split(" ").length-1;
   }else{
@@ -1746,7 +1787,7 @@ function evaluateSteps(question,transcript){
     let hit=false,hitPos=-1;
     for(const term of accepted){
       const n=normalizeAeroText(term);
-      const idx=n?transcriptStr.indexOf(n):-1;
+      const idx=n?wholeWordIndexOf(transcriptStr,n):-1;
       if(idx!==-1){hit=true;hitPos=transcriptStr.slice(0,idx).split(" ").length-1;break}
     }
     if(!hit){
@@ -1876,14 +1917,36 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&!$("nextBtn").disabled)nextQuestion();
   if(e.key==="ArrowLeft"&&!$("prevBtn").disabled)prevQuestion();
 });
+function oralBankIntegrity(){
+  let issues=0;
+  if(!Array.isArray(ORAL_VOICE_BANK))return 0;
+  const seenIds=new Set();
+  ORAL_VOICE_BANK.forEach(q=>{
+    if(!q||typeof q.id!=="string"||!q.id||seenIds.has(q.id)){issues++;return}
+    seenIds.add(q.id);
+    if(!String(q.question||"").trim()||!String(q.reference||"").trim()){issues++;return}
+    const rubric=Array.isArray(q.steps)&&q.steps.length?q.steps:q.concepts;
+    if(!Array.isArray(rubric)||!rubric.length){issues++;return}
+    rubric.forEach(item=>{
+      if(!Array.isArray(item.accepted)||!item.accepted.length)issues++;
+      if(item.weight!==undefined&&(!Number.isFinite(item.weight)||item.weight<=0))issues++;
+    });
+  });
+  return issues;
+}
+/* "Integridad" es estructural: forma valida de cada pregunta (banco
+   tecnico/DGAC) y de cada rubrica (banco oral). No certifica que el
+   contenido aeronautico sea correcto - eso se audita por separado
+   contra el FCOM/FCTM y no lo puede confirmar esta funcion. */
 function bankIntegrity(){
   let structural=0,verifiedMissing=0;
   Object.entries(SYSTEMS).forEach(([k,s])=>(s.questions||[]).forEach(q=>{
     if(!isStructurallyValid(q)){structural++;return}
     if(k!==DGAC_KEY&&(!String(q.expl||"").trim()||!String(q.cite||"").trim()))verifiedMissing++;
   }));
-  const issues=structural+verifiedMissing;
-  return{ok:issues===0,issues,structural,verifiedMissing};
+  const oralIssues=oralBankIntegrity();
+  const issues=structural+verifiedMissing+oralIssues;
+  return{ok:issues===0,issues,structural,verifiedMissing,oralIssues};
 }
 async function exportProgress(){
   const payload={

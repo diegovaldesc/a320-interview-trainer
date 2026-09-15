@@ -392,16 +392,8 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>
   </span>
-  <span class="module-main"><strong>Simulacro Oral</strong><span id="homeOralVoiceCount">Habla y recibe evaluacion automatica por conceptos</span></span>
+  <span class="module-main"><strong>Entrevista Oral</strong><span id="homeOralVoiceCount">Habla y recibe evaluacion automatica por conceptos</span></span>
   <span class="module-chevron">&rsaquo;</span>
-</button>
-
-<button class="module-card interview" onclick="startInterview(null)" type="button">
-  <span class="module-icon" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="8" y="3" width="8" height="12" rx="4"/><path d="M5.5 11.5A6.5 6.5 0 0 0 18.5 11.5"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
-  </span>
-  <span class="module-main"><strong>Entrevista Oral</strong><span>Responde primero; compara después</span></span>
-  <span class="module-chevron">›</span>
 </button>
 
 <button class="module-card weak" onclick="showWeak()" type="button">
@@ -514,7 +506,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 <div class="qtop"><div class="qmeta" id="ovMeta"></div></div>
 <div class="progress"><div id="ovProgress"></div></div>
 <div class="interview-card">
-<div class="eyebrow">SIMULACRO ORAL &middot; EVALUACION AUTOMATICA</div>
+<div class="eyebrow">ENTREVISTA ORAL &middot; EVALUACION AUTOMATICA</div>
 <div class="prompt" id="oralQuestion"></div>
 </div>
 <div class="oral-mic-box">
@@ -1059,7 +1051,7 @@ const ORAL_VOICE_BANK=[
 {id:"ov_crm_windshear",question:"Antes del despegue detectas una condición de windshear que te hace pensar que la operación no es segura, pero el comandante quiere continuar. ¿Qué harías?",
  reference:"Expresaría claramente mi preocupación citando datos o el procedimiento aplicable, verificaría los límites correspondientes, y si la seguridad sigue comprometida, escalaría la intervención con mayor firmeza hasta lograr que se reconsidere la decisión.",
  concepts:[
-  {label:"Expresar la preocupación claramente",weight:2,terms:["expresar mi preocupacion","comunicar la duda","decir lo que pienso","hablar claramente","plantear la duda"]},
+  {label:"Expresar la preocupación claramente",weight:2,terms:["expresar mi preocupacion","expresaria","comunicar la duda","decir lo que pienso","hablar claramente","plantear la duda","mi preocupacion"]},
   {label:"Apoyarse en datos/procedimiento",weight:2,terms:["datos","procedimiento","limites","referencia tecnica","apoyarme en el manual","criterio establecido"]},
   {label:"Escalar si el riesgo persiste",weight:2,terms:["escalar","insistir","ser mas firme","tomar el control si es necesario","elevar la preocupacion","intervenir con mas fuerza"]}
  ],
@@ -1069,7 +1061,7 @@ const ORAL_VOICE_BANK=[
  reference:"Significa que se selecciona V1 de modo que la distancia requerida para acelerar y detenerse sea igual a la distancia requerida para acelerar y continuar el despegue con un motor inoperativo hasta 35 ft. No es una característica fija de la pista, sino el resultado de un cálculo de performance para ese peso y esas condiciones.",
  concepts:[
   {label:"V1 selecciona el balance",weight:2,terms:["v1","seleccion de v1","eligiendo v1","se calcula v1"]},
-  {label:"Distancia de aceleración-parada",weight:2,terms:["accelerate stop","aceleracion parada","abortar y detenerse","rechazar el despegue","distancia para frenar"]},
+  {label:"Distancia de aceleración-parada",weight:2,terms:["accelerate stop","aceleracion parada","abortar y detenerse","rechazar el despegue","distancia para frenar","acelerar y detenerse"]},
   {label:"Distancia de aceleración-continuación con OEI hasta 35ft",weight:2,terms:["accelerate go","continuar el despegue","motor inoperativo","35 ft","un motor parado","oei"]},
   {label:"Es cálculo de performance, no característica fija de la pista",weight:1,terms:["calculo","performance","depende del peso","no es la pista","no es asda"]}
  ],
@@ -1090,7 +1082,7 @@ const ORAL_VOICE_BANK=[
  concepts:[
   {label:"Coordinar con cabin crew",weight:2,terms:["cabin crew","tripulacion de cabina","auxiliares","sobrecargos"]},
   {label:"Buscar asistencia médica",weight:2,terms:["asistencia medica","medico a bordo","medlink","soporte medico"]},
-  {label:"Evaluar aeropuertos y tiempos",weight:2,terms:["aeropuertos disponibles","desviar","tiempo de vuelo","alternos","aeropuerto mas cercano"]},
+  {label:"Evaluar aeropuertos y tiempos",weight:2,terms:["aeropuertos disponibles","desviar","tiempo de vuelo","alternos","aeropuerto mas cercano","aeropuertos y tiempos","evaluar los aeropuertos"]},
   {label:"Coordinar con ATC",weight:1,terms:["atc","control de trafico","declarar la emergencia"]}
  ],
  criticalErrors:[{terms:["esperar hasta el final del vuelo","no hacer nada","esperar sin actuar"],feedback:"Un caso grave requiere evaluación y acción proactiva, no esperar sin actuar."}]},
@@ -1098,7 +1090,7 @@ const ORAL_VOICE_BANK=[
 {id:"ov_sterile",question:"¿Qué significa 'sterile cockpit' y por qué es importante?",
  reference:"Durante fases críticas del vuelo se restringen las conversaciones y actividades no relacionadas con la operación segura, para minimizar distracciones cuando la carga de trabajo y el riesgo son mayores.",
  concepts:[
-  {label:"Restringe conversaciones no esenciales",weight:2,terms:["restringe conversaciones","solo temas operacionales","sin charla","conversaciones no relacionadas"]},
+  {label:"Restringe conversaciones no esenciales",weight:2,terms:["restringe conversaciones","solo temas operacionales","sin charla","conversaciones no relacionadas","se restringen las conversaciones","actividades no relacionadas"]},
   {label:"Durante fases críticas",weight:2,terms:["fases criticas","despegue","aterrizaje","rodaje","por debajo de cierta altura"]},
   {label:"Reduce distracciones",weight:2,terms:["distracciones","carga de trabajo","concentracion"]}
  ]},
@@ -1106,7 +1098,7 @@ const ORAL_VOICE_BANK=[
 {id:"ov_fbw",question:"¿Qué significa que el A320 sea fly-by-wire?",
  reference:"Que las órdenes del piloto en el sidestick se transmiten eléctricamente a computadores de control, que a su vez generan las órdenes a los actuadores de las superficies, dentro de las leyes de control aplicables según el estado del sistema.",
  concepts:[
-  {label:"Órdenes eléctricas, no mecánicas directas",weight:2,terms:["electricamente","señal electrica","no mecanico","sidestick"]},
+  {label:"Órdenes eléctricas, no mecánicas directas",weight:2,terms:["electricamente","señal electrica","no mecanico","sidestick","por cable","electronicamente","transmision electrica"]},
   {label:"Computadores de control",weight:2,terms:["computadores","elac","sec","fac","calculan la orden"]},
   {label:"Leyes de control",weight:1,terms:["normal law","alternate law","direct law","leyes de control"]}
  ]},
@@ -1114,24 +1106,25 @@ const ORAL_VOICE_BANK=[
 {id:"ov_tcas",question:"¿Por qué siempre se deben seguir las órdenes de una RA de TCAS, incluso si implica cruzar la altitud del tráfico?",
  reference:"Porque las órdenes de la RA buscan la mejor separación vertical posible entre ambas aeronaves en tiempo real, coordinándose automáticamente con el TCAS de la otra aeronave, y tienen prioridad sobre cualquier instrucción de ATC en ese momento.",
  concepts:[
-  {label:"Coordinación entre ambos TCAS",weight:2,terms:["coordinacion","ambos aviones","el otro trafico","se coordinan"]},
+  {label:"Coordinación entre ambos TCAS",weight:2,terms:["coordinacion","coordinandose","ambos aviones","el otro trafico","se coordinan","coordina con"]},
   {label:"Prioridad sobre ATC",weight:2,terms:["prioridad","por sobre atc","aunque atc diga otra cosa","antes que atc"]},
   {label:"Busca la mejor separación vertical",weight:2,terms:["separacion vertical","evitar colision","mejor solucion"]}
  ]},
 
-{id:"ov_etops",question:"¿Qué es ETOPS y cuándo se exige históricamente?",
- reference:"Es Extended-range Twin-engine Operations. Se exige cuando la ruta se aleja más de cierto tiempo de vuelo, a velocidad crucero con un motor inoperativo, típicamente 60 minutos, de un aeródromo adecuado para ese tipo de aeronave.",
+{id:"ov_etops",question:"¿Qué es ETOPS, cuándo se exige históricamente, y por qué es tan relevante para una ruta bimotor de largo alcance?",
+ reference:"Es Extended-range Twin-engine Operations. Se exige cuando la ruta se aleja más de cierto tiempo de vuelo, a velocidad crucero con un motor inoperativo, típicamente 60 minutos, de un aeródromo adecuado. Es relevante porque en una ruta bimotor lejos de tierra una falla de motor obliga a desviarse y volar un tiempo prolongado con un solo motor, así que la certificación ETOPS exige demostrar la fiabilidad del motor y la autonomía de sistemas necesarias para completar ese desvío con seguridad.",
  concepts:[
   {label:"Extended twin-engine operations",weight:2,terms:["extended range","dos motores","bimotor"]},
   {label:"Tiempo de vuelo con un motor inoperativo",weight:2,terms:["un motor inoperativo","motor parado","oei"]},
-  {label:"Distancia a aeródromo adecuado (~60 min)",weight:2,terms:["aerodromo adecuado","alterno","60 minutos"]}
+  {label:"Distancia a aeródromo adecuado (~60 min)",weight:2,terms:["aerodromo adecuado","alterno","60 minutos"]},
+  {label:"Por qué importa: volar prolongado con un motor lejos de tierra",weight:2,terms:["volar con un solo motor","lejos de tierra","desviarse","fiabilidad del motor","autonomia de sistemas","completar el desvio con seguridad"]}
  ]},
 
 {id:"ov_hydroplane",question:"¿Qué es el hidroplaneo y por qué es peligroso?",
  reference:"Es la pérdida parcial o total del contacto efectivo entre el neumático y el pavimento debido a una película de agua, lo que degrada el frenado y el control direccional en tierra.",
  concepts:[
   {label:"Película de agua entre neumático y pista",weight:2,terms:["pelicula de agua","agua entre el neumatico","pista mojada"]},
-  {label:"Pérdida de contacto neumático-pavimento",weight:2,terms:["pierde contacto","no toca la pista","se separa del pavimento"]},
+  {label:"Pérdida de contacto neumático-pavimento",weight:2,terms:["pierde contacto","del contacto","contacto efectivo","no toca la pista","se separa del pavimento"]},
   {label:"Degrada frenado y control direccional",weight:2,terms:["frenado","control direccional","direccion","no responde"]}
  ]},
 
@@ -1140,17 +1133,17 @@ const ORAL_VOICE_BANK=[
  concepts:[
   {label:"Objetivo de desaceleración, no presión fija",weight:2,terms:["desaceleracion objetivo","no presion fija","se ajusta"]},
   {label:"Automático según modo seleccionado",weight:2,terms:["modo seleccionado","low","med","max","automatico"]},
-  {label:"Se adapta a condiciones reales",weight:1,terms:["se adapta","condiciones de pista","ajusta la presion"]}
+  {label:"Se adapta a condiciones reales",weight:1,terms:["se adapta","condiciones de pista","ajusta la presion","ajustandose","condiciones reales"]}
  ]},
 
 {id:"ov_engfire",question:"Camina conmigo por la secuencia de memory items ante un ENG 1(2) FIRE en vuelo, y explica por qué es ese orden.",
  reference:"Primero se lleva el thrust lever del motor afectado a IDLE, luego ENG MASTER a OFF, después se presiona el ENG FIRE pushbutton para armar el extintor, y se descarga el AGENT 1 tras esperar unos 10 segundos, tiempo que permite que el N1 disminuya y mejora la eficacia del agente extintor.",
  concepts:[
-  {label:"Thrust lever a IDLE primero",weight:2,terms:["thrust lever idle","palanca a idle","reducir empuje"]},
-  {label:"ENG MASTER OFF",weight:2,terms:["eng master off","apagar el motor","master off"]},
+  {label:"Thrust lever a IDLE primero",weight:2,terms:["thrust lever idle","thrust lever a idle","palanca a idle","reducir empuje","a idle"]},
+  {label:"ENG MASTER OFF",weight:2,terms:["eng master off","eng master a off","apagar el motor","master off","a off"]},
   {label:"ENG FIRE pushbutton arma el extintor",weight:2,terms:["fire pushbutton","armar el extintor","fire pb"]},
   {label:"Esperar ~10s antes de AGENT 1",weight:2,terms:["10 segundos","esperar antes del agente","agent 1"]},
-  {label:"Por qué: N1 disminuye, mejora eficacia",weight:1,terms:["n1 disminuye","mas eficaz","mejor efectividad"]}
+  {label:"Por qué: N1 disminuye, mejora eficacia",weight:1,terms:["n1 disminuye","n1 disminuya","mas eficaz","mejor efectividad","mejora la eficacia","mejora eficacia"]}
  ]},
 
 {id:"ov_allengfail",question:"En un ALL ENGINES FAILURE, ¿qué harías respecto de la velocidad y por qué es tan importante mantenerla?",
@@ -1161,55 +1154,39 @@ const ORAL_VOICE_BANK=[
   {label:"Evita engine core lock",weight:2,terms:["core lock","bloqueo del nucleo","engine core lock"]}
  ]},
 
-{id:"ov_decompression",question:"Ante una descompresión que requiere un EMER DESCENT, ¿qué acciones tomarías y en qué orden general?",
- reference:"Máscaras de oxígeno de la tripulación, establecer comunicación entre pilotos, thrust levers a IDLE, speed brakes a FULL, iniciar un giro y luego pull en el selector de altitud, dirigirse hacia FL100 o el MEA/MORA lo que sea mayor, y descender a la velocidad máxima apropiada.",
+{id:"ov_decompression",question:"Ante una descompresión que requiere un EMER DESCENT, explica qué acciones tomarías y por qué el orden de esas acciones es importante.",
+ reference:"Primero las máscaras de oxígeno de la tripulación, porque sin ellas ningún otro paso posterior es seguro. Luego se establece comunicación entre pilotos, se llevan los thrust levers a IDLE y los speed brakes a FULL para perder altitud rápidamente, y en el selector de altitud se hace turn antes que pull para no quedar volando en línea recta hacia terreno mientras se desciende. El objetivo es FL100 o el MEA/MORA aplicable, el que sea mayor, descendiendo a la velocidad máxima apropiada.",
  concepts:[
-  {label:"Máscaras de oxígeno",weight:2,terms:["mascaras de oxigeno","oxigeno"]},
-  {label:"Thrust idle y speed brakes full",weight:2,terms:["thrust idle","speed brakes full","spoilers"]},
-  {label:"Turn y luego pull en altitud",weight:2,terms:["turn","pull","girar","selector de altitud"]},
-  {label:"Objetivo FL100 o MEA/MORA",weight:2,terms:["fl100","mea","mora","el mayor"]}
+  {label:"Máscaras de oxígeno primero",weight:2,terms:["mascaras de oxigeno","oxigeno","primero el oxigeno"]},
+  {label:"Por qué primero: sin oxígeno nada más es seguro",weight:2,terms:["sin oxigeno","sin ellas","antes que nada","por seguridad propia","primero uno mismo","ningun otro paso","paso posterior es seguro","otro paso es seguro"]},
+  {label:"Thrust idle y speed brakes full",weight:2,terms:["thrust idle","thrust a idle","speed brakes full","speed brakes a full","spoilers"]},
+  {label:"Turn antes que pull, por el terreno",weight:2,terms:["turn","pull","girar","selector de altitud","evitar terreno","no volar recto hacia terreno"]},
+  {label:"Objetivo FL100 o MEA/MORA",weight:1,terms:["fl100","mea","mora","el mayor"]}
  ]},
 
-{id:"ov_smoke",question:"Si detectas humo o vapores en cockpit y no puedes identificar la fuente de inmediato, ¿qué harías?",
- reference:"Iniciaría una diversión y un descenso hacia FL100 o el MEA/MORA aplicable, mientras se continúa intentando identificar y aislar la fuente del humo.",
+{id:"ov_smoke",question:"Si detectas humo o vapores en cockpit y no puedes identificar la fuente de inmediato, explica qué harías y por qué no conviene esperar a diagnosticar antes de actuar.",
+ reference:"Iniciaría una diversión y un descenso hacia FL100 o el MEA/MORA aplicable de inmediato, sin esperar a identificar primero la fuente, porque el humo puede escalar rápidamente y conviene estar ya actuando sobre el escenario más exigente mientras en paralelo se sigue intentando identificar y aislar el origen.",
  concepts:[
-  {label:"Iniciar diversión",weight:2,terms:["diversion","desviar","aeropuerto mas cercano"]},
+  {label:"Iniciar diversión de inmediato",weight:2,terms:["diversion","desviar","aeropuerto mas cercano"]},
   {label:"Descenso hacia FL100/MEA-MORA",weight:2,terms:["descenso","fl100","mea","mora"]},
-  {label:"Seguir intentando identificar la fuente",weight:1,terms:["identificar la fuente","aislar el humo"]}
+  {label:"No esperar a diagnosticar antes de actuar",weight:2,terms:["sin esperar","no esperar a identificar","actuar de inmediato","antes de saber la causa","sin saber la fuente"]},
+  {label:"Seguir identificando en paralelo",weight:1,terms:["identificar la fuente","aislar el humo","en paralelo","al mismo tiempo"]}
  ]},
 
 {id:"ov_stall",question:"Durante un stall recovery, ¿qué haces además de aplicar nose-down pitch, y por qué?",
- reference:"Se nivelan las alas para evitar complicar la recuperación con una componente de bank, y una vez que la aeronave sale del stall se aumenta el empuje suavemente mientras se retraen los speed brakes si estaban extendidos.",
+ reference:"Aplicando nose-down pitch para reducir el ángulo de ataque, además se nivelan las alas (bank wings level) para evitar complicar la recuperación con una componente de bank, y una vez que la aeronave sale del stall se aumenta el empuje suavemente mientras se retraen los speed brakes si estaban extendidos.",
  concepts:[
-  {label:"Nivelar las alas / wings level",weight:2,terms:["wings level","nivelar las alas","bank wings level"]},
-  {label:"Nose-down pitch",weight:1,terms:["nose down","pitch abajo","bajar la nariz"]},
-  {label:"Aumentar empuje al salir del stall",weight:2,terms:["aumentar empuje","thrust","potencia"]},
-  {label:"Retraer speed brakes",weight:1,terms:["retraer speed brakes","speed brakes in"]}
- ]},
-
-{id:"ov_windshear_v1",question:"Ante un windshear detectado después de V1 durante el despegue, ¿qué harías con los thrust levers y el pitch si no tienes flight director?",
- reference:"Llevaría los thrust levers a TOGA y seguiría el SRS; si no hay flight director disponible, usaría un pitch inicial de referencia de 17.5°.",
- concepts:[
-  {label:"Thrust levers a TOGA",weight:2,terms:["toga","thrust toga","maximo empuje"]},
-  {label:"Seguir SRS",weight:2,terms:["srs","speed reference system"]},
-  {label:"Pitch de referencia 17.5° sin FD",weight:2,terms:["17.5","pitch de referencia","sin flight director"]}
- ]},
-
-{id:"ov_pullup",question:"Si el TAWS genera un PULL UP, ¿qué acciones simultáneas realizas?",
- reference:"Desconecto el autopilot, aplico pitch de pull up, llevo los thrust levers a TOGA, verifico speed brakes retraídos, y mantengo las alas niveladas o ajusto el bank según sea necesario.",
- concepts:[
-  {label:"AP OFF",weight:2,terms:["ap off","desconectar el autopilot"]},
-  {label:"Pitch pull up",weight:2,terms:["pitch pull up","tirar de la nariz","subir la nariz"]},
-  {label:"Thrust TOGA",weight:2,terms:["thrust toga","maximo empuje"]},
-  {label:"Speed brake retracted",weight:1,terms:["speed brake retracted","verificar spoilers adentro"]},
-  {label:"Bank wings level o ajustar",weight:1,terms:["wings level","ajustar el bank"]}
+  {label:"Nivelar las alas / wings level",weight:2,terms:["wings level","nivela","alas nivel","bank wings level"]},
+  {label:"Nose-down pitch / ángulo de ataque",weight:1,terms:["nose down","pitch abajo","bajar la nariz","angulo de ataque"]},
+  {label:"Aumentar empuje al salir del stall",weight:2,terms:["aumenta el empuje","aumenta empuje","thrust","potencia"]},
+  {label:"Retraer speed brakes",weight:1,terms:["retrae","speed brakes in","speed brakes retra"]}
  ]},
 
 {id:"ov_elec_emer",question:"Si terminas en ELEC EMER CONFIG, ¿qué esperarías tener disponible y qué deberías extremar?",
  reference:"Esperaría contar con el RAT desplegado alimentando la red esencial a través del emergency generator, con equipos de radio y navegación limitados, posible FUEL GRVTY FEED sin bombas evitando G negativas, y debería evitar volar por debajo de la velocidad mínima recomendada para no hacer stall al RAT.",
  concepts:[
   {label:"RAT desplegado / emergency generator",weight:2,terms:["rat","ram air turbine","emergency generator","generador de emergencia"]},
-  {label:"Equipos limitados (radio/nav)",weight:2,terms:["equipos limitados","radio limitado","navegacion limitada"]},
+  {label:"Equipos limitados (radio/nav)",weight:2,terms:["equipos limitados","radio limitado","navegacion limitada","equipos de radio","radio y navegacion"]},
   {label:"Fuel gravity feed sin bombas",weight:1,terms:["gravity feed","sin bombas","alimentacion por gravedad"]},
   {label:"Evitar velocidad baja / G negativas",weight:2,terms:["velocidad minima","no bajar de","g negativas","evitar stall del rat"]}
  ]}
@@ -1227,7 +1204,7 @@ function exitOralVoice(){stopEverythingOral();goHome()}
 function oralVoiceQuestion(){return ORAL_VOICE_BANK[oralState.index]}
 function loadOralVoiceQuestion(){
   const q=oralVoiceQuestion();
-  $("ovMeta").textContent=`SIMULACRO ORAL · ${oralState.index+1} / ${ORAL_VOICE_BANK.length}`;
+  $("ovMeta").textContent=`ENTREVISTA ORAL · ${oralState.index+1} / ${ORAL_VOICE_BANK.length}`;
   $("ovProgress").style.width=`${((oralState.index+1)/ORAL_VOICE_BANK.length)*100}%`;
   $("ovPrevBtn").disabled=oralState.index===0;
   $("ovNextBtn").textContent=oralState.index===ORAL_VOICE_BANK.length-1?"Finalizar":"Siguiente";

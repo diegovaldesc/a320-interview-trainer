@@ -607,7 +607,9 @@ function safePool(pool){return (pool||[]).filter(isStructurallyValid)}
 function enrich(){
   const out={};
   Object.entries(RAW_SYSTEMS).forEach(([k,s])=>{
-    out[k]={...s,questions:(s.questions||[]).map(q=>({...q,expl:String(q.expl||"").trim(),_generated:false}))};
+    if(!isPlainObject(s))return;
+    const qs=Array.isArray(s.questions)?s.questions:[];
+    out[k]={...s,questions:qs.map(q=>({...(isPlainObject(q)?q:{}),expl:String((isPlainObject(q)&&q.expl)||"").trim(),_generated:false}))};
   });
   return out;
 }
@@ -642,7 +644,7 @@ function sanitizeMapEntries(obj,fn){
 }
 function sanitizeStatEntry(v){
   if(!isPlainObject(v))return null;
-  return{a:finiteNum(v.a),c:finiteNum(v.c),w:finiteNum(v.w),last:finiteNum(v.last),streak:finiteNum(v.streak),lastResult:v.lastResult===true||v.lastResult===false?v.lastResult:null};
+  return{a:finiteNum(v.a),c:finiteNum(v.c),w:finiteNum(v.w),last:finiteNum(v.last),streak:finiteNum(v.streak),lastResult:v.lastResult===0||v.lastResult===1?v.lastResult:null};
 }
 function sanitizeBestEntry(v){
   if(!isPlainObject(v))return null;
@@ -661,10 +663,23 @@ function sanitizeBookmarks(obj){
   if(isPlainObject(obj))Object.keys(obj).forEach(k=>{if(typeof k==="string"&&k.length<=200&&obj[k])out[k]=true});
   return out;
 }
+/* Una pregunta de resume corrupta (options:null, etc.) pasa el chequeo
+   de "es un objeto" pero revienta renderQuestion()/renderInterview()
+   mas adelante con un .map()/indice invalido. Se valida la forma
+   minima que cada pantalla realmente necesita antes de confiar en el
+   arreglo completo. */
+function validResumeQuestion(q,isInterview){
+  if(!isPlainObject(q))return false;
+  if(typeof q.q!=="string"&&typeof q.oral_q!=="string"&&typeof q.scenario_q!=="string")return false;
+  if(isInterview)return true;
+  return Array.isArray(q.options)&&q.options.length>0&&Number.isInteger(q.correct)&&q.correct>=0&&q.correct<q.options.length;
+}
 function sanitizeResume(r){
   if(!isPlainObject(r))return null;
   const questions=Array.isArray(r.questions)?r.questions:null;
   if(!questions||!questions.length)return null;
+  const isInterview=r.mode==="oral"||r.type==="interview";
+  if(!questions.every(q=>validResumeQuestion(q,isInterview)))return null;
   const total=questions.length;
   const index=Number.isInteger(r.index)&&r.index>=0&&r.index<total?r.index:0;
   const out={
@@ -676,10 +691,10 @@ function sanitizeResume(r){
     bankFingerprint:typeof r.bankFingerprint==="string"?r.bankFingerprint:null
   };
   if(typeof r.kind==="string")out.kind=r.kind.slice(0,40);
-  if(Array.isArray(r.answers))out.answers=r.answers;
-  if(Array.isArray(r.counted))out.counted=r.counted;
-  if(Array.isArray(r.ratings))out.ratings=r.ratings;
-  if(Array.isArray(r.revealed))out.revealed=r.revealed;
+  if(Array.isArray(r.answers)&&r.answers.length===total)out.answers=r.answers;
+  if(Array.isArray(r.counted)&&r.counted.length===total)out.counted=r.counted;
+  if(Array.isArray(r.ratings)&&r.ratings.length===total)out.ratings=r.ratings;
+  if(Array.isArray(r.revealed)&&r.revealed.length===total)out.revealed=r.revealed;
   return out;
 }
 function sanitizeState(raw){
@@ -892,7 +907,7 @@ function runSearch(v){
   }).slice(0,40);
   wrap.innerHTML=hits.length?hits.map(x=>`<button type="button" class="search-item" onclick="startSingle('${x._id}')"><div class="smeta">${esc(systemName(x._sys))}${appState.bookmarks[x._id]?" · ★":""}</div><div class="sq">${esc(x.q)}</div></button>`).join(""):`<div class="empty">No encontré preguntas con “${esc(v)}”.</div>`;
 }
-function clearSearch(){const i=$("searchInput");i.value="";runSearch("");i.focus()}
+function clearSearch(){clearTimeout(searchDebounceTimer);const i=$("searchInput");i.value="";runSearch("");i.focus()}
 function findById(id){return allLookupPool().find(q=>q._id===id)}
 function startSingle(id){const q=findById(id);if(!q)return;currentSystemKey=q._sys;startTechnical("study",[q])}
 function startQuickTest(){currentSystemKey=null;startTechnical("test")}
@@ -956,7 +971,7 @@ function resumeSession(){
   const r=appState.resume;if(!r)return;
   const qs=Array.isArray(r.questions)?r.questions:[];
   if(!qs.length){appState.resume=null;saveState();renderHome();toast("La sesión anterior ya no es válida");return}
-  if(r.bankFingerprint&&r.bankFingerprint!==BANK_FINGERPRINT){
+  if(r.bankFingerprint!==BANK_FINGERPRINT){
     appState.resume=null;saveState();renderHome();
     toast("El banco se actualizó desde tu última sesión; empieza una nueva para ver el contenido vigente");
     return;
@@ -1701,7 +1716,16 @@ function fuzzyWordMatch(w1,w2){
   const tolerance=maxLen<=7?1:2;
   return levenshtein(w1,w2)<=tolerance;
 }
-function significantWords(termNormalized){return termNormalized.split(" ").filter(w=>w.length>=3)}
+/* "no"/"ni" tienen menos de 3 letras y normalmente no cargan
+   significado propio (se descartan como stopwords cortas), pero
+   cuando SI son parte literal de un termino aceptado ("no presion
+   fija", "no toca la pista") sacarlas de significantWords hacia el
+   matcher difuso hace que el termino quede satisfecho con solo
+   "presion fija" -- sin la negacion -- porque esas palabras nunca
+   se exigen. Se preservan aqui para que el termino realmente
+   requiera que la negacion este presente. */
+const ORAL_NEGATION_MARKERS=new Set(["no","nunca","jamas","tampoco","ni"]);
+function significantWords(termNormalized){return termNormalized.split(" ").filter(w=>w.length>=3||ORAL_NEGATION_MARKERS.has(w))}
 function phraseFuzzyMatch(transcriptTokens,transcriptStr,term){
   const termNorm=normalizeAeroText(term);
   if(!termNorm)return false;
@@ -1737,7 +1761,6 @@ function phraseFuzzyMatch(transcriptTokens,transcriptStr,term){
    la primera palabra significativa del termino: no es un parser de
    alcance de negacion completo, cubre el patron real "no/nunca/jamas/
    tampoco + concepto" que aparece en respuestas orales cortas. */
-const ORAL_NEGATION_MARKERS=new Set(["no","nunca","jamas","tampoco"]);
 function negatedBeforeMatch(transcriptTokens,transcriptStr,term){
   const termNorm=normalizeAeroText(term);
   if(!termNorm)return false;
@@ -1753,7 +1776,7 @@ function negatedBeforeMatch(transcriptTokens,transcriptStr,term){
     for(let i=0;i<transcriptTokens.length;i++){if(fuzzyWordMatch(transcriptTokens[i],words[0])){matchTokenPos=i;break}}
   }
   if(matchTokenPos===-1)return false;
-  for(let j=Math.max(0,matchTokenPos-3);j<matchTokenPos;j++){
+  for(let j=Math.max(0,matchTokenPos-5);j<matchTokenPos;j++){
     if(ORAL_NEGATION_MARKERS.has(transcriptTokens[j]))return true;
   }
   return false;
@@ -1809,11 +1832,11 @@ function evaluateSteps(question,transcript){
     for(const term of accepted){
       const n=normalizeAeroText(term);
       const idx=n?wholeWordIndexOf(transcriptStr,n):-1;
-      if(idx!==-1){hit=true;hitPos=transcriptStr.slice(0,idx).split(" ").length-1;break}
+      if(idx!==-1&&!negatedBeforeMatch(transcriptTokens,transcriptStr,term)){hit=true;hitPos=transcriptStr.slice(0,idx).split(" ").length-1;break}
     }
     if(!hit){
       for(const term of accepted){
-        if(phraseFuzzyMatch(transcriptTokens,transcriptStr,term)){
+        if(phraseFuzzyMatch(transcriptTokens,transcriptStr,term)&&!negatedBeforeMatch(transcriptTokens,transcriptStr,term)){
           hit=true;
           const words=significantWords(normalizeAeroText(term));
           if(words.length){for(let i=0;i<transcriptTokens.length;i++){if(fuzzyWordMatch(transcriptTokens[i],words[0])){hitPos=i;break}}}
@@ -1952,7 +1975,9 @@ function oralBankIntegrity(){
     const rubric=Array.isArray(q.steps)&&q.steps.length?q.steps:q.concepts;
     if(!Array.isArray(rubric)||!rubric.length){issues++;return}
     rubric.forEach(item=>{
-      if(!Array.isArray(item.accepted)||!item.accepted.length)issues++;
+      if(!item||typeof item!=="object"){issues++;return}
+      const accepted=Array.isArray(item.accepted)?item.accepted:null;
+      if(!accepted||!accepted.length||!accepted.every(term=>typeof term==="string"&&term.trim()))issues++;
       if(item.weight!==undefined&&(!Number.isFinite(item.weight)||item.weight<=0))issues++;
     });
   });
@@ -1964,9 +1989,12 @@ function oralBankIntegrity(){
    contra el FCOM/FCTM y no lo puede confirmar esta funcion. */
 function bankIntegrity(){
   let structural=0,verifiedMissing=0;
+  const seenIds=new Set();
   Object.entries(SYSTEMS).forEach(([k,s])=>(s.questions||[]).forEach(q=>{
     if(!isStructurallyValid(q)){structural++;return}
     if(k!==DGAC_KEY&&(!String(q.expl||"").trim()||!String(q.cite||"").trim()))verifiedMissing++;
+    const id=qid(k,q);
+    if(seenIds.has(id))structural++;else seenIds.add(id);
   }));
   const oralIssues=oralBankIntegrity();
   const issues=structural+verifiedMissing+oralIssues;

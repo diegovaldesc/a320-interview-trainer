@@ -192,6 +192,9 @@ main{padding:18px 18px calc(92px + env(safe-area-inset-bottom))}
 .rate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
 .rate{border:1px solid var(--line);background:var(--panel);color:var(--white);border-radius:10px;padding:10px 7px;font-size:11px;cursor:pointer}
 .rate.no{border-color:var(--red2)}.rate.partial{border-color:var(--amber2)}.rate.yes{border-color:var(--green2)}
+.rate.no.active{background:var(--red);border-color:var(--red);color:#fff}
+.rate.partial.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.rate.yes.active{background:var(--green);border-color:var(--green);color:#fff}
 .result-hero{text-align:center;padding:12px 0}
 .score-circle{width:142px;height:142px;margin:0 auto 13px;border-radius:50%;border:3px solid var(--line);display:grid;place-items:center;align-content:center}
 .score-circle strong{font:700 34px/1 var(--mono);color:var(--green)}.score-circle span{font:10px var(--mono);color:var(--muted);margin-top:6px}
@@ -1141,8 +1144,12 @@ function startOralSession(k=null,kind="interview"){
   show("interview");renderInterview();persistResume();
 }
 function iQuestion(){return session.questions[session.index]}
+function syncRateButtons(r){
+  document.querySelectorAll("#rateWrap .rate").forEach((b,i)=>b.classList.toggle("active",r===i));
+}
 function renderInterview(){
   const q=iQuestion(),n=session.questions.length,r=session.ratings[session.index],isScenario=session.kind==="scenario";
+  syncRateButtons(r);
   $("iMeta").textContent=`${isScenario?"ESCENARIO":"AUTOEVALUACIÓN"} · ${session.index+1} / ${n}`;$("iProgress").style.width=`${((session.index+1)/n)*100}%`;
   $("iSource").innerHTML=`${esc(systemName(q._sys))} · ${esc(q.bank==="interview_technical"?(q.topic||"Entrevista"):(q.src||"Banco técnico"))}${q.audit==="fcom_verified"?`<span class="verify-badge">✓ FCOM 2025</span>`:q.audit==="airbus_tutorials_verified"?`<span class="verify-badge">✓ AIRBUS REV 15</span>`:q.bank==="interview_technical"?`<span class="verify-badge">BANCO DEPURADO</span>`:""}`;
   $("iQuestion").textContent=isScenario?(q.scenario_q||q.oral_q||q.q):(q.oral_q||q.q);
@@ -1165,7 +1172,7 @@ function revealInterview(already=false){
 function rateInterview(v){
   const q=iQuestion();session.ratings[session.index]=v;
   const s=appState.oral[q._id]||{a:0,total:0,low:0,last:0};s.a++;s.total+=v;if(v===0)s.low++;s.last=Date.now();appState.oral[q._id]=s;saveState();
-  $("iNextBtn").disabled=false;persistResume();toast(v===2?"Sólida":v===1?"Parcial · conviene repetir":"Marcada para repaso");
+  $("iNextBtn").disabled=false;syncRateButtons(v);persistResume();toast(v===2?"Sólida":v===1?"Parcial · conviene repetir":"Marcada para repaso");
 }
 function prevInterview(){if(session.index>0){session.index--;renderInterview();persistResume()}}
 function nextInterview(){

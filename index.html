@@ -838,7 +838,7 @@ function renderHome(){
   $("homeWeakCount").textContent=ov.wq?ov.wq+" preguntas por repasar":"Sin preguntas pendientes";
   $("folderSystemsCount").textContent=totalQuestions()+" preguntas";
 
-  const health=bankIntegrity();
+  const health=BANK_HEALTH;
   $("bankStatus").textContent=health.ok?"Integridad estructural OK":health.issues+" incidencias";
   $("bankStatus").classList.toggle("warn",!health.ok);
   $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas · ${ORAL_VOICE_BANK.length} entrevista oral`;

@@ -250,6 +250,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
   .system-card.ops .ata{color:var(--green);border-color:rgba(77,107,88,.24)}
   .dgac-warning{border-left:2px solid var(--amber);background:rgba(136,105,62,.06);padding:11px 14px;border-radius:0 7px 7px 0;margin-top:12px;color:#735A38;font-size:12.5px;line-height:1.5}
   .dgac-badge{display:inline-flex;margin-left:7px;padding:2px 6px;border:1px solid rgba(136,105,62,.30);border-radius:4px;color:var(--amber);font:9.5px var(--mono);letter-spacing:.6px;vertical-align:middle}
+  .verify-badge{display:inline-flex;margin-left:7px;padding:2px 6px;border:1px solid var(--green2);border-radius:4px;color:var(--green);font:9.5px var(--mono);letter-spacing:.6px;vertical-align:middle}
 
 
 /* iPhone home organization pass */
@@ -776,7 +777,7 @@ function trainingPool(key){
     seen.add(n);return true;
   });
 }
-function savedQuestions(key=null){const p=key===null?allVerifiedPool():rawPool(key);return p.filter(q=>!!appState.bookmarks[q._id])}
+function savedQuestions(key=null){const p=key===null?allLookupPool():rawPool(key);return p.filter(q=>!!appState.bookmarks[q._id])}
 function isWeakStat(s){
   if(!s||!(s.a>0)||!(s.w>0))return false;
   const err=(s.w||0)/(s.a||1);
@@ -1092,7 +1093,7 @@ function finishTest(){
   saveState();
   const total=session.questions.length,pct=Math.round(correct/total*100),wrong=total-correct;
   $("resultPct").textContent=pct+"%";$("resultPct").style.color=pct>=90?"var(--green)":pct>=75?"var(--amber)":"var(--red)";$("resultRaw").textContent=`${correct} / ${total}`;
-  $("resultSummary").textContent=pct>=90?"Nivel sólido. Revisa los pocos errores antes de cerrar el tema.":pct>=75?"Buen nivel, pero todavía hay asociaciones que conviene fijar.":"Hay brechas claras. Te conviene repetir solo los errores antes de hacer otro test.";
+  $("resultSummary").textContent=wrong===0?"Puntaje perfecto. Repite el test en unos días para confirmar que se mantiene.":pct>=90?"Nivel sólido. Revisa los pocos errores antes de cerrar el tema.":pct>=75?"Buen nivel, pero todavía hay asociaciones que conviene fijar.":"Hay brechas claras. Te conviene repetir solo los errores antes de hacer otro test.";
   if(session.systemKey===DGAC_KEY)$("resultSummary").textContent="Resultado del banco DGAC 2018. Sirve como práctica histórica y no modifica tu precisión ni tus áreas débiles del banco FCOM.";
   const bySys={};session.questions.forEach((q,i)=>{const k=q._sys||"general";bySys[k]??={c:0,t:0};bySys[k].t++;if(session.answers[i]===q.correct)bySys[k].c++});
   $("resultBreakdown").innerHTML=Object.entries(bySys).sort((a,b)=>b[1].t-a[1].t).map(([k,v])=>`<span class="breakdown-pill">${esc(systemName(k))} · <b>${v.c}/${v.t}</b></span>`).join("");

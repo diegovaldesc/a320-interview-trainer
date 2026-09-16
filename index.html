@@ -593,6 +593,7 @@ try{
 const $=id=>document.getElementById(id);
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function plural(n,one,many){return n===1?one:many}
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function norm(s){return String(s||"").toLowerCase().replace(/\s+/g," ").trim()}
 function stemKey(s){return norm(String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/gi," "))}
@@ -787,7 +788,7 @@ function isWeakStat(s){
 function attemptsFor(q){return appState.stats[q._id]||{a:0,c:0,w:0,last:0}}
 function overall(){
   let a=0,c=0;
-  rawPool(null).forEach(q=>{const s=attemptsFor(q);a+=s.a||0;c+=s.c||0});
+  allVerifiedPool().forEach(q=>{const s=attemptsFor(q);a+=s.a||0;c+=s.c||0});
   return{a,c,p:a?Math.round(c/a*100):0,wq:weakQuestions(null).length};
 }
 function systemStats(k){
@@ -836,11 +837,11 @@ function renderHome(){
   $("homeInterviewCount").textContent=interviewTechnicalTotal()+" preguntas · banco de entrevista depurado";
   const dgacExplained=(SYSTEMS[DGAC_KEY]?.questions||[]).filter(q=>q.expl).length;
   $("homeDgacCount").textContent=dgacTotal()+(dgacExplained>=dgacTotal()?" preguntas históricas · explicadas":` preguntas históricas · ${dgacExplained} explicadas`);
-  $("homeWeakCount").textContent=ov.wq?ov.wq+" preguntas por repasar":"Sin preguntas pendientes";
+  $("homeWeakCount").textContent=ov.wq?`${ov.wq} ${plural(ov.wq,"pregunta","preguntas")} por repasar`:"Sin preguntas pendientes";
   $("folderSystemsCount").textContent=totalQuestions()+" preguntas";
 
   const health=BANK_HEALTH;
-  $("bankStatus").textContent=health.ok?"Integridad estructural OK":health.issues+" incidencias";
+  $("bankStatus").textContent=health.ok?"Integridad estructural OK":`${health.issues} ${plural(health.issues,"incidencia","incidencias")}`;
   $("bankStatus").classList.toggle("warn",!health.ok);
   $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas · ${ORAL_VOICE_BANK.length} entrevista oral`;
   $("integrityNote").classList.toggle("warn",!health.ok);
@@ -868,14 +869,14 @@ function openSystem(k){
   if(dgac){
     const explained=pool.filter(q=>q.expl).length;
     $("detailDesc").textContent=explained>=pool.length?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. Las ${pool.length} tienen explicación técnica y referencia verificadas.`:explained?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. ${explained} de ${pool.length} ya tienen explicación técnica verificada; seguimos completando el resto.`:`${pool.length} preguntas del examen DGAC A320 2018. Este banco se conserva para practicar el formato y las preguntas históricas. No forma parte del banco técnico validado y deliberadamente no muestra explicaciones.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas DGAC</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span><span class="pill"><b>${explained}</b> explicadas</span>`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas DGAC</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span><span class="pill"><b>${explained}</b> explicadas</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
     $("studyModeDesc").textContent=explained?"Muestra la respuesta marcada en el examen; si ya fue auditada, incluye explicación técnica y cita FCOM.":"Muestra la respuesta marcada en el examen después de contestar. Sin explicación.";
     $("interviewModeCard").classList.add("hidden");
     $("systemWeakBtn").classList.add("hidden");
   }else if(interviewTech){
     const curated=pool.filter(q=>q.audit==="interview_curated"&&q.expl).length;
     $("detailDesc").textContent=`${pool.length} preguntas derivadas de los archivos de entrevista LATAM que subiste, depuradas para estudiar meteorología, performance, IFR, aerodinámica, operación, CRM y conceptos A320.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${curated}</b> depuradas</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${curated}</b> depuradas</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
     $("studyModeDesc").textContent="Respuesta y explicación después de contestar, con referencia al material de entrevista y a la revisión aplicada.";
     $("interviewModeCard").classList.remove("hidden");
     const weak=weakQuestions(k).length,b=$("systemWeakBtn");
@@ -883,7 +884,7 @@ function openSystem(k){
   }else if(ops){
     const verified=pool.filter(q=>q.audit==="airbus_tutorials_verified"&&q.expl&&q.cite).length;
     $("detailDesc").textContent=`${pool.length} preguntas de operación Airbus construidas desde Airbus Tutorials Revision 15. Aquí se evalúan filosofía Airbus, flows, técnicas operacionales y manejo de fases de vuelo.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${verified}</b> AIRBUS ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${verified}</b> AIRBUS ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
     $("studyModeDesc").textContent="Respuesta, explicación y referencia Airbus Tutorials justo después de contestar.";
     $("interviewModeCard").classList.remove("hidden");
     const weak=weakQuestions(k).length,b=$("systemWeakBtn");
@@ -927,7 +928,7 @@ function startWeakSession(k=null){
 function showWeak(){
   const p=weakQuestions(null),saved=savedQuestions(null);show("weak");
   $("weakActions").innerHTML=p.length?`<button type="button" class="btn primary" style="width:100%" onclick="startWeakSession(null)">Practicar ${Math.min(30,p.length)} prioritarias</button>`:"";
-  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${finiteNum(s.w)} errores · ${finiteNum(s.c)} correctas${finiteNum(s.streak)>=2?" · recuperada":""}</div></button>`}).join(""):`<div class="empty">No tienes preguntas pendientes de refuerzo. Las preguntas salen de esta lista cuando demuestras recuperación con respuestas correctas consecutivas.</div>`;
+  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${finiteNum(s.w)} ${plural(finiteNum(s.w),"error","errores")} · ${finiteNum(s.c)} ${plural(finiteNum(s.c),"correcta","correctas")}${finiteNum(s.streak)>=2?" · recuperada":""}</div></button>`}).join(""):`<div class="empty">No tienes preguntas pendientes de refuerzo. Las preguntas salen de esta lista cuando demuestras recuperación con respuestas correctas consecutivas.</div>`;
   $("savedWrap").classList.toggle("hidden",saved.length===0);
   if(saved.length){
     $("savedActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="startSavedSession()">Practicar ${Math.min(30,saved.length)} guardadas</button>`;
@@ -1142,7 +1143,7 @@ function startOralSession(k=null,kind="interview"){
 function iQuestion(){return session.questions[session.index]}
 function renderInterview(){
   const q=iQuestion(),n=session.questions.length,r=session.ratings[session.index],isScenario=session.kind==="scenario";
-  $("iMeta").textContent=`${isScenario?"ESCENARIO":"ORAL"} · ${session.index+1} / ${n}`;$("iProgress").style.width=`${((session.index+1)/n)*100}%`;
+  $("iMeta").textContent=`${isScenario?"ESCENARIO":"AUTOEVALUACIÓN"} · ${session.index+1} / ${n}`;$("iProgress").style.width=`${((session.index+1)/n)*100}%`;
   $("iSource").innerHTML=`${esc(systemName(q._sys))} · ${esc(q.bank==="interview_technical"?(q.topic||"Entrevista"):(q.src||"Banco técnico"))}${q.audit==="fcom_verified"?`<span class="verify-badge">✓ FCOM 2025</span>`:q.audit==="airbus_tutorials_verified"?`<span class="verify-badge">✓ AIRBUS REV 15</span>`:q.bank==="interview_technical"?`<span class="verify-badge">BANCO DEPURADO</span>`:""}`;
   $("iQuestion").textContent=isScenario?(q.scenario_q||q.oral_q||q.q):(q.oral_q||q.q);
   $("iEyebrow").textContent=isScenario?"ANALIZA EL CASO":"RESPONDE EN VOZ ALTA";
@@ -2027,7 +2028,7 @@ async function exportProgress(){
       await navigator.share({files:[file],title:"Copia de progreso A320 Trainer"});
       toast("Copia preparada");return;
     }
-  }catch(e){}
+  }catch(e){if(e&&e.name==="AbortError")return}
   try{
     const blob=new Blob([text],{type:"application/json"});
     const url=URL.createObjectURL(blob),a=document.createElement("a");

@@ -8,11 +8,29 @@ permanente antes de darlo por cerrado, y esta batería completa se corre
 después de cualquier cambio al motor de evaluación, al saneamiento de estado
 o a la integridad del banco.
 
-No es un test runner automatizado (el proyecto es un solo `index.html` sin
-build step). Es la lista de casos + resultado esperado que cualquiera de los
-dos audita a mano o con su propio harness (navegador para Claude, VM de
-Node para Codex). Si los harnesses alguna vez divergen en el resultado de un
-caso de aquí, ese es el bug a resolver primero, antes de seguir auditando.
+## Cómo correrla (un solo comando)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tests\run.ps1
+```
+
+`tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
+al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
+nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
+a su estado real. Termina en ~2 s con `OK 39/39 casos...` (código 0) o con la
+lista de casos que fallan y su mensaje (código 1). La app publicada no se
+modifica.
+
+Está comprobado que detecta regresiones: rompiendo a propósito siete de los
+arreglos de abajo, falló en los casos correspondientes. Ejecútala **antes de
+cada commit** que toque `index.html`, y agrega un caso a `tests/suite.js`
+por cada bug nuevo (con el ID del hallazgo en el nombre).
+
+Lo que esta batería **no** cubre: aspecto visual, tamaños en pantalla y
+comportamiento real del micrófono/voz en un teléfono; eso se verifica a ojo
+en el navegador o el dispositivo. Si dos verificaciones distintas (por ejemplo
+el harness de Codex y esta) divergen en un caso de aquí, ese es el bug a
+resolver primero, antes de seguir auditando.
 
 ## 1. Guardar, cerrar y recuperar el progreso
 
@@ -125,6 +143,34 @@ caso de aquí, ese es el bug a resolver primero, antes de seguir auditando.
   vacíos no debe pasar como válido.
 - **A15** — un ID duplicado en `ORAL_VOICE_BANK` debe incrementar el conteo de
   incidencias.
+
+## 8. Pulido de la interfaz (revisión general, commits 3aa2fae–a60dd34)
+
+- **Guardadas con DGAC (7764f5c)** — una pregunta DGAC marcada con ⭐ debe
+  aparecer en `savedQuestions(null)` y `startSavedSession()` debe arrancar
+  con ella (antes quedaba guardada pero invisible).
+- **`.verify-badge` (7764f5c)** — la clase de las insignias "✓ FCOM 2025",
+  "✓ AIRBUS REV 15", "BANCO DEPURADO" y "✓ EXPLICADA" debe tener estilo
+  (borde y margen); antes no existía en el CSS y el texto se veía pegado.
+- **Resumen del test (7764f5c)** — 20/20 dice "Puntaje perfecto"; 18/20 sigue
+  diciendo "Revisa los pocos errores".
+- **Recálculo de integridad (82ba29c)** — `renderHome()` reutiliza
+  `BANK_HEALTH`; no debe volver a llamar `bankIntegrity()`.
+- **Compartir progreso (fafa386)** — cancelar el panel de compartir
+  (`AbortError`) no dispara una descarga; un fallo real sí cae a la descarga.
+- **Etiqueta de la Autoevaluación (fafa386)** — el contador de la sesión dice
+  `AUTOEVALUACIÓN`, nunca `ORAL`.
+- **Plurales (fafa386)** — "1 pregunta por repasar", "1 error · 1 correcta".
+- **Mejor test de DGAC/Entrevista técnica/Operación Airbus (fafa386)** — se
+  guarda y aparece como pill "mejor test" en la pantalla del banco; un test
+  DGAC no modifica las estadísticas de precisión.
+- **Precisión del inicio (fafa386)** — cuenta FCOM + Operación Airbus +
+  Entrevista técnica, el mismo alcance que "por repasar".
+- **Autocalificación visible (a60dd34)** — la nota elegida ("No la sabía" /
+  "Parcial" / "La sabía") queda marcada y se ve al volver a la pregunta.
+- **Resultado oral (3aa2fae)** — etiqueta `ESTIMACIÓN`, nota aclaratoria y
+  grados de cobertura (muy alta / alta / media / parcial / baja) con color
+  verde/ámbar/rojo.
 
 ## Límite explícito de esta batería
 

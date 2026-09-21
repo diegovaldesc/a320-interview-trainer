@@ -5,12 +5,17 @@
 #
 # Sale con codigo 0 si todos los casos pasan, 1 si alguno falla y 2 si la
 # bateria no pudo ejecutarse. El detalle de cada caso esta en TESTING.md.
-param([string]$Browser = "")
+#
+# Uso avanzado: -Script otro.js ejecuta ese archivo en lugar de la bateria
+# (debe escribir su resultado en #__test_results como JSON) e imprime ese
+# JSON tal cual; -Width/-Height fijan el tamano de ventana (p. ej. 375x812
+# para simular un iPhone). Sirve para diagnosticos puntuales dentro de la app.
+param([string]$Browser = "", [string]$Script = "", [int]$Width = 0, [int]$Height = 0)
 $ErrorActionPreference = "Stop"
 
 $root  = Split-Path -Parent $PSScriptRoot
 $index = Join-Path $root "index.html"
-$suite = Join-Path $PSScriptRoot "suite.js"
+$suite = if ($Script) { (Resolve-Path $Script).Path } else { Join-Path $PSScriptRoot "suite.js" }
 
 $candidates = @(
   $Browser,
@@ -46,8 +51,9 @@ try {
   $err = Join-Path $work "err.txt"
   $url = ([Uri]$page).AbsoluteUri
   $argList = @("--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
-               "--disable-extensions", "--user-data-dir=`"$profile`"", "--virtual-time-budget=20000",
-               "--dump-dom", $url)
+               "--disable-extensions", "--user-data-dir=`"$profile`"", "--virtual-time-budget=20000")
+  if ($Width -gt 0 -and $Height -gt 0) { $argList += "--window-size=$Width,$Height" }
+  $argList += @("--dump-dom", $url)
 
   $sw = [Diagnostics.Stopwatch]::StartNew()
   $p = Start-Process -FilePath $browserExe -ArgumentList $argList -NoNewWindow -PassThru `
@@ -64,7 +70,9 @@ try {
     Write-Host "La bateria no entrego resultados. Revisa errores de script en index.html o tests/suite.js."
     exit 2
   }
-  $res = ([Net.WebUtility]::HtmlDecode($mm.Groups[1].Value)) | ConvertFrom-Json
+  $decoded = [Net.WebUtility]::HtmlDecode($mm.Groups[1].Value)
+  if ($Script) { Write-Output $decoded; exit 0 }
+  $res = $decoded | ConvertFrom-Json
 
   if ($res.failed -eq 0) {
     Write-Host "OK  $($res.passed)/$($res.total) casos de regresion pasaron ($secs s)"

@@ -172,6 +172,17 @@ resolver primero, antes de seguir auditando.
   grados de cobertura (muy alta / alta / media / parcial / baja) con color
   verde/ámbar/rojo.
 
+## 9. Accesibilidad (revisión de contraste y áreas táctiles)
+
+- **Contraste** — `--muted` (gris de texto secundario) y `--amber` deben
+  alcanzar ≥4.5:1 sobre `--bg`, `--panel`, `--panel2` y `--panel3`. Antes
+  daban 4.0–4.2:1 y el texto pequeño (10–12 px) se leía mal a la luz.
+- **Áreas táctiles** — el botón de marca, "Volver/Salir", los botones de
+  autocalificación y "Crear/Restaurar copia" miden ≥44 px de alto (antes
+  26–34 px); "Prefiero escribir mi respuesta" y "Ver qué se transcribió"
+  pasaron de 14 px a 40 px. Diagnóstico completo por pantalla:
+  `tests\run.ps1 -Script <archivo.js> -Width 375 -Height 812`.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

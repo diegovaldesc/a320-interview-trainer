@@ -183,7 +183,7 @@ resolver primero, antes de seguir auditando.
   pasaron de 14 px a 40 px. Diagnóstico completo por pantalla:
   `tests\run.ps1 -Script <archivo.js> -Width 375 -Height 812`.
 
-## 10. Inglés OACI (sección nueva, rama `modulo-ingles`)
+## 10. Inglés OACI (sección nueva)
 
 - **Banco completo** — 74 alternativas, 8 imágenes, 17 respuestas orales y
   13 audios (5 ATIS y 8 autorizaciones); `bankIntegrity()` no reporta

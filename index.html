@@ -1855,7 +1855,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
     "The airport probably closed the runway while the aircraft was recovered."
    ],
    "context": "Vuelo 9363 de Ameristar Charters, un MD-83. Según la ficha de Commons (NTSB), tuvo una salida de pista tras abortar el despegue en la pista 23L del aeropuerto Detroit-Willow Run (Michigan), el 8-mar-2017.",
-   "model": "This picture shows a white jet standing on dry grass, away from the runway. Its nose is very close to the ground, and there is a ladder against the fuselage under the front door. Behind the wing I can see several trucks, including what looks like a tanker, and a truck with a boom near the tail. A worker in a high-visibility vest is standing near the wing. It is a sunny day. I think the aircraft rejected its take-off and ran off the runway. The trucks might be there to remove the fuel and to move the aircraft. Before this, the crew must have stopped the aircraft and probably evacuated the people on board.",
+   "model": "This picture shows a white jet standing on dry grass. Its nose is very close to the ground, and there is a ladder against the fuselage under the front door. Behind the wing I can see several trucks, including what looks like a tanker, and a truck with a boom near the tail. A worker in a high-visibility vest is standing near the wing. It is a sunny day. I think the aircraft rejected its take-off and ran off the runway. The trucks might be there to remove the fuel and to move the aircraft. Before this, the crew probably stopped the aircraft and evacuated the people on board.",
    "vocab": [
     {
      "en": "rejected (aborted) take-off",
@@ -5408,7 +5408,7 @@ const EN_MAX_SECONDS=90,EN_MAX_RESTARTS=25;
 const EN_LABEL={image:"DESCRIBIR IMÁGENES",speaking:"PREGUNTAS CON MICRÓFONO",listening:"AUDIOS"};
 const EN_RADIO_DIGITS={three:"tree",four:"fower",five:"fife",nine:"niner"};
 let enSession=null;
-const enMedia={audioGen:0,speaking:false,sayBtn:null,utter:null,micGen:0,listening:false,stopping:false,rec:null,base:"",final:"",interim:"",restarts:0,timer:null,maxTimer:null,restartTimer:null,startTime:null,micOk:false};
+const enMedia={audioGen:0,speaking:false,sayBtn:null,utter:null,voicesLoaded:false,micGen:0,listening:false,stopping:false,rec:null,base:"",final:"",interim:"",restarts:0,timer:null,maxTimer:null,restartTimer:null,startTime:null,micOk:false};
 
 /* ---------- preferencias (solo comodidad; si falla el almacenamiento, todo sigue igual) ---------- */
 function enPrefs(){try{const p=JSON.parse(localStorage.getItem(EN_PREF_KEY)||"{}");return isPlainObject(p)?p:{}}catch(e){return{}}}
@@ -5514,9 +5514,9 @@ function enFillVoices(){
   const list=enVoices(),saved=enPref("voice","");
   sel.innerHTML='<option value="">Automática</option>'+list.map(v=>`<option value="${esc(v.voiceURI)}"${v.voiceURI===saved?" selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("");
   const st=$("enAudioStatus");
-  if(st)st.textContent=!enSpeechOk()?"Este navegador no tiene voz sintética: usa la transcripción.":(list.length?"":"Buscando voces en inglés del dispositivo…");
+  if(st)st.textContent=!enSpeechOk()?"Este navegador no tiene voz sintética: usa la transcripción.":(list.length?"":(enMedia.voicesLoaded?"No se encontró ninguna voz en inglés en este dispositivo. Instala una en los ajustes del sistema o usa la transcripción.":"Buscando voces en inglés del dispositivo…"));
 }
-if(enSpeechOk()){try{speechSynthesis.onvoiceschanged=()=>enFillVoices()}catch(e){}}
+if(enSpeechOk()){try{speechSynthesis.onvoiceschanged=()=>{enMedia.voicesLoaded=true;enFillVoices()}}catch(e){}}
 
 /* ---------- micrófono en inglés (solo transcribe: no puntúa) ---------- */
 function enMicSupported(){return speechRecognitionSupported()}
@@ -5677,7 +5677,8 @@ function renderEnglishHub(){
   $("enSpkCount").textContent=line(sp,`${sp.length} situaciones · radio, lenguaje claro y conversación`);
   $("enLisCount").textContent=line(li,`${li.length} audios · escucha y anota datos`);
   const total=im.length+sp.length+li.length,tried=enTried(im)+enTried(sp)+enTried(li),good=enGood(im)+enGood(sp)+enGood(li);
-  $("englishProgressSummary").textContent=tried?`${tried} de ${total} ejercicios practicados · ${good} marcados «Bien»`:"Aún no practicas ningún ejercicio";
+  const again=[...im,...sp,...li].filter(x=>(appState.english[x.id]||{}).r===0).length;
+  $("englishProgressSummary").textContent=tried?`${tried} de ${total} ejercicios practicados · ${good} «Bien»${again?` · ${again} para repetir`:""}`:"Aún no practicas ningún ejercicio";
 }
 function startEnglishMcq(type){
   currentSystemKey=ENGLISH_KEY;
@@ -5802,6 +5803,7 @@ function renderEnglishPractice(){
   if(s.kind==="listening")$("enFieldsWrap").innerHTML=enFieldsHtml(it,st);
   const box=$("enTranscript");if(box)box.value=st.text||"";
   enFillVoices();
+  if(!enMedia.voicesLoaded&&$("enVoice"))setTimeout(()=>{enMedia.voicesLoaded=true;enFillVoices()},2500);
   renderEnglishReveal();
 }
 function enToggleHeard(){const b=$("enHeardText");if(b)b.classList.toggle("hidden")}

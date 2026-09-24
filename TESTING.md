@@ -222,7 +222,10 @@ de los audios se comprobó textualmente contra la página PDF indicada de
 que `buscar.ps1 -Frase`, y los diálogos de dos columnas (piloto/controlador) y
 las tablas se leyeron además en la imagen de la página. Esa comprobación
 necesita el manual en `Desktop\APP` y por eso no forma parte de `run.ps1`; si
-se edita el texto de una cita, hay que repetirla.
+se edita el texto de una cita, hay que repetirla con
+`node C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_ingles.js`
+(lee el bloque `english-data` de `index.html`; en la última corrida: 106 tramos
+de cita comprobados, 0 problemas).
 
 ## Límite explícito de esta batería
 

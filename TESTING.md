@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~2 s con `OK 39/39 casos...` (código 0) o con la
+a su estado real. Termina en ~2 s con `OK 55/55 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -182,6 +182,47 @@ resolver primero, antes de seguir auditando.
   26–34 px); "Prefiero escribir mi respuesta" y "Ver qué se transcribió"
   pasaron de 14 px a 40 px. Diagnóstico completo por pantalla:
   `tests\run.ps1 -Script <archivo.js> -Width 375 -Height 812`.
+
+## 10. Inglés OACI (sección nueva, rama `modulo-ingles`)
+
+- **Banco completo** — 74 alternativas, 8 imágenes, 17 respuestas orales y
+  11 audios; `bankIntegrity()` no reporta incidencias (`englishIssues`), y
+  cada alternativa lleva fuente (`ICAO Doc 9432 · …`), cita y explicación. Las
+  alternativas no cuentan como preguntas FCOM (`totalQuestions()` sigue en 415)
+  ni entran en la precisión ni en «Mis errores» del inicio.
+- **`englishIntegrity()`** detecta una respuesta fuera de las opciones, un id
+  repetido y un modelo vacío.
+- **Motor de preguntas** — las alternativas usan el motor de siempre: la
+  etiqueta dice `ICAO DOC 9432`, la respuesta muestra cabecera y referencia
+  del manual, salir de la sesión vuelve al menú de inglés (no al inicio) y una
+  sesión a medias se guarda y se puede continuar.
+- **Estado guardado** — `sanitizeState` limpia el mapa `english`
+  (valoración 0/1/2, intentos, fecha) y un respaldo antiguo sin ese campo sigue
+  siendo válido; con el tipo equivocado se rechaza.
+- **Sin nota, nunca** — en describir imágenes, audios y micrófono no existe
+  `.oral-score`, `.oral-grade` ni `.score-circle`. El autoexamen (Repetir /
+  Casi / Bien) solo se guarda como avance; los audios comparan campo por
+  campo (`enFieldOk`: números sin ceros a la izquierda, códigos exactos,
+  opciones exactas) y nunca resumen en una calificación.
+- **Micrófono en inglés** — usa reconocimiento en `en-US`; `goHome()` lo detiene
+  y lo aborta; un permiso que llega tarde no inicia el reconocimiento en otra
+  pantalla; lo reconocido (provisional y final) llega al cuadro de texto y se
+  conserva, pero no se puntúa.
+- **Audio** — se lee con la voz del dispositivo (`speechSynthesis`); cambiar de
+  pantalla lo cancela. `radioSay` convierte 3/4/5/9 en tree/fower/fife/niner y
+  deletrea QNH, ILS, RVR y SSR sin tocar palabras como «nineteen».
+- **Accesibilidad** — tarjetas, selector de ejercicio, botón de escuchar,
+  selector de velocidad, botón de grabar, botones ▶ del modelo, casillas de
+  autoevaluación, botones Repetir/Casi/Bien y campos numéricos miden ≥44 px.
+
+**Comprobación de las citas (fuera de esta batería).** Cada `cite` de las
+alternativas, cada frase de radio tomada de un ejemplo del manual y cada dato
+de los audios se comprobó textualmente contra la página PDF indicada de
+*ICAO Doc 9432* (versión .md de la carpeta APP), con la misma normalización
+que `buscar.ps1 -Frase`, y los diálogos de dos columnas (piloto/controlador) y
+las tablas se leyeron además en la imagen de la página. Esa comprobación
+necesita el manual en `Desktop\APP` y por eso no forma parte de `run.ps1`; si
+se edita el texto de una cita, hay que repetirla.
 
 ## Límite explícito de esta batería
 

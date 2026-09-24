@@ -480,6 +480,223 @@
     minHeight("#rateWrap .rate","los botones de autocalificacion");
   });
 
+  /* ---------- 10. Ingles OACI ---------- */
+  function visibleScreens(){return Array.prototype.slice.call(document.querySelectorAll("main > section")).filter(function(s){return !s.classList.contains("hidden")}).map(function(s){return s.id})}
+  function noScore(scope,msg){ok(!scope.querySelector(".oral-score,.oral-grade,.score-circle,#resultPct"),msg||"no debe haber nota ni nivel")}
+  function fakeSpeech(){
+    var spoken=[],cancelled={n:0},desc=Object.getOwnPropertyDescriptor(window,"speechSynthesis");
+    var fake={speak:function(u){spoken.push(u)},cancel:function(){cancelled.n++},getVoices:function(){return[]}};
+    Object.defineProperty(window,"speechSynthesis",{value:fake,configurable:true});
+    return{spoken:spoken,cancelled:cancelled,restore:function(){if(desc)Object.defineProperty(window,"speechSynthesis",desc);else delete window.speechSynthesis}};
+  }
+  T("10 el banco de Ingles OACI carga completo, con fuente y cita en cada alternativa, sin incidencias",function(){
+    var h=bankIntegrity();
+    eq(h.englishIssues,0,"incidencias de Ingles OACI");
+    ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
+    eq(ENGLISH.mcq.length,74,"alternativas");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.speaking.length,17,"respuestas orales");eq(ENGLISH.listening.length,11,"audios");
+    eq(SYSTEMS[ENGLISH_KEY].questions.length,74,"alternativas dentro de SYSTEMS");
+    eq(totalQuestions(),415,"las alternativas de ingles no deben contarse como preguntas FCOM");
+    SYSTEMS[ENGLISH_KEY].questions.forEach(function(q,i){
+      ok(/^ICAO Doc 9432 · /.test(q.src)&&String(q.cite).length>10&&String(q.expl).length>30,"la alternativa "+i+" no tiene fuente, cita y explicacion");
+      eq(q.bank,"english_icao","banco de la alternativa "+i);
+    });
+  });
+  T("10 englishIntegrity detecta ejercicios rotos e ids repetidos",function(){
+    eq(englishIntegrity(),0,"base");
+    var l=ENGLISH.listening[0];
+    l.fields.push({id:"x",label:"X",kind:"choice",options:["a","b"],answer:"c"});
+    try{eq(englishIntegrity(),1,"respuesta fuera de las opciones")}finally{l.fields.pop()}
+    ENGLISH.images.push(ENGLISH.images[0]);
+    try{eq(englishIntegrity(),1,"id repetido")}finally{ENGLISH.images.pop()}
+    var saved=ENGLISH.speaking[0].model;ENGLISH.speaking[0].model=[];
+    try{eq(englishIntegrity(),1,"modelo vacio")}finally{ENGLISH.speaking[0].model=saved}
+    eq(englishIntegrity(),0,"restaurado");
+  });
+  T("10 las alternativas usan el motor de preguntas: etiqueta, cita, y salir vuelve al menu de ingles",function(){
+    reset();
+    openEnglish();
+    eq(visibleScreens().join(),"englishHub");
+    startEnglishMcq("study");
+    eq(visibleScreens().join(),"quiz");
+    ok(/ICAO DOC 9432/.test(byId("qSource").textContent),"etiqueta: "+byId("qSource").textContent);
+    selectOption(session.questions[0].correct);
+    var a=byId("answerWrap").textContent;
+    ok(/CONTENIDO VERIFICADO CONTRA ICAO DOC 9432/.test(a),"cabecera: "+a.slice(0,80));
+    ok(/ICAO DOC 9432 · VERIFICADO/.test(a),"referencia: "+a.slice(0,160));
+    exitSession();
+    eq(visibleScreens().join(),"englishHub","salir de la sesion debe volver al menu de ingles");
+    openSystem(ENGLISH_KEY);
+    eq(visibleScreens().join(),"englishHub","abrir el sistema de ingles debe llevar al menu de ingles");
+    eq(overall().a,0,"las alternativas de ingles no entran en la precision del inicio");
+    eq(weakQuestions(null).length,0,"ni en los errores del inicio");
+  });
+  T("10 una sesion de alternativas de Ingles OACI se guarda y se puede continuar",function(){
+    reset();startEnglishMcq("study");
+    var first=session.questions[0].q;
+    persistResume();
+    ok(/Inglés OACI/.test(appState.resume.label),"etiqueta: "+appState.resume.label);
+    session=null;show("home");
+    resumeSession();
+    eq(visibleScreens().join(),"quiz");eq(byId("qText").textContent,first);
+  });
+  T("10 el estado guardado sanea y respalda los avances de Ingles OACI",function(){
+    var s=sanitizeState({english:{a:{r:2,a:3,last:5},b:{r:9,a:"x"},c:null,d:"no"}});
+    eq(JSON.stringify(s.english.a),JSON.stringify({r:2,a:3,last:5}));
+    eq(s.english.b.r,null,"valoracion fuera de rango");eq(s.english.b.a,0);
+    ok(!("c" in s.english)&&!("d" in s.english),"entradas invalidas");
+    eq(looksLikeValidBackup({english:null}),false,"campo con tipo equivocado");
+    eq(looksLikeValidBackup({stats:{}}),true,"un respaldo antiguo sin ingles sigue siendo valido");
+    eq(JSON.stringify(sanitizeState({}).english),"{}");
+    eq(JSON.stringify(defaultState().english),"{}");
+  });
+  T("10 describir imagenes: el modelo aparece al revelar, el autoexamen se guarda y no hay nota",function(){
+    reset();
+    startEnglishPractice("image");
+    eq(visibleScreens().join(),"englishPractice");
+    eq(byId("epNextBtn").disabled,true,"no se puede avanzar sin revelar");
+    ok(byId("epReveal").classList.contains("hidden"),"el modelo debe estar oculto");
+    ok(/^assets\/ingles\/.+\.jpg$/.test(byId("epStimulus").querySelector("img").getAttribute("src")),"foto");
+    ok(byId("epStimulus").querySelector("img").getAttribute("alt").length>20,"la foto necesita texto alternativo");
+    revealEnglish();
+    ok(!byId("epReveal").classList.contains("hidden"),"el modelo debe verse");
+    ok(/Descripción modelo/i.test(byId("epReveal").textContent),"falta la descripcion modelo");
+    eq(byId("epNextBtn").disabled,false,"tras revelar se puede avanzar");
+    var id=ENGLISH.images[0].id;
+    rateEnglish(1);eq(appState.english[id].r,1);eq(appState.english[id].a,1);
+    rateEnglish(2);eq(appState.english[id].r,2);eq(appState.english[id].a,2);
+    noScore(byId("englishPractice"));
+    nextEnglish();eq(enSession.index,1);
+    exitEnglishPractice();
+    eq(visibleScreens().join(),"englishHub");
+    ok(/1 de 8 practicadas/.test(byId("enImgCount").textContent),"conteo del menu: "+byId("enImgCount").textContent);
+    noScore(byId("englishHub"));
+  });
+  T("10 al empezar se abre el primer ejercicio que aun no marcaste como Bien, y se puede saltar",function(){
+    reset();
+    appState.english[ENGLISH.speaking[0].id]={r:2,a:1,last:1};
+    startEnglishPractice("speaking");
+    eq(enSession.index,1);
+    jumpEnglish(5);eq(enSession.index,5);
+    jumpEnglish(999);eq(enSession.index,5,"un salto fuera de rango se ignora");
+    prevEnglish();eq(enSession.index,4);
+  });
+  T("10 audios: los campos se comparan uno a uno, sin nota global",function(){
+    var f=function(kind,answer){return{kind:kind,answer:answer}};
+    ok(enFieldOk(f("num","27"),"27"),"igual");
+    ok(enFieldOk(f("num","6"),"06"),"pista con cero a la izquierda");
+    ok(enFieldOk(f("num","129.1"),"129,1"),"frecuencia con coma");
+    ok(!enFieldOk(f("code","0700"),"700"),"un codigo debe coincidir exacto");
+    ok(enFieldOk(f("code","1018"),"1 0 1 8"),"espacios");
+    ok(!enFieldOk(f("num","27"),""),"vacio");
+    ok(!enFieldOk(f("num","27"),"veintisiete"),"texto sin digitos");
+    ok(enFieldOk(f("choice","Bravo"),"Bravo")&&!enFieldOk(f("choice","Bravo"),"bravo"),"opcion exacta");
+    reset();
+    startEnglishPractice("listening");
+    var fields=ENGLISH.listening[0].fields;
+    enFieldChanged("d1","3");enFieldChanged("rwy","27");enFieldChanged("fl","999");
+    revealEnglish();
+    eq(document.querySelectorAll("#enFieldsWrap .en-field").length,fields.length,"filas");
+    eq(document.querySelectorAll("#enFieldsWrap .en-field.ok").length,2,"campos correctos");
+    eq(document.querySelectorAll("#enFieldsWrap .en-field.bad").length,fields.length-2,"campos incorrectos");
+    ok(/Transcripci/.test(byId("epReveal").textContent),"transcripcion");
+    noScore(byId("englishPractice"));
+  });
+  T("10 radioSay: digitos de radio y siglas deletreadas",function(){
+    eq(radioSay("Runway three four five nine, QNH one zero one eight."),"Runway tree fower fife niner, Q N H one zero one eight.");
+    eq(radioSay("Three thousand four hundred",false),"Three thousand four hundred");
+    eq(radioSay("Nineteen and fourteen"),"Nineteen and fourteen","no debe tocar palabras que solo contienen un digito");
+    eq(radioSay("ILS runway two four"),"I L S runway two fower");
+    eq(radioSay("ILS runway two four",false),"I L S runway two four");
+  });
+  T("10 el audio se lee con la voz del dispositivo y se detiene al cambiar de pantalla",function(){
+    reset();
+    var sp=fakeSpeech();
+    try{
+      startEnglishPractice("listening");
+      enPlayCurrent();
+      return new Promise(function(resolve,reject){
+        setTimeout(function(){
+          try{
+            ok(sp.spoken.length>=1,"no se pidio hablar");
+            eq(sp.spoken[0].text,"tree.","el primer digito (Three.) debe decirse tree");
+            ok(enMedia.speaking,"debe figurar como reproduciendo");
+            goHome();
+            ok(sp.cancelled.n>=1,"no se cancelo la voz al salir");
+            eq(enMedia.speaking,false,"siguio reproduciendo");
+            sp.restore();resolve();
+          }catch(e){sp.restore();reject(e)}
+        },250);
+      });
+    }catch(e){sp.restore();throw e}
+  });
+  T("10 microfono en ingles: goHome detiene la escucha y un permiso tardio no la inicia en otra pantalla",async function(){
+    reset();setupMic(okStream);
+    try{
+      enMedia.micOk=true;
+      startEnglishPractice("speaking");
+      await enToggleMic();
+      ok(enMedia.listening===true,"no quedo escuchando");
+      var inst=FakeSR.instances[FakeSR.instances.length-1];
+      ok(inst&&inst.startCalls===1,"no se inicio el reconocimiento");
+      eq(inst.lang,"en-US","el reconocimiento debe ser en ingles");
+      goHome();
+      eq(enMedia.listening,false,"siguio escuchando despues de goHome");
+      ok(inst.aborted===true,"no se aborto el reconocimiento");
+    }finally{teardownMic()}
+    reset();
+    var resolvePermission;
+    setupMic(function(){return new Promise(function(r){resolvePermission=r})});
+    try{
+      enMedia.micOk=false;
+      startEnglishPractice("speaking");
+      var pending=enToggleMic();
+      goHome();
+      resolvePermission({getTracks:function(){return[]}});
+      await pending;
+      eq(enMedia.listening,false,"quedo escuchando en otra pantalla");
+      eq(FakeSR.instances.length,0,"se creo un reconocimiento fuera de la practica");
+    }finally{teardownMic()}
+  });
+  T("10 microfono en ingles: el texto reconocido va al cuadro, se conserva y no se puntua",async function(){
+    reset();setupMic(okStream);
+    try{
+      enMedia.micOk=true;
+      startEnglishPractice("speaking");
+      await enToggleMic();
+      var inst=FakeSR.instances[FakeSR.instances.length-1];
+      var res=function(text,fin){var r=[{transcript:text}];r.isFinal=fin;return r};
+      inst.onresult({resultIndex:0,results:[res("say again",false)]});
+      eq(byId("enTranscript").value,"say again","texto provisional");
+      inst.onresult({resultIndex:0,results:[res("say again QNH",true)]});
+      eq(byId("enTranscript").value,"say again QNH","texto final");
+      enFinishMic();
+      inst.onend();
+      eq(enSession.state[0].text,"say again QNH","el texto se conserva en la sesion");
+      noScore(byId("englishPractice"));
+      revealEnglish();
+      ok(!byId("epReveal").classList.contains("hidden"),"el modelo debe verse");
+    }finally{teardownMic()}
+  });
+  T("9 los controles de Ingles OACI miden al menos 44 px de alto",function(){
+    reset();
+    function minH(sel,label){
+      var els=Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function(e){return e.getClientRects().length});
+      ok(els.length,"no hay "+label+" visible");
+      els.forEach(function(e){ok(e.getBoundingClientRect().height>=43.5,label+" mide "+Math.round(e.getBoundingClientRect().height)+" px de alto")});
+    }
+    setupMic(okStream);
+    try{
+      openEnglish();
+      minH("#englishHub .mode-card","las tarjetas de alternativas");minH("#englishHub .module-card","las tarjetas de practica");
+      startEnglishPractice("speaking");jumpEnglish(1);
+      minH("#englishPractice .back","el enlace Salir");minH("#epJump","el selector de ejercicio");minH("#enPlayBtn","el boton de escuchar");minH("#enRate","el selector de velocidad");minH("#enMicBtn","el boton de grabar");
+      revealEnglish();
+      minH("#epReveal .en-say","los botones de escuchar el modelo");minH("#epRateWrap .rate","los botones de autocalificacion");minH("#epReveal .en-check label","las casillas de autoevaluacion");
+      startEnglishPractice("listening");
+      minH("#enFieldsWrap input","los campos numericos");
+    }finally{teardownMic()}
+  });
+
   /* ---------- Ejecucion ---------- */
   async function run(){
     var res={total:tests.length,passed:0,failed:0,failures:[],errs:(window.__errs||[]).slice()};

@@ -362,22 +362,21 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 .en-say.playing{background:var(--cyan);border-color:var(--cyan);color:#FFFFFF}
 .en-tr{font-size:13px;line-height:1.5;margin-top:6px}
 .en-audio{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
-.en-audio .btn{width:100%}
+.en-audio-row{display:grid;grid-template-columns:1fr;gap:8px}
+.en-audio-row.two{grid-template-columns:1.5fr 1fr}
+.en-audio-row .btn{width:100%}
 .en-audio-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .en-audio-opts label,.en-inline{font-size:11.5px;color:var(--muted)}
 .en-audio-opts select{display:block;width:100%;min-height:44px;margin-top:4px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:var(--white);font-size:13px;padding:0 8px}
 .en-inline{display:flex;gap:8px;align-items:center;margin-top:10px;min-height:44px}
 .en-inline input{width:20px;height:20px;flex:0 0 20px}
 .en-heard-btn{min-height:44px}
-.en-fields{display:grid;gap:8px}
-.en-field{display:grid;grid-template-columns:1fr 46%;gap:6px 10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
-.en-field label{font-size:12.5px;line-height:1.35;color:#34434C}
-.en-field input,.en-field select{width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:#FFFFFF;color:var(--white);font-size:15px}
-.en-field.ok{border-color:var(--green)}
-.en-field.bad{border-color:var(--red)}
-.en-fans{grid-column:1/-1;font-size:12px;color:var(--muted)}
-.en-field.ok .en-fans{color:var(--green)}
-.en-field.bad .en-fans{color:var(--red)}
+.en-notes{min-height:210px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:15px;line-height:1.55}
+.en-key{display:flex;gap:8px;align-items:flex-start;margin-top:8px;font-size:13px;line-height:1.45}
+.en-key-mark{flex:0 0 18px;font-weight:700}
+.en-key.ok .en-key-mark{color:var(--green)}
+.en-key.miss .en-key-mark{color:var(--amber)}
+.en-key em{font-style:normal;color:var(--amber)}
 .en-check label{display:flex;gap:10px;align-items:flex-start;padding:10px 4px;min-height:44px;font-size:13px;line-height:1.45;border-bottom:1px solid var(--line)}
 .en-check input{margin-top:2px;width:20px;height:20px;flex:0 0 20px}
 .en-help{margin-top:10px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
@@ -385,7 +384,6 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 .en-help div{padding:0 13px 10px;font-size:12.5px;line-height:1.5;color:#34434C}
 .en-help p{margin:0 0 8px}
 .en-jump{max-width:52%;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--white);font-size:12px;padding:0 8px}
-@media(max-width:430px){.en-field{grid-template-columns:1fr}}
 
 </style>
 </head>
@@ -656,7 +654,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z"/></svg>
   </span>
-  <span class="module-main"><strong>Audios</strong><span id="enLisCount">Escucha y anota datos</span></span>
+  <span class="module-main"><strong>Audios</strong><span id="enLisCount">Copia un ATIS o una autorización</span></span>
   <span class="module-chevron">›</span>
 </button>
 </div>
@@ -3095,175 +3093,1061 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
  "listening": [
   {
    "id": "en_lis_01",
-   "title": "Dígitos y datos cortos",
-   "scenario": "Escucha los cuatro dígitos sueltos y luego tres datos cortos. Anótalos.",
+   "type": "atis",
+   "title": "ATIS · Georgetown, información Bravo",
+   "scenario": "Escucha este ATIS y escribe todo lo que oigas, como si tomaras nota en cabina. Puedes repetirlo las veces que quieras.",
    "lines": [
     {
      "who": "atc",
-     "text": "Three.",
-     "pause": 1100
+     "text": "Georgetown information Bravo.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Four.",
-     "pause": 1100
+     "text": "Time one four five five.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Five.",
-     "pause": 1100
+     "text": "Runway two seven in use. Expect ILS approach runway two seven. Transition level five zero.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Nine.",
-     "pause": 1500
+     "text": "Wind two zero zero degrees, one two knots.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Runway two seven.",
-     "pause": 1200
+     "text": "Visibility eight thousand metres. Few clouds two thousand five hundred feet.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Flight level one eight zero.",
-     "pause": 1200
+     "text": "Temperature one six, dew point one zero.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "QNH one zero one eight."
+     "text": "QNH one zero one eight.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Advise on initial contact you have information Bravo."
     }
    ],
-   "fields": [
+   "after": [
     {
-     "id": "d1",
-     "label": "Dígito 1",
-     "kind": "num",
-     "answer": "3"
+     "who": "pilot",
+     "text": "Georgetown Ground, Fastair three four five, stand two four, request start up, information Bravo."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Letra de la información",
+     "value": "Bravo",
+     "accept": [
+      [
+       "bravo"
+      ],
+      [
+       "b"
+      ]
+     ]
     },
     {
-     "id": "d2",
-     "label": "Dígito 2",
-     "kind": "num",
-     "answer": "4"
+     "label": "Hora",
+     "value": "1455",
+     "accept": [
+      [
+       "1455"
+      ]
+     ]
     },
     {
-     "id": "d3",
-     "label": "Dígito 3",
-     "kind": "num",
-     "answer": "5"
+     "label": "Pista en uso",
+     "value": "27",
+     "accept": [
+      [
+       "27"
+      ]
+     ]
     },
     {
-     "id": "d4",
-     "label": "Dígito 4",
-     "kind": "num",
-     "answer": "9"
+     "label": "Aproximación esperada",
+     "value": "ILS",
+     "accept": [
+      [
+       "ils"
+      ]
+     ]
     },
     {
-     "id": "rwy",
-     "label": "Pista",
-     "kind": "num",
-     "answer": "27"
+     "label": "Nivel de transición",
+     "value": "50",
+     "accept": [
+      [
+       "50"
+      ]
+     ]
     },
     {
-     "id": "fl",
-     "label": "Nivel de vuelo",
-     "kind": "num",
-     "answer": "180"
+     "label": "Viento",
+     "value": "200° / 12 kt",
+     "accept": [
+      [
+       "200",
+       "12"
+      ]
+     ]
     },
     {
-     "id": "qnh",
-     "label": "QNH (hPa)",
-     "kind": "code",
-     "answer": "1018"
+     "label": "Visibilidad",
+     "value": "8000 m",
+     "accept": [
+      [
+       "8000"
+      ],
+      [
+       "8",
+       "km"
+      ]
+     ]
+    },
+    {
+     "label": "Nubes",
+     "value": "Few · 2500 ft",
+     "accept": [
+      [
+       "2500"
+      ],
+      [
+       "025"
+      ]
+     ]
+    },
+    {
+     "label": "Temperatura / punto de rocío",
+     "value": "16 / 10",
+     "accept": [
+      [
+       "16",
+       "10"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1018",
+     "accept": [
+      [
+       "1018"
+      ]
+     ]
+    },
+    {
+     "label": "Instrucción final",
+     "value": "Avisar en el primer contacto que tienes la información Bravo",
+     "accept": [
+      [
+       "advise"
+      ],
+      [
+       "initial"
+      ]
+     ]
     }
    ],
    "notes": [
-    "En radio se dice TREE, FOW-er, FIFE y NIN-er para 3, 4, 5 y 9 (§2.4.1). El audio usa esas formas si «Dígitos OACI» está activado.",
-    "Datos ficticios."
+    "Formato de práctica con datos ficticios (aeródromos y letras del propio manual). El Doc 9432 define cómo se dicen los números, la hora, el RVR y el estado de pista; el orden exacto y las frases del ATIS oficial de cada país están en el Anexo 11 y en la AIP, que no están en tu carpeta APP.",
+    "El manual indica que, cuando hay ATIS, se acusa recibo en la llamada inicial al aeródromo (§4.6.2): «information Bravo».",
+    "Al revelar, verás como modelo la llamada inicial del piloto con la letra del ATIS."
    ],
    "ref": {
-    "src": "ICAO Doc 9432 · §2.4.1 · p. 2-3 (PDF 20)",
-    "cite": "3 TREE 4 FOW-er 5 FIFE 6 SIX 7 SEV-en 8 AIT 9 NIN-er"
+    "src": "ICAO Doc 9432 · Capítulo 1 (glosario) · p. 1-2 (PDF 11)",
+    "cite": "The automatic provision of current, routine information to arriving and departing aircraft throughout 24 hours or a specified portion thereof:"
    }
   },
   {
    "id": "en_lis_02",
-   "title": "Información de salida",
-   "scenario": "Un piloto pide información de salida a Ground. Anota los datos que da el controlador.",
+   "type": "atis",
+   "title": "ATIS · Stephenville, información Charlie",
+   "scenario": "Escucha este ATIS y escribe todo lo que oigas, como si tomaras nota en cabina. Puedes repetirlo las veces que quieras.",
    "lines": [
     {
-     "who": "pilot",
-     "text": "Harbour Ground, Training one eight zero, request departure information.",
-     "pause": 900
+     "who": "atc",
+     "text": "Stephenville information Charlie.",
+     "pause": 350
     },
     {
      "who": "atc",
-     "text": "Training one eight zero, departure runway two seven. Wind two zero zero degrees, one two knots. QNH one zero one eight. Temperature one six. Dew point one zero. Visibility eight thousand metres. Time two two."
+     "text": "Time zero six three zero.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Runway three six in use. ILS approach runway three six.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Wind three six zero degrees, two five knots.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Visibility one thousand metres.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "RVR runway three six, touchdown six five zero metres, midpoint seven hundred metres, stop end five five zero metres.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Continuous moderate rain. Overcast six hundred feet.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Temperature seven, dew point six.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "QNH one zero zero one.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Runway wet.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Advise on initial contact you have information Charlie."
     }
    ],
-   "fields": [
+   "keys": [
     {
-     "id": "rwy",
-     "label": "Pista de salida",
-     "kind": "num",
-     "answer": "27"
+     "label": "Letra de la información",
+     "value": "Charlie",
+     "accept": [
+      [
+       "charlie"
+      ],
+      [
+       "c"
+      ]
+     ]
     },
     {
-     "id": "wd",
-     "label": "Viento: dirección (°)",
-     "kind": "num",
-     "answer": "200"
+     "label": "Hora",
+     "value": "0630",
+     "accept": [
+      [
+       "0630"
+      ],
+      [
+       "630"
+      ]
+     ]
     },
     {
-     "id": "ws",
-     "label": "Viento: velocidad (kt)",
-     "kind": "num",
-     "answer": "12"
+     "label": "Pista en uso",
+     "value": "36",
+     "accept": [
+      [
+       "36"
+      ]
+     ]
     },
     {
-     "id": "qnh",
-     "label": "QNH (hPa)",
-     "kind": "code",
-     "answer": "1018"
+     "label": "Aproximación",
+     "value": "ILS",
+     "accept": [
+      [
+       "ils"
+      ]
+     ]
     },
     {
-     "id": "t",
-     "label": "Temperatura (°C)",
-     "kind": "num",
-     "answer": "16"
+     "label": "Viento",
+     "value": "360° / 25 kt",
+     "accept": [
+      [
+       "360",
+       "25"
+      ]
+     ]
     },
     {
-     "id": "dp",
-     "label": "Punto de rocío (°C)",
-     "kind": "num",
-     "answer": "10"
+     "label": "Visibilidad",
+     "value": "1000 m",
+     "accept": [
+      [
+       "1000"
+      ],
+      [
+       "1",
+       "km"
+      ]
+     ]
     },
     {
-     "id": "vis",
-     "label": "Visibilidad (m)",
-     "kind": "num",
-     "answer": "8000"
+     "label": "RVR zona de toma de contacto",
+     "value": "650 m",
+     "accept": [
+      [
+       "650"
+      ]
+     ]
     },
     {
-     "id": "min",
-     "label": "Hora: minutos",
-     "kind": "num",
-     "answer": "22"
+     "label": "RVR punto medio",
+     "value": "700 m",
+     "accept": [
+      [
+       "700"
+      ]
+     ]
+    },
+    {
+     "label": "RVR final de pista",
+     "value": "550 m",
+     "accept": [
+      [
+       "550"
+      ]
+     ]
+    },
+    {
+     "label": "Tiempo presente",
+     "value": "Lluvia continua moderada",
+     "accept": [
+      [
+       "rain"
+      ],
+      [
+       "ra"
+      ]
+     ]
+    },
+    {
+     "label": "Nubes",
+     "value": "Overcast · 600 ft",
+     "accept": [
+      [
+       "600"
+      ],
+      [
+       "006"
+      ]
+     ]
+    },
+    {
+     "label": "Temperatura / punto de rocío",
+     "value": "7 / 6",
+     "accept": [
+      [
+       "7",
+       "6"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1001",
+     "accept": [
+      [
+       "1001"
+      ]
+     ]
+    },
+    {
+     "label": "Estado de la pista",
+     "value": "Mojada (wet)",
+     "accept": [
+      [
+       "wet"
+      ]
+     ]
+    },
+    {
+     "label": "Instrucción final",
+     "value": "Avisar en el primer contacto que tienes la información Charlie",
+     "accept": [
+      [
+       "advise"
+      ],
+      [
+       "initial"
+      ]
+     ]
     }
    ],
    "notes": [
-    "No es un ATIS completo: sigue la estructura del ejemplo de información de salida de §4.2.1. Lugar, indicativo y datos son ficticios.",
-    "TIME 22 son los minutos de la hora: normalmente solo se transmiten los minutos (§2.5.1)."
+    "Formato de práctica con datos ficticios (aeródromos y letras del propio manual). El Doc 9432 define cómo se dicen los números, la hora, el RVR y el estado de pista; el orden exacto y las frases del ATIS oficial de cada país están en el Anexo 11 y en la AIP, que no están en tu carpeta APP.",
+    "Cuando hay varias lecturas de RVR, se transmiten en este orden: zona de toma de contacto, punto medio y final de pista (§10.2.2).",
+    "Viento, visibilidad, lluvia continua moderada, nubes y QNH siguen el ejemplo de §10.1."
    ],
    "ref": {
-    "src": "ICAO Doc 9432 · §4.2.1 · p. 4-1 (PDF 39)",
-    "cite": "Where no ATIS is provided, the pilot may ask for current aerodrome information before requesting start up."
+    "src": "ICAO Doc 9432 · §10.2.2 · p. 10-2 (PDF 95)",
+    "cite": "they are always transmitted commencing with the reading for the touchdown zone followed by the mid-point zone and ending with the roll-out/stop end zone report."
    }
   },
   {
    "id": "en_lis_03",
-   "title": "Autorización de ruta",
-   "scenario": "Antes de arrancar, ATC pasa la autorización de ruta. Anótala.",
+   "type": "atis",
+   "title": "ATIS · Walden, información Delta",
+   "scenario": "Escucha este ATIS y escribe todo lo que oigas, como si tomaras nota en cabina. Puedes repetirlo las veces que quieras.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Walden information Delta.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Time zero eight one five.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Runway zero nine in use.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Runway conditions zero nine: available width three two metres, covered with thin patches of ice, braking action poor. Snow up to three zero centimetres along edges.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Wind zero eight zero degrees, one zero knots.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Visibility two thousand metres, light snow. Broken cloud one thousand five hundred feet.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Temperature minus two, dew point minus three.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "QNH one zero two two.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Taxiway Golf closed due maintenance, use Alpha to vacate.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Advise on initial contact you have information Delta."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Letra de la información",
+     "value": "Delta",
+     "accept": [
+      [
+       "delta"
+      ],
+      [
+       "d"
+      ]
+     ]
+    },
+    {
+     "label": "Hora",
+     "value": "0815",
+     "accept": [
+      [
+       "0815"
+      ],
+      [
+       "815"
+      ]
+     ]
+    },
+    {
+     "label": "Pista en uso",
+     "value": "09",
+     "accept": [
+      [
+       "9"
+      ]
+     ]
+    },
+    {
+     "label": "Ancho disponible de la pista",
+     "value": "32 m",
+     "accept": [
+      [
+       "32"
+      ]
+     ]
+    },
+    {
+     "label": "Superficie",
+     "value": "Parches de hielo (thin patches of ice)",
+     "accept": [
+      [
+       "ice"
+      ],
+      [
+       "icy"
+      ]
+     ]
+    },
+    {
+     "label": "Eficacia de frenado",
+     "value": "Mala (poor)",
+     "accept": [
+      [
+       "poor"
+      ]
+     ]
+    },
+    {
+     "label": "Nieve a los costados",
+     "value": "Hasta 30 cm",
+     "accept": [
+      [
+       "30"
+      ]
+     ]
+    },
+    {
+     "label": "Viento",
+     "value": "080° / 10 kt",
+     "accept": [
+      [
+       "80",
+       "10"
+      ]
+     ]
+    },
+    {
+     "label": "Visibilidad",
+     "value": "2000 m",
+     "accept": [
+      [
+       "2000"
+      ],
+      [
+       "2",
+       "km"
+      ]
+     ]
+    },
+    {
+     "label": "Tiempo presente",
+     "value": "Nieve ligera",
+     "accept": [
+      [
+       "light",
+       "snow"
+      ],
+      [
+       "sn"
+      ]
+     ]
+    },
+    {
+     "label": "Nubes",
+     "value": "Broken · 1500 ft",
+     "accept": [
+      [
+       "1500"
+      ],
+      [
+       "015"
+      ]
+     ]
+    },
+    {
+     "label": "Temperatura / punto de rocío",
+     "value": "-2 / -3",
+     "accept": [
+      [
+       "2",
+       "3"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1022",
+     "accept": [
+      [
+       "1022"
+      ]
+     ]
+    },
+    {
+     "label": "Calle de rodaje cerrada",
+     "value": "Golf",
+     "accept": [
+      [
+       "golf"
+      ]
+     ]
+    },
+    {
+     "label": "Calle para desocupar la pista",
+     "value": "Alpha",
+     "accept": [
+      [
+       "alpha"
+      ]
+     ]
+    },
+    {
+     "label": "Instrucción final",
+     "value": "Avisar en el primer contacto que tienes la información Delta",
+     "accept": [
+      [
+       "advise"
+      ],
+      [
+       "initial"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "Formato de práctica con datos ficticios (aeródromos y letras del propio manual). El Doc 9432 define cómo se dicen los números, la hora, el RVR y el estado de pista; el orden exacto y las frases del ATIS oficial de cada país están en el Anexo 11 y en la AIP, que no están en tu carpeta APP.",
+    "«Runway conditions… braking action poor» y «snow up to 30 cm along edges» son frases del propio manual (§4.10); «taxiway Golf closed due maintenance, use Alpha to vacate» es de §10.3.",
+    "«Minus» se dice para las temperaturas negativas (ejemplo de §4.2.1: «temperature minus 2, dewpoint minus 3»)."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §4.10 · p. 4-16 (PDF 54)",
+    "cite": "snow, slush or ice on a runway, a taxiway or an apron;"
+   }
+  },
+  {
+   "id": "en_lis_04",
+   "type": "atis",
+   "title": "ATIS · Kennington (salidas), información Echo",
+   "scenario": "Escucha este ATIS y escribe todo lo que oigas, como si tomaras nota en cabina. Puedes repetirlo las veces que quieras.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Kennington departure information Echo.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Time one one three zero.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Runway two seven in use.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Wind two five zero degrees, eight knots. CAVOK.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Temperature two two, dew point one four.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "QNH one zero one zero.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Caution, construction work adjacent to gate three seven. Large flock of birds north of runway two seven near central taxiway. VASIS runway two seven unserviceable. Centre line taxiway lighting unserviceable.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Advise on initial contact you have information Echo."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Letra de la información",
+     "value": "Echo",
+     "accept": [
+      [
+       "echo"
+      ],
+      [
+       "e"
+      ]
+     ]
+    },
+    {
+     "label": "Hora",
+     "value": "1130",
+     "accept": [
+      [
+       "1130"
+      ]
+     ]
+    },
+    {
+     "label": "Pista en uso",
+     "value": "27",
+     "accept": [
+      [
+       "27"
+      ]
+     ]
+    },
+    {
+     "label": "Viento",
+     "value": "250° / 8 kt",
+     "accept": [
+      [
+       "250",
+       "8"
+      ]
+     ]
+    },
+    {
+     "label": "Condiciones",
+     "value": "CAVOK",
+     "accept": [
+      [
+       "cavok"
+      ]
+     ]
+    },
+    {
+     "label": "Temperatura / punto de rocío",
+     "value": "22 / 14",
+     "accept": [
+      [
+       "22",
+       "14"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1010",
+     "accept": [
+      [
+       "1010"
+      ]
+     ]
+    },
+    {
+     "label": "Obras",
+     "value": "Junto a la puerta 37",
+     "accept": [
+      [
+       "37"
+      ]
+     ]
+    },
+    {
+     "label": "Aves",
+     "value": "Bandada grande al norte de la pista 27",
+     "accept": [
+      [
+       "bird"
+      ],
+      [
+       "birds"
+      ]
+     ]
+    },
+    {
+     "label": "Ayuda visual",
+     "value": "VASIS pista 27 fuera de servicio",
+     "accept": [
+      [
+       "vasis"
+      ]
+     ]
+    },
+    {
+     "label": "Luces",
+     "value": "Luces del eje de la calle de rodaje fuera de servicio",
+     "accept": [
+      [
+       "centre"
+      ],
+      [
+       "center"
+      ],
+      [
+       "centreline"
+      ],
+      [
+       "centerline"
+      ],
+      [
+       "lighting"
+      ]
+     ]
+    },
+    {
+     "label": "Instrucción final",
+     "value": "Avisar en el primer contacto que tienes la información Echo",
+     "accept": [
+      [
+       "advise"
+      ],
+      [
+       "initial"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "Formato de práctica con datos ficticios (aeródromos y letras del propio manual). El Doc 9432 define cómo se dicen los números, la hora, el RVR y el estado de pista; el orden exacto y las frases del ATIS oficial de cada país están en el Anexo 11 y en la AIP, que no están en tu carpeta APP.",
+    "La información esencial del aeródromo incluye obras, aves, superficies dañadas, nieve o agua y fallas de iluminación (§4.10). CAVOK está definido en el glosario del manual (visibilidad, nubes y tiempo presente mejores que los valores prescritos)."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §4.10 · p. 4-16 (PDF 54)",
+    "cite": "other temporary hazards, including parked aircraft and birds on the ground or in the air;"
+   }
+  },
+  {
+   "id": "en_lis_05",
+   "type": "atis",
+   "title": "ATIS · Georgetown (llegadas), información Foxtrot",
+   "scenario": "Escucha este ATIS y escribe todo lo que oigas, como si tomaras nota en cabina. Puedes repetirlo las veces que quieras.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Georgetown arrival information Foxtrot.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Time one six zero five.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Expect radar vectors for ILS approach runway two four. Holding delay two zero minutes. Transition level five zero.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Wind two six zero degrees, two two knots, gusting three five knots.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Visibility six thousand metres. Showers. Scattered cumulonimbus two thousand five hundred feet.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Temperature one eight, dew point one two.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "QNH one zero zero eight.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Wind shear reported on final runway two four.",
+     "pause": 350
+    },
+    {
+     "who": "atc",
+     "text": "Advise on initial contact you have information Foxtrot."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Letra de la información",
+     "value": "Foxtrot",
+     "accept": [
+      [
+       "foxtrot"
+      ],
+      [
+       "f"
+      ]
+     ]
+    },
+    {
+     "label": "Hora",
+     "value": "1605",
+     "accept": [
+      [
+       "1605"
+      ]
+     ]
+    },
+    {
+     "label": "Pista y aproximación",
+     "value": "ILS pista 24",
+     "accept": [
+      [
+       "ils",
+       "24"
+      ]
+     ]
+    },
+    {
+     "label": "Demora en espera",
+     "value": "20 minutos",
+     "accept": [
+      [
+       "20"
+      ]
+     ]
+    },
+    {
+     "label": "Nivel de transición",
+     "value": "50",
+     "accept": [
+      [
+       "50"
+      ]
+     ]
+    },
+    {
+     "label": "Viento con ráfagas",
+     "value": "260° / 22 kt, ráfagas 35 kt",
+     "accept": [
+      [
+       "260",
+       "22",
+       "35"
+      ]
+     ]
+    },
+    {
+     "label": "Visibilidad",
+     "value": "6000 m",
+     "accept": [
+      [
+       "6000"
+      ],
+      [
+       "6",
+       "km"
+      ]
+     ]
+    },
+    {
+     "label": "Tiempo presente",
+     "value": "Chubascos (showers)",
+     "accept": [
+      [
+       "shower"
+      ],
+      [
+       "showers"
+      ],
+      [
+       "shra"
+      ]
+     ]
+    },
+    {
+     "label": "Tipo de nube",
+     "value": "Cumulonimbus",
+     "accept": [
+      [
+       "cb"
+      ],
+      [
+       "cumulonimbus"
+      ]
+     ]
+    },
+    {
+     "label": "Altura de las nubes",
+     "value": "2500 ft",
+     "accept": [
+      [
+       "2500"
+      ],
+      [
+       "025"
+      ]
+     ]
+    },
+    {
+     "label": "Temperatura / punto de rocío",
+     "value": "18 / 12",
+     "accept": [
+      [
+       "18",
+       "12"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1008",
+     "accept": [
+      [
+       "1008"
+      ]
+     ]
+    },
+    {
+     "label": "Cizalladura (wind shear)",
+     "value": "Reportada en final pista 24",
+     "accept": [
+      [
+       "shear"
+      ],
+      [
+       "windshear"
+      ],
+      [
+       "ws"
+      ]
+     ]
+    },
+    {
+     "label": "Instrucción final",
+     "value": "Avisar en el primer contacto que tienes la información Foxtrot",
+     "accept": [
+      [
+       "advise"
+      ],
+      [
+       "initial"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "Formato de práctica con datos ficticios (aeródromos y letras del propio manual). El Doc 9432 define cómo se dicen los números, la hora, el RVR y el estado de pista; el orden exacto y las frases del ATIS oficial de cada país están en el Anexo 11 y en la AIP, que no están en tu carpeta APP.",
+    "El viento con ráfagas se dice «wind one six zero degrees one eight knots gusting three zero knots» en el ejemplo de §2.4.2; las advertencias de wind shear se explican en §11.4."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §11.4 · p. 11-3 (PDF 99)",
+    "cite": "When wind shear is forecast or is reported by aircraft, ATC will warn other aircraft until such time as aircraft report the phenomenon no longer exists."
+   }
+  },
+  {
+   "id": "en_lis_06",
+   "type": "clearance",
+   "title": "Autorización IFR de ruta",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
    "lines": [
     {
      "who": "atc",
@@ -3276,58 +4160,76 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
      "text": "Cleared to Kennington, via A one, flight level two eight zero, Wicken three Delta departure, squawk five five zero one, Fastair three four five."
     }
    ],
-   "fields": [
+   "keys": [
     {
-     "id": "dest",
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
+    },
+    {
      "label": "Destino",
-     "kind": "choice",
-     "options": [
-      "Kennington",
-      "Colinton",
-      "Stephenville",
-      "Georgetown"
-     ],
-     "answer": "Kennington"
+     "value": "Kennington",
+     "accept": [
+      [
+       "kennington"
+      ]
+     ]
     },
     {
-     "id": "route",
      "label": "Ruta",
-     "kind": "choice",
-     "options": [
-      "A1",
-      "A2",
-      "B1",
-      "Route Echo"
-     ],
-     "answer": "A1"
+     "value": "A1",
+     "accept": [
+      [
+       "a1"
+      ],
+      [
+       "a",
+       "1"
+      ]
+     ]
     },
     {
-     "id": "fl",
      "label": "Nivel de vuelo",
-     "kind": "num",
-     "answer": "280"
+     "value": "FL 280",
+     "accept": [
+      [
+       "280"
+      ],
+      [
+       "28000"
+      ]
+     ]
     },
     {
-     "id": "dep",
      "label": "Salida (SID)",
-     "kind": "choice",
-     "options": [
-      "Wicken 3 Delta",
-      "Wicken 3 Echo",
-      "Marlo 3 Delta",
-      "Wicken 2 Delta"
-     ],
-     "answer": "Wicken 3 Delta"
+     "value": "Wicken 3 Delta",
+     "accept": [
+      [
+       "wicken",
+       "3"
+      ]
+     ]
     },
     {
-     "id": "sq",
      "label": "Código transponder",
-     "kind": "code",
-     "answer": "5501"
+     "value": "5501",
+     "accept": [
+      [
+       "5501"
+      ]
+     ]
     }
    ],
    "notes": [
-    "Una autorización de ruta ATC siempre se colaciona (§2.8.3.5 a). Al revelar, verás la colación modelo, que termina con el indicativo.",
+    "Una autorización de ruta ATC siempre se colaciona (§2.8.3.5 a). Abajo verás la colación modelo, que termina con el indicativo (§2.8.3.7).",
     "La ruta ATC no es una instrucción para despegar ni para entrar a la pista (§2.8.3.3)."
    ],
    "ref": {
@@ -3336,61 +4238,246 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
    }
   },
   {
-   "id": "en_lis_04",
-   "title": "Aproximación IFR: instrucciones iniciales",
-   "scenario": "Un avión pesado hace contacto con Approach. Anota las instrucciones de descenso y el tipo de aproximación esperada.",
+   "id": "en_lis_07",
+   "type": "clearance",
+   "title": "Instrucciones de salida (Departure)",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
    "lines": [
     {
-     "who": "pilot",
-     "text": "Georgetown Approach, Fastair three four five heavy, flight level eight zero, estimating North Cross four six, information Delta.",
-     "pause": 900
+     "who": "atc",
+     "text": "Fastair three four five heavy, Georgetown Departure, turn right heading zero four zero until passing flight level seven zero then direct Wicken VOR. Report passing flight level seven zero.",
+     "pause": 3000
     },
     {
      "who": "atc",
-     "text": "Fastair three four five, descend to four thousand feet, QNH one zero zero five, transition level five zero, expect ILS approach runway two four."
+     "text": "Fastair three four five, contact Alexander Control one two nine decimal one."
     }
    ],
-   "fields": [
+   "after": [
     {
-     "id": "alt",
-     "label": "Descender a (pies)",
-     "kind": "num",
-     "answer": "4000"
+     "who": "pilot",
+     "text": "Right heading zero four zero until passing flight level seven zero then direct Wicken VOR, Fastair three four five."
     },
     {
-     "id": "qnh",
-     "label": "QNH (hPa)",
-     "kind": "code",
-     "answer": "1005"
+     "who": "pilot",
+     "text": "One two nine decimal one, Fastair three four five."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Categoría de estela",
+     "value": "Heavy",
+     "accept": [
+      [
+       "heavy"
+      ]
+     ]
     },
     {
-     "id": "tl",
-     "label": "Nivel de transición",
-     "kind": "num",
-     "answer": "50"
+     "label": "Dependencia",
+     "value": "Georgetown Departure",
+     "accept": [
+      [
+       "departure"
+      ]
+     ]
     },
     {
-     "id": "app",
-     "label": "Aproximación esperada",
-     "kind": "choice",
-     "options": [
-      "ILS",
-      "NDB",
-      "VOR",
-      "Visual"
-     ],
-     "answer": "ILS"
+     "label": "Giro",
+     "value": "A la derecha",
+     "accept": [
+      [
+       "right"
+      ]
+     ]
     },
     {
-     "id": "rwy",
-     "label": "Pista",
-     "kind": "num",
-     "answer": "24"
+     "label": "Rumbo",
+     "value": "040",
+     "accept": [
+      [
+       "40"
+      ]
+     ]
+    },
+    {
+     "label": "Hasta pasar el nivel",
+     "value": "FL 70",
+     "accept": [
+      [
+       "70"
+      ]
+     ]
+    },
+    {
+     "label": "Después",
+     "value": "Directo a Wicken VOR",
+     "accept": [
+      [
+       "wicken"
+      ]
+     ]
+    },
+    {
+     "label": "Cambio de frecuencia",
+     "value": "Alexander Control",
+     "accept": [
+      [
+       "alexander"
+      ]
+     ]
+    },
+    {
+     "label": "Frecuencia",
+     "value": "129.1",
+     "accept": [
+      [
+       "1291"
+      ]
+     ]
     }
    ],
    "notes": [
-    "Fíjate en HEAVY justo después del indicativo en el contacto inicial (§2.7.2.4) y en la información ATIS que se acusa recibo (information Delta).",
-    "La altitud 4 000 se transmite «four thousand feet» (§2.4.3)."
+    "Además de la autorización de ruta, los vuelos IFR que salen pueden recibir instrucciones de salida para mantener la separación (§7.1.2).",
+    "En un informe de rumbo o de frecuencia, la colación repite los datos y termina con el indicativo."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §7.1.2 · p. 7-1 (PDF 67)",
+    "cite": "In addition to the ATC route clearance, departing IFR flights may be given departure instructions in order to provide separation."
+   }
+  },
+  {
+   "id": "en_lis_08",
+   "type": "clearance",
+   "title": "Descenso y aproximación ILS (tres transmisiones)",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla. Esta vez son tres transmisiones seguidas.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Fastair three four five, descend to four thousand feet, QNH one zero zero five, transition level five zero, expect ILS approach runway two four.",
+     "pause": 3500
+    },
+    {
+     "who": "atc",
+     "text": "Fastair three four five, cleared straight-in ILS approach runway two four, report established.",
+     "pause": 3500
+    },
+    {
+     "who": "atc",
+     "text": "Fastair three four five, contact Tower one one eight decimal seven."
+    }
+   ],
+   "after": [
+    {
+     "who": "pilot",
+     "text": "Descending to four thousand feet, QNH one zero zero five, transition level five zero, expecting ILS approach runway two four, Fastair three four five."
+    },
+    {
+     "who": "pilot",
+     "text": "Cleared straight-in ILS approach runway two four, wilco, Fastair three four five."
+    },
+    {
+     "who": "pilot",
+     "text": "One one eight decimal seven, Fastair three four five."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
+    },
+    {
+     "label": "Descender a",
+     "value": "4000 ft",
+     "accept": [
+      [
+       "4000"
+      ],
+      [
+       "4",
+       "000"
+      ]
+     ]
+    },
+    {
+     "label": "QNH",
+     "value": "1005",
+     "accept": [
+      [
+       "1005"
+      ]
+     ]
+    },
+    {
+     "label": "Nivel de transición",
+     "value": "50",
+     "accept": [
+      [
+       "50"
+      ]
+     ]
+    },
+    {
+     "label": "Aproximación esperada",
+     "value": "ILS",
+     "accept": [
+      [
+       "ils"
+      ]
+     ]
+    },
+    {
+     "label": "Pista",
+     "value": "24",
+     "accept": [
+      [
+       "24"
+      ]
+     ]
+    },
+    {
+     "label": "Autorización de aproximación",
+     "value": "Cleared straight-in",
+     "accept": [
+      [
+       "straight"
+      ]
+     ]
+    },
+    {
+     "label": "Informar",
+     "value": "Established",
+     "accept": [
+      [
+       "established"
+      ],
+      [
+       "est"
+      ]
+     ]
+    },
+    {
+     "label": "Frecuencia de la torre",
+     "value": "118.7",
+     "accept": [
+      [
+       "1187"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "La altitud 4 000 se transmite «four thousand feet» (§2.4.3). Cuando se cambia una parte de una autorización de nivel, se repite entera (§3.3.3).",
+    "«Wilco» en la segunda colación: entendí y cumpliré."
    ],
    "ref": {
     "src": "ICAO Doc 9432 · §7.3.1 · p. 7-2 (PDF 68)",
@@ -3398,482 +4485,471 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
    }
   },
   {
-   "id": "en_lis_05",
-   "title": "Instrucciones de rodaje",
-   "scenario": "Ground autoriza el rodaje. Anota por dónde ir, qué hacer y dónde detenerte.",
-   "lines": [
-    {
-     "who": "atc",
-     "text": "Golf Charlie Delta, approved, taxi via Bravo, backtrack and line up runway zero six, hold short of runway one four."
-    }
-   ],
-   "fields": [
-    {
-     "id": "twy",
-     "label": "Calle de rodaje",
-     "kind": "choice",
-     "options": [
-      "Alpha",
-      "Bravo",
-      "Charlie",
-      "Delta"
-     ],
-     "answer": "Bravo"
-    },
-    {
-     "id": "act",
-     "label": "Instrucción en la pista",
-     "kind": "choice",
-     "options": [
-      "Backtrack and line up",
-      "Line up and wait",
-      "Cross and continue",
-      "Hold position"
-     ],
-     "answer": "Backtrack and line up"
-    },
-    {
-     "id": "lu",
-     "label": "Alinearse en la pista",
-     "kind": "num",
-     "answer": "6"
-    },
-    {
-     "id": "hs",
-     "label": "Mantener antes de la pista",
-     "kind": "num",
-     "answer": "14"
-    }
-   ],
-   "notes": [
-    "Cuando el límite de rodaje está más allá de una pista, la autorización debe traer un cruce explícito o una instrucción de mantener antes (§4.4.2).",
-    "Un rodaje no es autorización para despegar (§4.5.2)."
-   ],
-   "ref": {
-    "src": "ICAO Doc 9432 · §4.4.2 · p. 4-3 (PDF 41)",
-    "cite": "When a taxi clearance contains a taxi limit beyond a runway, it shall contain an explicit clearance to cross, or an instruction to hold short of that runway."
-   }
-  },
-  {
-   "id": "en_lis_06",
-   "title": "Informe de posición",
-   "scenario": "Un piloto transmite un informe de posición. Anota sus seis elementos.",
-   "lines": [
-    {
-     "who": "pilot",
-     "text": "Fastair three four five, Wicken four seven, flight level three three zero, Marlo five seven, Colin next."
-    }
-   ],
-   "after": [
-    {
-     "who": "atc",
-     "text": "Fastair three four five, roger."
-    }
-   ],
-   "fields": [
-    {
-     "id": "pos",
-     "label": "Posición",
-     "kind": "choice",
-     "options": [
-      "Wicken",
-      "Marlo",
-      "Colin",
-      "Kennington"
-     ],
-     "answer": "Wicken"
-    },
-    {
-     "id": "time",
-     "label": "Hora (minutos)",
-     "kind": "num",
-     "answer": "47"
-    },
-    {
-     "id": "fl",
-     "label": "Nivel de vuelo",
-     "kind": "num",
-     "answer": "330"
-    },
-    {
-     "id": "next",
-     "label": "Siguiente posición",
-     "kind": "choice",
-     "options": [
-      "Wicken",
-      "Marlo",
-      "Colin",
-      "Kennington"
-     ],
-     "answer": "Marlo"
-    },
-    {
-     "id": "nt",
-     "label": "Hora sobre la siguiente (min)",
-     "kind": "num",
-     "answer": "57"
-    },
-    {
-     "id": "ens",
-     "label": "Punto significativo siguiente",
-     "kind": "choice",
-     "options": [
-      "Wicken",
-      "Marlo",
-      "Colin",
-      "Kennington"
-     ],
-     "answer": "Colin"
-    }
-   ],
-   "notes": [
-    "Los elementos de un informe de posición son: identificación, posición, hora, nivel, siguiente posición y hora sobre ella, y punto significativo siguiente (§3.4.1)."
-   ],
-   "ref": {
-    "src": "ICAO Doc 9432 · §3.4.1 · p. 3-4 (PDF 37)",
-    "cite": "Position reports shall contain the following elements of information"
-   }
-  },
-  {
-   "id": "en_lis_07",
-   "title": "Información esencial del aeródromo",
-   "scenario": "Ground pasa una advertencia sobre el aeródromo. Anota los peligros y el estado de la pista.",
-   "lines": [
-    {
-     "who": "atc",
-     "text": "Fastair three four five, caution, construction work adjacent to gate three seven. Runway conditions zero nine: available width three two metres, covered with thin patches of ice, braking action poor. Snow up to three zero centimetres along edges."
-    }
-   ],
-   "after": [
-    {
-     "who": "pilot",
-     "text": "Roger, Fastair three four five."
-    }
-   ],
-   "fields": [
-    {
-     "id": "gate",
-     "label": "Puerta con obras (gate)",
-     "kind": "num",
-     "answer": "37"
-    },
-    {
-     "id": "rwy",
-     "label": "Pista informada",
-     "kind": "num",
-     "answer": "9"
-    },
-    {
-     "id": "wid",
-     "label": "Ancho disponible (m)",
-     "kind": "num",
-     "answer": "32"
-    },
-    {
-     "id": "surf",
-     "label": "Estado de la superficie",
-     "kind": "choice",
-     "options": [
-      "Thin patches of ice",
-      "Standing water",
-      "Wet",
-      "Dry"
-     ],
-     "answer": "Thin patches of ice"
-    },
-    {
-     "id": "brk",
-     "label": "Eficacia de frenado",
-     "kind": "choice",
-     "options": [
-      "Poor",
-      "Medium",
-      "Good",
-      "Nil"
-     ],
-     "answer": "Poor"
-    },
-    {
-     "id": "snow",
-     "label": "Nieve hasta (cm)",
-     "kind": "num",
-     "answer": "30"
-    }
-   ],
-   "notes": [
-    "La información esencial del aeródromo incluye obras, superficies dañadas, nieve, hielo o agua, aves y fallas de iluminación (§4.10)."
-   ],
-   "ref": {
-    "src": "ICAO Doc 9432 · §4.10 · p. 4-16 (PDF 54)",
-    "cite": "snow, slush or ice on a runway, a taxiway or an apron;"
-   }
-  },
-  {
-   "id": "en_lis_08",
-   "title": "Llamado de socorro",
-   "scenario": "Escucha un llamado de socorro. Anota qué ocurre, qué pretende hacer el piloto y dónde está.",
-   "lines": [
-    {
-     "who": "pilot",
-     "text": "Mayday, mayday, mayday, Walden Tower, Golf Alpha Bravo Charlie Delta, engine failed. Will attempt to land your field, five miles south, four thousand feet, heading three six zero."
-    }
-   ],
-   "after": [
-    {
-     "who": "atc",
-     "text": "Golf Alpha Bravo Charlie Delta, Walden Tower, roger mayday. Cleared straight-in approach runway three five, wind three six zero degrees, one zero knots, QNH one zero zero eight, you are number one."
-    }
-   ],
-   "fields": [
-    {
-     "id": "type",
-     "label": "Tipo de llamado",
-     "kind": "choice",
-     "options": [
-      "Distress (MAYDAY)",
-      "Urgency (PAN PAN)"
-     ],
-     "answer": "Distress (MAYDAY)"
-    },
-    {
-     "id": "nat",
-     "label": "Naturaleza",
-     "kind": "choice",
-     "options": [
-      "Engine failed",
-      "Engine on fire",
-      "Passenger ill",
-      "Low fuel"
-     ],
-     "answer": "Engine failed"
-    },
-    {
-     "id": "int",
-     "label": "Intención del piloto",
-     "kind": "choice",
-     "options": [
-      "Attempt to land at Walden",
-      "Return to departure airport",
-      "Divert to another airport",
-      "Continue to destination"
-     ],
-     "answer": "Attempt to land at Walden"
-    },
-    {
-     "id": "dist",
-     "label": "Distancia (millas)",
-     "kind": "num",
-     "answer": "5"
-    },
-    {
-     "id": "dir",
-     "label": "Dirección desde Walden",
-     "kind": "choice",
-     "options": [
-      "South",
-      "North",
-      "East",
-      "West"
-     ],
-     "answer": "South"
-    },
-    {
-     "id": "lvl",
-     "label": "Nivel (pies)",
-     "kind": "num",
-     "answer": "4000"
-    },
-    {
-     "id": "hdg",
-     "label": "Rumbo",
-     "kind": "num",
-     "answer": "360"
-    }
-   ],
-   "notes": [
-    "Orden de los elementos de un mensaje de socorro: estación llamada, identificación, naturaleza, intención del piloto al mando, posición/nivel/rumbo y otra información útil (§9.2.1.1).",
-    "Al revelar, verás la respuesta de la torre del ejemplo del manual."
-   ],
-   "ref": {
-    "src": "ICAO Doc 9432 · §9.2.1.1 · p. 9-2 (PDF 89)",
-    "cite": "A distress message should contain as many as possible of the following elements, and, if possible, in the order shown:"
-   }
-  },
-  {
    "id": "en_lis_09",
-   "title": "Colación incorrecta del QNH",
-   "scenario": "El piloto colaciona mal el QNH. Detecta el error y cómo lo corrige el controlador.",
+   "type": "clearance",
+   "title": "Espera (holding) sobre un NDB",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
    "lines": [
     {
      "who": "atc",
-     "text": "Golf Charlie Delta, QNH one zero zero three.",
-     "pause": 900
-    },
-    {
-     "who": "pilot",
-     "text": "QNH one zero one three, Golf Charlie Delta.",
-     "pause": 900
-    },
-    {
-     "who": "atc",
-     "text": "Golf Charlie Delta, negative, I say again, QNH one zero zero three.",
-     "pause": 900
-    },
-    {
-     "who": "pilot",
-     "text": "QNH one zero zero three, Golf Charlie Delta."
+     "text": "Fastair three four five, hold at North Cross NDB flight level one zero zero, inbound track two five zero degrees, left hand pattern, outbound time one minute."
     }
    ],
-   "fields": [
+   "keys": [
     {
-     "id": "given",
-     "label": "QNH que dio el controlador",
-     "kind": "code",
-     "answer": "1003"
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
     },
     {
-     "id": "rb",
-     "label": "QNH que colacionó el piloto primero",
-     "kind": "code",
-     "answer": "1013"
+     "label": "Punto de espera",
+     "value": "North Cross NDB",
+     "accept": [
+      [
+       "north",
+       "cross"
+      ],
+      [
+       "northcross"
+      ]
+     ]
     },
     {
-     "id": "fix",
-     "label": "Frase del controlador para corregir",
-     "kind": "choice",
-     "options": [
-      "Negative, I say again",
-      "Roger, correction",
-      "Disregard",
-      "Say again"
-     ],
-     "answer": "Negative, I say again"
+     "label": "Nivel",
+     "value": "FL 100",
+     "accept": [
+      [
+       "100"
+      ]
+     ]
+    },
+    {
+     "label": "Rumbo de acercamiento (inbound track)",
+     "value": "250°",
+     "accept": [
+      [
+       "250"
+      ]
+     ]
+    },
+    {
+     "label": "Patrón",
+     "value": "A la izquierda",
+     "accept": [
+      [
+       "left"
+      ]
+     ]
+    },
+    {
+     "label": "Tiempo del tramo de alejamiento",
+     "value": "1 minuto",
+     "accept": [
+      [
+       "1",
+       "minute"
+      ],
+      [
+       "1",
+       "min"
+      ]
+     ]
     }
    ],
    "notes": [
-    "Si la colación es incorrecta, el controlador transmite «NEGATIVE I SAY AGAIN» seguido de la versión correcta (§2.8.3.9). Los ajustes altimétricos siempre se colacionan (§2.8.3.5)."
+    "Normalmente el circuito de espera está publicado; cuando el piloto pide una descripción detallada basada en una instalación, se usa esta fraseología (§7.3.3).",
+    "El manual sugiere pasar los datos en este orden: punto, nivel, rumbo de acercamiento, sentido de los virajes y tiempo del tramo (nota de §7.3.3)."
    ],
    "ref": {
-    "src": "ICAO Doc 9432 · §2.8.3.9 · p. 2-14 (PDF 31)",
-    "cite": "the controller shall transmit the word “NEGATIVE I SAY AGAIN” followed by the correct version."
+    "src": "ICAO Doc 9432 · §7.3.3 · p. 7-5 (PDF 71)",
+    "cite": "when the pilot requires a detailed description of the holding procedure based on a facility, the following phraseology should be used:"
    }
   },
   {
    "id": "en_lis_10",
-   "title": "Cambio de frecuencia",
-   "scenario": "ATC ordena un cambio de frecuencia condicionado a un nivel. Anota cuándo, con quién y en qué frecuencia.",
+   "type": "clearance",
+   "title": "Espera sobre un radial VOR/DME con hora prevista de aproximación",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
    "lines": [
     {
      "who": "atc",
-     "text": "Fastair three four five, when passing flight level eight zero, contact Alexander Control, one two nine decimal one."
+     "text": "Fastair three four five, hold on the two six five radial of Marlo VOR between two five miles and three zero miles DME, flight level one zero zero, inbound track zero eight five, right hand pattern, expected approach time one zero three two."
     }
    ],
-   "after": [
+   "keys": [
     {
-     "who": "pilot",
-     "text": "When passing flight level eight zero, one two nine decimal one, Fastair three four five."
-    }
-   ],
-   "fields": [
-    {
-     "id": "lvl",
-     "label": "Cambiar al pasar el nivel de vuelo",
-     "kind": "num",
-     "answer": "80"
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
     },
     {
-     "id": "unit",
-     "label": "Contactar a",
-     "kind": "choice",
-     "options": [
-      "Alexander Control",
-      "Stephenville Tower",
-      "Georgetown Ground",
-      "Alexander Information"
-     ],
-     "answer": "Alexander Control"
+     "label": "Radial",
+     "value": "265 de Marlo VOR",
+     "accept": [
+      [
+       "265"
+      ]
+     ]
     },
     {
-     "id": "freq",
-     "label": "Frecuencia (MHz)",
-     "kind": "num",
-     "answer": "129.1"
+     "label": "VOR",
+     "value": "Marlo",
+     "accept": [
+      [
+       "marlo"
+      ]
+     ]
+    },
+    {
+     "label": "Entre",
+     "value": "25 y 30 millas DME",
+     "accept": [
+      [
+       "25",
+       "30"
+      ]
+     ]
+    },
+    {
+     "label": "Nivel",
+     "value": "FL 100",
+     "accept": [
+      [
+       "100"
+      ]
+     ]
+    },
+    {
+     "label": "Rumbo de acercamiento (inbound track)",
+     "value": "085°",
+     "accept": [
+      [
+       "85"
+      ]
+     ]
+    },
+    {
+     "label": "Patrón",
+     "value": "A la derecha",
+     "accept": [
+      [
+       "right"
+      ]
+     ]
+    },
+    {
+     "label": "Hora prevista de aproximación",
+     "value": "1032",
+     "accept": [
+      [
+       "1032"
+      ]
+     ]
     }
    ],
    "notes": [
-    "En frecuencias se dice «decimal» y cada dígito por separado (§2.4.4).",
-    "La colación modelo repite la condición y la frecuencia y termina con el indicativo (§2.8.3.7)."
+    "Los datos se pasan en este orden: punto o radial, nivel, rumbo de acercamiento, sentido de los virajes y tiempo del tramo si hace falta (nota de §7.3.3).",
+    "«Expected approach time» es la hora a la que ATC espera que la aeronave salga del punto de espera para completar su aproximación (glosario, cap. 1)."
    ],
    "ref": {
-    "src": "ICAO Doc 9432 · §2.8.2.1 · p. 2-12 (PDF 29)",
-    "cite": "An aircraft shall be advised by the appropriate aeronautical station to change from one radio frequency to another in accordance with agreed procedures."
+    "src": "ICAO Doc 9432 · §7.3.3 · p. 7-5 (PDF 71)",
+    "cite": "when the pilot requires a detailed description of the holding procedure based on a facility, the following phraseology should be used:"
    }
   },
   {
    "id": "en_lis_11",
-   "title": "Advertencia de cizalladura (wind shear)",
-   "scenario": "ATC advierte de un peligro en final. Anota el fenómeno, su intensidad y dónde fue reportado.",
+   "type": "clearance",
+   "title": "Rodaje con cesión de paso",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
    "lines": [
     {
      "who": "atc",
-     "text": "Fastair three four five, caution, medium wind shear reported at eight hundred feet, three miles final, runway two seven."
+     "text": "Fastair three four five, taxi to holding point runway two seven, give way to B seven four seven passing left to right, QNH one zero one nine."
     }
    ],
    "after": [
     {
      "who": "pilot",
-     "text": "Roger, Fastair three four five."
+     "text": "Holding point runway two seven, QNH one zero one nine, giving way to B seven four seven, Fastair three four five."
     }
    ],
-   "fields": [
+   "keys": [
     {
-     "id": "haz",
-     "label": "Fenómeno",
-     "kind": "choice",
-     "options": [
-      "Wind shear",
-      "Wake turbulence",
-      "Bird activity",
-      "Runway contamination"
-     ],
-     "answer": "Wind shear"
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
     },
     {
-     "id": "sev",
-     "label": "Intensidad",
-     "kind": "choice",
-     "options": [
-      "Medium",
-      "Light",
-      "Severe"
-     ],
-     "answer": "Medium"
+     "label": "Destino del rodaje",
+     "value": "Punto de espera pista 27",
+     "accept": [
+      [
+       "27"
+      ]
+     ]
     },
     {
-     "id": "alt",
-     "label": "Altitud reportada (pies)",
-     "kind": "num",
-     "answer": "800"
+     "label": "Ceder el paso a",
+     "value": "B747",
+     "accept": [
+      [
+       "747"
+      ],
+      [
+       "b747"
+      ]
+     ]
     },
     {
-     "id": "dist",
-     "label": "Distancia en final (millas)",
-     "kind": "num",
-     "answer": "3"
+     "label": "Sentido del cruce",
+     "value": "De izquierda a derecha",
+     "accept": [
+      [
+       "left",
+       "right"
+      ],
+      [
+       "l",
+       "r"
+      ]
+     ]
     },
     {
-     "id": "rwy",
-     "label": "Pista",
-     "kind": "num",
-     "answer": "27"
+     "label": "QNH",
+     "value": "1019",
+     "accept": [
+      [
+       "1019"
+      ]
+     ]
     }
    ],
    "notes": [
-    "Cuando se pronostica o se reporta wind shear, ATC advierte al resto del tránsito hasta que los pilotos informen que el fenómeno ya no existe (§11.4)."
+    "Un rodaje siempre trae un límite de la autorización, normalmente el punto de espera de la pista en uso (§4.4.1). Cuando la aeronave acusa recibo del ATIS, el controlador no necesita pasar la información de salida (§4.4.3).",
+    "El QNH es de los datos que siempre se colacionan (§2.8.3.5)."
    ],
    "ref": {
-    "src": "ICAO Doc 9432 · §11.4 · p. 11-3 (PDF 99)",
-    "cite": "When wind shear is forecast or is reported by aircraft, ATC will warn other aircraft until such time as aircraft report the phenomenon no longer exists."
+    "src": "ICAO Doc 9432 · §4.4.1 · p. 4-3 (PDF 41)",
+    "cite": "Taxi instructions issued by a controller will always contain a clearance limit, which is the point at which the aircraft must stop until further permission to proceed is given."
+   }
+  },
+  {
+   "id": "en_lis_12",
+   "type": "clearance",
+   "title": "Despegue con instrucciones de salida",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla. Son dos transmisiones: la autorización de despegue y, más tarde, el cambio de frecuencia.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Fastair three four five, climb straight ahead until two thousand five hundred feet before turning right, runway two four cleared for take-off.",
+     "pause": 3500
+    },
+    {
+     "who": "atc",
+     "text": "Fastair three four five, contact Departure one two one decimal seven five zero."
+    }
+   ],
+   "after": [
+    {
+     "who": "pilot",
+     "text": "Straight ahead two thousand five hundred feet, right turn, cleared for take-off runway two four, Fastair three four five."
+    },
+    {
+     "who": "pilot",
+     "text": "One two one decimal seven five zero, Fastair three four five."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Indicativo",
+     "value": "Fastair 345",
+     "accept": [
+      [
+       "fastair",
+       "345"
+      ],
+      [
+       "345"
+      ]
+     ]
+    },
+    {
+     "label": "Trayectoria inicial",
+     "value": "Recto hasta 2500 ft",
+     "accept": [
+      [
+       "2500"
+      ]
+     ]
+    },
+    {
+     "label": "Después",
+     "value": "Virar a la derecha",
+     "accept": [
+      [
+       "right"
+      ]
+     ]
+    },
+    {
+     "label": "Pista",
+     "value": "24",
+     "accept": [
+      [
+       "24"
+      ]
+     ]
+    },
+    {
+     "label": "Autorización",
+     "value": "Cleared for take-off",
+     "accept": [
+      [
+       "cleared"
+      ],
+      [
+       "take"
+      ],
+      [
+       "takeoff"
+      ]
+     ]
+    },
+    {
+     "label": "Frecuencia de Departure",
+     "value": "121.750",
+     "accept": [
+      [
+       "121750"
+      ],
+      [
+       "12175"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "Las instrucciones de salida pueden darse junto con la autorización de despegue para asegurar la separación (§4.5.9). «Take-off» se usa solo para autorizar o cancelar el despegue (§2.8.3.3).",
+    "Es una autorización que siempre se colaciona: instrucciones de despegar, aterrizar, entrar, cruzar o mantener antes de una pista (§2.8.3.5 b)."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §4.5.9 · p. 4-8 (PDF 46)",
+    "cite": "Departure instructions may be given with the take-off clearance."
+   }
+  },
+  {
+   "id": "en_lis_13",
+   "type": "clearance",
+   "title": "Autorización directa a un NDB, entrada a espacio controlado y espera",
+   "scenario": "Escucha la autorización de ATC y escríbela completa, como si tuvieras que colacionarla.",
+   "lines": [
+    {
+     "who": "atc",
+     "text": "Golf Alpha Bravo, cleared direct Stephenville NDB, flight level seven zero. Enter controlled airspace flight level one zero zero or below. Hold Stephenville NDB flight level seven zero, right hand pattern, expected approach time five two."
+    }
+   ],
+   "after": [
+    {
+     "who": "pilot",
+     "text": "Cleared direct to Stephenville NDB flight level seven zero. Entering controlled airspace flight level one zero zero or below. Holding Stephenville NDB flight level seven zero right hand pattern, expecting approach time five two, Golf Alpha Bravo."
+    }
+   ],
+   "keys": [
+    {
+     "label": "Indicativo",
+     "value": "G-AB",
+     "accept": [
+      [
+       "golf",
+       "alpha",
+       "bravo"
+      ],
+      [
+       "g",
+       "ab"
+      ],
+      [
+       "gab"
+      ]
+     ]
+    },
+    {
+     "label": "Directo a",
+     "value": "Stephenville NDB",
+     "accept": [
+      [
+       "stephenville"
+      ]
+     ]
+    },
+    {
+     "label": "Nivel",
+     "value": "FL 70",
+     "accept": [
+      [
+       "70"
+      ]
+     ]
+    },
+    {
+     "label": "Entrar al espacio controlado a",
+     "value": "FL 100 o menos",
+     "accept": [
+      [
+       "100"
+      ]
+     ]
+    },
+    {
+     "label": "Patrón de espera",
+     "value": "A la derecha",
+     "accept": [
+      [
+       "right"
+      ]
+     ]
+    },
+    {
+     "label": "Hora prevista de aproximación",
+     "value": "52 (minutos)",
+     "accept": [
+      [
+       "52"
+      ]
+     ]
+    }
+   ],
+   "notes": [
+    "Así se pasan una autorización directa, el límite de nivel para entrar al espacio controlado y una espera con hora prevista de aproximación (§7.3.1).",
+    "En la hora solo se transmiten los minutos (§2.5.1): «expected approach time five two»."
+   ],
+   "ref": {
+    "src": "ICAO Doc 9432 · §7.3.1 (ejemplo) · p. 7-3 (PDF 69)",
+    "cite": "G-AB CLEARED DIRECT STEPHENVILLE NDB, FL 70. ENTER CONTROLLED AIRSPACE FL 100 OR BELOW. HOLD STEPHENVILLE NDB FL 70, RIGHT HAND PATTERN, EXPECTED APPROACH TIME 52."
    }
   }
  ]
@@ -5408,7 +6484,7 @@ const EN_MAX_SECONDS=90,EN_MAX_RESTARTS=25;
 const EN_LABEL={image:"DESCRIBIR IMÁGENES",speaking:"PREGUNTAS CON MICRÓFONO",listening:"AUDIOS"};
 const EN_RADIO_DIGITS={three:"tree",four:"fower",five:"fife",nine:"niner"};
 let enSession=null;
-const enMedia={audioGen:0,speaking:false,sayBtn:null,utter:null,voicesLoaded:false,micGen:0,listening:false,stopping:false,rec:null,base:"",final:"",interim:"",restarts:0,timer:null,maxTimer:null,restartTimer:null,startTime:null,micOk:false};
+const enMedia={audioGen:0,speaking:false,sayBtn:null,utter:null,lineIdx:-1,voicesLoaded:false,micGen:0,listening:false,stopping:false,rec:null,base:"",final:"",interim:"",restarts:0,timer:null,maxTimer:null,restartTimer:null,startTime:null,micOk:false};
 
 /* ---------- preferencias (solo comodidad; si falla el almacenamiento, todo sigue igual) ---------- */
 function enPrefs(){try{const p=JSON.parse(localStorage.getItem(EN_PREF_KEY)||"{}");return isPlainObject(p)?p:{}}catch(e){return{}}}
@@ -5432,12 +6508,9 @@ function englishIntegrity(){
   });
   (ENGLISH.listening||[]).forEach(x=>{
     if(!uid(x)){issues++;return}
-    if(!str(x.title)||!str(x.scenario)||!Array.isArray(x.lines)||!x.lines.length||!x.lines.every(l=>isPlainObject(l)&&(l.who==="atc"||l.who==="pilot")&&str(l.text))||!Array.isArray(x.fields)||!x.fields.length){issues++;return}
-    const fids=new Set();
-    x.fields.forEach(f=>{
-      if(!isPlainObject(f)||!str(f.id)||fids.has(f.id)||!str(f.label)||!["num","code","choice"].includes(f.kind)||!str(String(f.answer))){issues++;return}
-      fids.add(f.id);
-      if(f.kind==="choice"&&!(Array.isArray(f.options)&&f.options.includes(f.answer)))issues++;
+    if(!["atis","clearance"].includes(x.type)||!str(x.title)||!str(x.scenario)||!Array.isArray(x.lines)||!x.lines.length||!x.lines.every(l=>isPlainObject(l)&&(l.who==="atc"||l.who==="pilot")&&str(l.text))||!Array.isArray(x.keys)||!x.keys.length){issues++;return}
+    x.keys.forEach(k=>{
+      if(!isPlainObject(k)||!str(k.label)||!str(k.value)||!Array.isArray(k.accept)||!k.accept.length||!k.accept.every(a=>Array.isArray(a)&&a.length&&a.every(t=>typeof t==="string"&&/^[a-z0-9]+$/.test(t))))issues++;
     });
   });
   return issues;
@@ -5462,8 +6535,14 @@ function enChooseVoice(){
   const saved=enPref("voice","");
   const chosen=saved&&list.find(v=>v.voiceURI===saved);
   if(chosen)return chosen;
-  const rank=v=>/en[-_]GB/i.test(v.lang)?0:/en[-_]US/i.test(v.lang)?1:2;
+  /* Las voces «Natural»/neuronales (por ejemplo las de Microsoft Edge) suenan mucho mejor: van primero. */
+  const rank=v=>(/natural|neural/i.test(v.name||"")?-2:0)+(/en[-_]GB/i.test(v.lang)?0:/en[-_]US/i.test(v.lang)?1:2);
   return list.slice().sort((a,b)=>rank(a)-rank(b))[0];
+}
+/* Velocidad: la que el usuario guardó; si no hay, lenta para las frases de práctica y normal para copiar un ATIS o una autorización. */
+function enRate(kind){
+  const saved=Number(enPref("rate",0));
+  return saved>0?saved:(kind==="listening"?1:0.85);
 }
 function enUpdateAudioUi(){
   const b=$("enPlayBtn");
@@ -5475,11 +6554,11 @@ function enStopAudio(){
   if(enSpeechOk()){try{speechSynthesis.cancel()}catch(e){}}
   enUpdateAudioUi();
 }
-function enPlay(lines,btn){
+function enPlay(lines,btn,from){
   enStopAudio();
   if(!enSpeechOk()){toast("Este navegador no puede leer el audio en voz alta. Usa la transcripción.");return false}
   enStopMic(true);
-  const gen=++enMedia.audioGen,voice=enChooseVoice(),rate=Number(enPref("rate",0.85))||0.85,radio=enPref("radio",true)!==false;
+  const gen=++enMedia.audioGen,voice=enChooseVoice(),rate=enRate(enSession?enSession.kind:"speaking"),radio=enPref("radio",true)!==false,base=from||0;
   let i=0;
   enMedia.speaking=true;enMedia.sayBtn=btn||null;enUpdateAudioUi();
   const finish=()=>{if(gen!==enMedia.audioGen)return;enMedia.speaking=false;enMedia.sayBtn=null;enUpdateAudioUi()};
@@ -5487,6 +6566,7 @@ function enPlay(lines,btn){
     if(gen!==enMedia.audioGen)return;
     if(i>=lines.length){finish();return}
     const ln=lines[i++];
+    enMedia.lineIdx=base+i-1;
     const u=new SpeechSynthesisUtterance(radioSay(ln.say||ln.text,radio));
     u.lang=voice?voice.lang:"en-GB";if(voice)u.voice=voice;
     u.rate=rate;u.pitch=ln.who==="pilot"?1.15:0.9;
@@ -5499,11 +6579,20 @@ function enPlay(lines,btn){
   setTimeout(next,80);
   return true;
 }
+function enPlayableLines(){
+  const it=enItem();if(!it)return[];
+  return enSession.kind==="listening"?it.lines:(it.heard||[]);
+}
 function enPlayCurrent(){
   if(enMedia.speaking){enStopAudio();return}
-  const it=enItem();if(!it)return;
-  const lines=enSession.kind==="listening"?it.lines:(it.heard||[]);
-  if(lines.length)enPlay(lines);
+  const lines=enPlayableLines();
+  if(lines.length){enMedia.lineIdx=-1;enPlay(lines)}
+}
+/* Repite solo la última frase que sonó (o la primera si aún no sonó nada): útil para copiar con calma. */
+function enReplayLine(){
+  const lines=enPlayableLines();if(!lines.length)return;
+  const idx=Math.max(0,Math.min(lines.length-1,enMedia.lineIdx));
+  enPlay(lines.slice(idx,idx+1),null,idx);
 }
 function enPlayFromBtn(btn){
   if(enMedia.speaking&&enMedia.sayBtn===btn){enStopAudio();return}
@@ -5654,6 +6743,45 @@ function enStopMic(updateUi){
 function stopEnglishMedia(){enStopAudio();enStopMic(false)}
 document.addEventListener("visibilitychange",()=>{if(document.hidden)stopEnglishMedia()});
 
+/* ---------- comparar tus apuntes con el audio (flexible; solo marca datos, nunca una nota) ----------
+   Los apuntes son libres: cada persona escribe a su manera («200/12», «wind two zero zero one two»,
+   «RWY27», «118.7»). Se normalizan a grupos de dígitos y palabras y cada dato clave declara con qué
+   grupos se da por anotado (ver "keys" de cada audio). */
+const EN_NUM_WORDS=Object.assign(Object.create(null),{zero:"0",one:"1",wun:"1",two:"2",too:"2",three:"3",tree:"3",four:"4",fower:"4",five:"5",fife:"5",six:"6",seven:"7",eight:"8",ait:"8",nine:"9",niner:"9"});
+function enNoteTokens(text){
+  const t=String(text||"").toLowerCase().replace(/(\d)[.,:](?=\d)/g,"$1").replace(/[^a-z0-9]+/g," ").trim();
+  const words=[],digits=[],compact=[];
+  let run="",acc="",hold=false;
+  const push=g=>{if(hold&&digits.length)digits[digits.length-1]+=g;else digits.push(g);hold=false};
+  const flush=()=>{const n=acc+run;acc="";run="";if(n)push(n)};
+  (t?t.split(" "):[]).forEach(tok=>{
+    compact.push(tok);
+    (tok.match(/[a-z]+|\d+/g)||[]).forEach(ch=>{
+      if(/^\d+$/.test(ch)){flush();push(ch);return}
+      if(ch in EN_NUM_WORDS){run+=EN_NUM_WORDS[ch];return}
+      if(ch==="thousand"){if(run){acc=run+"000";run=""}return}
+      if(ch==="hundred"){if(run){acc=acc?acc.slice(0,-3)+run+"00":run+"00";run=""}return}
+      if(ch==="decimal"||ch==="dot"){flush();hold=true;return}
+      hold=false;flush();words.push(ch);
+    });
+  });
+  flush();
+  return{words,digits,compact};
+}
+function enNumEq(g,a){return g===a||(g.length<=3&&a.length<=3&&parseInt(g,10)===parseInt(a,10))}
+function enAtomFound(atom,tok){
+  if(/^\d+$/.test(atom))return tok.digits.some(g=>enNumEq(g,atom));
+  return tok.words.includes(atom)||tok.compact.includes(atom);
+}
+function enKeyFound(key,tok){
+  const alts=[];
+  ((key&&key.accept)||[]).forEach(a=>{
+    alts.push(a);
+    if(a.length>1&&a.every(x=>/^\d+$/.test(x)))alts.push([a.join("")]);   // «20012» por 200/12
+  });
+  return alts.some(a=>a.length>0&&a.every(x=>enAtomFound(x,tok)));
+}
+
 /* ---------- pantalla de la sección ---------- */
 function enItemsFor(kind){
   const src=kind==="image"?ENGLISH.images:kind==="speaking"?ENGLISH.speaking:ENGLISH.listening;
@@ -5675,7 +6803,7 @@ function renderEnglishHub(){
   const im=enItemsFor("image"),sp=enItemsFor("speaking"),li=enItemsFor("listening");
   $("enImgCount").textContent=line(im,`${im.length} fotos reales · describe, compara y aprende vocabulario`);
   $("enSpkCount").textContent=line(sp,`${sp.length} situaciones · radio, lenguaje claro y conversación`);
-  $("enLisCount").textContent=line(li,`${li.length} audios · escucha y anota datos`);
+  $("enLisCount").textContent=line(li,`${li.length} audios · copia un ATIS o una autorización`);
   const total=im.length+sp.length+li.length,tried=enTried(im)+enTried(sp)+enTried(li),good=enGood(im)+enGood(sp)+enGood(li);
   const again=[...im,...sp,...li].filter(x=>(appState.english[x.id]||{}).r===0).length;
   $("englishProgressSummary").textContent=tried?`${tried} de ${total} ejercicios practicados · ${good} «Bien»${again?` · ${again} para repetir`:""}`:"Aún no practicas ningún ejercicio";
@@ -5690,7 +6818,7 @@ function startEnglishPractice(kind){
   if(!items.length){toast("Todavía no hay ejercicios de este tipo");return}
   stopEnglishMedia();stopEverythingOral();session=null;
   const first=Math.max(0,items.findIndex(x=>(appState.english[x.id]||{}).r!==2));
-  enSession={kind,items,index:first,state:items.map(()=>({revealed:false,rating:null,text:"",vals:{}}))};
+  enSession={kind,items,index:first,state:items.map(()=>({revealed:false,rating:null,text:""}))};
   show("englishPractice");renderEnglishPractice();
 }
 function enItem(){return enSession?enSession.items[enSession.index]:null}
@@ -5720,26 +6848,22 @@ function enCitation(ref){
   if(!ref)return "";
   return `<div class="citation"><div class="label">Referencia · ICAO Doc 9432</div>${ref.cite?`<blockquote>“${esc(ref.cite)}”</blockquote>`:""}<div class="src">${esc(ref.src||"")}</div></div>`;
 }
-function enFieldOk(f,val){
-  const v=String(val==null?"":val).trim();
-  if(!v)return false;
-  if(f.kind==="choice")return v===f.answer;
-  const d=v.replace(/\D/g,""),a=String(f.answer).replace(/\D/g,"");
-  if(!d)return false;
-  return f.kind==="code"?d===a:parseInt(d,10)===parseInt(a,10);
+function enNotesBox(){
+  return `<div class="section-label">Tus apuntes</div>
+<textarea class="oral-transcript en-notes" id="enNotes" rows="9" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Escribe aquí lo que vas oyendo, como si tomaras nota en cabina…" aria-label="Tus apuntes de lo que escuchas" oninput="enTextChanged(this.value)"></textarea>`;
 }
-function enFieldChanged(id,val){if(enSession)enSession.state[enSession.index].vals[id]=String(val||"")}
-function enAudioBox(){
-  const rate=Number(enPref("rate",0.85))||0.85;
-  const opts=[[0.65,"Muy lenta"],[0.85,"Lenta"],[1,"Normal"]].map(([v,l])=>`<option value="${v}"${Math.abs(v-rate)<0.01?" selected":""}>${l}</option>`).join("");
+function enAudioBox(withReplay){
+  const rate=enRate(enSession?enSession.kind:"speaking");
+  const opts=[[0.65,"Muy lenta"],[0.85,"Lenta"],[1,"Normal"],[1.15,"Rápida"]].map(([v,l])=>`<option value="${v}"${Math.abs(v-rate)<0.01?" selected":""}>${l}</option>`).join("");
   return `<div class="en-audio">
-<button class="btn primary" id="enPlayBtn" onclick="enPlayCurrent()" type="button">▶ Escuchar</button>
+<div class="en-audio-row${withReplay?" two":""}"><button class="btn primary" id="enPlayBtn" onclick="enPlayCurrent()" type="button">▶ Escuchar</button>${withReplay?`<button class="btn" id="enReplayBtn" onclick="enReplayLine()" type="button">↺ Última frase</button>`:""}</div>
 <div class="en-audio-opts">
 <label>Velocidad<select id="enRate" onchange="enSetPref('rate',Number(this.value))">${opts}</select></label>
 <label>Voz<select id="enVoice" onchange="enSetPref('voice',this.value)"><option value="">Automática</option></select></label>
 </div>
 <label class="en-inline"><input type="checkbox" id="enRadio"${enPref("radio",true)!==false?" checked":""} onchange="enSetPref('radio',this.checked)"><span>Dígitos como en radio (tree, fower, fife, niner)</span></label>
 <div class="oral-status" id="enAudioStatus" role="status" aria-live="polite"></div>
+<div class="oral-score-note">La calidad de la voz depende de tu dispositivo. En Microsoft Edge (Windows) aparecen voces «Natural» mucho más realistas.</div>
 </div>`;
 }
 function enMicBox(){
@@ -5791,32 +6915,22 @@ function renderEnglishPractice(){
     work+=enMicBox();
     $("epRevealBtn").textContent="Mostrar modelo";
   }else{
-    $("epTag").innerHTML=`AUDIO · ICAO DOC 9432`;
-    $("epEyebrow").textContent="ESCUCHA Y ANOTA";
+    $("epTag").innerHTML=`AUDIO · ${it.type==="atis"?"ATIS":"AUTORIZACIÓN DE ATC"}`;
+    $("epEyebrow").textContent="ESCUCHA Y ESCRIBE";
     $("epTitle").textContent=it.title;
     $("epStimulus").innerHTML=`<div class="en-scenario">${esc(it.scenario)}</div>`;
-    $("epTip").textContent="Escucha las veces que necesites antes de comprobar. Al comprobar verás qué campos coinciden con el audio; no se calcula ninguna nota.";
-    work=`${enAudioBox()}<div id="enFieldsWrap"></div>`;
+    $("epTip").textContent="Anota lo que oigas como lo escribirías en cabina, en tu propio formato. Al comprobar verás la transcripción y qué datos encontré en tus apuntes; no se calcula ninguna nota.";
+    work=`${enAudioBox(true)}${enNotesBox()}`;
     $("epRevealBtn").textContent="Comprobar y ver transcripción";
   }
   $("epWork").innerHTML=work;
-  if(s.kind==="listening")$("enFieldsWrap").innerHTML=enFieldsHtml(it,st);
-  const box=$("enTranscript");if(box)box.value=st.text||"";
+  const box=$("enTranscript")||$("enNotes");
+  if(box){box.value=st.text||"";if(s.kind==="listening"&&st.revealed)box.readOnly=true}
   enFillVoices();
   if(!enMedia.voicesLoaded&&$("enVoice"))setTimeout(()=>{enMedia.voicesLoaded=true;enFillVoices()},2500);
   renderEnglishReveal();
 }
 function enToggleHeard(){const b=$("enHeardText");if(b)b.classList.toggle("hidden")}
-function enFieldsHtml(it,st){
-  const checked=st.revealed;
-  return `<div class="section-label">Anota lo que escuchas</div><div class="en-fields">${it.fields.map(f=>{
-    const v=st.vals[f.id]??"",ok=checked?enFieldOk(f,v):null,id="enf_"+f.id;
-    const control=f.kind==="choice"
-      ?`<select id="${id}" onchange="enFieldChanged('${f.id}',this.value)"${checked?" disabled":""}><option value="">—</option>${f.options.map(o=>`<option value="${esc(o)}"${o===v?" selected":""}>${esc(o)}</option>`).join("")}</select>`
-      :`<input id="${id}" type="text" inputmode="${f.kind==="num"?"decimal":"numeric"}" autocomplete="off" value="${esc(v)}" oninput="enFieldChanged('${f.id}',this.value)"${checked?" disabled":""}>`;
-    return `<div class="en-field${checked?(ok?" ok":" bad"):""}"><label for="${id}">${esc(f.label)}</label>${control}${checked?`<div class="en-fans">${ok?"✓ Coincide con el audio":"✗ En el audio: <b>"+esc(f.answer)+"</b>"}</div>`:""}</div>`;
-  }).join("")}</div>`;
-}
 function enImageReveal(it){
   let h=`<div class="explain"><div class="label">Lo que se ve</div>${enUl(it.seen)}</div>`;
   h+=`<div class="memory"><div class="label">Lo que podría haber pasado (hipótesis)</div>${enUl(it.might)}</div>`;
@@ -5835,21 +6949,28 @@ function enSpeakingReveal(it){
   h+=enCitation(it.ref);
   return h;
 }
-function enListeningReveal(it){
+function enListeningReveal(it,st){
   const who=w=>w==="pilot"?"Piloto":"ATC";
+  const tok=enNoteTokens(st.text),wrote=String(st.text||"").trim().length>0;
+  const rows=it.keys.map(k=>{
+    const ok=wrote&&enKeyFound(k,tok);
+    return `<div class="en-key ${ok?"ok":"miss"}"><span class="en-key-mark" aria-hidden="true">${ok?"✓":"•"}</span><span><b>${esc(k.label)}</b> · ${esc(k.value)}${ok?"":`<em> — no lo encontré en tus apuntes</em>`}</span></div>`;
+  }).join("");
   let h=`<div class="explain"><div class="label">Transcripción</div>${it.lines.map(l=>`<div class="en-tr"><b>${who(l.who)}:</b> ${esc(l.text)}</div>`).join("")}</div>`;
-  if(it.after&&it.after.length)h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Continuación / colación modelo</div>${it.after.map(l=>`<div class="en-line"><span class="en-model"><b>${who(l.who)}:</b> ${esc(l.text)}</span>${enSayBtn(l.text,l.who)}</div>`).join("")}</div>`;
+  h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Datos clave, en el orden en que sonaron</div>${wrote?"":`<div class="en-tr">No escribiste nada: escucha de nuevo, anota lo que oigas y vuelve a comprobar.</div>`}${rows}<div class="oral-score-note">La comparación es automática y flexible: entiende «200/12», «two zero zero» o «RWY27». Si lo anotaste de otra forma y está bien, cuéntalo como bien. Es solo una ayuda, no una nota.</div></div>`;
+  if(it.after&&it.after.length)h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Colación / llamada modelo</div>${it.after.map(l=>`<div class="en-line"><span class="en-model"><b>${who(l.who)}:</b> ${esc(l.text)}</span>${enSayBtn(l.text,l.who)}</div>`).join("")}</div>`;
   h+=`<div class="memory" style="margin-top:8px"><div class="label">Para fijar</div>${enUl(it.notes||[])}</div>`;
   h+=enCitation(it.ref);
+  h+=`<button class="btn ghost" onclick="retryEnglish()" style="width:100%;margin-top:10px" type="button">Volver a intentarlo (borra tus apuntes)</button>`;
   return h;
 }
 function renderEnglishReveal(){
   const s=enSession,it=enItem(),st=s.state[s.index],n=s.items.length;
   const box=$("epReveal");
   if(st.revealed){
-    box.innerHTML=s.kind==="image"?enImageReveal(it):s.kind==="speaking"?enSpeakingReveal(it):enListeningReveal(it);
+    box.innerHTML=s.kind==="image"?enImageReveal(it):s.kind==="speaking"?enSpeakingReveal(it):enListeningReveal(it,st);
     box.classList.remove("hidden");
-    if(s.kind==="listening")$("enFieldsWrap").innerHTML=enFieldsHtml(it,st);
+    const notes=$("enNotes");if(notes&&s.kind==="listening")notes.readOnly=true;
   }else{box.innerHTML="";box.classList.add("hidden")}
   $("epRevealBtn").classList.toggle("hidden",st.revealed);
   $("epRateWrap").classList.toggle("hidden",!st.revealed);
@@ -5862,7 +6983,7 @@ function revealEnglish(){
   if(!enSession)return;
   enSession.state[enSession.index].revealed=true;
   stopEnglishMedia();
-  const box=$("enTranscript");if(box)enTextChanged(box.value);
+  const box=$("enTranscript")||$("enNotes");if(box)enTextChanged(box.value);
   renderEnglishReveal();
   const r=$("epReveal");if(r&&r.scrollIntoView)r.scrollIntoView({block:"start",behavior:"smooth"});
 }
@@ -5875,6 +6996,14 @@ function rateEnglish(v){
   saveState();
   enSyncRate();
   toast(v===2?"Bien":v===1?"Casi · vuelve a intentarlo":"Marcada para repetir");
+}
+/* Repetir el mismo audio desde cero: borra los apuntes y vuelve a ocultar la comparación. */
+function retryEnglish(){
+  if(!enSession)return;
+  const st=enSession.state[enSession.index];
+  st.revealed=false;st.rating=null;st.text="";
+  renderEnglishPractice();
+  const n=$("enNotes");if(n){n.focus({preventScroll:true});n.scrollIntoView({block:"center"})}
 }
 function enSyncRate(){
   const st=enSession?enSession.state[enSession.index]:null;

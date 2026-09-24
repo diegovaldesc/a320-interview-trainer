@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~2 s con `OK 55/55 casos...` (código 0) o con la
+a su estado real. Termina en ~2 s con `OK 60/60 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -186,12 +186,13 @@ resolver primero, antes de seguir auditando.
 ## 10. Inglés OACI (sección nueva, rama `modulo-ingles`)
 
 - **Banco completo** — 74 alternativas, 8 imágenes, 17 respuestas orales y
-  11 audios; `bankIntegrity()` no reporta incidencias (`englishIssues`), y
+  13 audios (5 ATIS y 8 autorizaciones); `bankIntegrity()` no reporta
+  incidencias (`englishIssues`), y
   cada alternativa lleva fuente (`ICAO Doc 9432 · …`), cita y explicación. Las
   alternativas no cuentan como preguntas FCOM (`totalQuestions()` sigue en 415)
   ni entran en la precisión ni en «Mis errores» del inicio.
-- **`englishIntegrity()`** detecta una respuesta fuera de las opciones, un id
-  repetido y un modelo vacío.
+- **`englishIntegrity()`** detecta un dato clave mal formado, un tipo de audio
+  inválido, un id repetido y un modelo vacío.
 - **Motor de preguntas** — las alternativas usan el motor de siempre: la
   etiqueta dice `ICAO DOC 9432`, la respuesta muestra cabecera y referencia
   del manual, salir de la sesión vuelve al menú de inglés (no al inicio) y una
@@ -201,19 +202,33 @@ resolver primero, antes de seguir auditando.
   siendo válido; con el tipo equivocado se rechaza.
 - **Sin nota, nunca** — en describir imágenes, audios y micrófono no existe
   `.oral-score`, `.oral-grade` ni `.score-circle`. El autoexamen (Repetir /
-  Casi / Bien) solo se guarda como avance; los audios comparan campo por
-  campo (`enFieldOk`: números sin ceros a la izquierda, códigos exactos,
-  opciones exactas) y nunca resumen en una calificación.
+  Casi / Bien) solo se guarda como avance.
+- **Audios = copiar un ATIS o una autorización, con apuntes libres** — no hay
+  campos ni etiquetas que den el orden: solo un cuadro de texto (el texto de
+  ayuda no menciona viento, pista, QNH, etc.). Al comprobar se muestra la
+  transcripción y una lista de «datos clave» marcados ✓ / • (nunca un total ni
+  una nota). La comparación es flexible (`enNoteTokens` / `enKeyFound`): entiende
+  `200/12`, `two zero zero one two`, `RWY27`, `QNH1018`, `T16 D10`, `8KM`,
+  `eight thousand`, `two thousand five hundred`, `118.7` / `one one eight decimal
+  seven`, sin unir cifras ajenas («dew point») ni encontrar `10` dentro de
+  `1018`. Cada dato clave de los 13 audios debe reconocerse en su propia
+  transcripción y no en un texto ajeno; unos apuntes abreviados «de cabina» los
+  reconocen y unos parciales marcan solo lo anotado. «Volver a intentarlo»
+  borra los apuntes y oculta la comparación.
 - **Micrófono en inglés** — usa reconocimiento en `en-US`; `goHome()` lo detiene
   y lo aborta; un permiso que llega tarde no inicia el reconocimiento en otra
   pantalla; lo reconocido (provisional y final) llega al cuadro de texto y se
   conserva, pero no se puntúa.
 - **Audio** — se lee con la voz del dispositivo (`speechSynthesis`); cambiar de
   pantalla lo cancela. `radioSay` convierte 3/4/5/9 en tree/fower/fife/niner y
-  deletrea QNH, ILS, RVR y SSR sin tocar palabras como «nineteen».
+  deletrea QNH, ILS, RVR y SSR sin tocar palabras como «nineteen». «↺ Última
+  frase» repite solo la última frase que sonó. Las voces «Natural»/neuronales
+  (Edge) se eligen primero; la velocidad por defecto es normal para copiar un
+  ATIS o una autorización y lenta para las frases de práctica.
 - **Accesibilidad** — tarjetas, selector de ejercicio, botón de escuchar,
-  selector de velocidad, botón de grabar, botones ▶ del modelo, casillas de
-  autoevaluación, botones Repetir/Casi/Bien y campos numéricos miden ≥44 px.
+  «Última frase», selector de velocidad, botón de grabar, cuadro de apuntes,
+  botones ▶ del modelo, casillas de autoevaluación y botones Repetir/Casi/Bien
+  miden ≥44 px.
 
 **Comprobación de las citas (fuera de esta batería).** Cada `cite` de las
 alternativas, cada frase de radio tomada de un ejemplo del manual y cada dato
@@ -224,7 +239,7 @@ las tablas se leyeron además en la imagen de la página. Esa comprobación
 necesita el manual en `Desktop\APP` y por eso no forma parte de `run.ps1`; si
 se edita el texto de una cita, hay que repetirla con
 `node C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_ingles.js`
-(lee el bloque `english-data` de `index.html`; en la última corrida: 106 tramos
+(lee el bloque `english-data` de `index.html`; en la última corrida: 108 tramos
 de cita comprobados, 0 problemas).
 
 ## Límite explícito de esta batería

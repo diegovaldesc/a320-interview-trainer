@@ -493,7 +493,7 @@
     var h=bankIntegrity();
     eq(h.englishIssues,0,"incidencias de Ingles OACI");
     ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
-    eq(ENGLISH.mcq.length,74,"alternativas");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.speaking.length,17,"respuestas orales");eq(ENGLISH.listening.length,11,"audios");
+    eq(ENGLISH.mcq.length,74,"alternativas");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.speaking.length,17,"respuestas orales");eq(ENGLISH.listening.length,13,"audios");
     eq(SYSTEMS[ENGLISH_KEY].questions.length,74,"alternativas dentro de SYSTEMS");
     eq(totalQuestions(),415,"las alternativas de ingles no deben contarse como preguntas FCOM");
     SYSTEMS[ENGLISH_KEY].questions.forEach(function(q,i){
@@ -504,8 +504,10 @@
   T("10 englishIntegrity detecta ejercicios rotos e ids repetidos",function(){
     eq(englishIntegrity(),0,"base");
     var l=ENGLISH.listening[0];
-    l.fields.push({id:"x",label:"X",kind:"choice",options:["a","b"],answer:"c"});
-    try{eq(englishIntegrity(),1,"respuesta fuera de las opciones")}finally{l.fields.pop()}
+    l.keys.push({label:"X",value:"x",accept:[["dos palabras"]]});
+    try{eq(englishIntegrity(),1,"alternativa con espacios (los atomos son minusculas y digitos)")}finally{l.keys.pop()}
+    var savedType=l.type;l.type="otro";
+    try{eq(englishIntegrity(),1,"tipo de audio invalido")}finally{l.type=savedType}
     ENGLISH.images.push(ENGLISH.images[0]);
     try{eq(englishIntegrity(),1,"id repetido")}finally{ENGLISH.images.pop()}
     var saved=ENGLISH.speaking[0].model;ENGLISH.speaking[0].model=[];
@@ -580,26 +582,75 @@
     jumpEnglish(999);eq(enSession.index,5,"un salto fuera de rango se ignora");
     prevEnglish();eq(enSession.index,4);
   });
-  T("10 audios: los campos se comparan uno a uno, sin nota global",function(){
-    var f=function(kind,answer){return{kind:kind,answer:answer}};
-    ok(enFieldOk(f("num","27"),"27"),"igual");
-    ok(enFieldOk(f("num","6"),"06"),"pista con cero a la izquierda");
-    ok(enFieldOk(f("num","129.1"),"129,1"),"frecuencia con coma");
-    ok(!enFieldOk(f("code","0700"),"700"),"un codigo debe coincidir exacto");
-    ok(enFieldOk(f("code","1018"),"1 0 1 8"),"espacios");
-    ok(!enFieldOk(f("num","27"),""),"vacio");
-    ok(!enFieldOk(f("num","27"),"veintisiete"),"texto sin digitos");
-    ok(enFieldOk(f("choice","Bravo"),"Bravo")&&!enFieldOk(f("choice","Bravo"),"bravo"),"opcion exacta");
+  T("10 apuntes libres: se entienden digitos, palabras, mil/cien y decimales escritos de muchas formas",function(){
+    var d=function(s){return enNoteTokens(s).digits.join("|")};
+    eq(d("RWY 27 WIND 200/12 QNH1018 T16 D10"),"27|200|12|1018|16|10");
+    eq(d("wind two zero zero degrees one two knots"),"200|12");
+    eq(d("Visibility eight thousand metres"),"8000");
+    eq(d("two thousand five hundred feet"),"2500");
+    eq(d("three thousand four hundred"),"3400");
+    eq(d("one two thousand"),"12000");
+    eq(d("seven hundred"),"700");
+    eq(d("one one eight decimal seven"),"1187");
+    eq(d("118.7"),"1187");eq(d("118,7"),"1187");eq(d("13:55Z"),"1355");
+    eq(d("temperature one six, dew point one zero"),"16|10","dew point no debe unir las cifras");
+    eq(d("tree fower fife niner"),"3459");
+    var t=enNoteTokens("A1 FL280");
+    ok(t.compact.indexOf("a1")>=0&&t.digits.indexOf("280")>=0,"A1 FL280");
+  });
+  T("10 apuntes libres: un dato se da por anotado si aparece de cualquiera de sus formas, y no por casualidad",function(){
+    var f=function(text,accept){return enKeyFound({accept:accept},enNoteTokens(text))};
+    ok(f("WIND 200/12KT",[["200","12"]]),"viento con barra");
+    ok(f("w/v 20012kt",[["200","12"]]),"viento pegado (20012)");
+    ok(!f("WIND 200 KT",[["200","12"]]),"falta la velocidad");
+    ok(f("RWY27",[["27"]]),"pista pegada");
+    ok(f("runway 06",[["6"]])&&f("rwy 6",[["06"]]),"ceros a la izquierda");
+    ok(!f("QNH 1018",[["1019"]]),"otro valor");
+    ok(!f("1018",[["10"]]),"10 no debe salir de 1018");
+    ok(f("VIS 8KM",[["8000"],["8","km"]]),"visibilidad en km");
+    ok(f("A one",[["a1"],["a","1"]])&&f("A1",[["a1"],["a","1"]]),"ruta A1");
+    ok(f("INFO B",[["bravo"],["b"]])&&f("information Bravo",[["bravo"],["b"]]),"letra del ATIS");
+    ok(!f("",[["27"]]),"vacio");
+    ok(!f("hello world",[["hello","27"]]),"todas las partes son obligatorias");
+  });
+  T("10 audios: cada dato clave se reconoce en la propia transcripcion y no en un texto ajeno",function(){
+    ENGLISH.listening.forEach(function(it){
+      var tok=enNoteTokens(it.lines.map(function(l){return l.text}).join(" ")),other=enNoteTokens("hello world nothing to see");
+      it.keys.forEach(function(k){
+        ok(enKeyFound(k,tok),it.id+": el dato «"+k.label+"» no se reconoce ni en la transcripcion exacta");
+        ok(!enKeyFound(k,other),it.id+": el dato «"+k.label+"» se da por anotado con un texto que no tiene nada que ver");
+      });
+    });
+  });
+  T("10 audios: unos apuntes abreviados al estilo de cabina se reconocen y unos parciales solo marcan lo anotado",function(){
+    var it=ENGLISH.listening[0];
+    var tok=enNoteTokens("GEORGETOWN INFO B 1455\nRWY 27 ILS TL 50\nW/V 200/12\nVIS 8KM FEW 2500\nT16 D10\nQNH 1018\nADVISE INFO B");
+    it.keys.forEach(function(k){ok(enKeyFound(k,tok),"no reconoce «"+k.label+"» en apuntes abreviados")});
+    var partial=enNoteTokens("RWY 27 QNH 1018");
+    eq(it.keys.filter(function(k){return enKeyFound(k,partial)}).map(function(k){return k.label}).join("|"),"Pista en uso|QNH","solo debe reconocer lo anotado");
+  });
+  T("10 audios: los apuntes son libres (sin campos que den el orden) y la comparacion no da nota",function(){
     reset();
     startEnglishPractice("listening");
-    var fields=ENGLISH.listening[0].fields;
-    enFieldChanged("d1","3");enFieldChanged("rwy","27");enFieldChanged("fl","999");
+    var notes=byId("enNotes");
+    ok(notes&&notes.tagName==="TEXTAREA","debe haber un cuadro libre de apuntes");
+    eq(document.querySelectorAll("#epWork input:not([type=checkbox]),#epWork select:not(#enRate):not(#enVoice)").length,0,"no debe haber campos etiquetados");
+    ok(!/viento|pista|qnh|wind|runway|temperatura|visibilidad|frecuencia/i.test(notes.placeholder+" "+byId("epTip").textContent+" "+byId("epStimulus").textContent),"las instrucciones no deben adelantar el orden ni los datos");
     revealEnglish();
-    eq(document.querySelectorAll("#enFieldsWrap .en-field").length,fields.length,"filas");
-    eq(document.querySelectorAll("#enFieldsWrap .en-field.ok").length,2,"campos correctos");
-    eq(document.querySelectorAll("#enFieldsWrap .en-field.bad").length,fields.length-2,"campos incorrectos");
-    ok(/Transcripci/.test(byId("epReveal").textContent),"transcripcion");
+    ok(/No escribiste nada/.test(byId("epReveal").textContent)&&document.querySelectorAll("#epReveal .en-key.ok").length===0,"sin apuntes no se marca nada");
+    retryEnglish();
+    notes=byId("enNotes");
+    notes.value="RWY 27 QNH 1018 ILS";enTextChanged(notes.value);
+    revealEnglish();
+    eq(document.querySelectorAll("#epReveal .en-key").length,ENGLISH.listening[0].keys.length,"una fila por dato clave");
+    eq(document.querySelectorAll("#epReveal .en-key.ok").length,3,"pista, ILS y QNH");
+    ok(/Transcripci/.test(byId("epReveal").textContent)&&/Georgetown information Bravo/.test(byId("epReveal").textContent),"transcripcion");
+    ok(byId("enNotes").readOnly,"los apuntes quedan bloqueados al comprobar");
     noScore(byId("englishPractice"));
+    retryEnglish();
+    eq(byId("enNotes").value,"","volver a intentarlo borra los apuntes");
+    ok(byId("epReveal").classList.contains("hidden"),"y oculta la comparacion");
+    eq(byId("enNotes").readOnly,false);
   });
   T("10 radioSay: digitos de radio y siglas deletreadas",function(){
     eq(radioSay("Runway three four five nine, QNH one zero one eight."),"Runway tree fower fife niner, Q N H one zero one eight.");
@@ -613,12 +664,13 @@
     var sp=fakeSpeech();
     try{
       startEnglishPractice("listening");
+      jumpEnglish(5);
       enPlayCurrent();
       return new Promise(function(resolve,reject){
         setTimeout(function(){
           try{
             ok(sp.spoken.length>=1,"no se pidio hablar");
-            eq(sp.spoken[0].text,"tree.","el primer digito (Three.) debe decirse tree");
+            ok(/^Fastair tree fower fife, cleared to Kennington/.test(sp.spoken[0].text),"la autorizacion debe decir tree fower fife: "+sp.spoken[0].text);
             ok(enMedia.speaking,"debe figurar como reproduciendo");
             goHome();
             ok(sp.cancelled.n>=1,"no se cancelo la voz al salir");
@@ -626,6 +678,36 @@
             sp.restore();resolve();
           }catch(e){sp.restore();reject(e)}
         },250);
+      });
+    }catch(e){sp.restore();throw e}
+  });
+  T("10 audios: «Ultima frase» repite solo la frase que sono",function(){
+    reset();
+    var sp=fakeSpeech();
+    try{
+      startEnglishPractice("listening");
+      enPlayCurrent();
+      return new Promise(function(resolve,reject){
+        setTimeout(function(){
+          try{
+            eq(sp.spoken.length,1,"debe sonar la primera frase");
+            sp.spoken[0].onend();
+            setTimeout(function(){
+              try{
+                eq(sp.spoken.length,2,"debe sonar la segunda frase");
+                eq(enMedia.lineIdx,1,"la ultima frase es la segunda");
+                enReplayLine();
+                setTimeout(function(){
+                  try{
+                    eq(sp.spoken.length,3,"debe repetirse una sola frase");
+                    eq(sp.spoken[2].text,sp.spoken[1].text,"y debe ser la ultima que sono");
+                    goHome();sp.restore();resolve();
+                  }catch(e){sp.restore();reject(e)}
+                },200);
+              }catch(e){sp.restore();reject(e)}
+            },550);
+          }catch(e){sp.restore();reject(e)}
+        },200);
       });
     }catch(e){sp.restore();throw e}
   });
@@ -693,7 +775,7 @@
       revealEnglish();
       minH("#epReveal .en-say","los botones de escuchar el modelo");minH("#epRateWrap .rate","los botones de autocalificacion");minH("#epReveal .en-check label","las casillas de autoevaluacion");
       startEnglishPractice("listening");
-      minH("#enFieldsWrap input","los campos numericos");
+      minH("#enNotes","el cuadro de apuntes");minH("#enReplayBtn","el boton de ultima frase");
     }finally{teardownMic()}
   });
 

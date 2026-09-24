@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~2 s con `OK 66/66 casos...` (código 0) o con la
+a su estado real. Termina en ~2 s con `OK 69/69 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -183,59 +183,87 @@ resolver primero, antes de seguir auditando.
   pasaron de 14 px a 40 px. Diagnóstico completo por pantalla:
   `tests\run.ps1 -Script <archivo.js> -Width 375 -Height 812`.
 
-## 10. Inglés OACI: 4 pruebas al azar (sección nueva)
+## 10. Inglés OACI: 4 pruebas de una sola parte (sección nueva)
 
-La sección es una sola **prueba** que reúne los cuatro tipos de ejercicio, y al
-entrar te toca una al azar (1 de 4, luego 1 de las 3 que faltan, etc.). Cada
-prueba trae **12 alternativas, 4 audios (2 ATIS y 2 autorizaciones de ATC),
-2 imágenes para describir y 1 role-play de 3 turnos con ATC**, en ese orden.
+La sección es una sola **prueba** de una sola tanda: al entrar te toca una al
+azar (1 de 4, luego 1 de las 3 que faltan, etc.) y esa prueba mezcla al azar
+**8 alternativas, 4 audios (2 ATIS y 2 autorizaciones de ATC), 2 imágenes para
+describir y 1 role-play de 3 turnos con ATC**. No hay partes, secciones ni menú
+entre un ejercicio y el siguiente: se avanza siempre hacia adelante.
 
-- **Banco y reparto** — 74 alternativas (48 repartidas en las pruebas, por
-  tema, y 26 de reserva para pruebas nuevas), 8 imágenes, 16 audios (5 + 3
-  ATIS nuevos = 8 ATIS y 8 autorizaciones), 4 role-plays y 17 respuestas
-  orales de reserva. `bankIntegrity()` no reporta incidencias
-  (`englishIssues`); solo las 48 alternativas asignadas entran al banco
-  (búsqueda y guardadas), cada una con fuente (`ICAO Doc 9432 · …`), cita y
-  explicación; ningún ejercicio está en dos pruebas. Las alternativas no
-  cuentan como preguntas FCOM (`totalQuestions()` sigue en 415) ni entran en la
-  precisión ni en «Mis errores» del inicio.
+- **Banco y reparto** — 32 alternativas (8 por prueba, por tema), 8 imágenes,
+  16 audios (8 ATIS y 8 autorizaciones) y 4 role-plays; todo está asignado a una
+  prueba y nada está en dos (lo que sobró de versiones anteriores —42
+  alternativas y 17 frases para hablar— queda en el historial de git, commit
+  `f75627e`). `bankIntegrity()` no reporta incidencias (`englishIssues`). Las
+  alternativas ya no viven en el banco técnico: `SYSTEMS` no tiene `english_icao`,
+  no salen en la búsqueda, no cuentan como preguntas FCOM (`totalQuestions()`
+  sigue en 415) ni entran en la precisión ni en «Mis errores», y el motor de
+  preguntas es el de antes de esta sección.
+- **Ningún texto cita un manual, una sección o una carpeta** — la app se va a
+  distribuir a gente que no tiene esos documentos. `enVisibleTexts()` reúne lo que
+  el usuario ve de cada ejercicio y `enSourceRef()` detecta «manual», «§», «9432»,
+  «FCTM», «FCOM», «PDF», «carpeta», «Anexo», «AIP», «p. N», «foreword», «prólogo»,
+  «table in» y «note in the»; `englishIntegrity()` cuenta como incidencia cualquier
+  texto visible que las use (así aparece en el inicio, y falla la batería). El
+  caso recorre las 4 pruebas completas y revisa también lo que se dibuja (menú,
+  alternativas contestadas, modelos revelados, audios y role-plays): sin bloques
+  «Referencia» ni «VERIFICADO». Las fuentes (`cite`, `src`, `refs`) siguen en los
+  datos como dato interno para verificar y no se muestran.
 - **`englishIntegrity()`** detecta un dato clave mal formado, un tipo de audio
-  inválido, un id repetido, un modelo vacío, una alternativa o un role-play
-  que no existe, la misma alternativa en dos pruebas, un turno de role-play que
-  responde a ATC sin audio, un turno sin cita y un banco sin pruebas.
+  inválido, un id repetido, una alternativa con la respuesta fuera de rango, un
+  enunciado, una opción, una explicación, una nota de audio o una nota de
+  role-play que cite una fuente, una alternativa o un role-play que no existe, la
+  misma alternativa en dos pruebas, un turno que responde a ATC sin audio, un
+  turno sin fuente interna y un banco sin pruebas.
+- **La mezcla** (`enOrderFor`) — los 15 ejercicios salen en orden aleatorio y
+  repartidos: nunca dos ejercicios que no sean alternativas seguidos, ninguna
+  racha de más de 3 alternativas, el primer ejercicio y el lugar del role-play
+  cambian de una vez a otra. Un orden incompleto o de otra prueba no vale
+  (`enValidOrder`).
 - **El sorteo** — al entrar (`openEnglish` → `enAssign`) se asigna una prueba
-  pendiente al azar y se guarda: al volver a entrar no se sortea de nuevo; al
-  terminarla te toca una de las que faltan; al terminar las 4 aparece
-  «Completaste las 4 pruebas» con «Empezar otra vuelta» (`enStartNewRound`), cuyo
-  primer sorteo no repite la última que hiciste. Con `Math.random` real, 300
-  sorteos sacan las 4 pruebas.
-- **Flujo de una prueba** — alternativas (motor de preguntas de siempre, con
-  explicación y cita, encabezado `PRUEBA n · PARTE 1 DE 4`) → menú → audios →
-  menú → imágenes → menú → role-play → prueba completada. Cada parte que se
-  termina se guarda (`current.part`); las alternativas dejan un dato objetivo
-  (`c` de `t` correctas), nunca una nota. Salir a mitad de una parte la
-  reinicia pero conserva las partes terminadas y la prueba asignada; las
-  alternativas de una prueba no se guardan como sesión suelta
-  (`appState.resume` sigue en `null`).
+  pendiente al azar, con su orden, y se guarda: al volver a entrar no se sortea
+  ni se mezcla de nuevo; al terminarla te toca una de las que faltan; al terminar
+  las 4 aparece «Completaste las 4 pruebas» con «Empezar otra vuelta»
+  (`enStartNewRound`), cuyo primer sorteo no repite la última que hiciste. Con
+  `Math.random` real, 300 sorteos sacan las 4 pruebas.
+- **Una sola tanda** — el caso recorre una prueba completa: encabezado
+  `PRUEBA n · k / 15` en cada ejercicio, sin pasar por el menú, sin botón
+  «Anterior», «Siguiente» bloqueado hasta contestar o revelar (también por
+  código), «Terminar prueba» solo en la última pantalla, el avance guardado en el
+  dispositivo al terminar cada ejercicio y el resultado objetivo de las
+  alternativas (`5 de 8 correctas`), nunca una nota.
+- **Salir a mitad** — la prueba queda «EN CURSO»: al volver (incluso tras
+  recargar) sigues en el mismo ejercicio, con el mismo orden y tus aciertos; una
+  alternativa que no se terminó no cuenta y un role-play a medias vuelve al
+  primer turno. Nada se guarda como sesión suelta (`appState.resume` sigue en
+  `null`).
 - **Estado guardado** — `sanitizeState` limpia el mapa `english` (valoración
   0/1/2, intentos, fecha) y `englishTests` (pruebas hechas: enteros 1–99 sin
-  repetir; prueba en curso que no esté ya hecha; parte 0–3; aciertos ≤ total;
-  vuelta y última); un respaldo antiguo sin esos campos sigue siendo válido y con
-  el tipo equivocado se rechaza; ida y vuelta por `JSON`.
+  repetir; prueba en curso que no esté ya hecha, con su orden —solo referencias
+  `q:`/`l:`/`i:`/`r:` más id—, el ejercicio por el que vas y los aciertos ≤
+  total; vuelta y última). El formato de la versión anterior (por partes) se
+  acepta y la prueba se vuelve a mezclar al entrar; un respaldo antiguo sin esos
+  campos sigue siendo válido y con el tipo equivocado se rechaza.
+- **Alternativas** — cuatro opciones mezcladas cada vez (la correcta no cae
+  siempre en el mismo lugar), una sola respuesta que no se puede cambiar,
+  «No la sé» cuenta como incorrecta, la explicación aparece al contestar y no
+  trae citas, y no tocan las estadísticas del banco técnico.
 - **Inicio** — la tarjeta dice «4 pruebas al azar…» y, cuando hay, «N de 4
-  hechas».
-- **Sin nota, nunca** — en ninguna parte existe `.oral-score`, `.oral-grade` ni
+  hechas»; el pie del inicio cuenta las 32 alternativas.
+- **Sin nota, nunca** — en ninguna pantalla existe `.oral-score`, `.oral-grade` ni
   `.score-circle`. El autoexamen (Repetir / Casi / Bien) solo se guarda como
-  avance.
+  avance y no aparece en las alternativas.
 - **Imágenes** — las 2 fotos de la prueba; el título y el tema de la foto no se
   ven antes de describirla (darían vocabulario hecho) y aparecen al revelar el
   modelo.
-- **Role-play** — 3 turnos por escenario (falla de motor después de V1, antes de
-  V1, pasajero con un problema de salud y pérdida de presión). La situación
-  siempre está a la vista; el primer turno no tiene audio; los siguientes traen
-  audio de ATC (con el texto oculto hasta pedirlo) y «Hasta ahora» con lo que ya
-  pasó. Cada modelo lleva el indicativo, y cada turno trae 1–2 citas
-  (`ICAO Doc 9432`, `FCTM` o `FCOM`) con página PDF.
+- **Role-play** — 3 turnos seguidos que cuentan como un solo ejercicio de la
+  prueba (falla de motor después de V1, antes de V1, pasajero con un problema de
+  salud y pérdida de presión). La situación siempre está a la vista; el primer
+  turno no tiene audio; los siguientes traen audio de ATC (con el texto oculto
+  hasta pedirlo) y «Hasta ahora» con lo que ya pasó; tras el último turno sigue
+  el ejercicio siguiente. Cada modelo lleva el indicativo y no se muestra ninguna
+  cita.
 - **Audios = copiar un ATIS o una autorización, con apuntes libres** — no hay
   campos ni etiquetas que den el orden: solo un cuadro de texto (el texto de
   ayuda no menciona viento, pista, QNH, etc.) y **un único botón de audio** (no
@@ -264,32 +292,36 @@ prueba trae **12 alternativas, 4 audios (2 ATIS y 2 autorizaciones de ATC),
   y lo aborta; un permiso que llega tarde no inicia el reconocimiento en otra
   pantalla; lo reconocido (provisional y final) llega al cuadro de texto y se
   conserva, pero no se puntúa.
-- **Accesibilidad** — el botón de comenzar, «Salir», el botón de escuchar, el de
-  grabar, el cuadro de apuntes, las alternativas de la prueba, los botones ▶ del
-  modelo, las casillas de autoevaluación y los botones Repetir/Casi/Bien miden
-  ≥44 px.
+- **Accesibilidad** — el botón de comenzar, «Salir», las alternativas, «No la
+  sé», «Siguiente», el botón de escuchar, el de grabar, el de mostrar modelo, el
+  cuadro de apuntes, los botones ▶ del modelo, las casillas de autoevaluación y
+  los botones Repetir/Casi/Bien miden ≥44 px (`.dontknow`, que comparte el
+  botón «No la sé» del banco técnico, pasó de 42 a 44 px).
 
-**Comprobación de las citas (fuera de esta batería).** Cada `cite` de las
-alternativas, de los audios y de los turnos de role-play se comprobó
+**Comprobación de las fuentes internas (fuera de esta batería).** El `cite` de
+cada alternativa, de cada audio y de cada turno de role-play se comprobó
 textualmente contra la página PDF indicada de su fuente (*ICAO Doc 9432*,
 *FCTM* 25 NOV 24 o *FCOM* 15 SEP 25, versiones .md de la carpeta APP), con la
 misma normalización que `buscar.ps1 -Frase`; los diálogos de dos columnas
 (piloto/controlador) y las tablas del Doc 9432 se leyeron además en la imagen
 de la página. Esa comprobación necesita esos manuales en `Desktop\APP` y por
-eso no forma parte de `run.ps1`; si se edita el texto de una cita, hay que
-repetirla con
+eso no forma parte de `run.ps1`; si se edita el texto de una fuente interna,
+hay que repetirla con
 `node C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_ingles.js`
-(lee el bloque `english-data` de `index.html`; en la última corrida: 134 tramos
+(lee el bloque `english-data` de `index.html`; en la última corrida: 77 tramos
 de cita comprobados, 0 problemas). Lo que **no** viene de un manual (los turnos
 de ATC de los role-plays y el formato de los ATIS) es composición de práctica y
-así se indica en cada ejercicio.
+así se indica en pantalla.
 
-**Prueba de mutación (una vez, al armar las 4 pruebas).** Se rompieron a
-propósito ocho piezas (el sorteo que se repite al volver a entrar, las
-alternativas de la prueba guardadas como sesión suelta, las voces de novedad, la
-velocidad, el avance de una parte a la siguiente, el título de la foto visible,
-la voz que se vuelve a sortear al repetir y la vuelta nueva que repite la
-última prueba) y la batería falló en cada caso.
+**Prueba de mutación (una vez, al armar la versión de una sola parte).** Se
+rompieron a propósito doce piezas (el sorteo o la mezcla que se repiten al volver
+a entrar, la mezcla que deja de repartir, el avance que no se guarda, las
+alternativas acertadas que no se cuentan, la vigilancia de textos que citan un
+manual, una explicación que vuelve a mostrar una cita, poder pasar de una
+alternativa sin contestarla, las voces de novedad, la voz que se vuelve a sortear
+al repetir, una prueba terminada que no se marca como hecha, las opciones que no
+se mezclan y el título de la foto visible) y la batería falló en cada caso (dos
+de ellas obligaron a reforzar un caso primero).
 
 ## Límite explícito de esta batería
 

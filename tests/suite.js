@@ -481,7 +481,7 @@
     minHeight("#rateWrap .rate","los botones de autocalificacion");
   });
 
-  /* ---------- 10. Ingles OACI: 4 pruebas al azar ---------- */
+  /* ---------- 10. Ingles OACI: 4 pruebas de una sola parte ---------- */
   function visibleScreens(){return Array.prototype.slice.call(document.querySelectorAll("main > section")).filter(function(s){return !s.classList.contains("hidden")}).map(function(s){return s.id})}
   function noScore(scope,msg){ok(!scope.querySelector(".oral-score,.oral-grade,.score-circle,#resultPct"),msg||"no debe haber nota ni nivel")}
   /* Sustituye la voz del navegador por una de mentira (con las voces que se pidan) y devuelve lo que se le mando decir. */
@@ -502,31 +502,74 @@
     Math.random=function(){var v=values[Math.min(i,values.length-1)];i++;return v};
     try{return fn()}finally{Math.random=orig}
   }
-  function enSetCurrent(n,part){appState.englishTests=sanitizeEnglishTests({done:[],current:{n:n,part:part||0},cycle:0})}
   function enTestDef(n){return ENGLISH.pruebas.filter(function(t){return t.n===n})[0]}
+  /* Deja la prueba n en curso con orden conocido (los ejercicios indicados primero) y muestra el primero. */
+  function enOpenUnit(n,firstRefs){
+    var t=enTestDef(n),order=enUnitRefs(t),first=[].concat(firstRefs);
+    first.forEach(function(r){order.splice(order.indexOf(r),1)});
+    appState.englishTests=sanitizeEnglishTests({done:[],current:{n:n,order:first.concat(order),i:0},cycle:0});
+    enStartOrContinue();
+  }
   function voice(name,lang){return{name:name,lang:lang,voiceURI:name}}
   var EN_VOICES=[voice("Test George","en-GB"),voice("Test Susan","en-GB"),voice("Test Aria","en-US"),voice("Zarvox","en-US"),voice("Paulina","es-MX")];
+  function optionButtons(){return Array.prototype.slice.call(document.querySelectorAll("#epWork .option"))}
+  function optionText(b){return b.querySelector(".otxt").textContent}
+  /* Contesta la alternativa que se ve en pantalla: bien (con clic en la opcion correcta) o mal (con clic en otra). */
+  function answerMcq(right){
+    var s=enSession,q=s.items[0],btns=optionButtons();
+    var pick=btns.filter(function(b){return (optionText(b)===q.options[q.correct])===right})[0];
+    ok(pick,"no hay una opcion "+(right?"correcta":"incorrecta")+" para pulsar");
+    pick.click();
+  }
 
-  T("10 el banco de Ingles OACI: 4 pruebas de 12 alternativas, 4 audios, 2 imagenes y 1 role-play, con fuente y cita, sin incidencias",function(){
+  T("10 el banco de Ingles OACI: 4 pruebas de 8 alternativas, 4 audios, 2 imagenes y 1 role-play, sin incidencias",function(){
     var h=bankIntegrity();
     eq(h.englishIssues,0,"incidencias de Ingles OACI");
     ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
-    eq(ENGLISH.mcq.length,74,"alternativas del banco (48 en pruebas + reserva)");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.listening.length,16,"audios");eq(ENGLISH.roleplays.length,4,"role-plays");eq(ENGLISH.pruebas.length,4,"pruebas");
-    eq(SYSTEMS[ENGLISH_KEY].questions.length,48,"solo las alternativas de las pruebas entran al banco");
+    eq(ENGLISH.mcq.length,32,"alternativas");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.listening.length,16,"audios");eq(ENGLISH.roleplays.length,4,"role-plays");eq(ENGLISH.pruebas.length,4,"pruebas");
+    ok(!("english_icao" in SYSTEMS),"las alternativas de ingles no deben estar en el banco tecnico");
+    ok(allLookupPool().every(function(q){return q.bank!=="english_icao"}),"ni en la busqueda");
     eq(totalQuestions(),415,"las alternativas de ingles no deben contarse como preguntas FCOM");
-    SYSTEMS[ENGLISH_KEY].questions.forEach(function(q,i){
-      ok(/^ICAO Doc 9432 · /.test(q.src)&&String(q.cite).length>10&&String(q.expl).length>30,"la alternativa "+i+" no tiene fuente, cita y explicacion");
-      eq(q.bank,"english_icao","banco de la alternativa "+i);
+    ENGLISH.mcq.forEach(function(q){
+      eq(q.options.length,4,"opciones de "+q.id);ok(q.correct>=0&&q.correct<4,"indice correcto de "+q.id);
+      ok(String(q.expl).length>40,"explicacion de "+q.id);
+      ok(String(q.cite).length>10&&/^(ICAO Doc 9432|FCTM|FCOM) /.test(q.src),"la fuente interna de "+q.id+" se conserva para poder verificarla");
     });
     ENGLISH.pruebas.forEach(function(t){
-      var d=enResolveTest(t);
-      eq(d.mcq.length,12,"alternativas de la prueba "+t.n);eq(d.images.length,2,"imagenes de la prueba "+t.n);eq(d.listening.length,4,"audios de la prueba "+t.n);eq(d.turns.length,3,"turnos del role-play de la prueba "+t.n);
-      eq(d.listening.map(function(x){return x.type}).join(),"atis,clearance,atis,clearance","tipos de audio de la prueba "+t.n);
+      eq(t.mcq.length,8,"alternativas de la prueba "+t.n);eq(t.images.length,2,"imagenes de la prueba "+t.n);eq(t.listening.length,4,"audios de la prueba "+t.n);
+      eq(enUnitRefs(t).length,15,"ejercicios de la prueba "+t.n);
+      eq(enRoleplayItems(enById(ENGLISH.roleplays,t.roleplay)).length,3,"turnos del role-play de la prueba "+t.n);
+      eq(t.listening.map(function(id){return enById(ENGLISH.listening,id).type}).join(),"atis,clearance,atis,clearance","tipos de audio de la prueba "+t.n);
     });
     var all=[];ENGLISH.pruebas.forEach(function(t){all=all.concat(t.mcq,t.images,t.listening,[t.roleplay])});
     eq(new Set(all).size,all.length,"ningun ejercicio puede estar en dos pruebas");
+    eq(all.length,60,"32 alternativas + 8 imagenes + 16 audios + 4 role-plays, todo asignado");
   });
-  T("10 englishIntegrity detecta ejercicios rotos, ids repetidos y pruebas mal armadas",function(){
+  T("10 ningun texto de Ingles OACI cita un manual, una seccion o una carpeta (ni en los datos ni en pantalla)",function(){
+    var checks=[["mcq",ENGLISH.mcq],["listening",ENGLISH.listening],["image",ENGLISH.images],["roleplay",ENGLISH.roleplays]];
+    checks.forEach(function(c){c[1].forEach(function(x){enVisibleTexts(c[0],x).forEach(function(t){ok(!enSourceRef(t),c[0]+" "+x.id+" cita una fuente: "+t.slice(0,90))})})});
+    /* y lo que realmente se dibuja: se recorren las 4 pruebas completas, alternativas contestadas y modelos revelados */
+    reset();
+    [1,2,3,4].forEach(function(n){
+      appState.englishTests=sanitizeEnglishTests({done:[],current:{n:n,order:enOrderFor(enTestDef(n)),i:0},cycle:0});
+      openEnglish();
+      ok(!enSourceRef(byId("englishHub").textContent)&&!/Doc 9432|FCTM|FCOM/.test(byId("englishHub").textContent),"el menu cita una fuente");
+      enStartOrContinue();
+      var guard=0;
+      while(visibleScreens().join()==="englishPractice"&&guard++<60){
+        if(enSession.kind==="mcq")answerMcq(guard%2===0);else byId("epRevealBtn").click();
+        var txt=byId("englishPractice").textContent;
+        ok(!enSourceRef(txt)&&!/Doc 9432|FCTM|FCOM|Referencia|VERIFICADO/.test(txt),"la prueba "+n+" muestra una fuente: "+(txt.match(/.{0,50}(manual|§|9432|FCTM|FCOM|Referencia|VERIFICADO).{0,50}/i)||[""])[0]);
+        byId("epNextBtn").click();
+      }
+      ok(guard>15,"la prueba "+n+" no se recorrio entera");
+    });
+    /* la deteccion funciona */
+    ok(enSourceRef("According to the note in the manual, when must ROGER NOT be used?"),"manual");
+    ok(enSourceRef("§2.6 y p. 2-7 (PDF 24)")&&enSourceRef("Doc 9432")&&enSourceRef("El FCTM pide")&&enSourceRef("no están en tu carpeta APP"),"secciones, paginas y carpetas");
+    ok(!enSourceRef("Las cifras se dicen una por una: el avión está estable y las cifras según el país varían."),"no debe marcar frases normales");
+  });
+  T("10 englishIntegrity detecta ejercicios rotos, ids repetidos, pruebas mal armadas y textos que citan un manual",function(){
     eq(englishIntegrity(),0,"base");
     var l=ENGLISH.listening[0];
     l.keys.push({label:"X",value:"x",accept:[["dos palabras"]]});
@@ -535,8 +578,24 @@
     try{eq(englishIntegrity(),1,"tipo de audio invalido")}finally{l.type=savedType}
     ENGLISH.images.push(ENGLISH.images[0]);
     try{eq(englishIntegrity(),1,"id repetido")}finally{ENGLISH.images.pop()}
-    var saved=ENGLISH.speaking[0].model;ENGLISH.speaking[0].model=[];
-    try{eq(englishIntegrity(),1,"modelo vacio")}finally{ENGLISH.speaking[0].model=saved}
+    var q0=ENGLISH.mcq[0],savedCorrect=q0.correct;q0.correct=9;
+    try{eq(englishIntegrity(),1,"alternativa con la respuesta correcta fuera de rango")}finally{q0.correct=savedCorrect}
+    var savedQ=q0.q;q0.q="According to the note in the manual, when must ROGER NOT be used?";
+    try{eq(englishIntegrity(),1,"enunciado que cita el manual")}finally{q0.q=savedQ}
+    var savedOpt=q0.options[1];q0.options[1]="See §2.6";
+    try{eq(englishIntegrity(),1,"opcion que cita una seccion")}finally{q0.options[1]=savedOpt}
+    var savedExpl=q0.expl;q0.expl="Según el manual (p. 2-7): ROGER solo confirma la recepción.";
+    try{eq(englishIntegrity(),1,"explicacion que cita el manual")}finally{q0.expl=savedExpl}
+    var savedNotes=l.notes;l.notes=["Formato de práctica; el orden exacto está en el Anexo 11 y en la AIP, que no están en tu carpeta APP."];
+    try{eq(englishIntegrity(),1,"nota de un audio que cita una carpeta")}finally{l.notes=savedNotes}
+    var rp=ENGLISH.roleplays[0],savedNote=rp.turns[0].note;rp.turns[0].note="Después de V1 se continúa el despegue (FCTM).";
+    try{eq(englishIntegrity(),1,"nota de un role-play que cita el FCTM")}finally{rp.turns[0].note=savedNote}
+    var savedRefs=rp.turns[0].refs;rp.turns[0].refs=[{src:"ICAO Doc 9432 · §9.2.1.1",cite:"cita interna"}];
+    try{eq(englishIntegrity(),0,"las fuentes internas (refs) si se pueden conservar: no se muestran")}finally{rp.turns[0].refs=savedRefs}
+    var savedHeard=rp.turns[1].heard;delete rp.turns[1].heard;
+    try{eq(englishIntegrity(),1,"un turno que responde a ATC necesita audio")}finally{rp.turns[1].heard=savedHeard}
+    rp.turns[0].refs=[];
+    try{eq(englishIntegrity(),1,"un turno sin fuente interna")}finally{rp.turns[0].refs=savedRefs}
     var t1=ENGLISH.pruebas[0],pristine=t1.mcq.slice();
     t1.mcq=pristine.slice();t1.mcq[0]="en_q_inexistente";
     try{eq(englishIntegrity(),1,"alternativa que no existe")}finally{t1.mcq=pristine.slice()}
@@ -544,15 +603,11 @@
     try{ok(englishIntegrity()>=1,"la misma alternativa en dos pruebas")}finally{t1.mcq=pristine.slice()}
     var savedRp=t1.roleplay;t1.roleplay="en_rp_99";
     try{eq(englishIntegrity(),1,"role-play que no existe")}finally{t1.roleplay=savedRp}
-    var turn=ENGLISH.roleplays[0].turns[1],savedHeard=turn.heard;delete turn.heard;
-    try{eq(englishIntegrity(),1,"un turno que responde a ATC necesita audio")}finally{turn.heard=savedHeard}
-    var savedRefs=ENGLISH.roleplays[0].turns[0].refs;ENGLISH.roleplays[0].turns[0].refs=[];
-    try{eq(englishIntegrity(),1,"un turno sin cita")}finally{ENGLISH.roleplays[0].turns[0].refs=savedRefs}
     var savedPruebas=ENGLISH.pruebas;ENGLISH.pruebas=[];
     try{ok(englishIntegrity()>=1,"sin pruebas")}finally{ENGLISH.pruebas=savedPruebas}
     eq(englishIntegrity(),0,"restaurado");
   });
-  T("10 el estado guardado sanea y respalda los avances de Ingles OACI y de las pruebas",function(){
+  T("10 el estado guardado sanea y respalda las pruebas de Ingles OACI (orden, avance y aciertos)",function(){
     var s=sanitizeState({english:{a:{r:2,a:3,last:5},b:{r:9,a:"x"},c:null,d:"no"}});
     eq(JSON.stringify(s.english.a),JSON.stringify({r:2,a:3,last:5}));
     eq(s.english.b.r,null,"valoracion fuera de rango");eq(s.english.b.a,0);
@@ -562,26 +617,65 @@
     eq(looksLikeValidBackup({stats:{}}),true,"un respaldo antiguo sin ingles sigue siendo valido");
     eq(JSON.stringify(sanitizeState({}).english),"{}");
     eq(JSON.stringify(defaultState().englishTests),JSON.stringify({done:[],current:null,cycle:0,last:null}));
-    var t=sanitizeEnglishTests({done:[1,1,2,"x",0,100,-3,2.5],current:{n:3,part:2,mcq:{c:9,t:12}},cycle:2,last:2});
-    eq(t.done.join(),"1,2","solo enteros de 1 a 99 y sin repetir");eq(t.current.n,3);eq(t.current.part,2);eq(t.current.mcq.c,9);eq(t.cycle,2);eq(t.last,2);
-    eq(sanitizeEnglishTests({done:[3],current:{n:3,part:1}}).current,null,"una prueba ya terminada no puede estar en curso");
-    eq(sanitizeEnglishTests({current:{n:2,part:9}}).current.part,0,"parte fuera de rango");
-    eq(sanitizeEnglishTests({current:{n:2,part:1,mcq:{c:13,t:12}}}).current.mcq,undefined,"aciertos mayores que el total");
+    var t=sanitizeEnglishTests({done:[1,1,2,"x",0,100,-3,2.5],current:{n:3,order:["q:en_q_01","l:en_lis_01","x:no","q:con espacio",7,"r:en_rp_03"],i:2,mcq:{c:5,t:8}},cycle:2,last:2});
+    eq(t.done.join(),"1,2","solo enteros de 1 a 99 y sin repetir");eq(t.current.n,3);
+    eq(t.current.order.join(),"q:en_q_01,l:en_lis_01,r:en_rp_03","solo referencias con la forma letra:id");
+    eq(t.current.i,2);eq(t.current.mcq.c,5);eq(t.current.mcq.t,8);eq(t.cycle,2);eq(t.last,2);
+    eq(sanitizeEnglishTests({current:{n:2,order:["q:a","q:b"],i:9}}).current.i,0,"avance fuera de rango");
+    eq(sanitizeEnglishTests({done:[3],current:{n:3,order:["q:a"],i:0}}).current,null,"una prueba ya terminada no puede estar en curso");
+    eq(sanitizeEnglishTests({current:{n:2,order:["q:a"],i:0,mcq:{c:9,t:8}}}).current.mcq,undefined,"aciertos mayores que el total");
+    var old=sanitizeEnglishTests({done:[1],current:{n:3,part:2,mcq:{c:9,t:12}},cycle:1,last:1}).current;
+    eq(JSON.stringify(old),JSON.stringify({n:3,order:[],i:0,mcq:{c:9,t:12}}),"el formato anterior (por partes) se acepta y se vuelve a mezclar al entrar");
     eq(JSON.stringify(sanitizeEnglishTests(null)),JSON.stringify({done:[],current:null,cycle:0,last:null}));
-    var rt=roundTrip({englishTests:{done:[1],current:{n:2,part:1,mcq:{c:10,t:12}},cycle:1,last:1}});
-    eq(JSON.stringify(rt.englishTests),JSON.stringify({done:[1],current:{n:2,part:1,mcq:{c:10,t:12}},cycle:1,last:1}),"ida y vuelta");
+    var rt=roundTrip({englishTests:{done:[1],current:{n:2,order:["q:en_q_06","r:en_rp_02"],i:1,mcq:{c:1,t:1}},cycle:1,last:1}});
+    eq(JSON.stringify(rt.englishTests),JSON.stringify({done:[1],current:{n:2,order:["q:en_q_06","r:en_rp_02"],i:1,mcq:{c:1,t:1}},cycle:1,last:1}),"ida y vuelta");
+    reset();appState.englishTests=sanitizeEnglishTests({current:{n:3,part:1}});
+    var cur=enAssign();
+    ok(enValidOrder(enTestDef(3),cur.order)&&cur.i===0&&cur.n===3,"al entrar con el formato anterior se conserva la prueba y se mezcla de nuevo");
+    ok(cur.mcq===undefined,"y no se arrastran aciertos de otro orden");
   });
-  T("10 al entrar te toca una prueba al azar, se conserva y no se vuelve a sortear",function(){
+  T("10 mezcla: los 15 ejercicios de cada prueba salen en orden aleatorio, repartidos, sin bloques ni secciones",function(){
+    ENGLISH.pruebas.forEach(function(t){
+      var firstKinds={},rpPositions={},maxRun=0;
+      for(var i=0;i<200;i++){
+        var o=enOrderFor(t);
+        ok(enValidOrder(t,o),"el orden debe traer los 15 ejercicios una sola vez");
+        var run=0;
+        o.forEach(function(r,k){
+          if(r[0]==="q"){run++;if(run>maxRun)maxRun=run}else{
+            run=0;
+            if(k>0)ok(o[k-1][0]==="q","dos ejercicios que no son alternativas seguidos: "+o[k-1]+" "+r);
+          }
+        });
+        firstKinds[o[0][0]]=1;rpPositions[o.indexOf("r:"+t.roleplay)]=1;
+      }
+      ok(maxRun<=3,"bloque de "+maxRun+" alternativas seguidas: se estaria armando una seccion");
+      ok(Object.keys(firstKinds).length>=2,"el primer ejercicio siempre es del mismo tipo");
+      ok(Object.keys(rpPositions).length>=5,"el role-play casi siempre cae en el mismo lugar");
+    });
+    /* sin hueco para alternar (pocas alternativas) igual se mezcla todo */
+    var raro={mcq:["a"],listening:["b","c","d"],images:[],roleplay:"r"},o2=enOrderFor(raro);
+    ok(enValidOrder(raro,o2),"una prueba con pocas alternativas tambien debe quedar completa");
+    ok(!enValidOrder(ENGLISH.pruebas[0],enOrderFor(ENGLISH.pruebas[0]).slice(1)),"un orden incompleto no vale");
+    ok(!enValidOrder(ENGLISH.pruebas[0],enOrderFor(ENGLISH.pruebas[1])),"un orden de otra prueba no vale");
+  });
+  T("10 al entrar te toca una prueba al azar, con su orden mezclado, y se conserva sin volver a sortear",function(){
     reset();
     withRandom([0],function(){openEnglish()});
     eq(visibleScreens().join(),"englishHub");
-    eq(appState.englishTests.current.n,1,"con azar 0 sale la primera pendiente");eq(appState.englishTests.current.part,0);
+    var cur=appState.englishTests.current;
+    eq(cur.n,1,"con azar 0 sale la primera pendiente");eq(cur.i,0);
+    ok(enValidOrder(enTestDef(1),cur.order),"la prueba trae su orden mezclado de los 15 ejercicios");
+    var order=cur.order.join();
     ok(/Prueba 1/.test(byId("enHubBody").textContent)&&/TE TOCÓ AL AZAR/.test(byId("enHubBody").textContent),"el menu debe decir cual te toco: "+byId("enHubBody").textContent.slice(0,120));
+    ok(/8 alternativas, 4 audios, 2 fotos y 1 role-play, mezclados al azar/.test(byId("enHubBody").textContent),"el menu describe la tanda: "+byId("enHubBody").textContent);
+    eq(document.querySelectorAll("#enHubBody li").length,0,"no hay lista de partes: es una sola tanda");
+    ok(!/Parte|parte/.test(byId("enHubBody").textContent),"no debe hablar de partes");
+    ok(/Comenzar prueba/.test(byId("enHubBody").textContent),"boton de comenzar");
     withRandom([0.99],function(){openEnglish()});
     eq(appState.englishTests.current.n,1,"al volver a entrar no se sortea de nuevo");
-    eq(loadState().englishTests.current.n,1,"la prueba asignada se guarda");
-    eq(document.querySelectorAll("#enHubBody .en-parts li").length,4);
-    ok(/Comenzar prueba/.test(byId("enHubBody").textContent),"boton de comenzar");
+    eq(appState.englishTests.current.order.join(),order,"ni se vuelve a mezclar");
+    eq(loadState().englishTests.current.order.join(),order,"la prueba y su orden se guardan");
     noScore(byId("englishHub"));
   });
   T("10 tras terminar una prueba te toca una de las que faltan; al terminar las 4 se ofrece otra vuelta",function(){
@@ -590,6 +684,7 @@
     eq(appState.englishTests.current.n,1);
     withRandom([0.99],function(){enFinishTest()});
     eq(appState.englishTests.done.join(),"1");eq(appState.englishTests.current.n,4,"con azar 0.99 sale la ultima de las 3 pendientes");
+    ok(enValidOrder(enTestDef(4),appState.englishTests.current.order),"y llega con su propio orden mezclado");
     ok(/Prueba 1 completada/.test(byId("enHubBody").textContent),"aviso de prueba completada: "+byId("enHubBody").textContent.slice(0,140));
     withRandom([0],function(){openEnglish()});
     ok(!/Prueba 1 completada/.test(byId("enHubBody").textContent),"el aviso solo se ve al terminar la prueba, no en las entradas siguientes");
@@ -606,6 +701,7 @@
     withRandom([0],function(){enStartNewRound()});
     eq(appState.englishTests.done.length,0,"la vuelta nueva empieza de cero");eq(appState.englishTests.cycle,1);
     ok(appState.englishTests.current&&appState.englishTests.current.n!==3,"la primera de la vuelta nueva no repite la ultima que hiciste");
+    ok(enValidOrder(enTestByN(appState.englishTests.current.n),appState.englishTests.current.order),"y con orden nuevo");
     ok(/vuelta 2/.test(byId("enHubBody").textContent),"el menu indica la vuelta: "+byId("enHubBody").textContent.slice(0,80));
   });
   T("10 el sorteo reparte de verdad entre las 4 pruebas",function(){
@@ -614,159 +710,210 @@
     eq(Object.keys(seen).sort().join(),"1,2,3,4","deben salir las 4 pruebas");
     Object.keys(seen).forEach(function(k){ok(seen[k]>=30,"la prueba "+k+" salio muy pocas veces: "+seen[k])});
   });
-  T("10 prueba completa: alternativas, audios, imagenes y role-play en orden, sin nota, y cada parte se guarda",function(){
+  T("10 una prueba es una sola tanda: 15 ejercicios mezclados sin pasar por el menu, con el resultado de las alternativas",function(){
     reset();
-    enSetCurrent(2,0);openEnglish();
-    var def=enTestDef(2);
-    /* parte 1: alternativas con el motor de preguntas */
+    withRandom([0],function(){openEnglish()});
+    var n=appState.englishTests.current.n,order=appState.englishTests.current.order.slice();
     enStartOrContinue();
-    eq(visibleScreens().join(),"quiz");
-    eq(session.prueba.n,2);eq(session.questions.length,12);
-    ok(/^PRUEBA 2 · PARTE 1 DE 4 · ALTERNATIVAS · 1 \/ 12$/.test(byId("qMeta").textContent),"encabezado: "+byId("qMeta").textContent);
-    var stems=session.questions.map(function(q){return q.q}).sort().join("|"),expected=enResolveTest(enTestByN(2)).mcq.map(function(q){return q.q}).sort().join("|");
-    eq(stems,expected,"las 12 preguntas deben ser las de la prueba");
-    eq(appState.resume,null,"una prueba no se guarda como sesion suelta");
-    for(var i=0;i<12;i++){
-      var q=session.questions[session.index];
-      selectOption(i<9?q.correct:(q.correct+1)%q.options.length);
-      eq(appState.resume,null,"tampoco durante la sesion");
-      ok(byId("nextBtn").textContent===(i<11?"Siguiente":"Terminar parte"),"boton "+byId("nextBtn").textContent);
-      nextQuestion();
-    }
-    eq(visibleScreens().join(),"englishHub","al terminar las alternativas se vuelve al menu de la prueba");
-    eq(appState.englishTests.current.part,1);eq(appState.englishTests.current.mcq.c,9);eq(appState.englishTests.current.mcq.t,12);
-    ok(/9 de 12 correctas/.test(byId("enHubBody").textContent)&&/Continuar · parte 2: Audios/.test(byId("enHubBody").textContent),"menu: "+byId("enHubBody").textContent.slice(0,260));
-    eq(overall().a,0,"las alternativas de ingles no entran en la precision del inicio");
-    /* parte 2: audios */
-    enStartOrContinue();
-    eq(visibleScreens().join(),"englishPractice");eq(enSession.kind,"listening");
-    eq(enSession.items.map(function(x){return x.id}).join(),def.listening.join(),"los 4 audios de la prueba, en su orden");
-    ok(/^PRUEBA 2 · PARTE 2 DE 4 · AUDIOS · 1 \/ 4$/.test(byId("epMeta").textContent),"encabezado: "+byId("epMeta").textContent);
-    for(i=0;i<4;i++){
-      eq(byId("epNextBtn").disabled,true,"no se puede avanzar sin comprobar");
-      revealEnglish();
-      eq(byId("epNextBtn").textContent,i<3?"Siguiente":"Terminar parte");
-      nextEnglish();
-    }
-    eq(visibleScreens().join(),"englishHub");eq(appState.englishTests.current.part,2);
-    /* parte 3: imagenes */
-    enStartOrContinue();
-    eq(enSession.kind,"image");eq(enSession.items.map(function(x){return x.id}).join(),def.images.join());
-    ok(/PARTE 3 DE 4 · IMÁGENES · 1 \/ 2/.test(byId("epMeta").textContent),byId("epMeta").textContent);
-    for(i=0;i<2;i++){revealEnglish();nextEnglish()}
-    eq(appState.englishTests.current.part,3);
-    /* parte 4: role-play */
-    enStartOrContinue();
-    eq(enSession.kind,"roleplay");eq(enSession.items.length,3);
-    ok(/PARTE 4 DE 4 · ROLE-PLAY · 1 \/ 3/.test(byId("epMeta").textContent),byId("epMeta").textContent);
-    for(i=0;i<3;i++){
-      revealEnglish();
-      eq(byId("epNextBtn").textContent,i<2?"Siguiente":"Terminar prueba");
+    var units=[],screens=0,guard=0,mcqDone=0;
+    while(visibleScreens().join()==="englishPractice"&&guard++<100){
+      var s=enSession;
+      if(!units.length||units[units.length-1].pos!==s.pos)units.push({pos:s.pos,kind:s.kind});
+      ok(new RegExp("^PRUEBA "+n+" · "+(s.pos+1)+" / 15$").test(byId("epMeta").textContent),"encabezado: "+byId("epMeta").textContent);
+      eq(byId("epNextBtn").disabled,true,"no se puede avanzar sin contestar o revelar");
+      ok(!byId("epPrevBtn"),"no hay boton Anterior: la prueba avanza siempre hacia adelante");
+      if(s.kind==="mcq"){answerMcq(mcqDone<5);mcqDone++}
+      else byId("epRevealBtn").click();
+      eq(byId("epNextBtn").disabled,false,"tras contestar o revelar se puede avanzar");
+      eq(byId("epNextBtn").textContent,(s.pos===14&&s.index===s.items.length-1)?"Terminar prueba":"Siguiente");
+      eq(appState.resume,null,"una prueba no se guarda como sesion suelta");
       noScore(byId("englishPractice"));
-      nextEnglish();
+      byId("epNextBtn").click();
+      screens++;
+      if(visibleScreens().join()==="englishPractice"&&enSession.index===0)eq(loadState().englishTests.current.i,enSession.pos,"el avance se guarda en el dispositivo al terminar cada ejercicio");
     }
-    eq(visibleScreens().join(),"englishHub");
-    eq(appState.englishTests.done.join(),"2","la prueba 2 queda completada");
-    ok(appState.englishTests.current&&appState.englishTests.current.n!==2,"y te toca otra");
-    ok(/Prueba 2 completada · alternativas: 9 de 12 correctas/.test(byId("enHubBody").textContent),"aviso: "+byId("enHubBody").textContent.slice(0,160));
+    eq(units.length,15,"ejercicios distintos");eq(screens,17,"15 ejercicios; el role-play trae 3 turnos");
+    eq(JSON.stringify(units.map(function(u){return u.kind})),JSON.stringify(order.map(function(r){return {q:"mcq",l:"listening",i:"image",r:"roleplay"}[r[0]]})),"salen en el orden mezclado que se sorteo");
+    var count=function(k){return units.filter(function(u){return u.kind===k}).length};
+    eq(count("mcq"),8);eq(count("listening"),4);eq(count("image"),2);eq(count("roleplay"),1);
+    eq(visibleScreens().join(),"englishHub","solo al terminar la prueba se vuelve al menu");
+    eq(appState.englishTests.done.join(),String(n),"la prueba queda completada");
+    ok(appState.englishTests.current&&appState.englishTests.current.n!==n,"y te toca otra");
+    ok(new RegExp("Prueba "+n+" completada · alternativas: 5 de 8 correctas").test(byId("enHubBody").textContent),"aviso: "+byId("enHubBody").textContent.slice(0,160));
     noScore(byId("englishHub"));
   });
-  T("10 salir a mitad de una parte la reinicia, pero conserva las partes terminadas y la prueba asignada",function(){
+  T("10 salir a mitad de la prueba la deja en curso: al volver sigues en el mismo ejercicio, con el mismo orden y tus aciertos",function(){
     reset();
-    enSetCurrent(3,1);openEnglish();
+    openEnglish();
+    var cur=appState.englishTests.current,order=cur.order.slice(),n=cur.n;
     enStartOrContinue();
-    revealEnglish();nextEnglish();
-    eq(enSession.index,1);
+    var wantMcq=0,guard=0;
+    while(enSession.pos<5&&guard++<30){
+      if(enSession.kind==="mcq"){answerMcq(true);wantMcq++}else byId("epRevealBtn").click();
+      byId("epNextBtn").click();
+    }
+    eq(enSession.pos,5,"vas en el sexto ejercicio");
     exitEnglishPractice();
-    eq(visibleScreens().join(),"englishHub");eq(appState.englishTests.current.n,3);eq(appState.englishTests.current.part,1);
-    enStartOrContinue();eq(enSession.index,0,"la parte vuelve a empezar");
-    /* salir de las alternativas: vuelve al menu, sin sesion guardada y sin avanzar */
-    goHome();enSetCurrent(3,0);openEnglish();enStartOrContinue();
-    selectOption(session.questions[0].correct);
-    exitSession();
-    eq(visibleScreens().join(),"englishHub","salir de las alternativas vuelve al menu de ingles");
-    eq(appState.resume,null);eq(appState.englishTests.current.part,0);
-    openSystem(ENGLISH_KEY);
-    eq(visibleScreens().join(),"englishHub","abrir el sistema de ingles lleva al menu de ingles");
-    eq(weakQuestions(null).length,0,"las alternativas de ingles no entran en los errores del inicio");
-  });
-  T("10 la tarjeta del inicio cuenta las pruebas y las alternativas cargadas",function(){
-    reset();renderHome();
-    ok(/4 pruebas al azar/.test(byId("homeEnglishCount").textContent),byId("homeEnglishCount").textContent);
-    ok(!/hechas/.test(byId("homeEnglishCount").textContent));
-    enSetCurrent(1,0);enFinishTest();renderHome();
-    ok(/1 de 4 hechas/.test(byId("homeEnglishCount").textContent),byId("homeEnglishCount").textContent);
-    ok(/48 inglés OACI \(alternativas en 4 pruebas\)/.test(byId("appMeta").textContent),byId("appMeta").textContent);
-  });
-  T("10 describir imagenes: las 2 fotos de la prueba, el modelo aparece al revelar, se guarda el autoexamen y no hay nota",function(){
+    eq(visibleScreens().join(),"englishHub");
+    cur=appState.englishTests.current;
+    eq(cur.n,n);eq(cur.i,5);eq(cur.order.join(),order.join(),"el orden no cambia");
+    eq(wantMcq>0?cur.mcq.t:0,wantMcq,"las alternativas ya contestadas se cuentan");
+    ok(/EN CURSO/.test(byId("enHubBody").textContent)&&/Vas en el ejercicio 6 de 15/.test(byId("enHubBody").textContent)&&/Continuar prueba/.test(byId("enHubBody").textContent),"menu: "+byId("enHubBody").textContent);
+    ok(document.querySelector("#enHubBody .progress"),"barra de avance");
+    /* al reabrir la app desde cero (recargar) tambien */
+    appState=loadState();
+    openEnglish();
+    eq(appState.englishTests.current.i,5,"el avance sobrevive a recargar");
+    enStartOrContinue();
+    eq(enSession.pos,5,"se retoma en el mismo ejercicio");
+    eq(enSession.n,n);
+    /* salir a mitad de una alternativa: no cuenta y vuelve a empezar */
+    var before=JSON.stringify(appState.englishTests.current.mcq||null);
+    if(enSession.kind==="mcq")optionButtons()[0].click();
+    exitEnglishPractice();
+    eq(JSON.stringify(appState.englishTests.current.mcq||null),before,"una alternativa que no se termino no cuenta");
+    eq(appState.englishTests.current.i,5);
+    /* salir a mitad de un role-play: vuelve al primer turno */
     reset();
-    enSetCurrent(1,2);openEnglish();enStartOrContinue();
+    enOpenUnit(2,["r:en_rp_02"]);
+    byId("epRevealBtn").click();byId("epNextBtn").click();
+    eq(enSession.index,1,"segundo turno");
+    exitEnglishPractice();
+    eq(appState.englishTests.current.i,0);
+    enStartOrContinue();
+    eq(enSession.index,0,"el role-play vuelve a empezar en el primer turno");
+    eq(appState.resume,null);
+  });
+  T("10 alternativas: cuatro opciones mezcladas, una sola respuesta, explicacion sin citas y no se puede cambiar",function(){
+    reset();
+    enOpenUnit(1,["q:en_q_01"]);
+    var q=enSession.items[0];
+    eq(visibleScreens().join(),"englishPractice");
+    ok(/ALTERNATIVA/.test(byId("epTag").textContent),byId("epTag").textContent);
+    eq(byId("epTitle").textContent,q.q);
+    var btns=optionButtons();
+    eq(btns.length,4);
+    eq(btns.map(function(b){return b.querySelector(".letter").textContent}).join(""),"ABCD");
+    eq(btns.map(optionText).sort().join("|"),q.options.slice().sort().join("|"),"estan las 4 opciones");
+    ok(byId("epRevealBtn").classList.contains("hidden"),"no hay boton de mostrar modelo");
+    ok(byId("epRateWrap").classList.contains("hidden"),"ni autocalificacion");
+    ok(byId("epReveal").classList.contains("hidden"),"la explicacion no se ve antes de contestar");
+    eq(byId("epNextBtn").disabled,true);
+    ok(document.querySelector("#epWork .dontknow"),"hay «No la sé»");
+    nextEnglish();
+    eq(enSession.pos,0,"sin contestar no se puede pasar a la siguiente (ni por codigo)");
+    answerMcq(false);
+    var after=optionButtons();
+    eq(after.filter(function(b){return b.classList.contains("correct")}).length,1,"una opcion correcta marcada");
+    eq(after.filter(function(b){return b.classList.contains("wrong")}).length,1,"y la elegida marcada como incorrecta");
+    ok(after.every(function(b){return b.disabled}),"las opciones se bloquean");
+    eq(optionText(after.filter(function(b){return b.classList.contains("correct")})[0]),q.options[q.correct]);
+    ok(byId("epReveal").querySelector(".feedback-head.bad")&&byId("epReveal").textContent.indexOf(q.expl)>=0,"explicacion");
+    ok(!byId("epReveal").querySelector(".citation")&&!/Referencia|VERIFICADO/.test(byId("epReveal").textContent),"sin bloque de citas");
+    ok(!document.querySelector("#epWork .dontknow"),"«No la sé» desaparece");
+    after.filter(function(b){return b.classList.contains("correct")})[0].disabled=false;
+    after.filter(function(b){return b.classList.contains("correct")})[0].click();
+    eq(enSession.state[0].chosen===q.correct,false,"la respuesta no se puede cambiar");
+    eq(byId("epNextBtn").disabled,false);
+    /* «No la sé» cuenta como incorrecta y muestra la respuesta */
+    reset();
+    enOpenUnit(1,["q:en_q_01"]);
+    document.querySelector("#epWork .dontknow").click();
+    eq(enSession.state[0].chosen,-1);
+    ok(byId("epReveal").querySelector(".feedback-head.bad")&&/Respuesta correcta/.test(byId("epReveal").textContent),"muestra la respuesta correcta");
+    eq(document.querySelectorAll("#epWork .option.wrong").length,0);
+    eq(document.querySelectorAll("#epWork .option.correct").length,1);
+    byId("epNextBtn").click();
+    eq(appState.englishTests.current.mcq.c,0);eq(appState.englishTests.current.mcq.t,1);
+    /* acertar */
+    reset();
+    enOpenUnit(1,["q:en_q_01"]);
+    answerMcq(true);
+    ok(byId("epReveal").querySelector(".feedback-head.ok")&&/Correcta/.test(byId("epReveal").textContent));
+    byId("epNextBtn").click();
+    eq(appState.englishTests.current.mcq.c,1);eq(appState.englishTests.current.mcq.t,1);
+    /* el orden de las opciones cambia de una vez a otra */
+    var pos={};
+    for(var i=0;i<60;i++){enOpenUnit(1,["q:en_q_01"]);var b=optionButtons();pos[b.map(optionText).indexOf(enSession.items[0].options[enSession.items[0].correct])]=1}
+    ok(Object.keys(pos).length>=3,"la respuesta correcta casi siempre cae en el mismo lugar: "+Object.keys(pos));
+    /* la alternativa no toca las estadisticas del banco tecnico */
+    eq(overall().a,0);eq(weakQuestions(null).length,0);
+  });
+  T("10 describir imagenes: las 2 fotos de la prueba, el titulo y el tema solo al revelar, y no hay nota",function(){
+    reset();
+    enOpenUnit(1,["i:en_img_01","i:en_img_05"]);
     eq(visibleScreens().join(),"englishPractice");
     eq(byId("epNextBtn").disabled,true,"no se puede avanzar sin revelar");
+    nextEnglish();
+    eq(enSession.pos,0,"sin revelar el modelo no se puede pasar a la siguiente (ni por codigo)");
     ok(byId("epReveal").classList.contains("hidden"),"el modelo debe estar oculto");
     ok(/^assets\/ingles\/.+\.jpg$/.test(byId("epStimulus").querySelector("img").getAttribute("src")),"foto");
     ok(byId("epStimulus").querySelector("img").getAttribute("alt").length>20,"la foto necesita texto alternativo");
-    var im=ENGLISH.images.filter(function(x){return x.id===enTestDef(1).images[0]})[0];
+    var im=enById(ENGLISH.images,"en_img_01");
     ok((byId("epTag").textContent+" "+byId("epTitle").textContent+" "+byId("epStimulus").textContent).indexOf(im.title)<0&&byId("epTag").textContent.indexOf(im.topic)<0,"ni el titulo ni el tema de la foto deben verse antes de describirla");
     eq(byId("epTitle").textContent,"Describe the picture.");
-    revealEnglish();
+    byId("epRevealBtn").click();
     ok(!byId("epReveal").classList.contains("hidden"),"el modelo debe verse");
     ok(/Descripción modelo/i.test(byId("epReveal").textContent),"falta la descripcion modelo");
     ok(byId("epReveal").textContent.indexOf(im.title)>=0&&byId("epReveal").textContent.indexOf(im.topic)>=0,"el titulo y el tema aparecen al revelar");
     eq(byId("epNextBtn").disabled,false,"tras revelar se puede avanzar");
-    var id=enTestDef(1).images[0];
-    rateEnglish(1);eq(appState.english[id].r,1);eq(appState.english[id].a,1);
-    rateEnglish(2);eq(appState.english[id].r,2);eq(appState.english[id].a,2);
+    rateEnglish(1);eq(appState.english["en_img_01"].r,1);eq(appState.english["en_img_01"].a,1);
+    rateEnglish(2);eq(appState.english["en_img_01"].r,2);eq(appState.english["en_img_01"].a,2);
     noScore(byId("englishPractice"));
-    nextEnglish();eq(enSession.index,1);
-    eq(enSession.items[1].id,enTestDef(1).images[1]);
+    byId("epNextBtn").click();
+    eq(enSession.kind,"image","la segunda foto sigue a la primera");eq(enSession.items[0].id,"en_img_05");eq(enSession.pos,1);
   });
-  T("10 role-play: 3 turnos con la situacion siempre a la vista, audio de ATC solo donde responde, y lo que ya pasó",function(){
+  T("10 role-play: 3 turnos seguidos dentro de la misma tanda, con la situacion a la vista, audio de ATC solo donde responde y lo que ya paso",function(){
     reset();
-    enSetCurrent(1,3);openEnglish();enStartOrContinue();
+    enOpenUnit(1,["r:en_rp_01"]);
     eq(enSession.kind,"roleplay");
     var rp=ENGLISH.roleplays[0];
+    ok(/^PRUEBA 1 · 1 \/ 15$/.test(byId("epMeta").textContent),byId("epMeta").textContent);
     /* turno 1: el piloto abre, sin audio */
     ok(/ROLE-PLAY · TURNO 1 DE 3/.test(byId("epTag").textContent),byId("epTag").textContent);
     ok(byId("epStimulus").textContent.indexOf(rp.scenario)>=0,"la situacion debe verse");
     ok(!byId("enPlayBtn"),"el primer turno no tiene audio");
     ok(byId("enTranscript"),"hay donde responder");
     ok(!/Hasta ahora/.test(byId("epStimulus").textContent),"el primer turno no tiene historia");
-    revealEnglish();
+    byId("epRevealBtn").click();
     ok(/Mayday, mayday, mayday, Walden Tower, Fastair three four five, engine failure/.test(byId("epReveal").textContent),"modelo del turno 1");
-    ok(byId("epReveal").querySelectorAll(".citation").length>=2,"cada turno trae sus citas");
-    ok(/turnos de ATC son de práctica/.test(byId("epReveal").textContent),"se avisa que los turnos de ATC son de practica");
+    ok(!byId("epReveal").querySelector(".citation")&&!/Referencia/.test(byId("epReveal").textContent),"el role-play no muestra citas");
     ok(byId("epReveal").querySelectorAll(".en-check label").length>=4,"lista para compararte");
     ok(byId("epReveal").querySelectorAll(".en-chip").length>=3,"vocabulario");
-    nextEnglish();
-    /* turno 2: ATC habla (audio con el texto oculto) y aparece lo que ya pasó */
+    ok(/turnos de ATC son de práctica/.test(byId("epReveal").textContent),"se avisa que los turnos de ATC son de practica");
+    eq(byId("epNextBtn").textContent,"Siguiente");
+    byId("epNextBtn").click();
+    /* turno 2: ATC habla (audio con el texto oculto) y aparece lo que ya paso; sigue siendo el mismo ejercicio de la prueba */
     ok(/TURNO 2 DE 3/.test(byId("epTag").textContent));
+    ok(/^PRUEBA 1 · 1 \/ 15$/.test(byId("epMeta").textContent),"el turno no cuenta como otro ejercicio");
     ok(byId("enPlayBtn"),"el segundo turno tiene audio");
     ok(byId("enHeardText").classList.contains("hidden"),"el texto de lo que escuchas empieza oculto");
     ok(byId("epStimulus").textContent.indexOf(rp.scenario)>=0,"la situacion sigue a la vista");
     ok(/Hasta ahora/.test(byId("epStimulus").textContent)&&/Tú:.*Mayday, mayday, mayday/.test(byId("epStimulus").textContent),"historia del turno 1: "+byId("epStimulus").textContent.slice(-220));
     enToggleHeard();ok(!byId("enHeardText").classList.contains("hidden"));
     ok(/roger Mayday/.test(byId("enHeardText").textContent));
-    revealEnglish();nextEnglish();
+    byId("epRevealBtn").click();byId("epNextBtn").click();
     /* turno 3: la historia trae los dos turnos anteriores */
     eq(byId("epStimulus").querySelectorAll(".en-tr").length,3,"turno 1 (tu respuesta), turno 2 (ATC y tu respuesta)");
     ok(/persons on board and endurance/.test(byId("enHeardText").textContent));
+    byId("epRevealBtn").click();
+    eq(byId("epNextBtn").textContent,"Siguiente","el role-play no es el ultimo ejercicio");
+    byId("epNextBtn").click();
+    eq(enSession.pos,1,"tras el ultimo turno sigue el ejercicio siguiente de la prueba, sin pasar por el menu");
+    eq(visibleScreens().join(),"englishPractice");
   });
-  T("10 role-play: los 4 escenarios (V1, rechazado, urgencia, descenso) traen indicativo, citas verificables y fuentes reales",function(){
+  T("10 role-play: los 4 escenarios (V1, rechazado, urgencia, descenso) traen indicativo y fuentes internas, y ninguna se muestra",function(){
     var m=function(i,t){return ENGLISH.roleplays[i].turns[t]};
     ok(/^Mayday, mayday, mayday, Walden Tower, Fastair three four five, engine failure after take-off\./.test(m(0,0).model[0]),"despues de V1: MAYDAY");
-    ok(m(0,0).refs.some(function(r){return /^FCTM/.test(r.src)&&/must continue the takeoff/.test(r.cite)}),"despues de V1: cita del FCTM");
+    ok(m(0,0).refs.some(function(r){return /^FCTM/.test(r.src)&&/must continue the takeoff/.test(r.cite)}),"despues de V1: la fuente interna se conserva");
     eq(m(1,0).model[0],"Fastair three four five, stopping.","antes de V1: stopping");
-    ok(m(1,0).refs.some(function(r){return /§4\.5\.12/.test(r.src)}),"antes de V1: §4.5.12");
     ok(/^Mayday, mayday, mayday, Kennington Tower/.test(m(1,1).model[0])&&/engine fire/.test(m(1,1).model[0]),"antes de V1: MAYDAY por fuego");
-    ok(m(1,2).refs.some(function(r){return /^FCTM/.test(r.src)&&/vacate the runway/.test(r.cite)}),"antes de V1: no dejar la pista");
     ok(/^Pan-pan, pan-pan, pan-pan, Walden Tower/.test(m(2,0).model[0]),"urgencia: PAN PAN");
-    eq(m(3,0).model.length,2,"descenso de emergencia: version del manual y version con MAYDAY");
-    ok(m(3,0).refs.some(function(r){return /^FCOM/.test(r.src)}),"descenso: cita del FCOM");
+    eq(m(3,0).model.length,2,"descenso de emergencia: version estandar y version con MAYDAY");
     ENGLISH.roleplays.forEach(function(rp){
       rp.turns.forEach(function(t,i){
         t.model.forEach(function(x){ok(/Fastair three four five/.test(x),rp.id+" turno "+(i+1)+": el modelo debe llevar el indicativo")});
-        t.refs.forEach(function(r){ok(/^(ICAO Doc 9432|FCTM|FCOM) /.test(r.src)&&/PDF \d+/.test(r.src)&&r.cite.length>10,rp.id+": cita sin fuente o sin pagina PDF")});
+        t.refs.forEach(function(r){ok(/^(ICAO Doc 9432|FCTM|FCOM) /.test(r.src)&&/PDF \d+/.test(r.src)&&r.cite.length>10,rp.id+": fuente interna sin documento o sin pagina")});
         if(i>0)ok(t.heard&&t.heard[0].who==="atc","el turno "+(i+1)+" responde a ATC");
       });
     });
@@ -824,22 +971,23 @@
   });
   T("10 audios: los apuntes son libres (sin campos que den el orden), una sola opcion de audio y la comparacion no da nota",function(){
     reset();
-    enSetCurrent(1,1);openEnglish();enStartOrContinue();
+    enOpenUnit(1,["l:en_lis_01"]);
     var notes=byId("enNotes");
     ok(notes&&notes.tagName==="TEXTAREA","debe haber un cuadro libre de apuntes");
     eq(document.querySelectorAll("#epWork input,#epWork select").length,0,"no debe haber campos etiquetados, selectores ni casillas");
     ok(!byId("enRate")&&!byId("enVoice")&&!byId("enRadio")&&!byId("enReplayBtn"),"el audio no tiene velocidad, voz, digitos ni ultima frase");
     eq(document.querySelectorAll("#epWork .en-audio button").length,1,"un solo boton de audio");
     ok(!/viento|pista|qnh|wind|runway|temperatura|visibilidad|frecuencia/i.test(notes.placeholder+" "+byId("epTip").textContent+" "+byId("epStimulus").textContent),"las instrucciones no deben adelantar el orden ni los datos");
-    revealEnglish();
+    byId("epRevealBtn").click();
     ok(/No escribiste nada/.test(byId("epReveal").textContent)&&document.querySelectorAll("#epReveal .en-key.ok").length===0,"sin apuntes no se marca nada");
     retryEnglish();
     notes=byId("enNotes");
     notes.value="RWY 27 QNH 1018 ILS";enTextChanged(notes.value);
-    revealEnglish();
+    byId("epRevealBtn").click();
     eq(document.querySelectorAll("#epReveal .en-key").length,ENGLISH.listening[0].keys.length,"una fila por dato clave");
     eq(document.querySelectorAll("#epReveal .en-key.ok").length,3,"pista, ILS y QNH");
     ok(/Transcripci/.test(byId("epReveal").textContent)&&/Georgetown information Bravo/.test(byId("epReveal").textContent),"transcripcion");
+    ok(!byId("epReveal").querySelector(".citation")&&!/Referencia/.test(byId("epReveal").textContent),"el audio no muestra citas");
     ok(byId("enNotes").readOnly,"los apuntes quedan bloqueados al comprobar");
     noScore(byId("englishPractice"));
     retryEnglish();
@@ -858,8 +1006,7 @@
     reset();
     var sp=fakeSpeech();
     try{
-      enSetCurrent(2,1);openEnglish();enStartOrContinue();
-      revealEnglish();nextEnglish();
+      enOpenUnit(2,["l:en_lis_07"]);
       enPlayCurrent();
       return new Promise(function(resolve,reject){
         setTimeout(function(){
@@ -885,7 +1032,7 @@
       var seenAtc={},bad=0;
       for(var i=0;i<200;i++){var p=enPickVoices();seenAtc[p.atc]=1;if(p.atc===p.pilot)bad++}
       eq(Object.keys(seenAtc).length,3,"con el azar de verdad deben salir las 3 voces");eq(bad,0,"ATC y piloto suenan con voces distintas cuando hay mas de una");
-      enSetCurrent(2,1);openEnglish();enStartOrContinue();
+      enOpenUnit(2,["l:en_lis_02","l:en_lis_07"]);
       withRandom([0,0.99],function(){enVoiceFor("atc")});
       enPlay(enPlayableLines());
       var u;
@@ -902,7 +1049,8 @@
                 eq(sp.spoken[before].voice.name,"Test George","al repetir el audio suena la misma voz");
                 eq(JSON.stringify(enSession.state[0].voices),voicesBefore,"y no se vuelve a sortear");
                 /* siguiente audio: otra voz */
-                revealEnglish();nextEnglish();
+                byId("epRevealBtn").click();byId("epNextBtn").click();
+                eq(enSession.items[0].id,"en_lis_07");
                 withRandom([0.99,0],function(){enVoiceFor("atc")});
                 enPlay(enPlayableLines());
                 setTimeout(function(){
@@ -910,7 +1058,7 @@
                     var last=sp.spoken[sp.spoken.length-1];
                     eq(last.voice.name,"Test Aria","el audio siguiente puede tener otra voz");
                     /* la voz del piloto en la colacion modelo */
-                    revealEnglish();
+                    byId("epRevealBtn").click();
                     var btn=document.querySelector('#epReveal .en-say[data-who="pilot"]');
                     ok(btn,"la colacion modelo tiene boton de escuchar");
                     enPlayFromBtn(btn);
@@ -935,7 +1083,7 @@
     reset();
     var sp=fakeSpeech([voice("Unica","en-US")]);
     try{
-      enSetCurrent(1,1);openEnglish();enStartOrContinue();
+      enOpenUnit(1,["l:en_lis_01"]);
       enPlay([{who:"atc",text:"Hello.",pause:0}]);
       return new Promise(function(resolve,reject){
         setTimeout(function(){
@@ -954,7 +1102,7 @@
     reset();setupMic(okStream);
     try{
       enMedia.micOk=true;
-      enSetCurrent(1,3);openEnglish();enStartOrContinue();
+      enOpenUnit(1,["r:en_rp_01"]);
       await enToggleMic();
       ok(enMedia.listening===true,"no quedo escuchando");
       var inst=FakeSR.instances[FakeSR.instances.length-1];
@@ -969,7 +1117,7 @@
     setupMic(function(){return new Promise(function(r){resolvePermission=r})});
     try{
       enMedia.micOk=false;
-      enSetCurrent(1,3);openEnglish();enStartOrContinue();
+      enOpenUnit(1,["r:en_rp_01"]);
       var pending=enToggleMic();
       goHome();
       resolvePermission({getTracks:function(){return[]}});
@@ -982,7 +1130,7 @@
     reset();setupMic(okStream);
     try{
       enMedia.micOk=true;
-      enSetCurrent(1,3);openEnglish();enStartOrContinue();
+      enOpenUnit(1,["r:en_rp_01"]);
       await enToggleMic();
       var inst=FakeSR.instances[FakeSR.instances.length-1];
       var res=function(text,fin){var r=[{transcript:text}];r.isFinal=fin;return r};
@@ -994,9 +1142,17 @@
       inst.onend();
       eq(enSession.state[0].text,"say again QNH","el texto se conserva en la sesion");
       noScore(byId("englishPractice"));
-      revealEnglish();
+      byId("epRevealBtn").click();
       ok(!byId("epReveal").classList.contains("hidden"),"el modelo debe verse");
     }finally{teardownMic()}
+  });
+  T("10 la tarjeta del inicio cuenta las pruebas y las alternativas cargadas",function(){
+    reset();renderHome();
+    ok(/4 pruebas al azar/.test(byId("homeEnglishCount").textContent),byId("homeEnglishCount").textContent);
+    ok(!/hechas/.test(byId("homeEnglishCount").textContent));
+    enOpenUnit(1,[]);enFinishTest();renderHome();
+    ok(/1 de 4 hechas/.test(byId("homeEnglishCount").textContent),byId("homeEnglishCount").textContent);
+    ok(/32 inglés OACI \(alternativas en 4 pruebas\)/.test(byId("appMeta").textContent),byId("appMeta").textContent);
   });
   T("9 los controles de Ingles OACI miden al menos 44 px de alto",function(){
     reset();
@@ -1007,16 +1163,19 @@
     }
     setupMic(okStream);
     try{
-      enSetCurrent(1,0);openEnglish();
+      openEnglish();
       minH("#englishHub .back","el enlace Inicio");minH("#englishHub .en-test-go","el boton de comenzar");
-      enSetCurrent(1,3);openEnglish();enStartOrContinue();revealEnglish();nextEnglish();
-      minH("#englishPractice .back","el enlace Salir");minH("#enPlayBtn","el boton de escuchar");minH("#enMicBtn","el boton de grabar");
-      revealEnglish();
+      enOpenUnit(1,["q:en_q_01"]);
+      minH("#englishPractice .back","el enlace Salir");minH("#epWork .option","las alternativas");minH("#epWork .dontknow","el boton No la se");
+      answerMcq(true);
+      minH("#epNextBtn","el boton Siguiente");
+      enOpenUnit(1,["r:en_rp_01"]);
+      byId("epRevealBtn").click();byId("epNextBtn").click();
+      minH("#enPlayBtn","el boton de escuchar");minH("#enMicBtn","el boton de grabar");minH("#epRevealBtn","el boton de mostrar modelo");
+      byId("epRevealBtn").click();
       minH("#epReveal .en-say","los botones de escuchar el modelo");minH("#epRateWrap .rate","los botones de autocalificacion");minH("#epReveal .en-check label","las casillas de autoevaluacion");
-      enSetCurrent(1,1);openEnglish();enStartOrContinue();
+      enOpenUnit(1,["l:en_lis_01"]);
       minH("#enNotes","el cuadro de apuntes");
-      enSetCurrent(1,0);openEnglish();enStartOrContinue();
-      minH("#quiz .option","las alternativas de la prueba");
     }finally{teardownMic()}
   });
 

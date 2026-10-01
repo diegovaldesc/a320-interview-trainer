@@ -455,6 +455,24 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
   dio el mismo HTML, los mismos estilos calculados y la misma distribución en
   las dos versiones. Tampoco cambiaron la huella del banco (`xl140d`), los
   verificadores de citas ni lo que arma `construir.js` de las estaciones.
+- **Recorrido de pantallas para cambios internos** — `tests/pantallas.js`
+  repite esa comparación: con el azar fijo abre 14 pantallas y guarda el HTML,
+  el estilo calculado y la caja de cada elemento. Para comprobar que un cambio
+  interno no se ve, se corre antes y después (la versión «antes» puede ser una
+  copia de un commit anterior con su propio `tests\run.ps1`) y se comparan las
+  dos salidas:
+
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File tests\run.ps1 -Script tests\pantallas.js -Width 390 -Height 844 > antes.json
+  powershell -ExecutionPolicy Bypass -File tests\run.ps1 -Script tests\pantallas.js -Width 390 -Height 844 > despues.json
+  node tests\comparar_pantallas.js antes.json despues.json
+  ```
+
+  Comprobado: la versión de un solo archivo contra la dividida sale igual, y
+  una regla de CSS agregada a propósito (`body{letter-spacing:0.5px}`) sale
+  distinta. Una alteración que no cambia nada (una regla que otra pisa, o una
+  clase que no existe) también sale igual: la prueba de mutación tiene que
+  cambiar algo de verdad.
 
 Comprobado que detecta regresiones: un `?v=` atrasado en `js/app.js` falla en
 ESTRUCTURA-01, y cargar `data/oral.js` después de `js/app.js` falla en 15

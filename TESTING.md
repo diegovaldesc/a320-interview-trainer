@@ -404,14 +404,24 @@ Comprobado que detecta regresiones: dejando el micrófono sin volver, aceptando
 un `needToKnow` de tipo inválido en el respaldo y quitando el arreglo de «si no,
 go-around», la batería falló en el caso correspondiente cada vez.
 
-## 12. Banco DGAC: pregunta retirada (2026-10-01)
+## 12. Banco DGAC: la pregunta del PTU con parking brake (2026-10-01)
 
-- **DGAC-01** — se retiró la pregunta «IT IS POSSIBLE TO PRESSURIZE THE GREEN
-  HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU WHEN THE PARKING BRAKE IS SET»: la app
-  la daba por falsa, pero en tierra el PTU funciona con los dos master levers en
-  OFF (o los dos en ON) aunque el parking brake esté puesto; el parking brake solo
-  lo inhibe con un master lever en ON y el otro en OFF (primer arranque). El banco
-  DGAC queda en 572 y la batería comprueba que la pregunta no vuelva.
+- **El banco DGAC es el examen oficial.** La sección sirve para preparar ese
+  examen: las preguntas y sus alternativas quedan tal como las escribió la DGAC,
+  aunque estén mal planteadas. Las respuestas marcadas en el archivo de origen no
+  son una clave oficial: las destacó un piloto que compartió el archivo. Por eso
+  la app marca la alternativa correcta para el avión real; si ninguna lo es del
+  todo, marca la mejor y lo aclara en la explicación.
+- **DGAC-01** — «IT IS POSSIBLE TO PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE
+  GROUND VIA THE PTU WHEN THE PARKING BRAKE IS SET» está en el banco con respuesta
+  TRUE. En tierra, el PTU funciona aunque el parking brake esté puesto si los dos
+  master levers están en OFF o los dos en ON. Con un master lever en ON y el otro
+  en OFF (primer arranque), necesita el parking brake suelto y la NWS fuera de la
+  posición de remolque.
+  - Historia: en el archivo de origen venía marcada FALSE. Por eso se retiró
+    (15e53b0) y después volvió con TRUE (1.11.3). El banco DGAC queda en 573.
+  - La batería comprueba que la pregunta esté, con TRUE, con la explicación de
+    los master levers y sin citar manuales.
 
 ## 13. Archivos de la app (2026-10-01)
 

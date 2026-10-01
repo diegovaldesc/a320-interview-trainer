@@ -49,13 +49,16 @@
   T("0 el banco reporta integridad estructural OK",function(){
     var h=bankIntegrity();ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
     eq(totalQuestions(),415,"preguntas FCOM");
-    eq(dgacTotal(),572,"preguntas DGAC");
+    eq(dgacTotal(),573,"preguntas DGAC");
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
     eq(ORAL_VOICE_BANK.length,53,"preguntas orales");
   });
-  T("0 DGAC-01 la pregunta del PTU con parking brake (clave contraria al FCOM) ya no esta en el banco",function(){
+  T("0 DGAC-01 la pregunta del PTU con parking brake esta en el banco DGAC con respuesta TRUE (logica real de los master levers)",function(){
     var hit=rawPool(DGAC_KEY).filter(function(q){return /PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU/i.test(q.q)});
-    eq(hit.length,0,"preguntas del PTU con parking brake");
+    eq(hit.length,1,"preguntas del PTU con parking brake");
+    eq(correctText(hit[0]),"TRUE.","respuesta");
+    ok(/master levers[^.]*en OFF/i.test(hit[0].expl)&&/parking brake suelto/i.test(hit[0].expl),"la explicacion debe dar la logica de los master levers y del parking brake");
+    ok(!/\b(FCOM|FCTM|AFM|PDF)\b/.test(hit[0].expl+" "+hit[0].cite),"la explicacion y la referencia no citan manuales");
   });
   T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden y con la version actual",function(){
     var want=["css/app.css","data/banco.js","data/ingles.js","data/oral.js","js/app.js"];

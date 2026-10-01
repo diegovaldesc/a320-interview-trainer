@@ -15,16 +15,18 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 ```
 
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
-al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
-nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~7 s con `OK 86/86 casos...` (código 0) o con la
-lista de casos que fallan y su mensaje (código 1). La app publicada no se
-modifica.
+al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
+sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
+instalar nada). Los casos corren dentro de la propia app, con acceso a sus
+funciones y a su estado real. Termina en ~7 s con `OK 87/87 casos...` (código
+0) o con la lista de casos que fallan y su mensaje (código 1). La app
+publicada no se modifica.
 
 Está comprobado que detecta regresiones: rompiendo a propósito siete de los
 arreglos de abajo, falló en los casos correspondientes. Ejecútala **antes de
-cada commit** que toque `index.html`, y agrega un caso a `tests/suite.js`
-por cada bug nuevo (con el ID del hallazgo en el nombre).
+cada commit** que toque la app (`index.html`, `css/`, `data/` o `js/`), y
+agrega un caso a `tests/suite.js` por cada bug nuevo (con el ID del hallazgo
+en el nombre).
 
 Lo que esta batería **no** cubre: aspecto visual, tamaños en pantalla y
 comportamiento real del micrófono/voz en un teléfono; eso se verifica a ojo
@@ -338,7 +340,7 @@ de la página. Esa comprobación necesita esos manuales en `Desktop\APP` y por
 eso no forma parte de `run.ps1`; si se edita el texto de una fuente interna,
 hay que repetirla con
 `node C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_ingles.js`
-(lee el bloque `english-data` de `index.html`; en la última corrida: 77 tramos
+(lee `data/ingles.js`; en la última corrida: 77 tramos
 de cita comprobados, 0 problemas). Lo que **no** viene de un manual (los turnos
 de ATC de los role-plays y el formato de los ATIS) es composición de práctica y
 así se indica en pantalla.
@@ -410,6 +412,53 @@ go-around», la batería falló en el caso correspondiente cada vez.
   OFF (o los dos en ON) aunque el parking brake esté puesto; el parking brake solo
   lo inhibe con un master lever en ON y el otro en OFF (primer arranque). El banco
   DGAC queda en 572 y la batería comprueba que la pregunta no vuelva.
+
+## 13. Archivos de la app (2026-10-01)
+
+La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
+
+| Archivo | Qué tiene |
+|---|---|
+| `index.html` | La página: encabezado, íconos y el HTML de las pantallas. |
+| `css/app.css` | Los estilos. |
+| `data/banco.js` | Banco de alternativas (sistemas, Operación Airbus, Entrevista técnica y DGAC), en JSON. |
+| `data/ingles.js` | Banco de Inglés OACI, en JSON. |
+| `data/oral.js` | Banco de Entrevista oral (`ORAL_VOICE_BANK`), que también usa Need to know. |
+| `js/app.js` | Toda la lógica. |
+
+- **Orden de carga** — `index.html` carga los tres bancos antes que
+  `js/app.js`, porque la lógica los usa al arrancar. La lógica sigue en un solo
+  archivo: al cargar el estado se usan funciones escritas más abajo, y
+  repartirlas en varios archivos rompería el arranque.
+- **Texto exacto del banco** — `data/banco.js` guarda el JSON como texto entre
+  comillas invertidas (`String.raw`), porque `BANK_FINGERPRINT` se calcula
+  sobre ese texto: así una sesión «Continuar» guardada antes de dividir sigue
+  valiendo. Por eso el JSON no puede tener comillas invertidas ni un `$`
+  seguido de una llave (`data/ingles.js` sigue la misma regla). Las
+  herramientas leen el JSON entre esa marca y la última comilla invertida.
+- **Versión en las rutas** — cada archivo se pide con `?v=` + `APP_VERSION`
+  para que un teléfono no mezcle una parte nueva con otra vieja guardada en su
+  memoria. **Cada versión nueva cambia `APP_VERSION` y los `?v=` de
+  `index.html`.**
+- **ESTRUCTURA-01** — `index.html` carga las 5 partes, cada una una sola vez,
+  en orden y con `?v=APP_VERSION`; no queda `<style>` ni banco dentro de
+  `index.html`; la huella sale del texto exacto de `data/banco.js`; y el banco
+  de inglés está cargado.
+- **Errores con detalle** — `run.ps1` abre la copia con
+  `--allow-file-access-from-files`: sin eso, un error en `js/` o `data/` llega
+  solo como «Script error.». Además lee la salida del navegador con
+  reintentos, porque a veces el archivo sigue tomado un instante.
+- **Comprobación de la división (una vez)** — al rearmar un solo archivo con
+  las partes se obtuvo exactamente el `index.html` anterior, salvo las 8 líneas
+  previstas: dónde se leen los dos bancos JSON, los mensajes y comentarios que
+  los nombran, y `APP_VERSION`. Un recorrido de 14 pantallas con el azar fijo
+  dio el mismo HTML, los mismos estilos calculados y la misma distribución en
+  las dos versiones. Tampoco cambiaron la huella del banco (`xl140d`), los
+  verificadores de citas ni lo que arma `construir.js` de las estaciones.
+
+Comprobado que detecta regresiones: un `?v=` atrasado en `js/app.js` falla en
+ESTRUCTURA-01, y cargar `data/oral.js` después de `js/app.js` falla en 15
+casos (`ORAL_VOICE_BANK is not defined`).
 
 ## Límite explícito de esta batería
 

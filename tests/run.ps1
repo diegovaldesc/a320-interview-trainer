@@ -46,12 +46,27 @@ try {
   $page = Join-Path $work "run.html"
   [IO.File]::WriteAllText($page, $html, (New-Object Text.UTF8Encoding($false)))
 
+  # La app carga sus estilos, sus bancos y su logica desde archivos aparte
+  # (css/, data/, js/): se copian junto a la copia temporal, con las mismas rutas.
+  foreach ($ref in [regex]::Matches($html, '<(?:script|link)\b[^>]*?\b(?:src|href)="([^"]+)"')) {
+    $rel = ($ref.Groups[1].Value -split '[?#]')[0]
+    if ($rel -match '^(?:[a-z][a-z0-9+.-]*:|//)') { continue }
+    $from = Join-Path $root $rel
+    if (-not (Test-Path -LiteralPath $from -PathType Leaf)) { throw "index.html carga $rel, que no existe" }
+    $to = Join-Path $work $rel
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $to) | Out-Null
+    Copy-Item -LiteralPath $from -Destination $to
+  }
+
   $profile = Join-Path $work "profile"
   $out = Join-Path $work "dom.html"
   $err = Join-Path $work "err.txt"
   $url = ([Uri]$page).AbsoluteUri
+  # --allow-file-access-from-files: sin esto, un error en js/ o data/ llega solo como
+  # "Script error." (archivos locales distintos cuentan como otro origen).
   $argList = @("--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
-               "--disable-extensions", "--user-data-dir=`"$profile`"", "--virtual-time-budget=20000")
+               "--disable-extensions", "--allow-file-access-from-files",
+               "--user-data-dir=`"$profile`"", "--virtual-time-budget=20000")
   if ($Width -gt 0 -and $Height -gt 0) { $argList += "--window-size=$Width,$Height" }
   $argList += @("--dump-dom", $url)
 
@@ -64,10 +79,15 @@ try {
   }
   $secs = [math]::Round($sw.Elapsed.TotalSeconds, 1)
 
-  $dom = [IO.File]::ReadAllText($out, [Text.Encoding]::UTF8)
+  # El navegador puede tener tomado el archivo de salida un instante despues de cerrarse.
+  $dom = $null
+  for ($i = 0; $i -lt 40 -and $null -eq $dom; $i++) {
+    try { $dom = [IO.File]::ReadAllText($out, [Text.Encoding]::UTF8) } catch { Start-Sleep -Milliseconds 250 }
+  }
+  if ($null -eq $dom) { Write-Host "No se pudo leer la salida del navegador."; exit 2 }
   $mm = [regex]::Match($dom, '<pre id="__test_results">(.*?)</pre>', 'Singleline')
   if (-not $mm.Success -or [string]::IsNullOrWhiteSpace($mm.Groups[1].Value)) {
-    Write-Host "La bateria no entrego resultados. Revisa errores de script en index.html o tests/suite.js."
+    Write-Host "La bateria no entrego resultados. Revisa errores de script en la app (index.html, js/, data/) o en tests/suite.js."
     exit 2
   }
   $decoded = [Net.WebUtility]::HtmlDecode($mm.Groups[1].Value)

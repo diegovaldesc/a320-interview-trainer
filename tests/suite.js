@@ -57,6 +57,21 @@
     var hit=rawPool(DGAC_KEY).filter(function(q){return /PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU/i.test(q.q)});
     eq(hit.length,0,"preguntas del PTU con parking brake");
   });
+  T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden y con la version actual",function(){
+    var want=["css/app.css","data/banco.js","data/ingles.js","data/oral.js","js/app.js"];
+    var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")});
+    var paths=refs.map(function(r){return r.split("?")[0]});
+    want.forEach(function(p,k){
+      eq(paths.filter(function(x){return x===p}).length,1,"veces que index.html carga "+p);
+      eq(refs[paths.indexOf(p)],p+"?v="+APP_VERSION,"version en la ruta de "+p+" (debe ser APP_VERSION para que el navegador no use una copia vieja)");
+      if(k>0)ok(paths.indexOf(p)>paths.indexOf(want[k-1]),p+" debe cargarse despues de "+want[k-1]);
+    });
+    ok(!document.querySelector("style"),"no debe quedar un bloque <style> dentro de index.html");
+    ok(!document.getElementById("systems-data")&&!document.getElementById("english-data"),"los bancos ya no van dentro de index.html");
+    eq(typeof SYSTEMS_DATA_JSON,"string","texto de data/banco.js");
+    eq(BANK_FINGERPRINT,cheapHash(SYSTEMS_DATA_JSON),"la huella sale del texto exacto de data/banco.js");
+    ok(ENGLISH.pruebas.length===4&&ENGLISH.mcq.length===32,"banco de ingles cargado desde data/ingles.js");
+  });
   T("0 A08 el encabezado ya no promete OFFLINE",function(){
     ok(!/OFFLINE/i.test(document.querySelector(".topbar").textContent),"el encabezado dice OFFLINE");
   });

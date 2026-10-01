@@ -5052,8 +5052,8 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.9.0";
-const BANK_VERSION="2026.09.24 · Inglés OACI v3";
+const APP_VERSION="1.10.0";
+const BANK_VERSION="2026.09.30 · Entrevista oral +9";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
 let RAW_SYSTEMS;
@@ -5937,7 +5937,206 @@ const ORAL_VOICE_BANK=[
   {label:"Posición, nivel y rumbo",weight:1,accepted:["posicion","nivel","rumbo","altitud","donde estan"]},
   {label:"Almas a bordo y combustible remanente",weight:1,accepted:["almas a bordo","personas a bordo","combustible remanente","fuel remanente","cuanta gente"]}
  ],
- criticalErrors:[{accepted:["mayday es menos grave que pan pan","pan pan es mas grave que mayday","son lo mismo pan pan y mayday"],penalty:3,feedback:"Es al revés: MAYDAY es el llamado más grave (socorro/peligro inminente); PAN PAN es para una urgencia sin peligro inminente."}]}
+ criticalErrors:[{accepted:["mayday es menos grave que pan pan","pan pan es mas grave que mayday","son lo mismo pan pan y mayday"],penalty:3,feedback:"Es al revés: MAYDAY es el llamado más grave (socorro/peligro inminente); PAN PAN es para una urgencia sin peligro inminente."}]},
+
+{id:"ov_mac_envelope",question:"¿Qué es el MAC% y cuál es la envolvente operacional del A320?",
+ reference:"El MAC% expresa la posición del centro de gravedad como porcentaje de la cuerda aerodinámica media (MAC), la cuerda de referencia del ala, medido desde su borde de ataque: 0% es el borde de ataque y 100% el borde de salida. Así figura en el loadsheet, en el ZFWCG que se ingresa en el FMS y en la escala del trim con la que se fija el estabilizador antes del despegue. La envolvente de peso y centrado da, para cada peso, los límites delantero y trasero del CG en %MAC para despegue, vuelo, aterrizaje y ZFW: con el CG muy adelantado al avión le cuesta rotar, y con el CG muy atrasado pierde estabilidad y tiende a rotar solo. La envolvente operacional, o ambiental, limita la altitud de presión y la temperatura: se opera hasta 39 800 ft (39 100 ft en los aviones más antiguos), se despega y aterriza entre -2 000 y 14 100 ft, y a nivel del mar hasta unos 55 °C.",
+ concepts:[
+  {label:"El %MAC indica la posición del centro de gravedad",weight:2,required:true,accepted:["centro de gravedad","posicion del centro","el cg","cg","ce ge","center of gravity"]},
+  {label:"MAC: cuerda aerodinámica media (cuerda de referencia del ala)",weight:2,required:true,accepted:["cuerda aerodinamica media","cuerda media aerodinamica","cuerda media","cuerda de referencia","cuerda aerodinamica","mean aerodynamic chord"]},
+  {label:"Porcentaje medido desde el borde de ataque de la MAC",weight:1,accepted:["borde de ataque","desde el borde","leading edge","lemac"]},
+  {label:"Uso operacional: loadsheet, ZFWCG en el FMS, trim de despegue",weight:1,accepted:["loadsheet","load sheet","hoja de carga","zfwcg","trim","estabilizador","ths","init b"]},
+  {label:"Envolvente de peso y centrado: límites delantero y trasero según el peso",weight:2,required:true,accepted:["limites delantero y trasero","limite delantero","limite trasero","limite adelantado","limite atrasado","envolvente de peso","envolvente de centrado","peso y centrado","cg envelope","limites del cg","limites del centro de gravedad","cg adelantado","cg atrasado","muy adelante","muy atras","muy adelantado","muy atrasado"]},
+  {label:"Efecto del CG adelantado (cuesta rotar) y atrasado (menos estabilidad)",weight:1,accepted:["rotar","rotacion","estabilidad","autoridad"]},
+  {label:"Envolvente operacional/ambiental: altitud de presión y temperatura",weight:2,accepted:["altitud de presion","altitud y temperatura","envolvente ambiental","environmental envelope","temperatura"]},
+  {label:"Valores: 39 800 ft, despegue y aterrizaje hasta 14 100 ft",weight:1,accepted:["39 800","39800","39 100 pies","39100","14 100 pies","14100","treinta y nueve mil","catorce mil"]}
+ ],
+ refs:[
+  {src:"FCOM 15 SEP 25 · LIM-AG-WGHT · Center of Gravity Limits (PDF 9812)",cite:"CG limits are given in percentage of the reference chord length aft of the leading edge."},
+  {src:"DAN 121 ED3 ENM7 · 121.1217 (e) Peso y balance (PDF 171)",cite:"Cada vez que la posición del centro de gravedad de la aeronave para peso vacío se desplace más de 0,5% de la cuerda media aerodinámica."},
+  {src:"FCOM 15 SEP 25 · DSC-27-20-30 · Pitch trim wheel (PDF 3145)",cite:"Before takeoff, the pilot sets the THS to the angular value, determined as a function of the aircraft CG, using the CG scale on the wheel."},
+  {src:"FCTM 25 NOV 24 · AS-FM-10 · General (PDF 199)",cite:"A ZFW or ZFWCG entry error in MCDU INIT B page induces calculation errors that are to be highlighted."},
+  {src:"FCTM 25 NOV 24 · PR-NP-SOP-120 · Takeoff pitch trim setting (PDF 300)",cite:"With an aft CG and the pitch trim set to the nose-up limit, the pilots will most probably have to counteract an early autorotation until VR is reached."},
+  {src:"FCOM 15 SEP 25 · LIM-AG-OPS · Environmental Envelope (PDF 9775; valores leídos en la figura: 39 800 ft, despegue y aterrizaje de -2 000 a 14 100 ft, 55 °C)",cite:"ENVIRONMENTAL ENVELOPE"},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-20-10-25 · PROG page (PDF 1921)",cite:"However, the current aircraft’s maximum certified altitude is 39 100 ft."}
+ ]},
+
+{id:"ov_weights",question:"Explica los pesos operativos del avión: factory weight, empty weight, basic weight, dry operating weight y zero fuel weight.",
+ reference:"Se construyen uno sobre otro, aunque los nombres cambian un poco entre operadores. El peso de fábrica, o Manufacturer's Empty Weight (MEW), es la estructura, los motores, los sistemas y los equipos fijos, con solo los fluidos de sistemas cerrados. Sumándole los ítems del operador, como combustible no utilizable, aceite, equipos de emergencia, asientos, galleys y la tripulación con su equipaje, se obtiene el peso vacío operativo (OEW). El DOW, o peso operativo en seco, es el avión listo para un vuelo determinado pero sin combustible utilizable ni carga paga: el OEW más lo propio de ese vuelo, como el catering. En el plan de vuelo, el basic weight es esa base a la que se le suma la carga paga. El ZFW es el DOW más la carga paga: pasajeros, equipaje y carga. Con el combustible de despegue se llega al TOW; restando el combustible de viaje queda el peso de aterrizaje, y sumando el de rodaje, el peso de rampa. Cada uno tiene su máximo estructural: MZFW, por la flexión en la raíz del ala cuando no hay combustible en las alas que la alivie, MTOW, MLW y MTW.",
+ concepts:[
+  {label:"Peso de fábrica (MEW): estructura, motores y sistemas",weight:2,required:true,accepted:["peso de fabrica","factory weight","manufacturer","mew","peso vacio de fabrica","peso del fabricante"]},
+  {label:"Peso vacío operativo o básico (OEW): MEW más los ítems del operador",weight:2,accepted:["peso vacio operativo","operational empty weight","operating empty weight","oew","items del operador","equipamiento del operador","combustible no utilizable","basic weight","peso basico"]},
+  {label:"DOW: listo para el vuelo, sin combustible utilizable ni carga paga",weight:2,required:true,accepted:["dry operating weight","dow","peso operativo en seco","peso operacional seco","peso operativo seco","sin combustible utilizable","listo para el vuelo","listo para volar"]},
+  {label:"ZFW: DOW más la carga paga",weight:2,required:true,accepted:["zero fuel weight","zfw","peso cero combustible","peso sin combustible","dow mas carga paga","dow mas la carga paga","dow mas el payload"]},
+  {label:"TOW, peso de aterrizaje y de rampa con el combustible",weight:1,accepted:["peso de despegue","takeoff weight","tow","peso de aterrizaje","landing weight","peso de rampa","ramp weight","peso de rodaje","taxi weight"]},
+  {label:"Cada uno tiene su máximo estructural (MZFW, MTOW, MLW, MTW)",weight:2,accepted:["mzfw","mtow","mlw","mtw","maximo estructural","maximos estructurales","maximum zero fuel","peso maximo"]},
+  {label:"Razón del MZFW: flexión en la raíz del ala",weight:1,accepted:["raiz del ala","flexion","momento flector","alivio","alivia","combustible en las alas"]}
+ ],
+ refs:[
+  {src:"Getting to Grips with Aircraft Performance · B.2.1 Aircraft Weight Definitions (PDF 41)",cite:"Manufacturer’s Empty Weight (MEW) : The weight of the structure, power plant, furnishings, systems and other items of equipment that are considered an integral part of the aircraft."},
+  {src:"Getting to Grips with Aircraft Performance · B.2.1 Aircraft Weight Definitions (PDF 41)",cite:"Operational Empty Weight (OEW) : The manufacturer’s weight empty plus the operator’s items, i.e. the flight and cabin crew and their baggage, unusable fuel, engine oil, emergency equipment"},
+  {src:"Getting to Grips with Aircraft Performance · B.2.1 Aircraft Weight Definitions (PDF 41)",cite:"Dry Operating Weight (DOW) : The total weight of an aircraft ready for a specific type of operation excluding all usable fuel and traffic load."},
+  {src:"Getting to Grips with Aircraft Performance · B.2.1 Aircraft Weight Definitions (PDF 42)",cite:"ZFW = DOW + traffic load"},
+  {src:"Getting to Grips with Aircraft Performance · B.2.4 MZFW (PDF 43)",cite:"Bending moments, which apply at the wing root, are maximum when the quantity of fuel in the wings is minimum"},
+  {src:"A320 Tutorials REV15 · Calculate EZFW (PDF 123)",cite:"BASIC WT = Basic Weight of aircraft"}
+ ]},
+
+{id:"ov_cost_index",question:"¿Qué es el cost index?",
+ reference:"Es la relación entre el costo del tiempo de vuelo y el costo del combustible: CI igual a costo del tiempo dividido por costo del combustible, expresado en kg/min o en 100 lb/h. La aerolínea lo define para cada ruta y el FMGS lo usa, junto con el peso, el nivel de crucero, el viento y la temperatura, para calcular la velocidad ECON de ascenso, crucero y descenso y el nivel óptimo. Con CI 0 se vuela a mínimo consumo, que es el máximo alcance; con CI 999, a mínimo tiempo, es decir a máxima velocidad. El objetivo es el menor costo total del vuelo y no solo ahorrar combustible, y un CI de 30 no quiere decir que se consumen 30 kg por minuto. La tripulación normalmente no lo cambia, salvo por una razón operacional, por ejemplo bajarlo si el combustible extra se acerca a cero. Con un motor fallado el FMS lo reemplaza por la velocidad de largo alcance con un motor.",
+ concepts:[
+  {label:"Relación costo del tiempo / costo del combustible",weight:2,required:true,accepted:["costo del tiempo","coste del tiempo","costo de tiempo","costo del combustible","coste del combustible","relacion entre el costo","tiempo y combustible","tiempo versus combustible","time cost"]},
+  {label:"El FMGS lo usa para la velocidad ECON y el nivel óptimo",weight:2,accepted:["econ","velocidad economica","econ speed","econ mach","velocidad optima","nivel optimo","opt fl","fmgs","fms"]},
+  {label:"CI 0: mínimo consumo (máximo alcance)",weight:2,accepted:["ci 0","cost index cero","ci cero","minimo consumo","minimo combustible","maximo alcance","max range"]},
+  {label:"CI máximo (999): mínimo tiempo, máxima velocidad",weight:2,accepted:["999","minimo tiempo","maxima velocidad","mas rapido","mayor velocidad"]},
+  {label:"Lo define la aerolínea para cada ruta",weight:1,accepted:["aerolinea","operador","compania","cada ruta","por ruta"]},
+  {label:"Busca el menor costo total, no solo ahorrar combustible",weight:1,accepted:["costo total","coste total","costo del vuelo","no solo ahorrar","no solo combustible","costo operativo"]}
+ ],
+ criticalErrors:[{accepted:["fuel flow","flujo de combustible","caudal de combustible"],penalty:2,feedback:"El cost index no es un fuel flow: un CI de 30 kg/min significa que un minuto de vuelo cuesta lo mismo que 30 kg de combustible, no que se consumen 30 kg por minuto."}],
+ refs:[
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-40-20 · Cost Index (PDF 1689)",cite:"CI is the ratio of flight time cost (CT) to fuel cost (CF)."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-40-20 · Cost Index (PDF 1689)",cite:"CI = 0 corresponds to minimum fuel consumption (Max Range)."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-40-20 · Cost Index (PDF 1689)",cite:"CI = 999 corresponds to minimum time."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-40-20 · Cost Index (PDF 1689)",cite:"The airline's operations department usually defines the cost index, to optimize each company route."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-40-10 · Optimization (PDF 1676)",cite:"The FMGS computes the optimum target speed (ECON SPD/MACH) as a function of:"},
+  {src:"Getting to Grips with Aircraft Performance · F.2.1.3 Economic Mach Number (PDF 136)",cite:"This does not mean the fuel flow is 30 kg/min."},
+  {src:"FCTM 25 NOV 24 · PR-NP-SOP-150 · Cost Index (PDF 313)",cite:"then it is appropriate to reduce the CI."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-20-10-25 · PERF CRZ page (PDF 1903)",cite:"EO LRC replaces automatically the cost index value in case of engine out."}
+ ]},
+
+{id:"ov_fuel_dan121",question:"¿Cuáles son los mínimos de combustible según la DAN 121?",
+ reference:"La norma arma el combustible mínimo por componentes. Rodaje: lo que se consume en tierra antes del despegue y después del aterrizaje, incluido el APU. Trayecto: desde el despegue hasta aterrizar en destino. Contingencia: el 5% del trayecto, pero nunca menos que 5 minutos a velocidad de espera a 1 500 ft sobre el destino. Alternativa: aproximación frustrada en destino, ascenso, ruta, descenso y aterrizaje en el alternativo; si no se requiere alternativo, 15 minutos de espera a 1 500 ft sobre el destino, y para un aeródromo aislado, 2 horas de crucero normal incluida la reserva final. Reserva final, para avión a turbina: 30 minutos a velocidad de espera a 1 500 ft sobre el aeródromo. Adicional: lo que falte para una falla de motor o una despresurización en el punto más crítico, más 15 minutos de espera y la aproximación, o para el escenario EDTO. Y el discrecional, a criterio del comandante. En vuelo se declara combustible mínimo si cualquier cambio haría aterrizar con menos de la reserva final, y MAYDAY combustible si se calcula aterrizar con menos que ella.",
+ concepts:[
+  {label:"Combustible de rodaje (incluye APU)",weight:1,accepted:["rodaje","taxi"]},
+  {label:"Combustible de trayecto (trip)",weight:1,accepted:["trayecto","trip","combustible de viaje","viaje"]},
+  {label:"Contingencia: 5% del trayecto, mínimo 5 minutos de espera a 1 500 ft",weight:2,required:true,accepted:["contingencia","contingency","5 por ciento","cinco por ciento","cinco minutos"]},
+  {label:"Combustible de alternativa",weight:2,accepted:["alternativa","alternativo","alterno","alternate"]},
+  {label:"Reserva final: 30 minutos de espera a 1 500 ft",weight:2,required:true,accepted:["reserva final","final reserve","treinta minutos","reserva"]},
+  {label:"Adicional (falla de motor, despresurización, EDTO) y discrecional",weight:1,accepted:["adicional","additional","discrecional","extra","falla de motor","despresurizacion","edto"]},
+  {label:"Casos especiales: sin alternativo 15 minutos; aeródromo aislado 2 horas",weight:1,accepted:["quince minutos","sin alternativo","sin alterno","dos horas","2 horas","aislado","aeropuerto aislado","aerodromo aislado"]},
+  {label:"En vuelo: combustible mínimo y MAYDAY combustible",weight:1,accepted:["combustible minimo","minimum fuel","mayday","emergencia de combustible"]}
+ ],
+ refs:[
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(1) (PDF 71)",cite:"Combustible para el rodaje (inicial y final), que será la cantidad de combustible que, según lo previsto, se consumirá antes del despegue"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(3) (PDF 71)",cite:"Será el 5% del combustible previsto para el trayecto"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(3) (PDF 71)",cite:"pero en ningún caso será inferior a la cantidad requerida para volar durante cinco minutos a la velocidad de espera a 450 metros (1 500 pies) sobre el aeródromo de destino en condiciones normales"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(4)(iii)(B) (PDF 72)",cite:"la cantidad de combustible que se necesita para volar durante dos horas con un consumo en crucero normal sobre el aeródromo de destino, incluyendo el combustible de reserva final."},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(4)(iv) (PDF 72)",cite:"durante 15 minutos a velocidad de espera a 450 metros (1 500 pies) sobre la elevación del aeródromo de destino en condiciones normales"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(5)(ii) (PDF 72)",cite:"Para avión con motores de turbina, la cantidad de combustible que se necesita para volar durante 30 minutos a velocidad de espera a 450 metros (1 500 pies)"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(6)(i) (PDF 72)",cite:"Aeródromo de Alternativa en caso de falla de motor o pérdida de presurización"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (c)(7) (PDF 73)",cite:"Combustible discrecional, será la cantidad extra de combustible que, a juicio del Piloto al Mando, debe llevarse."},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (f)(5) (PDF 73)",cite:"declarando COMBUSTIBLE MÍNIMO"},
+  {src:"DAN 121 ED3 ENM7 · 121.233 (f)(6) (PDF 73)",cite:"MAYDAY-MAYDAY- MAYDAY COMBUSTIBLE"}
+ ]},
+
+{id:"ov_contaminated_rwy",question:"¿Cuándo se considera que una pista está contaminada y qué cambia para el despegue?",
+ reference:"Cuando una parte significativa de su superficie, tradicionalmente más del 25% dentro del largo y el ancho en uso, está cubierta por un contaminante: fluido de más de 3 mm de espesor, como agua estancada, slush o nieve húmeda o seca, o duro, como nieve compactada, hielo o hielo mojado. Si el agua o la humedad visible no supera los 3 mm, la pista está mojada, no contaminada, y seca es la que no tiene humedad visible ni contaminantes. Los contaminantes fluidos reducen la fricción, generan resistencia por precipitación, que empeora la aceleración, y riesgo de hidroplaneo; los duros solo reducen la fricción. Para el despegue cambia el cálculo: no se permite FLEX, la altura de pantalla es 15 ft, se pueden considerar los reversores, no se puede despegar con más peso que en pista seca y hay espesores máximos con datos, por ejemplo 13 mm de agua o slush.",
+ concepts:[
+  {label:"Parte significativa de la superficie (tradicionalmente más del 25%)",weight:2,required:true,accepted:["25","25 por ciento","veinticinco por ciento","parte significativa","parte importante","porcion significativa"]},
+  {label:"Contaminante fluido de más de 3 mm: agua estancada, slush, nieve",weight:2,required:true,accepted:["3 mm","3 milimetros","tres milimetros","agua estancada","slush","nieve","standing water","aguanieve"]},
+  {label:"Contaminante duro: nieve compactada, hielo",weight:2,accepted:["hielo","nieve compactada","compactada","ice"]},
+  {label:"Diferencia con pista mojada (hasta 3 mm) y seca",weight:1,accepted:["mojada","wet","seca"]},
+  {label:"Efectos: menos fricción, resistencia por precipitación, hidroplaneo",weight:2,accepted:["friccion","frenado","hidroplaneo","aquaplaning","resistencia por precipitacion","precipitacion"]},
+  {label:"Cambios en el despegue: sin FLEX, 15 ft, reversores, no más peso que en seca",weight:1,accepted:["flex","15 ft","altura de pantalla","screen height","reversores","reversas","reversa","peso que en pista seca"]}
+ ],
+ refs:[
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Descriptions (PDF 10127)",cite:"A runway is contaminated when a significant portion (depending on the applicable regulation) of its surface is covered with:"},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Descriptions (PDF 10127)",cite:"In terms of performance, a contaminated runway is a runway covered by a fluid contaminant with a depth of more than 3 mm (1/8 in)."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Descriptions (PDF 10127)",cite:"Hard contaminants only reduce friction forces."},
+  {src:"DAN 121 ED3 ENM7 · Apéndice 10, definiciones (PDF 407)",cite:"Una pista está contaminada cuando más del 25% de su superficie"},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-20 · Wet runway (PDF 10125)",cite:"A runway is considered as wet, when the surface is covered by any visible moisture or water up to and including 3 mm (1/8 in) depth."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Performance calculation (PDF 10129)",cite:"However, it is not allowed to take off at a weight higher than the weight on a dry runway."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Performance calculation (PDF 10129)",cite:"The screen height at the end of the takeoff segment is 15 ft, instead of 35 ft."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-30-30 · Restrictions (PDF 10130)",cite:"FLEX takeoff is not permitted on contaminated runways."}
+ ]},
+
+{id:"ov_flex_derate_contam",question:"En una pista contaminada, ¿qué diferencia hay entre usar FLEX y usar derated?",
+ reference:"En pista contaminada el FLEX está prohibido y el derated está permitido. El FLEX es empuje reducido por temperatura asumida: se calcula a partir del rating TOGA, con las velocidades mínimas de control de TOGA, no es un límite de operación y TOGA sigue disponible en cualquier momento; solo está autorizado en pista seca o mojada. El derated es un rating de empuje máximo reducido y certificado, por ejemplo D04 o D08, con su propia performance para pista seca, mojada o contaminada. Como el empuje máximo es menor, bajan la VMCG y la VMCA; eso permite una V1 menor, que acorta la distancia de aceleración-parada y mejora el peso máximo en pistas cortas o contaminadas limitadas por VMCG. A cambio, con derated no se selecciona TOGA hasta pasar la velocidad F, salvo en un procedimiento anormal como la recuperación de windshear, y el FLEX y el derated no se combinan.",
+ concepts:[
+  {label:"El FLEX está prohibido en pista contaminada",weight:2,required:true,accepted:["flex esta prohibido","flex prohibido","prohibido el flex","prohibido usar flex","no se permite flex","no se permite el flex","no se puede usar flex","no se puede usar el flex","no puedo usar flex","no se usa flex","flex no esta permitido","flex no se permite","flex no se puede","flex no esta autorizado"]},
+  {label:"FLEX: temperatura asumida, calculado desde TOGA (no es un límite)",weight:2,accepted:["temperatura asumida","temperatura flexible","assumed temperature","tflex","temperatura flex","a partir del rating toga","velocidades de toga","control de toga","toga disponible"]},
+  {label:"El derated sí está permitido en pista contaminada",weight:2,required:true,accepted:["derate esta permitido","derated esta permitido","derate permitido","derated permitido","derate se permite","derated se permite","derate autorizado","derated autorizado","se puede usar derate","se puede usar el derate","derate se puede usar","derated se puede usar","si esta permitido","si se puede usar","cualquier estado de pista","seca mojada o contaminada","todo tipo de pista"]},
+  {label:"Derated: rating certificado con performance propia",weight:2,accepted:["rating certificado","rating reducido","rating de empuje","empuje certificado","nivel certificado","certificado","datos propios","propia performance","performance propia","tablas propias","sus propias tablas","limite de operacion"]},
+  {label:"Menor VMCG/VMCA: V1 menor y menor distancia de aceleración-parada",weight:2,accepted:["vmcg","vmca","velocidad minima de control","velocidades minimas de control","v1","v 1","aceleracion parada","acelerar y parar","acelerar y frenar"]},
+  {label:"Con derated no se selecciona TOGA bajo la velocidad F (salvo anormal/windshear)",weight:1,accepted:["windshear","no se selecciona toga","no seleccionar toga","no se puede seleccionar toga","no se puede poner toga","no puedo poner toga","no usar toga","toga no esta permitido"]},
+  {label:"FLEX y derated no se combinan",weight:1,accepted:["no se combinan","no se pueden combinar","no se puede combinar","no combinar","no se mezclan","no se pueden usar juntos"]}
+ ],
+ criticalErrors:[{accepted:["flex esta permitido en pista contaminada","flex se permite en pista contaminada","flex se puede usar en pista contaminada","se puede usar flex en pista contaminada","derate esta prohibido en pista contaminada","derated esta prohibido en pista contaminada"],penalty:3,feedback:"Es al revés: el FLEX está prohibido en pista contaminada; el derated sí está permitido porque tiene performance certificada para ese estado de pista."}],
+ refs:[
+  {src:"FCOM 15 SEP 25 · LIM-ENG · Flex Takeoff (PDF 9922)",cite:"FLEX takeoff is not permitted on contaminated runways."},
+  {src:"FCOM 15 SEP 25 · LIM-ENG · Derated Takeoff (PDF 9922)",cite:"The use of derated takeoff is permitted regardless of the runway condition (dry, wet, or contaminated)."},
+  {src:"FCOM 15 SEP 25 · LIM-ENG · Derated Takeoff (PDF 9922)",cite:"The use of reduced thrust takeoff (FLEX takeoff) is not permitted in association with derated takeoff."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-20-20-30 · Derated Takeoff Principle (PDF 10118)",cite:"The derated takeoff enables to improve the takeoff performance if the TOW is limited by VMCG."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-20-20-40 · Flexible Takeoff vs Derated Takeoff (PDF 10121)",cite:"Possible above F speed"},
+  {src:"FCTM 25 NOV 24 · PR-NP-SP-10-10-1 · Takeoff performances (PDF 438)",cite:"When available, a derated takeoff thrust results in lower minimum control speeds and, therefore, in a lower V1."},
+  {src:"Getting to Grips with Aircraft Performance · C.7.1.1 Flexible takeoff (PDF 92)",cite:"This method is derived from the approved maximum takeoff thrust rating, and thus uses the same certified minimum control speeds."}
+ ]},
+
+{id:"ov_appr_ldg_climb",question:"¿Cuál es la diferencia entre approach climb y landing climb?",
+ reference:"Son los dos gradientes mínimos de ascenso que se exigen para un go-around. El approach climb supone un motor inoperativo, TOGA en el motor que queda, tren arriba y configuración de aproximación, en Airbus CONF 2 o 3, a una velocidad entre 1,23 y 1,41 VS1g, y exige 2,1% en un bimotor (2,7% en un cuadrimotor). El landing climb supone todos los motores operativos, con el empuje disponible 8 segundos después de llevar las palancas de idle a TOGA, tren abajo y configuración de aterrizaje, CONF 3 o FULL, entre 1,13 y 1,23 VS1g, y exige 3,2% para todos los aviones. En Airbus el approach climb es el que limita, así que el peso máximo por gradiente de go-around se calcula con él; ese gradiente empeora con la altitud, la temperatura y el uso de bleeds, y en una aproximación CAT II o III se exige 2,5% o el gradiente publicado.",
+ concepts:[
+  {label:"Approach climb: un motor inoperativo",weight:2,required:true,accepted:["un motor inoperativo","motor inoperativo","un motor fallado","motor fallado","motor critico","oei","monomotor","n 1"]},
+  {label:"Approach climb: tren arriba y configuración de aproximación",weight:2,accepted:["tren arriba","tren retraido","tren recogido","configuracion de aproximacion","flaps de aproximacion"]},
+  {label:"Approach climb: 2,1% en bimotor",weight:2,required:true,accepted:["2 1","dos coma uno"]},
+  {label:"Landing climb: todos los motores operativos",weight:2,required:true,accepted:["todos los motores","ambos motores","los dos motores","all engines","motores operativos","todos operativos"]},
+  {label:"Landing climb: tren abajo y configuración de aterrizaje",weight:2,accepted:["tren abajo","tren extendido","tren afuera","configuracion de aterrizaje","conf full","flaps full"]},
+  {label:"Landing climb: 3,2%",weight:2,accepted:["3 2","tres coma dos"]},
+  {label:"Empuje disponible a los 8 segundos (idle a TOGA)",weight:1,accepted:["8 segundos","ocho segundos"]},
+  {label:"En Airbus limita el approach climb; CAT II/III exige 2,5%",weight:1,accepted:["el que limita","limitante","limita","peso maximo","2 5","dos coma cinco","cat ii","cat 2","cat iii"]}
+ ],
+ refs:[
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.1 Approach Climb (PDF 121)",cite:"This corresponds to an aircraft’s climb capability, assuming that one engine is inoperative."},
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.1 Approach Climb (PDF 121)",cite:"2- engine aircraft: 2.1%"},
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.2 Landing Climb (PDF 122)",cite:"The objective of this constraint is to ensure aircraft climb capability in case of a missed approach with all engines operating."},
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.2 Landing Climb (PDF 122)",cite:"Thrust available 8 seconds after initiation of thrust control movement from minimum flight idle to TOGA thrust"},
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.2 Landing Climb (PDF 122)",cite:"The minimum gradient to be demonstrated is 3.2% for all aircraft types."},
+  {src:"Getting to Grips with Aircraft Performance · E.3.3.2 Landing Climb (PDF 122)",cite:"For all Airbus aircraft, this constraint is covered by the approach climb requirement."},
+  {src:"Getting to Grips with Aircraft Performance · E.4.2.2 CAT II or CAT III Approach (PDF 127)",cite:"In case of a CAT II/III approach, the gradient is 2.5% (all aircraft types)"}
+ ]},
+
+{id:"ov_improve_takeoff",question:"¿Cómo se puede mejorar la performance de despegue cuando el peso está limitado?",
+ reference:"Separando lo que no se elige, como la pista, los obstáculos, la temperatura, la presión, el viento y el estado de la pista, de lo que sí se puede optimizar. Primero la configuración: CONF 1+F da mejor gradiente en pistas largas o cuando limita el ascenso, CONF 3 acorta la distancia en pistas cortas y CONF 2 es el compromiso cuando hay obstáculos. Segundo, el aire acondicionado: despegar con packs en OFF, o con bleed del APU, devuelve empuje. Tercero, las velocidades, que son la mayor fuente de ganancia: una V1 más alta favorece la distancia de despegue y los obstáculos, pero empeora la aceleración-parada y la energía de frenos; una V2 más alta, el improved climb, mejora el gradiente si sobra pista. Cuarto, el empuje: TOGA en vez de FLEX, o derated si el límite es la VMCG en una pista corta o contaminada. Además, despegar desde la cabecera sin intersección, elegir la pista y el viento más favorables, usar anti-ice solo cuando corresponde y, si aun así no alcanza, reducir peso o esperar una temperatura más baja.",
+ concepts:[
+  {label:"Configuración de flaps: 1+F para ascenso, 3 para pista corta, 2 compromiso",weight:2,required:true,accepted:["conf 1","1 f","conf 2","conf 3","configuracion","flaps"]},
+  {label:"Aire acondicionado: packs en OFF o bleed del APU",weight:2,accepted:["packs off","packs en off","packs apagados","sin packs","packs","aire acondicionado","bleed del apu","apu bleed"]},
+  {label:"Optimización de velocidades: V1 y V2 (improved climb)",weight:2,accepted:["v1","v2","improved climb","optimizacion de velocidades","velocidades"]},
+  {label:"Empuje: TOGA en vez de FLEX, derated si limita la VMCG",weight:2,accepted:["toga","derate","derated","empuje maximo"]},
+  {label:"Pista: toda la longitud sin intersección, pista y viento favorables",weight:1,accepted:["interseccion","intersecciones","cabecera","toda la pista","largo de pista","otra pista","viento de frente","viento en contra","headwind","pendiente"]},
+  {label:"Anti-ice solo si corresponde; reducir peso o esperar menor temperatura",weight:1,accepted:["anti ice","antihielo","reducir peso","bajar peso","reducir el peso","menos peso","temperatura mas baja","menor temperatura","baje la temperatura","esperar","esperando"]}
+ ],
+ refs:[
+  {src:"FCOM 15 SEP 25 · EFB-TOF-10 · Takeoff Parameters (PDF 10107)",cite:"From the takeoff performance parameters that can be optimized, the takeoff speeds optimization has the largest effect on the gain of takeoff weight."},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-50 · Takeoff Recommendations (PDF 10133)",cite:"As a general rule, CONF 1+F gives better performance on long runways (better climb gradient), whereas CONF 3 gives better performance on short runways (shorter takeoff distances)."},
+  {src:"Getting to Grips with Aircraft Performance · J.2.2 Air Conditioning (PDF 197)",cite:"Air conditioning, when switched on during takeoff, decreases the available power and thus degrades the takeoff performance."},
+  {src:"Getting to Grips with Aircraft Performance · J.2.3.2 V1/VR Ratio Influence (PDF 199)",cite:"On the contrary, the obstacle-limited weight is improved with a higher V1, as the takeoff distance is reduced."},
+  {src:"Getting to Grips with Aircraft Performance · J.2.3.3 V2/VS Ratio Influence (PDF 202)",cite:"any V2/VS increase results in better climb gradients (1st and 2nd segment)"},
+  {src:"FCOM 15 SEP 25 · EFB-TOF-20-20-30 · Derated Takeoff Principle (PDF 10118)",cite:"The derated takeoff enables to improve the takeoff performance if the TOW is limited by VMCG."},
+  {src:"FCTM 25 NOV 24 · PR-NP-SP-10-10-1 · Takeoff performances (PDF 438)",cite:"If anti-ice is used, the flight crew must apply the applicable performance penalty."}
+ ]},
+
+{id:"ov_eng_fail_cruise",question:"Si falla un motor en crucero, ¿qué estrategias de descenso existen (standard y obstacle, o drift down) y cómo se vuela cada una?",
+ reference:"Hay tres estrategias: standard, obstacle o drift down, y fixed speed para ETOPS; si no hay un procedimiento previsto para la ruta, se usa la standard. En todas se llevan las palancas a MCT, se desconecta el autothrust, se selecciona un rumbo apropiado, se determina la altitud de recuperación con un motor y se desciende en OPEN DES con velocidad seleccionada, manteniendo como mínimo green dot, y luego se hace el ECAM. Standard: M 0,78 o 300 kt, que mantiene el avión dentro de la envolvente de reencendido por molinete, descendiendo hacia el REC MAX con un motor, el nivel máximo en crucero de largo alcance que muestra la página PROG; cuando la velocidad vertical baja de 500 ft/min se selecciona V/S -500 y se vuelve a conectar el autothrust. Obstacle: sobre terreno se vuela a green dot, la velocidad de máxima fineza, para descender con menor razón y menor ángulo y mantener la mayor altitud posible, hasta el techo de drift down; al quedar libre del terreno se vuelve a la standard. En la planificación, la trayectoria neta debe librar el terreno por 2 000 ft dentro de 5 NM a cada lado de la ruta.",
+ concepts:[
+  {label:"Palancas a MCT",weight:2,required:true,accepted:["mct","m c t","maximo continuo","maximum continuous","empuje maximo continuo","potencia maxima continua"]},
+  {label:"Autothrust desconectado; descenso en OPEN DES con velocidad seleccionada",weight:1,accepted:["desconecta el autothrust","desconectar el autothrust","autothrust off","autothrust desconectado","athr off","a thr off","open des","open descent","descenso abierto","velocidad seleccionada"]},
+  {label:"Nombra las estrategias standard y obstacle (drift down)",weight:1,accepted:["standard","estandar","obstacle","obstaculos","drift down"]},
+  {label:"Standard: M 0,78 / 300 kt (envolvente de reencendido)",weight:2,required:true,accepted:["0 78","m 78","78","300 kt","300 nudos","300 kts","reencendido","relight","molinete","windmill"]},
+  {label:"Standard: descender al REC MAX con un motor (LRC); V/S -500 al final",weight:1,accepted:["rec max","recommended max","largo alcance","long range","lrc","500"]},
+  {label:"Obstacle: green dot, máxima fineza, menor razón y ángulo, mayor altitud",weight:2,required:true,accepted:["green dot","punto verde","maxima fineza","mejor fineza","maxima eficiencia","sustentacion resistencia"]},
+  {label:"Techo de drift down y volver a la standard al librar el terreno",weight:1,accepted:["techo de drift down","drift down ceiling","libre del terreno","librar el terreno","libre de obstaculos","se vuelve a la standard","volver a la standard","revertir"]},
+  {label:"Planificación: trayectoria neta a 2 000 ft del terreno, 5 NM a cada lado",weight:1,accepted:["2 000 pies","2000 pies","dos mil pies","trayectoria neta","5 nm","5 millas","cinco millas"]}
+ ],
+ refs:[
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Engine Failure During Cruise (PDF 509)",cite:"When an engine failure occurs during cruise, three possible strategies apply:"},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Engine Failure During Cruise (PDF 509)",cite:"Unless a specific procedure has been established before dispatch (considering ETOPS or mountainous areas), the standard strategy is used."},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Engine Failure During Cruise (PDF 509)",cite:"The crew must not decelerate below green dot."},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Standard strategy (PDF 510)",cite:"The speed of 0.78/300 kt is chosen to ensure the aircraft is within the stabilized windmill engine relight in-flight envelope."},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Standard strategy (PDF 510)",cite:"When the V/S becomes less than 500 ft/min, select V/S -500 ft/min and A/THR on."},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Obstacle strategy (PDF 510)",cite:"The speed target in this case is green dot. The procedure is similar to the standard strategy, but as the speed target is now green dot, the rate and angle of descent are reduced."},
+  {src:"FCTM 25 NOV 24 · PR-AEP-ENG · Obstacle strategy (PDF 511)",cite:"When clear of obstacles, revert to Standard Strategy."},
+  {src:"FCOM 15 SEP 25 · DSC-22_20-10-50 · Engine-out in cruise phase (PDF 1730)",cite:"The engine-out descent strategy requires disconnection of the autothrust, and descent in OPEN DES mode."},
+  {src:"Getting to Grips with Aircraft Performance · D.2.1.1 Drift Down procedure (PDF 98)",cite:"represents the best lift-to-drag ratio speed, where aerodynamic efficiency is maximum."},
+  {src:"DAN 121 ED3 ENM7 · Apéndice 10, en ruta con un motor inactivo (PDF 412)",cite:"con un margen vertical de por lo menos 600 metros (2 000 pies), todo el terreno y obstáculos situados a lo largo de la ruta hasta 9,3 kilómetros (5 NM) a cada lado de la derrota prevista."}
+ ]}
 ];
 
 const oralState={question:null,recognition:null,listening:false,stopping:false,transcript:"",startTime:null,timer:null,restartTimer:null,maxTimer:null,index:0,scores:{},pool:[]};
@@ -6311,16 +6510,114 @@ function negatedBeforeMatch(transcriptTokens,transcriptStr,term){
   }
   return false;
 }
+/* Busqueda complementaria de un concepto: ancla el termino en cada
+   aparicion de su primera palabra y toma las demas palabras lo mas cerca
+   posible de ese ancla. La busqueda original usa la primera aparicion de
+   cada palabra, y en respuestas largas eso dejaba fuera menciones reales:
+   "el flex no esta permitido ... el derated si esta permitido" no cumplia
+   "derated esta permitido" (la primera aparicion de "esta permitido" queda
+   lejos de "derated"), y una negacion en la primera mencion ("nunca bajar
+   de green dot ... volar a green dot") anulaba tambien la mencion
+   afirmativa posterior. La ventana es mas estrecha que la original (las
+   palabras del termino deben quedar a lo sumo 2 posiciones mas separadas
+   que en el termino), para no premiar palabras sueltas en respuestas
+   largas. La negacion se revisa en las 5 palabras previas a cada ancla,
+   igual que negatedBeforeMatch. itemDetected solo suma esta busqueda: si
+   la original detecta, el resultado no cambia. */
+function anchoredConceptMatch(transcriptTokens,term){
+  const termNorm=normalizeAeroText(term);
+  if(!termNorm)return false;
+  const all=termNorm.split(" ").filter(Boolean);
+  const termIsNegation=ORAL_NEGATION_MARKERS.has(all[0]);
+  const negatedAt=a=>{
+    if(termIsNegation)return false;
+    for(let j=Math.max(0,a-5);j<a;j++){if(ORAL_NEGATION_MARKERS.has(transcriptTokens[j]))return true}
+    return false;
+  };
+  for(let s=0;s+all.length<=transcriptTokens.length;s++){
+    let same=true;
+    for(let k=0;k<all.length;k++){if(transcriptTokens[s+k]!==all[k]){same=false;break}}
+    if(same&&!negatedAt(s))return true;
+  }
+  const words=significantWords(termNorm);
+  if(!words.length)return false;
+  for(let a=0;a<transcriptTokens.length;a++){
+    if(!fuzzyWordMatch(transcriptTokens[a],words[0]))continue;
+    const used=new Set([a]);
+    let lo=a,hi=a,complete=true;
+    for(let k=1;k<words.length;k++){
+      let best=-1;
+      for(let i=0;i<transcriptTokens.length;i++){
+        if(used.has(i)||!fuzzyWordMatch(transcriptTokens[i],words[k]))continue;
+        if(best===-1||Math.abs(i-a)<Math.abs(best-a))best=i;
+      }
+      if(best===-1){complete=false;break}
+      used.add(best);lo=Math.min(lo,best);hi=Math.max(hi,best);
+    }
+    if(complete&&hi-lo<=words.length+2&&!negatedAt(a))return true;
+  }
+  return false;
+}
 function itemDetected(transcriptTokens,transcriptStr,item){
   const accepted=item&&(item.accepted||item.terms);
   if(!Array.isArray(accepted))return false;
-  return accepted.some(term=>phraseFuzzyMatch(transcriptTokens,transcriptStr,term)&&!negatedBeforeMatch(transcriptTokens,transcriptStr,term));
+  return accepted.some(term=>(phraseFuzzyMatch(transcriptTokens,transcriptStr,term)&&!negatedBeforeMatch(transcriptTokens,transcriptStr,term))||anchoredConceptMatch(transcriptTokens,term));
+}
+/* Errores criticos. Un error critico es una afirmacion equivocada con un
+   orden propio ("pan pan es mas grave que mayday"). El detector de
+   conceptos ignora el orden de las palabras, y por eso la respuesta
+   correcta "el MAYDAY es mas grave que el PAN PAN" (mismas palabras, orden
+   inverso) se penalizaba con el error de la afirmacion invertida. Para los
+   errores criticos se exige el mismo orden del termino, dentro de la misma
+   ventana que usa phraseFuzzyMatch, y la coincidencia no cuenta si hay una
+   negacion justo antes o dentro de ella ("el flex no esta permitido en
+   pista contaminada" no afirma "flex esta permitido en pista contaminada"),
+   salvo que el termino mismo incluya la negacion ("no digo nada"). Se
+   revisan todas las apariciones, no solo la primera. */
+function orderedMatchSpans(transcriptTokens,term){
+  const termNorm=normalizeAeroText(term);
+  if(!termNorm)return [];
+  const spans=[];
+  const all=termNorm.split(" ").filter(Boolean);
+  for(let s=0;s+all.length<=transcriptTokens.length;s++){
+    let same=true;
+    for(let k=0;k<all.length;k++){if(transcriptTokens[s+k]!==all[k]){same=false;break}}
+    if(same)spans.push([s,s+all.length-1]);
+  }
+  const words=significantWords(termNorm);
+  if(!words.length)return spans;
+  for(let s=0;s<transcriptTokens.length;s++){
+    if(!fuzzyWordMatch(transcriptTokens[s],words[0]))continue;
+    let pos=s,complete=true;
+    for(let k=1;k<words.length;k++){
+      let found=-1;
+      for(let i=pos+1;i<transcriptTokens.length&&i<=s+words.length+5;i++){
+        if(fuzzyWordMatch(transcriptTokens[i],words[k])){found=i;break}
+      }
+      if(found===-1){complete=false;break}
+      pos=found;
+    }
+    if(complete)spans.push([s,pos]);
+  }
+  return spans;
+}
+function criticalItemDetected(transcriptTokens,item){
+  const accepted=item&&(item.accepted||item.terms);
+  if(!Array.isArray(accepted))return false;
+  return accepted.some(term=>{
+    const termHasNegation=normalizeAeroText(term).split(" ").some(w=>ORAL_NEGATION_MARKERS.has(w));
+    return orderedMatchSpans(transcriptTokens,term).some(([a,b])=>{
+      if(termHasNegation)return true;
+      for(let j=Math.max(0,a-5);j<=b;j++){if(ORAL_NEGATION_MARKERS.has(transcriptTokens[j]))return false}
+      return true;
+    });
+  });
 }
 function detectCriticalErrors(transcriptTokens,transcriptStr,question){
   const errors=[];let penaltyTotal=0;
   if(Array.isArray(question.criticalErrors)){
     question.criticalErrors.forEach(item=>{
-      if(itemDetected(transcriptTokens,transcriptStr,item)){
+      if(criticalItemDetected(transcriptTokens,item)){
         errors.push(item.feedback||"Se detectó un error conceptual.");
         penaltyTotal+=Number(item.penalty)||1.5;
       }

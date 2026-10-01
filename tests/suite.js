@@ -50,7 +50,7 @@
     eq(totalQuestions(),415,"preguntas FCOM");
     eq(dgacTotal(),573,"preguntas DGAC");
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
-    eq(ORAL_VOICE_BANK.length,23,"preguntas orales");
+    eq(ORAL_VOICE_BANK.length,32,"preguntas orales");
   });
   T("0 A08 el encabezado ya no promete OFFLINE",function(){
     ok(!/OFFLINE/i.test(document.querySelector(".topbar").textContent),"el encabezado dice OFFLINE");
@@ -298,11 +298,11 @@
   });
 
   /* ---------- 6. Evaluacion oral ---------- */
-  T("6 las 23 preguntas orales puntuan >=9.5 contra su propia referencia",function(){
+  T("6 todas las preguntas orales puntuan >=9.5 contra su propia referencia",function(){
     var bad=ORAL_VOICE_BANK.map(function(q){return{id:q.id,s:evaluateLocally(q,q.reference).score}}).filter(function(r){return r.s<9.5});
     eq(bad.length,0,"preguntas bajo 9.5: "+JSON.stringify(bad));
   });
-  T("6 una respuesta sin relacion puntua bajo en las 23 preguntas",function(){
+  T("6 una respuesta sin relacion puntua bajo en todas las preguntas orales",function(){
     var bad=ORAL_VOICE_BANK.map(function(q){return{id:q.id,s:evaluateLocally(q,"No se, algo relacionado con el motor tal vez.").score}}).filter(function(r){return r.s>3.5});
     eq(bad.length,0,"respuestas sin sentido con puntaje alto: "+JSON.stringify(bad));
     ok(evaluateLocally(ORAL_VOICE_BANK[0],"").score<=1,"una respuesta vacia debe puntuar ~0");
@@ -356,6 +356,85 @@
     eq(document.querySelector(".oral-result-label").textContent,"ESTIMACIÓN","etiqueta sobre el puntaje");
     ok(/no reemplaza tu propio juicio/.test(document.querySelector(".oral-score-note").textContent),"falta la nota aclaratoria");
     ok(byId("oralFeedback").querySelector(".oral-feedback-title.ok")&&byId("oralFeedback").querySelector(".oral-feedback-title.warn")&&byId("oralFeedback").querySelector(".oral-feedback-title.bad"),"faltan los titulos con color");
+  });
+
+  T("6 REG-03 el error critico respeta el orden: 'MAYDAY es mas grave que PAN PAN' no se penaliza, la afirmacion invertida si",function(){
+    var q=oral("ov_pan_mayday");
+    var r=evaluateLocally(q,"El MAYDAY es más grave que el PAN PAN: MAYDAY es socorro con peligro grave e inminente y PAN PAN es urgencia. En el MAYDAY se dice tres veces, la naturaleza de la emergencia, intenciones, posición, nivel, rumbo, personas a bordo y combustible remanente.");
+    eq(r.errors.length,0,"una respuesta correcta se penalizo: "+JSON.stringify(r.errors));
+    ok(r.score>=8.5,"puntaje "+r.score);
+    eq(evaluateLocally(q,"PAN PAN es menos grave que MAYDAY, porque es urgencia y MAYDAY es socorro").errors.length,0,"'PAN PAN es menos grave que MAYDAY' es correcto");
+    ok(evaluateLocally(q,"PAN PAN es más grave que MAYDAY").errors.length===1,"la afirmacion invertida debe penalizarse");
+    ok(evaluateLocally(q,"Mayday es menos grave que pan pan").errors.length===1,"'MAYDAY es menos grave' debe penalizarse");
+  });
+  T("6 REG-03 una negacion dentro del error critico lo anula: 'el flex no esta permitido en pista contaminada'",function(){
+    var q=oral("ov_flex_derate_contam");
+    ["El flex no está permitido en pista contaminada, pero el derated sí está permitido.",
+     "En pista contaminada no se puede usar flex y el derated no está prohibido en pista contaminada.",
+     "No se puede usar flex en pista contaminada porque la norma no lo permite; el derated en cambio sí."].forEach(function(a){
+      eq(evaluateLocally(q,a).errors.length,0,"se penalizo una respuesta correcta: "+a);
+    });
+    ok(evaluateLocally(q,"El flex está permitido en pista contaminada, no hay ningún problema.").errors.length===1,"la afirmacion equivocada debe penalizarse");
+    eq(criticalItemDetected(normalizeAeroText("no digo nada al comandante").split(" "),{accepted:["no digo nada"]}),true,"un termino que ya es una negacion sigue funcionando");
+  });
+  T("6 REG-04 un concepto se reconoce aunque sus palabras ya hayan aparecido antes, y una negacion previa no anula la mencion afirmativa",function(){
+    eq(det("el flex no esta permitido en pista contaminada y el derated si esta permitido",{accepted:["derated esta permitido"]}),true,"'derated si esta permitido' tras 'flex no esta permitido'");
+    eq(det("nunca hay que bajar de green dot; si hay montanas uso drift down a green dot",{accepted:["green dot"]}),true,"mencion afirmativa posterior de green dot");
+    eq(det("nunca hay que bajar de green dot",{accepted:["green dot"]}),false,"la unica mencion esta negada");
+    eq(det("mayday mayday",{accepted:["mayday mayday mayday"]}),false,"repeticiones: sigue exigiendo tres");
+  });
+  T("6 REG-04 la busqueda complementaria de conceptos solo suma detecciones (nunca quita las de la busqueda original)",function(){
+    var lost=[];
+    var corpus=ORAL_VOICE_BANK.map(function(x){return x.reference}).concat(["No se, algo relacionado con el motor tal vez.","No es una corriente ascendente, es una corriente descendente intensa y localizada."]);
+    ORAL_VOICE_BANK.forEach(function(Q){(Q.concepts||[]).forEach(function(c){corpus.forEach(function(txt){
+      var s=normalizeAeroText(txt),tk=s.split(" ").filter(Boolean);
+      var before=(c.accepted||[]).some(function(term){return phraseFuzzyMatch(tk,s,term)&&!negatedBeforeMatch(tk,s,term)});
+      if(before&&!itemDetected(tk,s,c))lost.push(Q.id+" / "+c.label);
+    })})});
+    eq(lost.length,0,"detecciones perdidas: "+JSON.stringify(lost.slice(0,5)));
+  });
+  T("6 entrevista oral, performance y operacion: las 9 preguntas nuevas reconocen respuestas correctas dichas con otras palabras",function(){
+    [["ov_mac_envelope","Es la posición del CG expresada en porcentaje de la cuerda media aerodinámica. Se carga el ZFWCG en el FMS y con eso se pone el trim. La envolvente define los límites del CG: si está muy adelante cuesta rotar, si está muy atrás pierde estabilidad. La envolvente ambiental llega a 39800 pies.",7.5],
+     ["ov_weights","Primero está el peso de fábrica, el manufacturer empty weight, que es la estructura, motores y sistemas. Después el peso vacío operativo que suma los ítems del operador. El DOW es el avión listo para volar sin combustible utilizable ni carga paga. El ZFW es el DOW más la carga paga. Luego con el combustible está el peso de despegue y el de aterrizaje, y cada uno tiene su máximo: MZFW, MTOW, MLW.",7.5],
+     ["ov_cost_index","Es un número que pone la compañía por ruta para minimizar el costo total del vuelo, equilibrando tiempo y combustible. Con CI 0 vuelas a máximo alcance; con el máximo vas a máxima velocidad.",6.5],
+     ["ov_fuel_dan121","Taxi, trip, contingencia, alternativa y reserva final de 30 minutos, más el adicional si hace falta por falla de motor o despresurización. En vuelo se declara combustible mínimo y si vas a aterrizar bajo la reserva final, mayday combustible.",7.5],
+     ["ov_contaminated_rwy","Cuando una parte significativa de la pista en uso tiene contaminante de más de tres milímetros, agua o nieve, o hielo. Si es menos es pista mojada. Afecta el frenado y la aceleración y en el despegue la altura de pantalla es 15 pies.",7.5],
+     ["ov_flex_derate_contam","En pista contaminada el flex no está permitido, porque es una temperatura asumida calculada desde TOGA. El derated sí está permitido porque es un rating certificado con su propia performance para pista contaminada. Además baja la VMCG, entonces la V1 es menor y mejora la distancia de aceleración parada. Con derated no se puede poner TOGA hasta la velocidad F, y no se combinan.",8.5],
+     ["ov_appr_ldg_climb","Approach climb: un motor fallado, tren retraído, 2.1 por ciento. Landing climb: los dos motores operando, tren extendido, flaps full, 3.2 por ciento, con el empuje disponible a los 8 segundos.",7.5],
+     ["ov_improve_takeoff","Cambiando la configuración, sacando los packs, usando TOGA, buscando una pista con viento de frente o esperando a que baje la temperatura.",6.5],
+     ["ov_eng_fail_cruise","Nunca hay que bajar de green dot. MCT, autothrust off, rumbo, y descenso en open des. Si no hay obstáculos uso la estrategia estándar a 300 nudos; si hay montañas uso drift down a green dot. La trayectoria neta tiene que pasar 2000 pies sobre el terreno.",6.5]
+    ].forEach(function(c){
+      var r=evaluateLocally(oral(c[0]),c[1]);
+      ok(r.score>=c[2],c[0]+": puntaje "+r.score+" (minimo "+c[2]+"), faltan "+JSON.stringify(r.missing));
+      eq(r.errors.length,0,c[0]+": se penalizo una respuesta correcta: "+JSON.stringify(r.errors));
+    });
+    ok(evaluateLocally(oral("ov_cost_index"),"El cost index es el fuel flow del avión, cuántos kilos por minuto consume.").errors.length===1,"el cost index confundido con fuel flow debe penalizarse");
+  });
+  T("6 entrevista oral, performance y operacion: fuentes internas en cada pregunta nueva y ningun texto visible cita un manual",function(){
+    var ids=["ov_mac_envelope","ov_weights","ov_cost_index","ov_fuel_dan121","ov_contaminated_rwy","ov_flex_derate_contam","ov_appr_ldg_climb","ov_improve_takeoff","ov_eng_fail_cruise"];
+    ids.forEach(function(id){
+      var q=oral(id);
+      ok(Array.isArray(q.refs)&&q.refs.length>=5&&q.refs.every(function(r){return r&&typeof r.src==="string"&&/\(PDF \d+/.test(r.src)&&typeof r.cite==="string"&&r.cite.trim()}),id+": refs incompletas");
+      var visible=[q.question,q.reference].concat((q.concepts||[]).map(function(c){return c.label}),(q.criticalErrors||[]).map(function(e){return e.feedback}));
+      visible.forEach(function(s){ok(!enSourceRef(s)&&!/Getting to Grips|Tutorials|\bAFM\b/i.test(s),id+": texto visible con cita: "+s)});
+    });
+    reset();
+    startOralVoice();
+    var seen=0;
+    for(var i=0;i<oralState.pool.length;i++){
+      oralState.index=i;loadOralVoiceQuestion();
+      if(ids.indexOf(oralVoiceQuestion().id)===-1)continue;
+      seen++;
+      var cur=oralVoiceQuestion();
+      /* lo que se ve: la pregunta y, tras responder, conceptos, avisos y la respuesta de referencia
+         (el area de resultado conserva la referencia de otra pregunta hasta que se evalua, por eso se evalua aqui) */
+      showOralEvaluation(evaluateLocally(cur,"Respuesta parcial: el flex esta permitido en pista contaminada y el cost index es el fuel flow."),"x");
+      var txt=byId("oralQuestion").textContent+" "+byId("oralFeedback").textContent;
+      ok(byId("oralFeedback").textContent.indexOf(cur.reference)!==-1,"no se muestra la referencia de "+cur.id);
+      ok(!/\bFCOM\b|\bFCTM\b|\bPDF\b|Getting to Grips|Tutorials/.test(txt),"la pantalla oral muestra una fuente en "+cur.id);
+    }
+    eq(seen,9,"preguntas nuevas recorridas en la entrevista oral");
+    stopEverythingOral();
   });
 
   /* ---------- 7. Integridad del banco oral ---------- */

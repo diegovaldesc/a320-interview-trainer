@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~2 s con `OK 69/69 casos...` (código 0) o con la
+a su estado real. Termina en ~3 s con `OK 75/75 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -101,7 +101,7 @@ resolver primero, antes de seguir auditando.
 
 ## 6. Evaluar respuestas orales: correctas, incorrectas, negadas, contradictorias
 
-- Las 23 preguntas de `ORAL_VOICE_BANK` deben puntuar ≥9.5/10 contra su propio
+- Las 32 preguntas de `ORAL_VOICE_BANK` deben puntuar ≥9.5/10 contra su propio
   texto de referencia (regresión base, correr después de cualquier cambio al
   motor).
 - Una respuesta deliberadamente incorrecta/vacía debe puntuar bajo.
@@ -133,6 +133,35 @@ resolver primero, antes de seguir auditando.
 - **A10 — normalización de jerga aeronáutica**: palabras españolas comunes
   como "vientos" u "operativa" no deben corromperse al pasar por
   `normalizeAeroText` (ej. "vientos" → "vientaws" era el bug original).
+- **REG-03 — el error crítico respeta el orden** (2026-09-30): en
+  `ov_pan_mayday`, la respuesta correcta "El MAYDAY es más grave que el PAN
+  PAN…" se penalizaba con −3 ("Es al revés") porque el error "pan pan es mas
+  grave que mayday" tiene las mismas palabras en otro orden (antes 6.2/10).
+  Ahora `criticalItemDetected` exige el orden del término: la respuesta
+  correcta y "PAN PAN es menos grave que MAYDAY" no se penalizan; "PAN PAN es
+  más grave que MAYDAY" y "MAYDAY es menos grave que PAN PAN" sí.
+- **REG-03 — negación dentro del error crítico**: "el flex no está permitido
+  en pista contaminada" no activa el error "flex esta permitido en pista
+  contaminada" (la negación cae entre las palabras del término, no antes);
+  la afirmación equivocada sí lo activa. Un término que ya es una negación
+  ("no digo nada") sigue funcionando.
+- **REG-04 — conceptos con palabras repetidas**: "el flex no está permitido …
+  el derated sí está permitido" cumple "derated esta permitido", y "nunca hay
+  que bajar de green dot … drift down a green dot" cumple "green dot" (antes
+  la primera aparición de cada palabra, o una negación en la primera mención,
+  lo impedían). Si la única mención está negada, no cuenta. La búsqueda
+  complementaria (`anchoredConceptMatch`) solo suma: sobre las 32
+  referencias no quita ninguna detección de la búsqueda original.
+- **Entrevista oral, performance y operación (9 preguntas nuevas,
+  2026-09-30)**: MAC% y envolvente, pesos operativos, cost index, combustible
+  DAN 121, pista contaminada, FLEX vs derated, approach vs landing climb,
+  mejorar el despegue y falla de motor en crucero. Una respuesta correcta
+  dicha con otras palabras supera un mínimo (6.5–8.5) sin avisos falsos; el
+  cost index confundido con fuel flow se penaliza. Cada una trae fuentes
+  internas (`refs` con `src` y `cite`) que nunca se muestran: ni la pregunta,
+  ni los conceptos, ni los avisos, ni la respuesta de referencia citan un
+  manual. Las citas se comprueban contra los PDF con
+  `APPMD_herramientaserificar_citas_orales.js` (70 citas, 0 problemas).
 
 ## Integridad estructural (no certifica precisión aeronáutica — ver más abajo)
 

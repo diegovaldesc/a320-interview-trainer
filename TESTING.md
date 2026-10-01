@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~3 s con `OK 75/75 casos...` (código 0) o con la
+a su estado real. Termina en ~7 s con `OK 85/85 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -150,8 +150,8 @@ resolver primero, antes de seguir auditando.
   que bajar de green dot … drift down a green dot" cumple "green dot" (antes
   la primera aparición de cada palabra, o una negación en la primera mención,
   lo impedían). Si la única mención está negada, no cuenta. La búsqueda
-  complementaria (`anchoredConceptMatch`) solo suma: sobre las 32
-  referencias no quita ninguna detección de la búsqueda original.
+  complementaria (`anchoredConceptMatch`) solo suma: sobre todas las
+  referencias (53) no quita ninguna detección de la búsqueda original.
 - **Entrevista oral, performance y operación (9 preguntas nuevas,
   2026-09-30)**: MAC% y envolvente, pesos operativos, cost index, combustible
   DAN 121, pista contaminada, FLEX vs derated, approach vs landing climb,
@@ -161,7 +161,8 @@ resolver primero, antes de seguir auditando.
   internas (`refs` con `src` y `cite`) que nunca se muestran: ni la pregunta,
   ni los conceptos, ni los avisos, ni la respuesta de referencia citan un
   manual. Las citas se comprueban contra los PDF con
-  `APPMD_herramientaserificar_citas_orales.js` (76 citas, 0 problemas).
+  `C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_orales.js`
+  (al 2026-10-01: 252 citas en 31 preguntas, 0 problemas).
 
 ## Integridad estructural (no certifica precisión aeronáutica — ver más abajo)
 
@@ -351,6 +352,55 @@ alternativa sin contestarla, las voces de novedad, la voz que se vuelve a sortea
 al repetir, una prueba terminada que no se marca como hecha, las opciones que no
 se mezclan y el título de la foto visible) y la batería falló en cada caso (dos
 de ellas obligaron a reforzar un caso primero).
+
+## 11. Need to know (sección destacada, 2026-10-01)
+
+Sección nueva, la primera del inicio y con color propio, con las preguntas
+clave de la entrevista. Cada pregunta se estudia como tarjeta: responder con la
+voz o escribiendo (misma evaluación de Entrevista oral) o «Ver respuesta».
+
+- **Lista base y contenido** — 31 preguntas: 10 que ya estaban en Entrevista
+  oral y 21 nuevas, que también quedan allí (el banco oral pasa de 32 a 53).
+  Cada una trae una idea corta (`short`) y la respuesta en párrafos o listas
+  (`formatRefHtml`: «- » y «1. » arman listas, «Etiqueta: texto» resalta la
+  etiqueta; no queda ninguna marca suelta). Ningún texto visible cita una
+  fuente; «FCOM» solo aparece como paso del procedimiento ECAM («revisar el FCOM
+  si hay tiempo»). Las 21 nuevas tienen fuentes internas (`refs`, más
+  `extRefs` para el AIP de SCEL) que el verificador comprueba página por página.
+- **Estado** — `appState.needToKnow = {added, removed}` se sanea (referencias
+  `o:<id>` / `q:<_id>`, sin repetidas ni basura), viaja en el respaldo, un
+  respaldo antiguo sin el campo queda vacío y un tipo inválido rechaza el
+  respaldo. La lista efectiva es «base − quitadas + agregadas»: una pregunta
+  base nueva le llega a todos sin perder sus cambios, y una referencia que ya no
+  existe se ignora. La regex de referencias es una función y no una `const`,
+  porque `sanitizeState` corre al cargar, antes de esa parte del script.
+- **Agregar, quitar y restaurar** — quitar una pregunta base, agregar una de
+  alternativas (va al final, en «Agregadas por ti»), restaurar las iniciales
+  sin borrar lo agregado, y «Quitar» desde la lista. Los cambios se guardan.
+- **Botón + Need to know** — aparece en alternativas, autoevaluación y
+  entrevista oral, muestra si la pregunta ya está («★ Need to know») y alterna.
+- **Tarjeta oral** — el micrófono de Entrevista oral (`.oral-mic-box`) se
+  presta a la tarjeta y vuelve a su lugar al salir o al abrir Entrevista oral;
+  la evaluación se guarda y la lista muestra el último puntaje; «Ver respuesta»
+  muestra idea corta y explicación con listas; Anterior y Siguiente cambian de
+  pregunta y limpian el resultado anterior.
+- **Tarjeta de alternativas** — se practica con sus alternativas, registra el
+  intento y la explicación no muestra citas ni insignias de fuente.
+- **Inicio** — la tarjeta va primero, tiene su propio color y cuenta las
+  preguntas y las practicadas.
+- **Rúbricas** — 22 respuestas correctas dichas con otras palabras superan su
+  mínimo (6.5–8.5) sin avisos falsos. En el orden del ECAM se usan `steps`: el
+  orden típico (recall items, OEB, ECAM, QRH, FCOM) aprueba y un orden
+  equivocado se avisa. FLEX en pista contaminada se penaliza. «Si no,
+  go-around» ya no se lee como una negación del go-around.
+- **Término reemplazado** — «altura de pantalla» no aparece en ningún banco ni
+  en pantalla (se dice screen height).
+- **Áreas táctiles** — la tarjeta del inicio, la lista, «Quitar», la tarjeta y
+  el botón + Need to know miden ≥44 px.
+
+Comprobado que detecta regresiones: dejando el micrófono sin volver, aceptando
+un `needToKnow` de tipo inválido en el respaldo y quitando el arreglo de «si no,
+go-around», la batería falló en el caso correspondiente cada vez.
 
 ## Límite explícito de esta batería
 

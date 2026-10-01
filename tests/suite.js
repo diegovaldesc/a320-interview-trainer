@@ -49,9 +49,13 @@
   T("0 el banco reporta integridad estructural OK",function(){
     var h=bankIntegrity();ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
     eq(totalQuestions(),415,"preguntas FCOM");
-    eq(dgacTotal(),573,"preguntas DGAC");
+    eq(dgacTotal(),572,"preguntas DGAC");
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
     eq(ORAL_VOICE_BANK.length,53,"preguntas orales");
+  });
+  T("0 DGAC-01 la pregunta del PTU con parking brake (clave contraria al FCOM) ya no esta en el banco",function(){
+    var hit=rawPool(DGAC_KEY).filter(function(q){return /PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU/i.test(q.q)});
+    eq(hit.length,0,"preguntas del PTU con parking brake");
   });
   T("0 A08 el encabezado ya no promete OFFLINE",function(){
     ok(!/OFFLINE/i.test(document.querySelector(".topbar").textContent),"el encabezado dice OFFLINE");

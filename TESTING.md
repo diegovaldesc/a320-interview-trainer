@@ -17,7 +17,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 `tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
 al final y la abre en Chrome o Edge sin ventana (no necesita Node ni instalar
 nada). Los casos corren dentro de la propia app, con acceso a sus funciones y
-a su estado real. Termina en ~7 s con `OK 85/85 casos...` (código 0) o con la
+a su estado real. Termina en ~7 s con `OK 86/86 casos...` (código 0) o con la
 lista de casos que fallan y su mensaje (código 1). La app publicada no se
 modifica.
 
@@ -401,6 +401,15 @@ voz o escribiendo (misma evaluación de Entrevista oral) o «Ver respuesta».
 Comprobado que detecta regresiones: dejando el micrófono sin volver, aceptando
 un `needToKnow` de tipo inválido en el respaldo y quitando el arreglo de «si no,
 go-around», la batería falló en el caso correspondiente cada vez.
+
+## 12. Banco DGAC: pregunta retirada (2026-10-01)
+
+- **DGAC-01** — se retiró la pregunta «IT IS POSSIBLE TO PRESSURIZE THE GREEN
+  HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU WHEN THE PARKING BRAKE IS SET»: la app
+  la daba por falsa, pero en tierra el PTU funciona con los dos master levers en
+  OFF (o los dos en ON) aunque el parking brake esté puesto; el parking brake solo
+  lo inhibe con un master lever en ON y el otro en OFF (primer arranque). El banco
+  DGAC queda en 572 y la batería comprueba que la pregunta no vuelva.
 
 ## Límite explícito de esta batería
 

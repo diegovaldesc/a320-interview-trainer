@@ -161,7 +161,7 @@ resolver primero, antes de seguir auditando.
   internas (`refs` con `src` y `cite`) que nunca se muestran: ni la pregunta,
   ni los conceptos, ni los avisos, ni la respuesta de referencia citan un
   manual. Las citas se comprueban contra los PDF con
-  `APPMD_herramientaserificar_citas_orales.js` (70 citas, 0 problemas).
+  `APPMD_herramientaserificar_citas_orales.js` (72 citas, 0 problemas).
 
 ## Integridad estructural (no certifica precisión aeronáutica — ver más abajo)
 

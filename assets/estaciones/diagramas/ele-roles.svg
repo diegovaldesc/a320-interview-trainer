@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 298" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Generar, repartir y convertir</title>
+  <desc id="d">Normal: el GEN 1 genera AC, el AC BUS 1 la reparte, el TR 1 la convierte en DC y el DC BUS 1 reparte esa DC. Respaldo: la BAT 1 guarda DC, el static inverter la convierte en AC y el AC ESS BUS la reparte, solo si no hay generadores. Un TR no genera energía.</desc>
+  <rect x="1" y="1" width="358" height="296" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="11.5" font-weight="700" fill="#33424D">Normal: la DC sale de la AC del generador</text>
+  <circle cx="40" cy="64" r="22" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="40" y="67.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 1</text>
+  <path d="M62 64 L79 64" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M84.5 64 L76.4 59.5 L76.4 68.5 Z" fill="#33424D"/>
+  <rect x="84" y="54" width="72" height="20" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="120" y="67.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 1</text>
+  <path d="M156 64 L173 64" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M178.5 64 L170.4 59.5 L170.4 68.5 Z" fill="#33424D"/>
+  <rect x="178" y="50" width="54" height="28" rx="5" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="205" y="67.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">TR 1</text>
+  <path d="M232 64 L249 64" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M254.5 64 L246.4 59.5 L246.4 68.5 Z" fill="#33424D"/>
+  <rect x="254" y="54" width="88" height="20" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="298" y="67.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC BUS 1</text>
+  <text x="40" y="104" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">genera</text>
+  <text x="40" y="117" text-anchor="middle" font-size="10.5" fill="#5B6B78">AC</text>
+  <text x="120" y="104" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">reparte</text>
+  <text x="120" y="117" text-anchor="middle" font-size="10.5" fill="#5B6B78">AC</text>
+  <text x="205" y="104" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">convierte</text>
+  <text x="205" y="117" text-anchor="middle" font-size="10.5" fill="#5B6B78">AC → DC</text>
+  <text x="298" y="104" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">reparte</text>
+  <text x="298" y="117" text-anchor="middle" font-size="10.5" fill="#5B6B78">DC</text>
+  <line x1="14" y1="134" x2="346" y2="134" stroke="#E4E9ED" stroke-width="1"/>
+  <text x="18" y="158" font-size="11.5" font-weight="700" fill="#33424D">Respaldo: la AC esencial sale de la batería</text>
+  <circle cx="40" cy="196" r="22" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="2"/>
+  <text x="40" y="199.6" text-anchor="middle" font-size="10" font-weight="700" fill="#5B6B78">BAT 1</text>
+  <path d="M62 196 L79 196" fill="none" stroke="#5B6B78" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M84.5 196 L76.4 191.5 L76.4 200.5 Z" fill="#A9B4BD"/>
+  <rect x="84" y="182" width="68" height="28" rx="5" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="118" y="199.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#5B6B78">STAT INV</text>
+  <path d="M152 196 L169 196" fill="none" stroke="#5B6B78" stroke-width="1.2" stroke-dasharray="2 3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M174.5 196 L166.4 191.5 L166.4 200.5 Z" fill="#A9B4BD"/>
+  <rect x="174" y="186" width="98" height="20" rx="5" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="223" y="199.96" text-anchor="middle" font-size="11" font-weight="700" fill="#5B6B78">AC ESS BUS</text>
+  <text x="282" y="192" font-size="10.5" fill="#5B6B78">si no hay</text>
+  <text x="282" y="205" font-size="10.5" fill="#5B6B78">generadores</text>
+  <text x="40" y="236" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">guarda</text>
+  <text x="40" y="249" text-anchor="middle" font-size="10.5" fill="#5B6B78">DC</text>
+  <text x="118" y="236" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">convierte</text>
+  <text x="118" y="249" text-anchor="middle" font-size="10.5" fill="#5B6B78">DC → AC</text>
+  <text x="223" y="236" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">reparte</text>
+  <text x="223" y="249" text-anchor="middle" font-size="10.5" fill="#5B6B78">AC</text>
+  <rect x="14" y="262" width="332" height="26" rx="8" fill="#F3F5F7" stroke="#DDE3E8"/>
+  <text x="180" y="279" text-anchor="middle" font-size="10.5" fill="#1E2A33">Un TR no genera: sin AC que le llegue, no entrega nada.</text>
+</svg>

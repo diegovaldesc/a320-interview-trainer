@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 100/100 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 101/101 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -154,6 +154,14 @@ resolver primero, antes de seguir auditando.
   lo impedían). Si la única mención está negada, no cuenta. La búsqueda
   complementaria (`anchoredConceptMatch`) solo suma: sobre todas las
   referencias (53) no quita ninguna detección de la búsqueda original.
+- **REG-05 — `ov_elec_arch` no castiga una frase correcta** (2026-10-02): su
+  error crítico incluía "las baterías están desconectadas en operación
+  normal" (−3), pero el manual dice justamente eso (el BCL las desconecta del
+  DC BAT BUS cuando están cargadas; siguen unidas a sus HOT BUS), y la clase
+  de Eléctrico lo enseña así. Se quitó ese término; "las baterías solo se
+  conectan si fallan los generadores" sigue penalizado. La referencia ya no
+  dice que el BUS TIE "comparte" la alimentación (sugería generadores en
+  paralelo). Prueba de mutación: con el término devuelto, REG-05 falla.
 - **Entrevista oral, performance y operación (9 preguntas nuevas,
   2026-09-30)**: MAC% y envolvente, pesos operativos, cost index, combustible
   DAN 121, pista contaminada, FLEX vs derated, approach vs landing climb,

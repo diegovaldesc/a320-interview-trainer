@@ -442,6 +442,13 @@
     })})});
     eq(lost.length,0,"detecciones perdidas: "+JSON.stringify(lost.slice(0,5)));
   });
+  T("6 REG-05 ov_elec_arch no penaliza decir que las baterias estan desconectadas en operacion normal (el manual lo dice asi), y si penaliza que solo se conectan si fallan los generadores",function(){
+    var q=oral("ov_elec_arch");
+    var r=evaluateLocally(q,q.reference+" En operación normal las baterías están desconectadas del DC BAT BUS la mayor parte del tiempo: el BCL las conecta solo para cargarlas. Las baterias estan desconectadas en operacion normal.");
+    eq(r.errors.length,0,"se penalizo una frase correcta: "+JSON.stringify(r.errors));
+    ok(evaluateLocally(q,"Las baterías solo se conectan si fallan los generadores.").errors.length===1,"el error de verdad debe seguir penalizado");
+    ok(!/compartir la alimentaci/.test(q.reference),"la referencia no debe sugerir generadores en paralelo");
+  });
   T("6 entrevista oral, performance y operacion: las 9 preguntas nuevas reconocen respuestas correctas dichas con otras palabras",function(){
     [["ov_mac_envelope","Es la posición del CG expresada en porcentaje de la cuerda media aerodinámica. La envolvente define los límites del CG según el peso: si está muy adelante cuesta rotar, si está muy atrás pierde estabilidad. El A320 tiene CG básico, T1, y extended forward. La escala del volante de trim va más o menos de 15 a 41 por ciento. Se carga el ZFWCG en el FMS y con eso se pone el trim.",7.5],
      ["ov_weights","Primero está el peso de fábrica, el manufacturer empty weight, que es la estructura, motores y sistemas. Después el peso vacío operativo que suma los ítems del operador. El DOW es el avión listo para volar sin combustible utilizable ni carga paga. El ZFW es el DOW más la carga paga. Luego con el combustible está el peso de despegue y el de aterrizaje, y cada uno tiene su máximo: MZFW, MTOW, MLW.",7.5],

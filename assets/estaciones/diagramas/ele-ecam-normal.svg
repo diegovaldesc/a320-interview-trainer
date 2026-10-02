@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 318" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Página ELEC: configuración normal en vuelo</title>
-  <desc id="d">GEN 1 alimenta AC 1 y GEN 2 alimenta AC 2. AC 1 alimenta AC ESS. TR 1 alimenta DC 1, DC BAT y DC ESS; TR 2 alimenta DC 2. ESS TR, EMER GEN y APU GEN quedan en reserva; las baterías están desconectadas (0 A).</desc>
+  <desc id="d">GEN 1 alimenta AC 1 y GEN 2 alimenta AC 2. AC 1 alimenta AC ESS. Por el TR 1 reciben DC el DC 1, el DC BAT y el DC ESS; por el TR 2, el DC 2. Entre DC 2 y DC BAT no hay línea porque ese contactor está abierto. ESS TR, EMER GEN y APU GEN quedan en reserva; las baterías están desconectadas (0 A).</desc>
   <rect x="1" y="1" width="358" height="316" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
   <text x="18" y="27" font-size="12.5" font-weight="700" fill="#33424D">ELEC</text>
   <line x1="18" y1="30.5" x2="51" y2="30.5" stroke="#33424D" stroke-width="1.3"/>

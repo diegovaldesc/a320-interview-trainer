@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 312" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">La red DC en vuelo normal</title>
+  <desc id="d">GEN 1 alimenta AC BUS 1 y el TR 1 convierte esa AC en DC para el DC BUS 1, que por su DC TIE cerrado alimenta el DC BAT BUS y este el DC ESS BUS. GEN 2 alimenta AC BUS 2 y el TR 2 convierte esa AC en DC para el DC BUS 2, cuyo DC TIE hacia el DC BAT BUS está abierto en normal. El ESS TR, colgado del AC ESS BUS, queda en reserva.</desc>
+  <rect x="1" y="1" width="358" height="310" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <path d="M40 36 L40 92" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M180 36 L180 92" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M320 36 L320 92" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55 110 L55 136" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M305 110 L305 136" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M180 110 L180 136" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55 160 L55 186" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M305 160 L305 186" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M180 160 L180 186" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M100 195 L130 195" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55 204 L55 221" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M305 204 L305 221" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="35.5" y="57.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="175.5" y="57.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="315.5" y="57.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="175.5" y="118.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="50" y="59" font-size="10.5" font-weight="600" fill="#33424D">DC TIE</text>
+  <text x="50" y="72" font-size="10.5" fill="#1F6E41">cerrado</text>
+  <text x="310" y="59" text-anchor="end" font-size="10.5" font-weight="600" fill="#33424D">DC TIE</text>
+  <text x="310" y="72" text-anchor="end" font-size="10.5" fill="#5B6B78">abierto en normal</text>
+  <rect x="14" y="18" width="332" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="180" y="30.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC BAT BUS</text>
+  <rect x="14" y="92" width="86" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="57" y="104.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC BUS 1</text>
+  <rect x="130" y="92" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="180" y="104.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC ESS BUS</text>
+  <rect x="260" y="92" width="86" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="303" y="104.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC BUS 2</text>
+  <rect x="30" y="136" width="50" height="24" rx="5" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="55" y="151.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">TR 1</text>
+  <rect x="150" y="136" width="60" height="24" rx="5" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="180" y="151.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#5B6B78">ESS TR</text>
+  <rect x="280" y="136" width="50" height="24" rx="5" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="305" y="151.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">TR 2</text>
+  <text x="86" y="152" font-size="10.5" fill="#5B6B78">AC → DC</text>
+  <text x="274" y="152" text-anchor="end" font-size="10.5" fill="#5B6B78">AC → DC</text>
+  <rect x="14" y="186" width="86" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="57" y="198.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 1</text>
+  <rect x="130" y="186" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="180" y="198.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC ESS BUS</text>
+  <rect x="260" y="186" width="86" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="303" y="198.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 2</text>
+  <circle cx="55" cy="238" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="55" y="241.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 1</text>
+  <circle cx="305" cy="238" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="305" y="241.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 2</text>
+  <text x="180" y="236" text-anchor="middle" font-size="10.5" fill="#5B6B78">La energía viene de</text>
+  <text x="180" y="249" text-anchor="middle" font-size="10.5" fill="#5B6B78">los generadores</text>
+  <path d="M18 278.5 L38 278.5" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="43" y="282" font-size="10.5" fill="#5B6B78">alimenta</text>
+  <path d="M101.8 278.5 L121.8 278.5" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="126.8" y="282" font-size="10.5" fill="#5B6B78">en reserva</text>
+  <rect x="23.5" y="292" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="43" y="300" font-size="10.5" fill="#5B6B78">contactor cerrado</text>
+  <rect x="157.7" y="292" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="177.2" y="300" font-size="10.5" fill="#5B6B78">abierto</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">AC y DC</title>
+  <desc id="d">DC: una línea pareja de 28 V, siempre del mismo lado del cero; la entregan las baterías y los TR. AC: una onda que cruza el cero en ciclos, 115/200 V y 400 Hz; la entregan los generadores, el external power y el static inverter.</desc>
+  <rect x="1" y="1" width="358" height="238" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="32" font-size="12" font-weight="700" fill="#33424D">DC · corriente continua</text>
+  <text x="18" y="52" font-size="10.5" fill="#1E2A33">28 V, siempre en el</text>
+  <text x="18" y="66" font-size="10.5" fill="#1E2A33">mismo sentido</text>
+  <text x="18" y="88" font-size="10.5" fill="#5B6B78">La entregan: baterías y TR</text>
+  <path d="M196 22 L196 92" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M196 84 L344 84" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="190" y="88" text-anchor="end" font-size="10.5" fill="#5B6B78">0</text>
+  <text x="344" y="99" text-anchor="end" font-size="10.5" fill="#5B6B78">tiempo</text>
+  <path d="M196 42 L340 42" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="344" y="36" text-anchor="end" font-size="10.5" font-weight="700" fill="#1F6E41">28 V</text>
+  <line x1="14" y1="112" x2="346" y2="112" stroke="#E4E9ED" stroke-width="1"/>
+  <text x="18" y="138" font-size="12" font-weight="700" fill="#33424D">AC · corriente alterna</text>
+  <text x="18" y="158" font-size="10.5" fill="#1E2A33">115/200 V y 400 Hz:</text>
+  <text x="18" y="172" font-size="10.5" fill="#1E2A33">cambia de sentido en ciclos</text>
+  <text x="18" y="194" font-size="10.5" fill="#5B6B78">La entregan: generadores,</text>
+  <text x="18" y="208" font-size="10.5" fill="#5B6B78">EXT PWR y static inverter</text>
+  <path d="M196 130 L196 214" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M196 172 L344 172" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="190" y="176" text-anchor="end" font-size="10.5" fill="#5B6B78">0</text>
+  <text x="190" y="150" text-anchor="end" font-size="12" font-weight="700" fill="#5B6B78">+</text>
+  <text x="190" y="202" text-anchor="end" font-size="12" font-weight="700" fill="#5B6B78">−</text>
+  <path d="M196 172 L197.5 166.1 L199 160.5 L200.5 155.3 L202 150.8 L203.5 147.1 L205 144.3 L206.5 142.6 L208 142 L209.5 142.6 L211 144.3 L212.5 147.1 L214 150.8 L215.5 155.3 L217 160.5 L218.5 166.1 L220 172 L221.5 177.9 L223 183.5 L224.5 188.7 L226 193.2 L227.5 196.9 L229 199.7 L230.5 201.4 L232 202 L233.5 201.4 L235 199.7 L236.5 196.9 L238 193.2 L239.5 188.7 L241 183.5 L242.5 177.9 L244 172 L245.5 166.1 L247 160.5 L248.5 155.3 L250 150.8 L251.5 147.1 L253 144.3 L254.5 142.6 L256 142 L257.5 142.6 L259 144.3 L260.5 147.1 L262 150.8 L263.5 155.3 L265 160.5 L266.5 166.1 L268 172 L269.5 177.9 L271 183.5 L272.5 188.7 L274 193.2 L275.5 196.9 L277 199.7 L278.5 201.4 L280 202 L281.5 201.4 L283 199.7 L284.5 196.9 L286 193.2 L287.5 188.7 L289 183.5 L290.5 177.9 L292 172 L293.5 166.1 L295 160.5 L296.5 155.3 L298 150.8 L299.5 147.1 L301 144.3 L302.5 142.6 L304 142 L305.5 142.6 L307 144.3 L308.5 147.1 L310 150.8 L311.5 155.3 L313 160.5 L314.5 166.1 L316 172 L317.5 177.9 L319 183.5 L320.5 188.7 L322 193.2 L323.5 196.9 L325 199.7 L326.5 201.4 L328 202 L329.5 201.4 L331 199.7 L332.5 196.9 L334 193.2 L335.5 188.7 L337 183.5 L338.5 177.9 L340 172" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="270" y="228" text-anchor="middle" font-size="10.5" fill="#5B6B78">400 ciclos por segundo</text>
+</svg>

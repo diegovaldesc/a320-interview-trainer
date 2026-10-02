@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 96/96 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 98/98 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -435,7 +435,7 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
 | `data/ingles.js` | Banco de Inglés OACI, en JSON. |
 | `data/oral.js` | Banco de Entrevista oral (`ORAL_VOICE_BANK`), que también usa Need to know. |
 | `js/app.js` | Toda la lógica del banco de preguntas. |
-| `css/ruta.css`, `js/ruta.js` | La Ruta de entrenamiento: portada, mapa y misiones (sección 14). Todo lleva el prefijo `rt-`. |
+| `css/ruta.css`, `js/ruta.js` | La Ruta de entrenamiento: portada, mapa y estaciones (sección 14). Todo lleva el prefijo `rt-`. |
 | `data/estaciones.js` | Las materias, estaciones y la ruta del mapa. Lo genera `Escritorio\APP\Estaciones\_herramientas\exportar_app.js`: no se edita a mano. |
 | `assets/estaciones/` | Los diagramas, imágenes y fondos del mapa que usan las estaciones (los copia el mismo exportador). |
 | `assets/portada/` | La textura de las nubes de la portada (sección 14). El exportador no toca esta carpeta. |
@@ -493,21 +493,43 @@ Comprobado que detecta regresiones: un `?v=` atrasado en `js/app.js` falla en
 ESTRUCTURA-01, y cargar `data/oral.js` después de `js/app.js` falla en 15
 casos (`ORAL_VOICE_BANK is not defined`).
 
-## 14. Ruta de entrenamiento: portada, mapa y misiones (2026-10-01, 1.12.0)
+## 14. Ruta de entrenamiento: portada, mapa y estaciones (2026-10-01, 1.12.0; carta en ruta 1.13.0)
 
 La app abre en una **portada** con el nombre de la app sobre el aeropuerto del
-mapa y dos puertas: **Ruta de entrenamiento** (el mapa de misiones) y **Banco de
+mapa y dos puertas: **Ruta de entrenamiento** (el mapa de estaciones) y **Banco de
 preguntas** (el inicio de siempre, ahora titulado «Banco de preguntas», con un
 botón «Portada» para volver). Ningún módulo cambió.
 
-- **Mapa** — los 6 fondos apilados, de la pista de salida al descenso; las 18
-  misiones de Hidráulico y Eléctrico mezcladas por nivel (`data/estaciones.js`); la
-  misión actual destacada, las demás con candado hasta ganar una estrella en
-  la anterior, y el avión (fuera de escala) que espera antes de la misión que
-  toca y vuela a la siguiente al terminar una.
-- **Misión** — presentación, fichas con diagramas, prueba y resultado: 3, 2 y
-  1 estrellas con 90, 70 y 50 % de respuestas correctas en el primer intento,
-  y segundo intento de las falladas.
+- **Mapa** — los 7 fondos apilados, de la pista de salida a la pista de
+  llegada; las 18 estaciones de Hidráulico y Eléctrico mezcladas por nivel
+  (`data/estaciones.js`); la estación actual destacada, las demás con candado
+  hasta ganar una estrella en la anterior, y el avión (la imagen
+  `mapa-avion.webp`, fuera de escala) que espera antes de la estación que toca
+  y vuela a la siguiente al terminar una, dejando una estela dorada.
+- **Carta en ruta (1.13.0)** — el mapa se ve como una carta de navegación:
+  - cada estación es un **VOR/DME** (hexágono dentro de un cuadrado) con su
+    rosa de los vientos; los repasos van con el hexágono relleno, como los
+    puntos de notificación obligatoria;
+  - al lado, su caja con frecuencia de VOR (112.0 a 117.9) e identificador de
+    3 letras (`ident` de cada estación, como PTU, RAT o IDG; `construir.js`
+    exige que exista y no se repita);
+  - la ruta es una aerovía (UA320) de tramos rectos, cada uno con su rumbo
+    (sale de su dirección en el mapa: el norte de la pantalla es el norte) y
+    su distancia en millas;
+  - despega del umbral de la RWY 36 por el eje de pista, con las 3 primeras
+    estaciones sobre el eje, sigue derecho hasta pasado el fin de pista y
+    recién vira;
+  - si dos estaciones quedan muy juntas en altura, la ruta se abre en zigzag
+    para que cada tramo mida al menos 136 px y el avión quepa sin tapar
+    ninguna (en la tormenta queda esquivando las celdas);
+  - termina con una aproximación punteada a la RWY 36 del fondo de llegada,
+    todavía sin estaciones.
+- **Estación** — presentación, fichas con diagramas, prueba y resultado: 3, 2
+  y 1 estrellas con 90, 70 y 50 % de respuestas correctas en el primer
+  intento, y segundo intento de las falladas. Al terminar se vuelve siempre al
+  mapa: no hay botón para pasar directo a la estación siguiente (1.13.0).
+- **Nombre** — la app dice «estación», nunca «misión» (decisión de Diego,
+  1.13.0). En el código siguen nombres internos en inglés (`missions`).
 - **Estadísticas compartidas** — la primera respuesta de cada pregunta de
   alternativas cuenta en las estadísticas de la app con `recordTechnical`
   (las del banco DGAC no, igual que en el resto de la app); el segundo intento
@@ -518,18 +540,19 @@ botón «Portada» para volver). Ningún módulo cambió.
   (`sanitizeRuta`: solo estaciones que existen, 1 a 3 estrellas, fecha
   AAAA-MM-DD), viaja en la copia de seguridad, un respaldo antiguo sin el
   campo queda vacío y uno con el tipo equivocado se rechaza. Ajustes de la
-  ruta: abrir todas las misiones y borrar solo el avance de la ruta.
+  ruta: abrir todas las estaciones y borrar solo el avance de la ruta.
 - **Contenido** — se exporta desde `Escritorio\APP\Estaciones` (donde
   `construir.js` revisa reglas y citas) con `exportar_app.js`; las fuentes
   internas no se copian a la app.
 - **Casos RUTA-01 a RUTA-07** — la app abre en la portada con el nombre de la
   app y sin la frase anterior; Banco de preguntas y Portada llevan y traen;
-  las 18 misiones, cada pregunta enseñada en su estación, igual a la del banco
+  las 18 estaciones, cada pregunta enseñada en su estación, igual a la del banco
   (alternativas, orden y respuesta) y sin citar manuales; el saneo y el
-  respaldo del avance; una misión completa (estrellas, siguiente abierta,
+  respaldo del avance; una estación completa (estrellas, siguiente abierta,
   racha y estadísticas); la DGAC no cuenta y la oral pasa por el motor; el
   segundo intento no cuenta doble y las alternativas DGAC salen en su orden;
-  la portada y el mapa muestran avance, candados, la misión actual y el avión.
+  la portada y el mapa muestran avance, candados, la estación actual, el avión
+  y los 7 fondos.
 - **Nubes de la portada (1.12.1)** — dos capas de nubes pasan sobre el
   aeropuerto a distinta velocidad. Usan una textura que se repite sin costuras
   (`assets/portada/nubes.webp`, 73 KB; la genera
@@ -543,11 +566,25 @@ botón «Portada» para volver). Ningún módulo cambió.
   no, se vería un salto al repetirse), solo con transform y cubriendo la
   pantalla todo el recorrido; y alguna regla `(prefers-reduced-motion:
   reduce)` las detiene.
+- **RUTA-09** — al terminar una estación el resultado solo ofrece volver al
+  mapa (o salir) y «Volver al mapa» lleva al mapa; ninguna pantalla de la ruta
+  (portada, mapa, hojas, ajustes, presentación y resultado, incluidas sus
+  etiquetas para lectores de pantalla) dice «misión».
+- **RUTA-10** — la carta: el umbral y las 3 estaciones de pista sobre el eje,
+  la ruta sigue derecha por el eje pasada la última y el avión espera
+  alineado; el avión es la imagen nueva; un VOR/DME por estación, relleno solo
+  en los repasos; una caja por radioayuda con frecuencia de VOR e
+  identificador distinto; cada tramo con rumbo de carta (001 a 360) y
+  distancia, y el del primer tramo de aerovía coincide con su dirección en el
+  mapa; la aerovía tiene nombre; cada tramo fuera de la pista mide al menos
+  136 px; y la aproximación punteada con la RWY 36 en las dos pistas.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de
 600 px en una textura de 640 px, o sin ninguna regla de «Reducir movimiento»,
-falló RUTA-08.
+falló RUTA-08. Con un botón para pasar a la siguiente estación o con «Misión»
+en el globo del mapa, falló RUTA-09; con las estaciones de pista corridas
+30 px del eje o sin el tramo recto pasado el fin de pista, falló RUTA-10.
 
 ## 15. «La PTU»: enunciados corregidos sin perder el progreso (QID-01)
 

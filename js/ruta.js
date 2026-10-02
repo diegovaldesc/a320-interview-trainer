@@ -1,4 +1,4 @@
-/* Ruta de entrenamiento: portada (inicio de la app), mapa de misiones y misión (clase, prueba y estrellas).
+/* Ruta de entrenamiento: portada (inicio de la app), mapa de estaciones y estación (clase, prueba y estrellas).
    El contenido viene de data/estaciones.js (lo exporta la carpeta Estaciones). El avance se guarda en
    appState.ruta y viaja en la copia de seguridad. Las preguntas de alternativas cuentan en las
    estadísticas de la app (menos las del banco DGAC, como en el resto de la app) y las orales se
@@ -54,106 +54,191 @@
     var ci = currentIndex(), done = M.filter(function(m){ return stars(m.id) > 0; }).length;
     if (ci < M.length){
       var m = M[ci];
-      $('rtRouteTitle').textContent = (done ? 'Continuar' : 'Empezar') + ' · Misión ' + m.n;
+      $('rtRouteTitle').textContent = (done ? 'Continuar' : 'Empezar') + ' · Estación ' + m.n;
       $('rtRouteSub').textContent = m.title + ' · ' + SUBJ[m.subject].title;
     } else {
       $('rtRouteTitle').textContent = 'Ruta completa';
-      $('rtRouteSub').textContent = 'Repite misiones para sumar estrellas. Vienen más materias.';
+      $('rtRouteSub').textContent = 'Repite estaciones para sumar estrellas. Vienen más materias.';
     }
     $('rtRouteBar').style.width = Math.round(done / M.length * 100) + '%';
-    $('rtRouteCount').textContent = done + ' de ' + M.length + ' misiones';
+    $('rtRouteCount').textContent = done + ' de ' + M.length + ' estaciones';
     var s = streakNow();
     $('rtStreak').textContent = s; $('rtStreakLbl').textContent = s === 1 ? 'día seguido' : 'días seguidos';
     $('rtStarTotal').textContent = totalStars(); $('rtStarMax').textContent = M.length * 3;
   }
 
   // ---------- mapa ----------
+  // La ruta se dibuja como una aerovía de carta en ruta: tramos rectos entre radioayudas. Cada estación es un VOR/DME
+  // (hexágono dentro de un cuadrado, relleno en los repasos, que son puntos de notificación obligatoria) con su rosa de
+  // los vientos, su identificador y su frecuencia; cada tramo trae su rumbo y su distancia. Despega por el eje de la
+  // pista del primer fondo, sigue ese eje hasta pasado el fin de pista y recién vira; si existe el fondo de llegada,
+  // termina con una aproximación (punteada, todavía no disponible) a su pista.
+  var RWY_X = 0.499;               // eje de pista de los fondos 1 y 7 (fracción del ancho)
+  var THR1 = 0.16, END1 = 0.915;   // fondo 1: umbral y fin de pista (fracción del alto, desde abajo)
+  var THR7 = 0.21;                 // fondo 7: umbral de la pista de llegada
+  var NM_PER_W = 40;               // escala de la carta: millas náuticas por ancho de pantalla
+  var AIRWAY = 'UA320';
+  var WAIT = 0.5;                  // el avión espera a la mitad del tramo que lleva a la estación que toca
   var geo = null, pendingFlight = null;
+  // Una línea quebrada: largo acumulado, punto a cierta distancia, rumbo suavizado en los quiebres y trazo SVG.
+  function line(points){
+    var cum = [0], i;
+    for (i = 1; i < points.length; i++) cum.push(cum[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y));
+    var total = cum[cum.length - 1];
+    function xy(d){
+      d = Math.max(0, Math.min(total, d));
+      for (var k = 1; k < points.length; k++) if (d <= cum[k] || k === points.length - 1){
+        var t = (d - cum[k - 1]) / ((cum[k] - cum[k - 1]) || 1);
+        return { x: points[k - 1].x + (points[k].x - points[k - 1].x) * t, y: points[k - 1].y + (points[k].y - points[k - 1].y) * t };
+      }
+      return { x: points[0].x, y: points[0].y };
+    }
+    function r1(v){ return Math.round(v * 10) / 10; }
+    return { pts: points, cum: cum, total: total, xy: xy,
+      at: function(d){ var p = xy(d), a = xy(d - 8), b = xy(d + 8); return { x: p.x, y: p.y, ang: (a.x === b.x && a.y === b.y) ? 0 : Math.atan2(b.x - a.x, -(b.y - a.y)) * 180 / Math.PI }; },
+      path: function(from, to){
+        from = from || 0; to = to == null ? total : to;
+        var out = [xy(from)];
+        for (var k = 1; k < points.length - 1; k++) if (cum[k] > from && cum[k] < to) out.push(points[k]);
+        out.push(xy(to));
+        return out.map(function(p, k){ return (k ? 'L' : 'M') + r1(p.x) + ' ' + r1(p.y); }).join(' ');
+      } };
+  }
+  // Rumbo de a hacia b como en la carta (001 a 360; el norte de la pantalla es el norte de la carta).
+  function course(a, b){ var c = Math.round((Math.atan2(b.x - a.x, -(b.y - a.y)) * 180 / Math.PI + 360) % 360); return ('00' + (c || 360)).slice(-3) + '°'; }
+  // Frecuencia de VOR (112.0 a 117.9 MHz) de la estación n: fija y distinta para cada una.
+  function freq(n){ return (112 + ((n * 37) % 59) / 10).toFixed(1); }
+  // Símbolo de VOR/DME con su rosa de los vientos (la flecha marca el norte).
+  function navaid(kind, state, color){
+    var locked = state === 'locked', ring = locked ? 'rgba(255,255,255,.5)' : state === 'current' ? '#E9C46A' : color;
+    var ink = locked ? 'rgba(255,255,255,.72)' : '#14212B', ticks = '', hex = '', a, k;
+    for (a = 0; a < 360; a += 10){
+      var r0 = a % 30 ? 23.5 : 20.5, t = (a - 90) * Math.PI / 180;
+      ticks += 'M' + (r0 * Math.cos(t)).toFixed(1) + ' ' + (r0 * Math.sin(t)).toFixed(1) + 'L' + (27 * Math.cos(t)).toFixed(1) + ' ' + (27 * Math.sin(t)).toFixed(1);
+    }
+    for (k = 0; k < 6; k++) hex += (k ? 'L' : 'M') + (11.5 * Math.cos(k * Math.PI / 3)).toFixed(2) + ' ' + (11.5 * Math.sin(k * Math.PI / 3)).toFixed(2);
+    return '<svg viewBox="-29 -29 58 58" aria-hidden="true"><circle r="28.5" fill="' + (locked ? 'rgba(16,30,42,.8)' : '#FFFFFF') + '"/>' +
+      '<path d="' + ticks + '" stroke="' + ring + '" stroke-width="1.7" stroke-linecap="round"/>' +
+      '<path d="M0 -28.6L3.4 -21.8H-3.4Z" fill="' + ink + '"/>' +
+      '<rect class="rt-dme" x="-13" y="-12" width="26" height="24" fill="none" stroke="' + ink + '" stroke-width="1.6"/>' +
+      '<path class="rt-vor" d="' + hex + 'Z" fill="' + (kind !== 'review' ? 'none' : locked ? 'rgba(255,255,255,.28)' : ink) + '" stroke="' + ink + '" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  }
+  // Antes de la primera estación el avión espera alineado cerca del umbral, sin tapar la estación.
+  function waitDist(i){ var r = geo.route, a = i ? r.cum[geo.sIdx[i - 1]] : 0, b = r.cum[geo.sIdx[i]]; return a + (i ? (b - a) * WAIT : Math.max(0, Math.min((b - a) * WAIT, b - a - 74))); }
   function buildMap(){
     var canvas = $('rtCanvas');
     var W = canvas.clientWidth || Math.min(window.innerWidth, 520);
     var PH = W * 1.5, OV = PH * 0.075, STEP = PH - OV;
     var panels = ZONES.filter(function(z){ return z.bg; });
-    var H = PH + (panels.length - 1) * STEP;
+    var H = PH + (panels.length - 1) * STEP, last = panels.length - 1;
     var zoneIndex = {}; panels.forEach(function(z, k){ zoneIndex[z.id] = k; });
-    var byZone = {};
-    M.forEach(function(m){ var k = zoneIndex[m.zone]; if (k == null) k = panels.length - 1; (byZone[k] = byZone[k] || []).push(m); });
-    var pts = [];
-    M.forEach(function(m, i){
-      var k = zoneIndex[m.zone]; if (k == null) k = panels.length - 1;
-      var list = byZone[k], j = list.indexOf(m), n = list.length;
-      // franja central de cada panel; en el último, la parte baja (arriba va el cartel de "más materias")
-      var lo = 0.16, span = k === panels.length - 1 ? 0.46 : 0.68;
-      var fromBottom = k * STEP + PH * (lo + span * (j + 0.5) / n);
-      pts.push({ x: Math.round(W / 2 + W * 0.24 * Math.sin(i * 1.05 + 0.35)), y: Math.round(H - fromBottom) });
+    var arrival = last > 0 && panels[last].id === 'llegada' ? last : -1;
+    function kOf(m){ var k = zoneIndex[m.zone]; return k == null ? last : k; }
+    function yAt(k, f){ return Math.round(H - (k * STEP + PH * f)); }
+    var cx = Math.round(W * RWY_X), byZone = {};
+    M.forEach(function(m){ var k = kOf(m); (byZone[k] = byZone[k] || []).push(m); });
+    var pts = M.map(function(m, i){
+      var k = kOf(m), list = byZone[k], j = list.indexOf(m), n = list.length;
+      // En la pista de salida, sobre el eje, entre el umbral y el fin de pista.
+      if (k === 0) return { x: cx, y: yAt(0, n > 1 ? 0.36 + 0.48 * j / (n - 1) : 0.5) };
+      // En los demás fondos, la franja central (en el último, si no hay pista de llegada, la parte baja).
+      var lo = 0.16, span = k === last && arrival < 0 ? 0.46 : 0.68;
+      return { x: Math.round(W / 2 + W * 0.24 * Math.sin(i * 1.05 + 0.35)), y: yAt(k, lo + span * (j + 0.5) / n) };
     });
-    var start = { x: Math.round(W / 2), y: Math.round(H - PH * 0.035) };
-    geo = { W: W, H: H, PH: PH, pts: pts, start: start };
+    // Tramos de al menos MIN_LEG: si dos estaciones quedan muy juntas en altura, se abren hacia los lados (zigzag),
+    // para que el avión quepa entre ellas sin tapar ninguna.
+    var MIN_LEG = 136;
+    for (var q = 1; q < pts.length; q++){
+      if (kOf(M[q]) === 0) continue;
+      var dy = pts[q].y - pts[q - 1].y, need = Math.sqrt(Math.max(0, MIN_LEG * MIN_LEG - dy * dy)), dx = pts[q].x - pts[q - 1].x;
+      if (Math.abs(dx) >= need) continue;
+      var dir = dx >= 0 ? 1 : -1, nx = pts[q - 1].x + dir * need;
+      if (nx < W * 0.16 || nx > W * 0.84) nx = pts[q - 1].x - dir * need;
+      pts[q].x = Math.round(Math.max(W * 0.16, Math.min(W * 0.84, nx)));
+    }
+    // Desde el umbral por el eje; al dejar la pista sigue el eje hasta pasado el fin de pista y recién vira.
+    var verts = [{ x: cx, y: yAt(0, THR1) }], sIdx = [];
+    M.forEach(function(m, i){
+      if (i && kOf(M[i - 1]) === 0 && kOf(m) !== 0) verts.push({ x: cx, y: yAt(0, END1) }, { x: cx, y: yAt(1, 0.1) });
+      sIdx.push(verts.length); verts.push(pts[i]);
+    });
+    var route = line(verts);
+    function routeX(y){
+      for (var v = 1; v < verts.length; v++){ var a = verts[v - 1], b = verts[v]; if ((y - a.y) * (y - b.y) <= 0) return a.x + (b.x - a.x) * ((y - a.y) / ((b.y - a.y) || 1)); }
+      return W / 2;
+    }
+    var appr = arrival >= 0 && pts.length ? line([pts[pts.length - 1], { x: cx, y: yAt(arrival, -0.05) }, { x: cx, y: yAt(arrival, THR7) }]) : null;
+    geo = { W: W, H: H, PH: PH, cx: cx, pts: pts, route: route, sIdx: sIdx, appr: appr };
+    var ci = currentIndex();
+    var flown = !M.length ? 0 : pendingFlight ? waitDist(pendingFlight.from) : ci < M.length ? waitDist(ci) : route.total;
     var html = '';
     panels.forEach(function(z, k){
       html += '<div class="rt-panel' + (k > 0 ? ' rt-fade' : '') + '" style="bottom:' + Math.round(k * STEP) + 'px;background-image:url(&quot;' + esc(z.bg) + '&quot;);z-index:' + (k + 1) + '"></div>';
     });
-    var all = [start].concat(pts), ci = currentIndex();
-    var flownPts = [start].concat(pts.slice(0, Math.min(ci, pts.length - 1) + 1));
+    var casing = 'rgba(8,18,26,.5)';
     html += '<svg class="rt-route" style="height:' + H + 'px;z-index:10" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
-      '<path d="' + smooth(all) + '" fill="none" stroke="rgba(8,18,26,.45)" stroke-width="9" stroke-linecap="round"/>' +
-      '<path d="' + smooth(all) + '" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>' +
-      (ci > 0 ? '<path d="' + smooth(flownPts) + '" fill="none" stroke="#E9C46A" stroke-width="5" stroke-linecap="round"/>' : '') +
-      // rtSeg k: el tramo que llega a la misión k (desde la anterior, o desde la pista)
-      all.slice(1).map(function(_, k){ return '<path id="rtSeg' + k + '" d="' + smooth(all, k, k + 1) + '" fill="none" stroke="none"/>'; }).join('') +
+      (appr ? '<path d="' + appr.path() + '" fill="none" stroke="' + casing + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<path class="rt-appr" d="' + appr.path() + '" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.2" stroke-dasharray="7 7" stroke-linecap="round"/>' : '') +
+      '<path d="' + route.path() + '" fill="none" stroke="' + casing + '" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<path class="rt-airway" d="' + route.path() + '" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<path id="rtFlown" d="' + route.path(0, flown) + '" fill="none" stroke="#E9C46A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>' +
       '</svg>';
+    html += '<span class="rt-rwy" style="left:' + (cx + 28) + 'px;top:' + yAt(0, THR1) + 'px;z-index:11">RWY 36</span>';
+    if (appr) html += '<span class="rt-rwy" style="left:' + (cx + 28) + 'px;top:' + yAt(arrival, THR7) + 'px;z-index:11">RWY 36</span>';
+    // Rumbo y distancia de cada tramo de la aerovía (en la pista no hay; el que sale de la estación actual lo tapa su globo).
+    var legs = 0;
+    for (var i = 1; i < M.length; i++){
+      if (kOf(M[i]) === 0 || i === ci + 1) continue;
+      var a = sIdx[i - 1], b = sIdx[i], p1 = verts[b - 1], p2 = verts[b];
+      var nm = Math.max(1, Math.round((route.cum[b] - route.cum[a]) / W * NM_PER_W));
+      html += '<span class="rt-leg" data-leg="' + i + '" style="left:' + Math.round((p1.x + p2.x) / 2) + 'px;top:' + Math.round((p1.y + p2.y) / 2) + 'px;z-index:11">' +
+        (legs % 4 === 0 ? '<em>' + AIRWAY + '</em>' : '') + '<b>' + course(p1, p2) + '</b><i>' + nm + '</i></span>';
+      legs++;
+    }
     panels.forEach(function(z, k){
       if (!byZone[k]) return;
-      html += '<span class="rt-zone" style="top:' + Math.round(H - (k * STEP + PH * 0.1)) + 'px;z-index:11">' + esc(z.title) + ' <small>· ' + esc(LEVEL[z.id] || '') + '</small></span>';
+      var zy = Math.round(H - (k * STEP + PH * 0.1));   // al lado contrario de la ruta, para no taparla
+      html += '<span class="rt-zone" style="top:' + zy + 'px;' + (routeX(zy) < W / 2 ? 'left:auto;right:14px;' : '') + 'z-index:11">' + esc(z.title) + ' <small>· ' + esc(LEVEL[z.id] || '') + '</small></span>';
     });
     M.forEach(function(m, i){
       var p = pts[i], st = ST[m.id], s = SUBJ[m.subject], open = isUnlocked(i), n = stars(m.id);
-      var cls = 'rt-node' + (st.kind === 'review' ? ' rt-review' : '') + (open ? '' : ' rt-locked') + (i === ci ? ' rt-current' : '');
-      var label = 'Misión ' + m.n + ': ' + m.title + (open ? (n ? ', ' + n + ' de 3 estrellas' : '') : ', bloqueada');
-      html += '<button class="' + cls + '" type="button" data-m="' + i + '" style="left:' + p.x + 'px;top:' + p.y + 'px;--rt-ring:' + esc(s.color) + ';z-index:12" aria-label="' + esc(label) + '"><span>' + (open ? (st.kind === 'review' ? '★' : m.n) : LOCK) + '</span></button>';
+      var state = !open ? 'locked' : i === ci ? 'current' : n ? 'done' : 'open', right = p.x <= W / 2;
+      var label = 'Estación ' + m.n + ': ' + m.title + (open ? (n ? ', ' + n + ' de 3 estrellas' : '') : ', bloqueada');
+      html += '<button class="rt-node rt-' + state + (st.kind === 'review' ? ' rt-review' : '') + '" type="button" data-m="' + i + '" style="left:' + p.x + 'px;top:' + p.y + 'px;z-index:12" aria-label="' + esc(label) + '">' +
+        navaid(st.kind, state, s.color) + (open ? '<span class="rt-nv-n">' + (st.kind === 'review' ? '★' : m.n) + '</span>' : '<span class="rt-nv-lock">' + LOCK + '</span>') + '</button>';
       if (n) html += '<span class="rt-node-stars" style="left:' + p.x + 'px;top:' + (p.y + 34) + 'px;z-index:12">' + starRow(n) + '</span>';
+      html += '<span class="rt-ident' + (right ? '' : ' rt-left') + (open ? '' : ' rt-dim') + '" style="left:' + (p.x + (right ? 1 : -1) * (state === 'current' ? 40 : 36)) + 'px;top:' + p.y + 'px;z-index:12">' + freq(m.n) + ' <b>' + esc(st.ident || '') + '</b></span>';
     });
     if (ci < M.length){
-      var cp = pts[ci], cx = Math.max(122, Math.min(W - 122, cp.x));   // el globo no se sale por los lados
-      html += '<div class="rt-callout" style="left:' + cx + 'px;top:' + (cp.y - 46) + 'px;--dx:' + (cp.x - cx) + 'px;z-index:13"><b>Misión ' + M[ci].n + ' · ' + esc(SUBJ[M[ci].subject].title) + '</b><span>' + esc(M[ci].title) + '</span></div>';
+      var cp = pts[ci], cxl = Math.max(122, Math.min(W - 122, cp.x));   // el globo no se sale por los lados
+      html += '<div class="rt-callout" style="left:' + cxl + 'px;top:' + (cp.y - 46) + 'px;--dx:' + (cp.x - cxl) + 'px;z-index:13"><b>Estación ' + M[ci].n + ' · ' + esc(SUBJ[M[ci].subject].title) + '</b><span>' + esc(M[ci].title) + '</span></div>';
     }
-    var top = pts.length ? pts[pts.length - 1].y : H / 2;
-    html += '<div class="rt-route-end" style="top:' + Math.max(70, Math.round(top - PH * 0.42)) + 'px;z-index:11"><b>Más materias en camino</b><span>La ruta crece con cada materia nueva. Al final viene el aterrizaje.</span></div>';
-    html += '<div class="rt-plane" id="rtPlane" style="z-index:14">' + planeSvg('#FFFFFF', '#14212B') + '</div>';
+    var endTop = arrival >= 0 ? 70 : Math.max(70, Math.round((pts.length ? pts[pts.length - 1].y : H / 2) - PH * 0.42));
+    html += '<div class="rt-route-end" style="top:' + endTop + 'px;z-index:11"><b>Más materias en camino</b><span>La ruta crece con cada materia nueva. Al final viene el aterrizaje.</span></div>';
+    html += '<div class="rt-plane" id="rtPlane" style="z-index:14">' + (D.route.plane ? '<img src="' + esc(D.route.plane) + '" alt="" decoding="async">' : planeSvg('#FFFFFF', '#14212B')) + '</div>';
     canvas.style.height = H + 'px';
     canvas.innerHTML = html;
-    placePlane();
+    placePlane(pendingFlight ? pendingFlight.from : null);
   }
-  // Curva suave (Catmull-Rom) por los puntos; from/to eligen el tramo.
-  function smooth(p, from, to){
-    if (p.length < 2) return '';
-    from = from || 0; to = to == null ? p.length - 1 : to;
-    var d = 'M' + p[from].x + ' ' + p[from].y;
-    for (var i = from; i < to; i++){
-      var p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
-      d += ' C' + (p1.x + (p2.x - p0.x) / 6).toFixed(1) + ' ' + (p1.y + (p2.y - p0.y) / 6).toFixed(1) + ' ' + (p2.x - (p3.x - p1.x) / 6).toFixed(1) + ' ' + (p2.y - (p3.y - p1.y) / 6).toFixed(1) + ' ' + p2.x + ' ' + p2.y;
-    }
-    return d;
-  }
-  // El avión espera sobre la ruta, antes de la misión que toca (a la mitad del tramo que llega a ella).
-  var WAIT = 0.5;
   function planeAt(x, y, angle){ var el = $('rtPlane'); if (!el) return; el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.transform = 'rotate(' + angle + 'deg)'; }
-  function pointOn(seg, d){ var L = seg.getTotalLength(), a = seg.getPointAtLength(Math.max(0, Math.min(L, d))), b = seg.getPointAtLength(Math.max(0, Math.min(L, d + 2))); return { x: a.x, y: a.y, ang: Math.atan2(b.x - a.x, -(b.y - a.y)) * 180 / Math.PI }; }
   function placePlane(index){
     var ci = index == null ? currentIndex() : index;
-    if (ci >= M.length){ var last = geo.pts[geo.pts.length - 1]; return planeAt(last.x, last.y - 70, 0); }
-    var seg = $('rtSeg' + ci); if (!seg) return;
-    var p = pointOn(seg, seg.getTotalLength() * WAIT); planeAt(p.x, p.y, p.ang);
+    if (!M.length) return;
+    if (ci >= M.length){
+      if (geo.appr){ var q = geo.appr.at(geo.appr.total * 0.35); return planeAt(q.x, q.y, q.ang); }
+      var last = geo.pts[geo.pts.length - 1]; return planeAt(last.x, last.y - 70, 0);
+    }
+    var p = geo.route.at(waitDist(ci)); planeAt(p.x, p.y, p.ang);
   }
+  // Vuela de la espera de una estación a la de la siguiente; la estela dorada crece con el avión.
   function flyPlane(fromIdx, toIdx){
-    var s1 = $('rtSeg' + fromIdx), s2 = $('rtSeg' + toIdx);
-    if (!s1 || !s2 || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return placePlane();
-    var L1 = s1.getTotalLength(), L2 = s2.getTotalLength(), d1 = L1 * (1 - WAIT), total = d1 + L2 * WAIT, t0 = null, dur = 1700;
+    var d1 = waitDist(fromIdx), d2 = waitDist(toIdx), fl = $('rtFlown');
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ if (fl) fl.setAttribute('d', geo.route.path(0, d2)); return placePlane(toIdx); }
+    var t0 = null, dur = Math.max(1200, Math.min(2600, (d2 - d1) * 6));
     function frame(ts){
       if (t0 == null) t0 = ts;
-      var k = Math.min(1, (ts - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, d = total * e;
-      var p = d < d1 ? pointOn(s1, L1 * WAIT + d) : pointOn(s2, d - d1);
-      planeAt(p.x, p.y, p.ang);
+      var k = Math.min(1, (ts - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, d = d1 + (d2 - d1) * e, p = geo.route.at(d);
+      planeAt(p.x, p.y, p.ang); if (fl) fl.setAttribute('d', geo.route.path(0, d));
       if (k < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
@@ -179,23 +264,23 @@
   $('rtOpenSettings').addEventListener('click', openSettings);
   window.addEventListener('resize', function(){ if (!$('rtMap').hidden) buildMap(); });
 
-  // ---------- hoja de detalle de misión y ajustes ----------
+  // ---------- hoja de detalle de la estación y ajustes ----------
   function openSheet(html){ var sh = $('rtSheet'); sh.innerHTML = '<div class="rt-grip"></div>' + html; sh.hidden = false; $('rtVeil').hidden = false; var b = sh.querySelector('.rt-btn'); if (b) b.focus({ preventScroll: true }); }
   function closeSheet(){ $('rtSheet').hidden = true; $('rtVeil').hidden = true; }
   $('rtVeil').addEventListener('click', closeSheet);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !$('rtSheet').hidden) closeSheet(); });
   $('rtCanvas').addEventListener('click', function(e){
-    var b = e.target.closest('[data-m]'); if (b) openMission(+b.dataset.m);
+    var b = e.target.closest('[data-m]'); if (b) openStation(+b.dataset.m);
   });
-  function openMission(i){
+  function openStation(i){
     var m = M[i], st = ST[m.id], s = SUBJ[m.subject], open = isUnlocked(i), n = stars(m.id);
     var meta = (st.kind === 'review' ? 'Repaso' : 'Nivel ' + st.level) + ' · ' + zoneTitle(m.zone);
-    var html = subjChip(s) + '<p class="rt-eyebrow" style="margin-top:10px">Misión ' + m.n + ' · ' + esc(meta) + '</p>' +
+    var html = subjChip(s) + '<p class="rt-eyebrow" style="margin-top:10px">Estación ' + m.n + ' · ' + esc(meta) + '</p>' +
       '<h2 id="rtSheetTitle">' + esc(st.title) + '</h2><p>' + esc(st.goal) + '</p>' +
-      '<div class="rt-row-meta"><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' ficha' : ' fichas') + '</span><span class="rt-chip">' + st.test.length + ' preguntas</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
+      '<div class="rt-row-meta"><span class="rt-chip">VOR/DME ' + esc(st.ident || '') + ' ' + freq(m.n) + '</span><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' ficha' : ' fichas') + '</span><span class="rt-chip">' + st.test.length + ' preguntas</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
       '<div class="rt-sheet-stars">' + starRow(n, true) + '<span>' + (n ? 'Tu mejor resultado' : 'Todavía sin estrellas') + '</span></div>';
-    if (open) html += '<div class="rt-actions"><button class="rt-btn rt-btn-primary" data-start="' + i + '">' + (n ? 'Repetir la misión' : 'Empezar la misión') + '</button><button class="rt-btn" data-close="1">Cerrar</button></div>';
-    else html += '<p class="rt-note" style="margin-top:14px">Se desbloquea al completar la misión ' + M[i - 1].n + ' con al menos una estrella.</p><div class="rt-actions"><button class="rt-btn" data-close="1">Entendido</button></div>';
+    if (open) html += '<div class="rt-actions"><button class="rt-btn rt-btn-primary" data-start="' + i + '">' + (n ? 'Repetir la estación' : 'Empezar la estación') + '</button><button class="rt-btn" data-close="1">Cerrar</button></div>';
+    else html += '<p class="rt-note" style="margin-top:14px">Se desbloquea al completar la estación ' + M[i - 1].n + ' con al menos una estrella.</p><div class="rt-actions"><button class="rt-btn" data-close="1">Entendido</button></div>';
     openSheet(html);
   }
   $('rtSheet').addEventListener('click', function(e){
@@ -209,15 +294,15 @@
   });
   function openSettings(){
     openSheet('<h2 id="rtSheetTitle">Ajustes de la ruta</h2>' +
-      '<div class="rt-toggle"><span><b>Abrir todas las misiones</b><small>Para repasar sin seguir el orden de la ruta.</small></span>' +
-      '<button class="rt-switch" role="switch" aria-checked="' + R().unlockAll + '" aria-label="Abrir todas las misiones" data-toggle="unlock"></button></div>' +
-      '<div class="rt-toggle"><span><b>Borrar el avance de la ruta</b><small>Estrellas, racha y misiones hechas. No toca el resto de tu progreso.</small></span><button class="rt-btn" id="rtResetAsk" data-reset="ask" style="width:auto;min-height:42px">Borrar</button></div>' +
+      '<div class="rt-toggle"><span><b>Abrir todas las estaciones</b><small>Para repasar sin seguir el orden de la ruta.</small></span>' +
+      '<button class="rt-switch" role="switch" aria-checked="' + R().unlockAll + '" aria-label="Abrir todas las estaciones" data-toggle="unlock"></button></div>' +
+      '<div class="rt-toggle"><span><b>Borrar el avance de la ruta</b><small>Estrellas, racha y estaciones hechas. No toca el resto de tu progreso.</small></span><button class="rt-btn" id="rtResetAsk" data-reset="ask" style="width:auto;min-height:42px">Borrar</button></div>' +
       '<div class="rt-confirm" id="rtResetBox" hidden><p style="margin:0">¿Borrar el avance de la ruta? No se puede deshacer.</p><div class="rt-actions"><button class="rt-btn" data-reset="no">Cancelar</button><button class="rt-btn rt-btn-primary" data-reset="yes">Borrar</button></div></div>' +
       '<p class="rt-note" style="margin-top:14px">La copia de seguridad del banco de preguntas también guarda el avance de la ruta.</p>' +
       '<div class="rt-actions"><button class="rt-btn" data-close="1">Listo</button></div>');
   }
 
-  // ---------- misión: clase, prueba y resultado ----------
+  // ---------- estación: clase, prueba y resultado ----------
   var S = null;
   function startMission(i){
     S = { i: i, st: ST[M[i].id], view: 'intro', card: 0, q: 0, answers: [], retry: null, revealed: false, firstScore: null, retryDone: false, confirmExit: false };
@@ -239,13 +324,13 @@
   }
   function seenHtml(t){ return '<p class="rt-seen">Se vio en: ' + t.taughtIn.map(function(id){ return '«' + esc(CARDS[id] ? CARDS[id].title : id) + '»'; }).join(', ') + '</p>'; }
   function head(pos){
-    return '<div class="rt-p-head"><button class="rt-x" data-act="exit" aria-label="Salir de la misión">' + CLOSE + '</button>' + progressHtml(pos) + '</div>' +
-      (S.confirmExit ? '<div class="rt-p-body" style="padding-bottom:0"><div class="rt-confirm"><p style="margin:0">¿Salir de la misión? Se pierde el avance de esta prueba.</p><div class="rt-actions"><button class="rt-btn" data-act="stay">Seguir</button><button class="rt-btn rt-btn-primary" data-act="leave">Salir</button></div></div></div>' : '');
+    return '<div class="rt-p-head"><button class="rt-x" data-act="exit" aria-label="Salir de la estación">' + CLOSE + '</button>' + progressHtml(pos) + '</div>' +
+      (S.confirmExit ? '<div class="rt-p-body" style="padding-bottom:0"><div class="rt-confirm"><p style="margin:0">¿Salir de la estación? Se pierde el avance de esta prueba.</p><div class="rt-actions"><button class="rt-btn" data-act="stay">Seguir</button><button class="rt-btn rt-btn-primary" data-act="leave">Salir</button></div></div></div>' : '');
   }
   function viewIntro(){
     var st = S.st, s = SUBJ[st.subject], m = M[S.i];
     return head(-1) + '<div class="rt-p-body">' + subjChip(s) +
-      '<span class="rt-eyebrow">Misión ' + m.n + ' · ' + (st.kind === 'review' ? 'Repaso' : 'Nivel ' + st.level) + '</span>' +
+      '<span class="rt-eyebrow">Estación ' + m.n + ' · ' + (st.kind === 'review' ? 'Repaso' : 'Nivel ' + st.level) + '</span>' +
       '<h1>' + esc(st.title) + '</h1>' +
       '<div class="rt-row-meta" style="margin-top:0"><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' ficha' : ' fichas') + '</span><span class="rt-chip">' + st.test.length + ' preguntas</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
       '<div class="rt-copilot"><span class="rt-av">' + planeSvg('#E9C46A', '#1E3A4C') + '</span><p>' + esc(st.intro) + '</p></div>' +
@@ -295,13 +380,11 @@
   function viewResult(){
     var st = S.st, total = st.test.length, first = S.firstScore, n = starsFor(first / total);
     var wrong = st.test.map(function(t, i){ return { t: t, i: i }; }).filter(function(x){ return !(S.answers[x.i] && S.answers[x.i].ok); });
-    var next = S.i + 1 < M.length && isUnlocked(S.i + 1) ? S.i + 1 : null;
     var msg = n === 3 ? 'Impecable. Lo tienes claro.' : n === 2 ? 'Muy bien. Repasa lo que falló y sigue.' : n === 1 ? 'Pasaste. Conviene repasar las fichas.' : 'Todavía no: repasa las fichas y vuelve a intentarlo. Con la mitad correcta se gana la primera estrella.';
     var h = head(st.cards.length) + '<div class="rt-p-body rt-result"><span class="rt-eyebrow">' + esc(st.title) + '</span>' +
       '<div class="rt-bigstars" aria-label="' + n + ' de 3 estrellas">' + starRow(n, true) + '</div>' +
       '<h2>' + first + ' de ' + total + ' correctas</h2><p style="margin:0">' + msg + '</p>';
     if (S.retryDone) h += '<p class="rt-note">Segundo intento: ' + (wrong.length ? 'quedan ' + wrong.length + ' por reforzar.' : 'corregiste todas las que habías fallado.') + '</p>';
-    if (next != null) h += '<button class="rt-btn rt-btn-gold" data-act="nextm">Siguiente misión · ' + esc(M[next].title) + '</button>';
     h += '<button class="rt-btn rt-btn-primary" data-act="tomap">Volver al mapa</button>';
     if (wrong.length) h += '<button class="rt-btn" data-act="retry">Reintentar las que fallaste</button>';
     h += '<div class="rt-card rt-recap"><span class="rt-eyebrow">Lo que aprendiste</span><ul>' + st.cards.map(function(c){ return '<li>' + inline(c.keyIdea) + '</li>'; }).join('') + '</ul></div>';
@@ -363,13 +446,12 @@
         wrong.forEach(function(i){ delete S.answers[i]; });
         return go('question', { retry: wrong, q: 0 });
       case 'tomap': return exitPlayer();
-      case 'nextm': var nx = S.i + 1; S = null; return startMission(nx);
     }
   });
 
   // Para la batería de pruebas y para el enlace «Portada» del banco de preguntas.
   window.RUTA = { missions: M, stations: ST, subjects: SUBJ, showCover: showCover, showMap: showMap, showBank: showBank,
     startMission: startMission, answer: answer, answerOral: answerOral, nextQuestion: nextQuestion,
-    state: function(){ return S; }, currentIndex: currentIndex, isUnlocked: isUnlocked, totalStars: totalStars, renderCover: renderCover };
+    state: function(){ return S; }, geo: function(){ return geo; }, currentIndex: currentIndex, isUnlocked: isUnlocked, totalStars: totalStars, renderCover: renderCover };
   showCover();
 })();

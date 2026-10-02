@@ -1598,7 +1598,7 @@
   T("14 RUTA-07 la portada muestra avance, racha y estrellas; el mapa dibuja 18 misiones con candados, la actual y el avion",function(){
     reset();appState.ruta=sanitizeRuta({stars:{"hid-1":3},streak:{last:today(),days:2}});
     RUTA.showCover();
-    ok(/Continuar · Misión 2/.test(byId("rtRouteTitle").textContent),"Continuar en la mision 2");
+    ok(/Continuar · Estación 2/.test(byId("rtRouteTitle").textContent),"Continuar en la estacion 2");
     eq(byId("rtStarTotal").textContent,"3","estrellas");eq(byId("rtStreak").textContent,"2","racha");
     ok(/1 de 18/.test(byId("rtRouteCount").textContent),"misiones hechas");
     RUTA.showMap();
@@ -1606,7 +1606,8 @@
     eq(byId("rtCanvas").querySelectorAll(".rt-node.rt-locked").length,16,"con candado");
     ok(byId("rtCanvas").querySelector('.rt-node.rt-current[data-m="1"]'),"la actual es la 2");
     ok(byId("rtPlane")&&byId("rtPlane").style.left,"el avion esta sobre la ruta");
-    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,6,"6 fondos");
+    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,window.ESTACIONES_DATA.route.zones.filter(function(z){return z.bg}).length,"un fondo por zona con imagen");
+    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,7,"los 7 fondos, con la pista de llegada");
     RUTA.showCover();
   });
   T("14 RUTA-08 las nubes de la portada pasan en bucle sin salto, bajo el titulo y los botones, y se detienen con Reducir movimiento",function(){
@@ -1637,6 +1638,59 @@
       ok(/assets\/portada\/nubes\.webp/.test(cs.backgroundImage),"usa la textura de nubes: "+name);
     });
     ok(still,"con Reducir movimiento las nubes quedan quietas");
+    RUTA.showCover();
+  });
+  T("14 RUTA-09 al terminar una estacion se vuelve si o si al mapa (sin atajo a la siguiente) y ninguna pantalla de la ruta dice mision",function(){
+    reset();
+    var MIS=/misi[oó]n/i,seen=[];
+    function look(where,el){var t=el.textContent+" "+[].map.call(el.querySelectorAll("[aria-label]"),function(e){return e.getAttribute("aria-label")}).join(" ")+" "+(el.getAttribute("aria-label")||"");if(MIS.test(t))seen.push(where)}
+    RUTA.showCover();look("portada",byId("rtCover"));
+    RUTA.showMap();look("mapa",byId("rtMap"));
+    byId("rtCanvas").querySelector('.rt-node[data-m="0"]').click();look("hoja de la estacion",byId("rtSheet"));
+    byId("rtCanvas").querySelector('.rt-node[data-m="1"]').click();look("hoja de una estacion cerrada",byId("rtSheet"));
+    RUTA.showCover();byId("rtOpenSettings").click();look("ajustes",byId("rtSheet"));
+    var m=RUTA.missions[0],st=RUTA.stations[m.id];RUTA.startMission(0);look("presentacion",byId("rtPlayer"));
+    var S=RUTA.state();S.view="question";
+    st.test.forEach(function(t,i){S.q=i;if(t.type==="mcq")RUTA.answer(t.correct);else RUTA.answerOral(t.reference,false)});
+    S.q=st.test.length-1;RUTA.nextQuestion();look("resultado",byId("rtPlayer"));
+    eq(seen.join(", "),"","ninguna pantalla dice mision");
+    ok(RUTA.isUnlocked(1),"la siguiente queda abierta");
+    var acts=[].map.call(byId("rtPlayer").querySelectorAll("[data-act]"),function(b){return b.dataset.act}).sort().join();
+    eq(acts,"exit,tomap","en el resultado solo se puede volver al mapa (o salir): sin boton a la siguiente estacion");
+    byId("rtPlayer").querySelector('[data-act="tomap"]').click();
+    ok(byId("rtPlayer").hidden&&!byId("rtMap").hidden,"Volver al mapa lleva al mapa");
+    RUTA.showCover();
+  });
+  T("14 RUTA-10 el mapa es una carta: despega por el eje de pista, cada estacion es un VOR/DME con su caja, los tramos traen rumbo y distancia, y termina en la aproximacion a la pista de llegada",function(){
+    reset();appState.ruta.unlockAll=true;RUTA.showMap();
+    var g=RUTA.geo(),cv=byId("rtCanvas"),W=g.W;
+    ok(Math.abs(g.cx-Math.round(W*0.499))<=1,"eje de pista del primer fondo");
+    eq(g.route.pts[0].x,g.cx,"la ruta parte en el umbral, sobre el eje");
+    var onRwy=RUTA.missions.map(function(m,i){return m.zone==="pista"?i:-1}).filter(function(i){return i>=0});
+    eq(onRwy.length,3,"tres estaciones en la pista de salida");
+    onRwy.forEach(function(i){eq(g.pts[i].x,g.cx,"estacion "+(i+1)+" sobre el eje de pista")});
+    var after=g.sIdx[onRwy[onRwy.length-1]];
+    ok(g.route.pts[after+1].x===g.cx&&g.route.pts[after+2].x===g.cx&&g.route.pts[after+2].y<g.route.pts[after+1].y&&g.route.pts[after+1].y<g.pts[onRwy[onRwy.length-1]].y,"pasada la ultima estacion de pista sigue derecho por el eje antes de virar");
+    ok(Math.abs(parseFloat(byId("rtPlane").style.left)-g.cx)<1,"el avion espera alineado en la pista");
+    var img=byId("rtPlane").querySelector("img");ok(img&&/mapa-avion\.webp/.test(img.getAttribute("src")),"el avion es la imagen nueva");
+    var nodes=cv.querySelectorAll(".rt-node");eq(nodes.length,RUTA.missions.length,"una radioayuda por estacion");
+    [].forEach.call(nodes,function(n){
+      var st=RUTA.stations[RUTA.missions[+n.dataset.m].id],vor=n.querySelector(".rt-vor");
+      ok(vor&&n.querySelector(".rt-dme"),"VOR/DME en la estacion "+(+n.dataset.m+1));
+      if(vor&&!n.classList.contains("rt-locked"))eq(vor.getAttribute("fill")!=="none",st.kind==="review","relleno solo en los repasos (notificacion obligatoria): estacion "+(+n.dataset.m+1));
+    });
+    var idents=[].map.call(cv.querySelectorAll(".rt-ident"),function(e){return e.textContent.trim()});
+    eq(idents.length,RUTA.missions.length,"una caja por radioayuda");
+    idents.forEach(function(t){ok(/^11[2-7]\.\d [A-Z]{3}$/.test(t),"caja con frecuencia de VOR e identificador: "+t)});
+    eq(new Set(idents.map(function(t){return t.slice(-3)})).size,idents.length,"identificadores distintos");
+    var legs=cv.querySelectorAll(".rt-leg");ok(legs.length>=10,"tramos con datos");
+    [].forEach.call(legs,function(l){var c=l.querySelector("b").textContent,v=+c.slice(0,3);ok(/^\d{3}°$/.test(c)&&v>=1&&v<=360,"rumbo de carta: "+c);ok(+l.querySelector("i").textContent>0,"distancia")});
+    var leg=cv.querySelector('.rt-leg[data-leg="3"]'),b=g.sIdx[3],p1=g.route.pts[b-1],p2=g.route.pts[b];
+    var want=Math.round((Math.atan2(p2.x-p1.x,-(p2.y-p1.y))*180/Math.PI+360)%360)||360;
+    ok(leg&&+leg.querySelector("b").textContent.slice(0,3)===want,"el rumbo del primer tramo de aerovia sale de su direccion en el mapa ("+want+")");
+    ok(/UA320/.test(cv.textContent),"la aerovia tiene nombre");
+    for(var i=onRwy.length;i<g.sIdx.length;i++){var L=g.route.cum[g.sIdx[i]]-g.route.cum[g.sIdx[i-1]];ok(L>=135.5,"tramo "+i+" con espacio para el avion ("+Math.round(L)+" px)")}
+    ok(cv.querySelector(".rt-appr")&&cv.querySelectorAll(".rt-rwy").length===2,"aproximacion punteada a la pista de llegada y RWY 36 en las dos pistas");
     RUTA.showCover();
   });
 

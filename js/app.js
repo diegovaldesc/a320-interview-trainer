@@ -4,7 +4,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.11.3";
+const APP_VERSION="1.12.0";
 const BANK_VERSION="2026.10.01 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -168,22 +168,50 @@ function sanitizeResume(r){
   if(Array.isArray(r.revealed)&&r.revealed.length===total)out.revealed=r.revealed;
   return out;
 }
+/* El id de una pregunta sale de su enunciado: al corregir un enunciado, su progreso pasa al id
+   nuevo (estadísticas, guardadas, autoevaluación y Need to know).
+   2026-10-01: «el PTU» → «la PTU» en 6 preguntas de Hidráulico. */
+const QID_RENAMES={"hydraulic:1os0brc":"hydraulic:106iugc","hydraulic:1eznmr1":"hydraulic:wxjsp5","hydraulic:98eoy5":"hydraulic:1rx3pif","hydraulic:uvvyh":"hydraulic:yu9ict","hydraulic:1qfuvr9":"hydraulic:dhos2p","hydraulic:19f34k":"hydraulic:152269q"};
+function renameQidKeys(map){
+  Object.keys(QID_RENAMES).forEach(old=>{
+    if(!(old in map))return;
+    if(!(QID_RENAMES[old] in map))map[QID_RENAMES[old]]=map[old];
+    delete map[old];
+  });
+  return map;
+}
+function renameNtkRefs(ntk){
+  const fix=list=>[...new Set(list.map(r=>r.slice(0,2)==="q:"&&QID_RENAMES[r.slice(2)]?"q:"+QID_RENAMES[r.slice(2)]:r))];
+  return{added:fix(ntk.added),removed:fix(ntk.removed)};
+}
 function sanitizeState(raw){
   const base=defaultState();
   if(!isPlainObject(raw))return base;
   return{
     schema:STATE_SCHEMA,
-    stats:sanitizeMapEntries(raw.stats,sanitizeStatEntry),
+    stats:renameQidKeys(sanitizeMapEntries(raw.stats,sanitizeStatEntry)),
     best:sanitizeMapEntries(raw.best,sanitizeBestEntry),
-    bookmarks:sanitizeBookmarks(raw.bookmarks),
-    oral:sanitizeMapEntries(raw.oral,sanitizeOralEntry),
+    bookmarks:renameQidKeys(sanitizeBookmarks(raw.bookmarks)),
+    oral:renameQidKeys(sanitizeMapEntries(raw.oral,sanitizeOralEntry)),
     oralVoice:sanitizeMapEntries(raw.oralVoice,sanitizeOralVoiceEntry),
     english:sanitizeMapEntries(raw.english,sanitizeEnglishEntry),
     englishTests:sanitizeEnglishTests(raw.englishTests),
     resume:sanitizeResume(raw.resume),
     lastSystem:typeof raw.lastSystem==="string"?raw.lastSystem.slice(0,200):null,
-    needToKnow:sanitizeNeedToKnow(raw.needToKnow)
+    needToKnow:renameNtkRefs(sanitizeNeedToKnow(raw.needToKnow)),
+    ruta:sanitizeRuta(raw.ruta)
   };
+}
+/* Ruta de entrenamiento (js/ruta.js): estrellas por estación (1 a 3), racha de días y la opción de abrir
+   todas las misiones. Una estación que ya no existe se descarta. */
+function sanitizeRuta(v){
+  const out={stars:{},streak:{last:"",days:0},unlockAll:false};
+  if(!isPlainObject(v))return out;
+  const ids=new Set(((window.ESTACIONES_DATA&&window.ESTACIONES_DATA.subjects)||[]).flatMap(s=>(s.stations||[]).map(st=>st.id)));
+  if(isPlainObject(v.stars))Object.keys(v.stars).forEach(k=>{const n=v.stars[k];if(k.length<=60&&(!ids.size||ids.has(k))&&(n===1||n===2||n===3))out.stars[k]=n});
+  if(isPlainObject(v.streak)&&typeof v.streak.last==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(v.streak.last))out.streak={last:v.streak.last,days:Math.max(0,Math.min(9999,Math.floor(finiteNum(v.streak.days))))};
+  out.unlockAll=v.unlockAll===true;
+  return out;
 }
 /* Distingue "el campo no viene" (aceptable, backups antiguos) de "el
    campo viene con el tipo equivocado" (senal de archivo corrupto o
@@ -191,14 +219,14 @@ function sanitizeState(raw){
    silencio). */
 function looksLikeValidBackup(raw){
   if(!isPlainObject(raw))return false;
-  for(const f of["stats","best","bookmarks","oral","oralVoice","english","englishTests","needToKnow"]){
+  for(const f of["stats","best","bookmarks","oral","oralVoice","english","englishTests","needToKnow","ruta"]){
     if(f in raw&&!isPlainObject(raw[f]))return false;
   }
   if("resume" in raw&&raw.resume!==null&&!isPlainObject(raw.resume))return false;
   if("lastSystem" in raw&&raw.lastSystem!==null&&typeof raw.lastSystem!=="string")return false;
   return true;
 }
-function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},oralVoice:{},english:{},englishTests:{done:[],current:null,cycle:0,last:null},resume:null,lastSystem:null,needToKnow:{added:[],removed:[]}}}
+function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},oralVoice:{},english:{},englishTests:{done:[],current:null,cycle:0,last:null},resume:null,lastSystem:null,needToKnow:{added:[],removed:[]},ruta:{stars:{},streak:{last:"",days:0},unlockAll:false}}}
 function loadState(){
   try{
     const current=localStorage.getItem(KEY),legacy=localStorage.getItem(LEGACY_KEY);

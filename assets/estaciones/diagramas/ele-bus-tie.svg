@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 414" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">BUS TIE: tres casos en vuelo</title>
+  <desc id="d">Normal: cada generador alimenta su AC BUS y los BTC están abiertos. Falla GEN 2 con APU: el APU GEN alimenta AC BUS 2 por el BTC 2. Falla GEN 2 sin APU: GEN 1 alimenta ambos AC BUS por los dos BTC.</desc>
+  <rect x="1" y="1" width="358" height="412" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="11" font-weight="700" fill="#33424D">1 · Normal: cada GEN alimenta su lado</text>
+  <path d="M50 74 L310 74" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 54 L50 93" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 54 L310 74" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 74 L310 93" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 74 L160 93" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45.5" y="79.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="305.5" y="79.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="155.5" y="79.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="87.5" y="69.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="263.5" y="69.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="92" y="66" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 1</text>
+  <text x="268" y="66" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 2</text>
+  <rect x="18" y="36" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="68" y="48.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 1</text>
+  <rect x="242" y="36" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="292" y="48.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 2</text>
+  <circle cx="50" cy="108" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="50" y="111.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 1</text>
+  <circle cx="160" cy="108" r="17" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="2"/>
+  <text x="160" y="106.2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B6B78">APU</text>
+  <text x="160" y="116.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B6B78">GEN</text>
+  <circle cx="310" cy="108" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="310" y="111.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 2</text>
+  <line x1="16" y1="128" x2="344" y2="128" stroke="#E4E9ED" stroke-width="1"/>
+  <text x="18" y="147" font-size="11" font-weight="700" fill="#33424D">2 · Falla GEN 2 con APU: el APU GEN toma el lado 2</text>
+  <path d="M50 194 L160 194" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 194 L310 194" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M224.5 194 L216.4 189.5 L216.4 198.5 Z" fill="#2E9D5B"/>
+  <path d="M50 174 L50 213" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 174 L310 194" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 194 L310 213" fill="none" stroke="#D98A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 194 L160 213" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45.5" y="199.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="305.5" y="199.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#D98A00" stroke-width="1.6"/>
+  <rect x="155.5" y="199.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="87.5" y="189.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="263.5" y="189.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="92" y="186" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 1</text>
+  <text x="268" y="186" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 2</text>
+  <rect x="18" y="156" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="68" y="168.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 1</text>
+  <rect x="242" y="156" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="292" y="168.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 2</text>
+  <circle cx="50" cy="228" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="50" y="231.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 1</text>
+  <circle cx="160" cy="228" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="160" y="226.2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1F6E41">APU</text>
+  <text x="160" y="236.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1F6E41">GEN</text>
+  <circle cx="310" cy="228" r="17" fill="#FCEBD3" stroke="#D98A00" stroke-width="2"/>
+  <text x="310" y="231.6" text-anchor="middle" font-size="10" font-weight="700" fill="#8A5300">GEN 2</text>
+  <text x="286" y="232" text-anchor="end" font-size="10.5" font-weight="600" fill="#8A5300">falla</text>
+  <line x1="16" y1="248" x2="344" y2="248" stroke="#E4E9ED" stroke-width="1"/>
+  <text x="18" y="267" font-size="11" font-weight="700" fill="#33424D">3 · Falla GEN 2 sin APU: GEN 1 alimenta ambos lados</text>
+  <path d="M50 314 L310 314" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M184.5 314 L176.4 309.5 L176.4 318.5 Z" fill="#2E9D5B"/>
+  <path d="M50 294 L50 333" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 294 L310 314" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M310 314 L310 333" fill="none" stroke="#D98A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 314 L160 333" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45.5" y="319.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="305.5" y="319.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#D98A00" stroke-width="1.6"/>
+  <rect x="155.5" y="319.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="87.5" y="309.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <rect x="263.5" y="309.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="92" y="306" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 1</text>
+  <text x="268" y="306" text-anchor="middle" font-size="10.5" fill="#5B6B78">BTC 2</text>
+  <rect x="18" y="276" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="68" y="288.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 1</text>
+  <rect x="242" y="276" width="100" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="292" y="288.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC BUS 2</text>
+  <circle cx="50" cy="348" r="17" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="50" y="351.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">GEN 1</text>
+  <circle cx="160" cy="348" r="17" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="2"/>
+  <text x="160" y="346.2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B6B78">APU</text>
+  <text x="160" y="356.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B6B78">GEN</text>
+  <circle cx="310" cy="348" r="17" fill="#FCEBD3" stroke="#D98A00" stroke-width="2"/>
+  <text x="310" y="351.6" text-anchor="middle" font-size="10" font-weight="700" fill="#8A5300">GEN 2</text>
+  <text x="286" y="352" text-anchor="end" font-size="10.5" font-weight="600" fill="#8A5300">falla</text>
+  <text x="184" y="352" font-size="10.5" fill="#5B6B78">no disponible</text>
+  <path d="M18 382.5 L38 382.5" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="43" y="386" font-size="10.5" fill="#5B6B78">alimenta</text>
+  <path d="M101.8 382.5 L121.8 382.5" fill="none" stroke="#D98A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="126.8" y="386" font-size="10.5" fill="#5B6B78">falla</text>
+  <rect x="23.5" y="396" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="43" y="404" font-size="10.5" fill="#5B6B78">contactor cerrado</text>
+  <rect x="157.7" y="396" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="177.2" y="404" font-size="10.5" fill="#5B6B78">abierto</text>
+</svg>

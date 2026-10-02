@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 87/87 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 95/95 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -404,7 +404,7 @@ Comprobado que detecta regresiones: dejando el micrófono sin volver, aceptando
 un `needToKnow` de tipo inválido en el respaldo y quitando el arreglo de «si no,
 go-around», la batería falló en el caso correspondiente cada vez.
 
-## 12. Banco DGAC: la pregunta del PTU con parking brake (2026-10-01)
+## 12. Banco DGAC: la pregunta de la PTU con parking brake (2026-10-01)
 
 - **El banco DGAC es el examen oficial.** La sección sirve para preparar ese
   examen: las preguntas y sus alternativas quedan tal como las escribió la DGAC,
@@ -414,7 +414,7 @@ go-around», la batería falló en el caso correspondiente cada vez.
   todo, marca la mejor y lo aclara en la explicación.
 - **DGAC-01** — «IT IS POSSIBLE TO PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE
   GROUND VIA THE PTU WHEN THE PARKING BRAKE IS SET» está en el banco con respuesta
-  TRUE. En tierra, el PTU funciona aunque el parking brake esté puesto si los dos
+  TRUE. En tierra, la PTU funciona aunque el parking brake esté puesto si los dos
   master levers están en OFF o los dos en ON. Con un master lever en ON y el otro
   en OFF (primer arranque), necesita el parking brake suelto y la NWS fuera de la
   posición de remolque.
@@ -434,7 +434,10 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
 | `data/banco.js` | Banco de alternativas (sistemas, Operación Airbus, Entrevista técnica y DGAC), en JSON. |
 | `data/ingles.js` | Banco de Inglés OACI, en JSON. |
 | `data/oral.js` | Banco de Entrevista oral (`ORAL_VOICE_BANK`), que también usa Need to know. |
-| `js/app.js` | Toda la lógica. |
+| `js/app.js` | Toda la lógica del banco de preguntas. |
+| `css/ruta.css`, `js/ruta.js` | La Ruta de entrenamiento: portada, mapa y misiones (sección 14). Todo lleva el prefijo `rt-`. |
+| `data/estaciones.js` | Las materias, estaciones y la ruta del mapa. Lo genera `Escritorio\APP\Estaciones\_herramientas\exportar_app.js`: no se edita a mano. |
+| `assets/estaciones/` | Los diagramas, imágenes y fondos del mapa que usan las estaciones (los copia el mismo exportador). |
 
 - **Orden de carga** — `index.html` carga los tres bancos antes que
   `js/app.js`, porque la lógica los usa al arrancar. La lógica sigue en un solo
@@ -450,7 +453,8 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
   para que un teléfono no mezcle una parte nueva con otra vieja guardada en su
   memoria. **Cada versión nueva cambia `APP_VERSION` y los `?v=` de
   `index.html`.**
-- **ESTRUCTURA-01** — `index.html` carga las 5 partes, cada una una sola vez,
+- **ESTRUCTURA-01** — `index.html` carga las 8 partes (desde la 1.12.0, con
+  `css/ruta.css`, `data/estaciones.js` y `js/ruta.js`), cada una una sola vez,
   en orden y con `?v=APP_VERSION`; no queda `<style>` ni banco dentro de
   `index.html`; la huella sale del texto exacto de `data/banco.js`; y el banco
   de inglés está cargado.
@@ -487,6 +491,63 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
 Comprobado que detecta regresiones: un `?v=` atrasado en `js/app.js` falla en
 ESTRUCTURA-01, y cargar `data/oral.js` después de `js/app.js` falla en 15
 casos (`ORAL_VOICE_BANK is not defined`).
+
+## 14. Ruta de entrenamiento: portada, mapa y misiones (2026-10-01, 1.12.0)
+
+La app abre en una **portada** con el nombre de la app sobre el aeropuerto del
+mapa y dos puertas: **Ruta de entrenamiento** (el mapa de misiones) y **Banco de
+preguntas** (el inicio de siempre, ahora titulado «Banco de preguntas», con un
+botón «Portada» para volver). Ningún módulo cambió.
+
+- **Mapa** — los 6 fondos apilados, de la pista de salida al descenso; las 18
+  misiones de Hidráulico y Eléctrico mezcladas por nivel (`data/estaciones.js`); la
+  misión actual destacada, las demás con candado hasta ganar una estrella en
+  la anterior, y el avión (fuera de escala) que espera antes de la misión que
+  toca y vuela a la siguiente al terminar una.
+- **Misión** — presentación, fichas con diagramas, prueba y resultado: 3, 2 y
+  1 estrellas con 90, 70 y 50 % de respuestas correctas en el primer intento,
+  y segundo intento de las falladas.
+- **Estadísticas compartidas** — la primera respuesta de cada pregunta de
+  alternativas cuenta en las estadísticas de la app con `recordTechnical`
+  (las del banco DGAC no, igual que en el resto de la app); el segundo intento
+  no cuenta. Las orales se evalúan con el motor de Entrevista oral
+  (`evaluateLocally`): aprueba con 6/10 («cobertura media») o más, y el
+  puntaje queda en `appState.oralVoice`.
+- **Avance** — `appState.ruta = {stars, streak, unlockAll}` se sanea
+  (`sanitizeRuta`: solo estaciones que existen, 1 a 3 estrellas, fecha
+  AAAA-MM-DD), viaja en la copia de seguridad, un respaldo antiguo sin el
+  campo queda vacío y uno con el tipo equivocado se rechaza. Ajustes de la
+  ruta: abrir todas las misiones y borrar solo el avance de la ruta.
+- **Contenido** — se exporta desde `Escritorio\APP\Estaciones` (donde
+  `construir.js` revisa reglas y citas) con `exportar_app.js`; las fuentes
+  internas no se copian a la app.
+- **Casos RUTA-01 a RUTA-07** — la app abre en la portada con el nombre de la
+  app y sin la frase anterior; Banco de preguntas y Portada llevan y traen;
+  las 18 misiones, cada pregunta enseñada en su estación, igual a la del banco
+  (alternativas, orden y respuesta) y sin citar manuales; el saneo y el
+  respaldo del avance; una misión completa (estrellas, siguiente abierta,
+  racha y estadísticas); la DGAC no cuenta y la oral pasa por el motor; el
+  segundo intento no cuenta doble y las alternativas DGAC salen en su orden;
+  la portada y el mapa muestran avance, candados, la misión actual y el avión.
+
+Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
+intento en las estadísticas, fallaron RUTA-05 y RUTA-06.
+
+## 15. «La PTU»: enunciados corregidos sin perder el progreso (QID-01)
+
+En la app se decía «el PTU»; lo correcto es **la PTU** (la unidad). Se corrigió
+en 35 textos del banco (con su concordancia: «inhibida», «activada»,
+«impulsada»), en
+Entrevista oral, en las clases y en sus diagramas. «El PTU pb» se mantiene:
+es el pushbutton.
+
+- Seis enunciados de Hidráulico cambiaron, y el id de una pregunta sale de su
+  enunciado. `QID_RENAMES` traslada al id nuevo lo que el usuario tenía en el
+  id antiguo: estadísticas, guardadas, autoevaluación y Need to know (si ya
+  hay datos en el id nuevo, se conservan).
+- **QID-01** comprueba el traslado de los cuatro registros, que los ids
+  nuevos existan y los antiguos no, y que ningún texto del banco diga «el
+  PTU».
 
 ## Límite explícito de esta batería
 

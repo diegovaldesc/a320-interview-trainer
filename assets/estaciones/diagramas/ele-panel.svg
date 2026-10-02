@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 252" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Panel ELEC del overhead</title>
+  <desc id="d">Arriba: COMMERCIAL, voltaje y pushbutton de cada batería, y AC ESS FEED. Abajo: IDG 1, GEN 1, APU GEN, BUS TIE, EXT PWR, GEN 2 e IDG 2, unidos por el mímico verde. Abajo a la izquierda, GALY &amp; CAB.</desc>
+  <rect x="1" y="1" width="358" height="250" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <rect x="10" y="10" width="340" height="232" rx="10" fill="#E9EDF0" stroke="#C5CED5"/>
+  <path d="M66 104 L66 92" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M66 91 L62 98.2 L70 98.2 Z" fill="#2E9D5B"/>
+  <path d="M294 104 L294 92" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M294 91 L290 98.2 L298 98.2 Z" fill="#2E9D5B"/>
+  <path d="M92 112 L150 112" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M148 112 L140.8 108 L140.8 116 Z" fill="#2E9D5B"/>
+  <path d="M66 120 L66 132 L294 132 L294 120" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M82 132 L82 140" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M132 132 L132 140" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M180 132 L180 140" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M228 132 L228 140" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M278 132 L278 140" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="40" y="76" width="52" height="16" rx="3" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="66" y="87.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1E2A33">DC BUS 1</text>
+  <rect x="268" y="76" width="52" height="16" rx="3" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="294" y="87.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1E2A33">DC BUS 2</text>
+  <rect x="40" y="104" width="52" height="16" rx="3" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="66" y="115.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1E2A33">AC BUS 1</text>
+  <rect x="150" y="104" width="60" height="16" rx="3" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="180" y="115.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1E2A33">AC ESS BUS</text>
+  <rect x="268" y="104" width="52" height="16" rx="3" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="294" y="115.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1E2A33">AC BUS 2</text>
+  <text x="46" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">COMMERCIAL</text>
+  <rect x="28" y="38" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="32" y1="55" x2="60" y2="55" stroke="#46525C" stroke-width="1"/>
+  <text x="46" y="66.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <rect x="81" y="43" width="50" height="24" rx="3" fill="#1B2228"/>
+  <text x="106" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#E9EEF2">26.8 V</text>
+  <rect x="225" y="43" width="50" height="24" rx="3" fill="#1B2228"/>
+  <text x="250" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#E9EEF2">27.9 V</text>
+  <text x="156" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">BAT 1</text>
+  <rect x="138" y="38" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="142" y1="55" x2="170" y2="55" stroke="#46525C" stroke-width="1"/>
+  <text x="156" y="50.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="156" y="66.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="200" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">BAT 2</text>
+  <rect x="182" y="38" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="186" y1="55" x2="214" y2="55" stroke="#46525C" stroke-width="1"/>
+  <text x="200" y="50.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="200" y="66.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="312" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">AC ESS FEED</text>
+  <rect x="294" y="38" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="298" y1="55" x2="326" y2="55" stroke="#46525C" stroke-width="1"/>
+  <text x="312" y="50.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="312" y="66.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">ALTN</text>
+  <text x="34" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">IDG 1</text>
+  <rect x="12" y="155" width="44" height="40" rx="5" fill="none" stroke="#C8473B" stroke-width="3"/>
+  <rect x="16" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="20" y1="175" x2="48" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="34" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="326" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">IDG 2</text>
+  <rect x="304" y="155" width="44" height="40" rx="5" fill="none" stroke="#C8473B" stroke-width="3"/>
+  <rect x="308" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="312" y1="175" x2="340" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="326" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="82" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">GEN 1</text>
+  <rect x="64" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="68" y1="175" x2="96" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="82" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="82" y="186.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="278" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">GEN 2</text>
+  <rect x="260" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="264" y1="175" x2="292" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="278" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="278" y="186.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="132" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">APU GEN</text>
+  <rect x="114" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="118" y1="175" x2="146" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="132" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="132" y="186.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="180" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">BUS TIE</text>
+  <rect x="162" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="166" y1="175" x2="194" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="180" y="186.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="228" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">EXT PWR</text>
+  <rect x="210" y="158" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="214" y1="175" x2="242" y2="175" stroke="#46525C" stroke-width="1"/>
+  <text x="228" y="170.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#62D394">AVAIL</text>
+  <text x="228" y="186.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#62B4FF">ON</text>
+  <rect x="28" y="200" width="36" height="34" rx="4" fill="#2C363F"/>
+  <line x1="32" y1="217" x2="60" y2="217" stroke="#46525C" stroke-width="1"/>
+  <text x="46" y="212.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#F2A93B">FAULT</text>
+  <text x="46" y="228.5" text-anchor="middle" font-size="8.5" font-weight="700" fill="#E9EEF2">OFF</text>
+  <text x="72" y="213" font-size="10" font-weight="700" fill="#33424D">GALY &amp; CAB</text>
+  <text x="72" y="226" font-size="10" fill="#5B6B78">(o GALLEY)</text>
+  <text x="340" y="226" text-anchor="end" font-size="10" fill="#5B6B78">FAULT ámbar · AVAIL verde · ON azul</text>
+</svg>

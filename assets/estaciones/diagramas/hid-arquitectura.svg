@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Arquitectura hidráulica del A320</title>
+  <desc id="d">Tres sistemas independientes: Green con la bomba del motor 1, Blue con una bomba eléctrica y el RAT, Yellow con la bomba del motor 2, una bomba eléctrica y una hand pump. La PTU une Green y Yellow.</desc>
+  <rect x="1" y="1" width="358" height="328" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+
+  <!-- PTU: une Green y Yellow (pasa por detrás del Blue) -->
+  <path d="M60 78 H170" stroke="#5B6B78" stroke-width="3" fill="none"/>
+  <path d="M190 78 H300" stroke="#5B6B78" stroke-width="3" fill="none"/>
+  <rect x="210" y="64" width="64" height="28" rx="8" fill="#FFFFFF" stroke="#5B6B78" stroke-width="2"/>
+  <text x="242" y="83" text-anchor="middle" font-size="13" font-weight="700" fill="#33424D">PTU</text>
+  <text x="122" y="70" text-anchor="middle" font-size="11" fill="#5B6B78">&gt; 500 PSI</text>
+
+  <!-- Líneas de cada sistema -->
+  <line x1="60" y1="50" x2="60" y2="262" stroke="#2E9D5B" stroke-width="6" stroke-linecap="round"/>
+  <line x1="180" y1="50" x2="180" y2="262" stroke="#2F6FD6" stroke-width="6" stroke-linecap="round"/>
+  <line x1="300" y1="50" x2="300" y2="262" stroke="#D99A00" stroke-width="6" stroke-linecap="round"/>
+  <!-- puente: el Blue cruza por encima de la línea de la PTU -->
+  <rect x="172" y="72" width="16" height="12" fill="#FFFFFF"/>
+  <line x1="180" y1="66" x2="180" y2="90" stroke="#2F6FD6" stroke-width="6"/>
+
+  <!-- Nombres -->
+  <rect x="14" y="14" width="92" height="28" rx="14" fill="#2E9D5B"/>
+  <text x="60" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">GREEN</text>
+  <rect x="134" y="14" width="92" height="28" rx="14" fill="#2F6FD6"/>
+  <text x="180" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">BLUE</text>
+  <rect x="254" y="14" width="92" height="28" rx="14" fill="#D99A00"/>
+  <text x="300" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">YELLOW</text>
+
+  <!-- Green: bomba del motor 1 -->
+  <rect x="16" y="150" width="88" height="30" rx="8" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="2"/>
+  <text x="60" y="170" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">ENG 1 pump</text>
+
+  <!-- Blue: bomba eléctrica y RAT -->
+  <rect x="136" y="128" width="88" height="30" rx="8" fill="#FFFFFF" stroke="#2F6FD6" stroke-width="2"/>
+  <text x="180" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">Elec pump</text>
+  <rect x="136" y="180" width="88" height="40" rx="8" fill="#FFFFFF" stroke="#2F6FD6" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="180" y="197" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">RAT</text>
+  <text x="180" y="212" text-anchor="middle" font-size="10.5" fill="#5B6B78">emergencia</text>
+
+  <!-- Yellow: motor 2, bomba eléctrica y hand pump -->
+  <rect x="256" y="110" width="88" height="30" rx="8" fill="#FFFFFF" stroke="#D99A00" stroke-width="2"/>
+  <text x="300" y="130" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">ENG 2 pump</text>
+  <rect x="256" y="152" width="88" height="30" rx="8" fill="#FFFFFF" stroke="#D99A00" stroke-width="2"/>
+  <text x="300" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">Elec pump</text>
+  <rect x="256" y="194" width="88" height="40" rx="8" fill="#FFFFFF" stroke="#D99A00" stroke-width="2"/>
+  <text x="300" y="211" text-anchor="middle" font-size="12" font-weight="600" fill="#1E2A33">Hand pump</text>
+  <text x="300" y="226" text-anchor="middle" font-size="10.5" fill="#5B6B78">cargo doors</text>
+
+  <!-- Reservorios -->
+  <rect x="18" y="258" width="84" height="26" rx="6" fill="#E9F5EE" stroke="#2E9D5B"/>
+  <text x="60" y="275" text-anchor="middle" font-size="11" fill="#1E2A33">Reservorio</text>
+  <rect x="138" y="258" width="84" height="26" rx="6" fill="#EAF1FC" stroke="#2F6FD6"/>
+  <text x="180" y="275" text-anchor="middle" font-size="11" fill="#1E2A33">Reservorio</text>
+  <rect x="258" y="258" width="84" height="26" rx="6" fill="#FCF4DE" stroke="#D99A00"/>
+  <text x="300" y="275" text-anchor="middle" font-size="11" fill="#1E2A33">Reservorio</text>
+
+  <!-- Nota -->
+  <text x="180" y="306" text-anchor="middle" font-size="11.5" fill="#33424D">3000 PSI normal · Blue con RAT: 2500 PSI</text>
+  <text x="180" y="321" text-anchor="middle" font-size="11.5" fill="#33424D">El fluido nunca pasa de un sistema a otro</text>
+</svg>

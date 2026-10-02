@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cuándo se conectan las baterías</title>
+  <desc id="d">Para arrancar el APU (N bajo 95 %, máximo 3 min con el EMER GEN), para cargarse (bajo 26.5 V, hasta que la corriente baje de 4 A) y en emergencia bajo 100 kt sin EMER GEN.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="11.5" font-weight="700" fill="#33424D">La batería se conecta al DC BAT BUS:</text>
+  <rect x="14" y="38" width="332" height="72" rx="10" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.3"/>
+  <circle cx="36" cy="60" r="12" fill="#2E9D5B"/>
+  <text x="36" y="64.5" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">1</text>
+  <text x="56" y="64" font-size="11.5" font-weight="700" fill="#1E2A33">Para arrancar el APU</text>
+  <text x="56" y="82" font-size="10.5" font-weight="400" fill="#1E2A33">MASTER SW en ON, mientras N esté bajo 95 %</text>
+  <text x="56" y="97" font-size="10.5" font-weight="600" fill="#8A5300">Con el EMER GEN funcionando: máximo 3 min</text>
+  <rect x="14" y="120" width="332" height="90" rx="10" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.3"/>
+  <circle cx="36" cy="142" r="12" fill="#2E9D5B"/>
+  <text x="36" y="146.5" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">2</text>
+  <text x="56" y="146" font-size="11.5" font-weight="700" fill="#1E2A33">Para cargarse</text>
+  <text x="56" y="164" font-size="10.5" font-weight="400" fill="#1E2A33">Se conecta si el voltaje baja de 26.5 V</text>
+  <text x="56" y="179" font-size="10.5" font-weight="400" fill="#1E2A33">Termina cuando la corriente baja de 4 A:</text>
+  <text x="56" y="194" font-size="10.5" font-weight="600" fill="#1F6E41">en tierra, al tiro · en vuelo, 30 min después</text>
+  <rect x="14" y="220" width="332" height="56" rx="10" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.3"/>
+  <circle cx="36" cy="242" r="12" fill="#D98A00"/>
+  <text x="36" y="246.5" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">3</text>
+  <text x="56" y="246" font-size="11.5" font-weight="700" fill="#1E2A33">En emergencia</text>
+  <text x="56" y="264" font-size="10.5" font-weight="400" fill="#1E2A33">Sin AC BUS 1 ni 2, bajo 100 kt y sin EMER GEN</text>
+</svg>

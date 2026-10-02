@@ -53,15 +53,31 @@
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
     eq(ORAL_VOICE_BANK.length,53,"preguntas orales");
   });
-  T("0 DGAC-01 la pregunta del PTU con parking brake esta en el banco DGAC con respuesta TRUE (logica real de los master levers)",function(){
+  T("0 DGAC-01 la pregunta de la PTU con parking brake esta en el banco DGAC con respuesta TRUE (logica real de los master levers)",function(){
     var hit=rawPool(DGAC_KEY).filter(function(q){return /PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU/i.test(q.q)});
-    eq(hit.length,1,"preguntas del PTU con parking brake");
+    eq(hit.length,1,"preguntas de la PTU con parking brake");
     eq(correctText(hit[0]),"TRUE.","respuesta");
     ok(/master levers[^.]*en OFF/i.test(hit[0].expl)&&/parking brake suelto/i.test(hit[0].expl),"la explicacion debe dar la logica de los master levers y del parking brake");
     ok(!/\b(FCOM|FCTM|AFM|PDF)\b/.test(hit[0].expl+" "+hit[0].cite),"la explicacion y la referencia no citan manuales");
   });
+  T("0 QID-01 al corregir un enunciado (la PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
+    var olds=Object.keys(QID_RENAMES);eq(olds.length,6,"enunciados corregidos");
+    olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
+    var o=olds[0],n=QID_RENAMES[o];
+    var st={stats:{},bookmarks:{},oral:{},needToKnow:{added:["q:"+o],removed:["q:"+olds[1]]}};
+    st.stats[o]={a:3,c:2,w:1,last:5,streak:1,lastResult:1};st.bookmarks[o]=true;st.oral[o]={a:2,total:3,low:0,last:5};
+    var r=roundTrip(st);
+    ok(r.stats[n]&&r.stats[n].a===3&&!r.stats[o],"estadisticas trasladadas");
+    ok(r.bookmarks[n]===true&&!r.bookmarks[o],"guardada trasladada");
+    ok(r.oral[n]&&r.oral[n].total===3&&!r.oral[o],"autoevaluacion trasladada");
+    eq(r.needToKnow.added.join(),"q:"+n,"Need to know (agregadas) trasladado");
+    eq(r.needToKnow.removed.join(),"q:"+QID_RENAMES[olds[1]],"Need to know (quitadas) trasladado");
+    var both={stats:{}};both.stats[o]={a:1,c:0,w:1,last:1,streak:0,lastResult:0};both.stats[n]={a:9,c:9,w:0,last:9,streak:9,lastResult:1};
+    eq(roundTrip(both).stats[n].a,9,"si ya hay datos en el id nuevo, se conservan");
+    ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||""))}),"ningun texto dice el PTU");
+  });
   T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden y con la version actual",function(){
-    var want=["css/app.css","data/banco.js","data/ingles.js","data/oral.js","js/app.js"];
+    var want=["css/app.css","css/ruta.css","data/banco.js","data/ingles.js","data/oral.js","data/estaciones.js","js/app.js","js/ruta.js"];
     var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")});
     var paths=refs.map(function(r){return r.split("?")[0]});
     want.forEach(function(p,k){
@@ -1487,6 +1503,111 @@
     ntkExitCard();
     startSingle(fcomQ(0)._id);
     minH("#ntkQuizBtn","el boton + Need to know");
+  });
+
+  /* ---------- 14. Ruta de entrenamiento (portada, mapa y misiones) ---------- */
+  function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  T("14 RUTA-01 la app abre en la portada con el titulo de la app; Banco de preguntas lleva al inicio de siempre y Portada vuelve",function(){
+    reset();RUTA.showCover();
+    var c=byId("rtCover");ok(!c.hidden,"la portada se ve");
+    ok(/A320/.test(c.querySelector("h1").textContent)&&/Interview Trainer/.test(c.querySelector("h1").textContent),"el titulo es el nombre de la app");
+    ok(!/misi[oó]n por misi[oó]n/i.test(c.textContent),"sin la frase anterior");
+    byId("rtGoBank").click();
+    ok(c.hidden&&!byId("home").classList.contains("hidden"),"Banco de preguntas muestra el inicio de siempre");
+    eq(document.querySelector("#home .home-hero h1").textContent,"Banco de preguntas","titulo del banco");
+    document.querySelector("#home .rt-back-cover").click();
+    ok(!c.hidden,"el boton Portada vuelve a la portada");
+    RUTA.showBank();
+  });
+  T("14 RUTA-02 contenido: 18 misiones de Hidraulico y Electrico, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,18,"misiones");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"electrico,hidraulico","materias");
+    var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
+    var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
+    Object.keys(RUTA.stations).forEach(function(k){
+      var st=RUTA.stations[k];ok(!st.internalRefs,"sin fuentes internas en "+k);
+      [st.title,st.goal,st.intro].concat(st.cards.map(function(c){return [c.title,c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" ")})).forEach(function(s){ok(!REF.test(s),"texto con cita en "+k+": "+String(s).slice(0,60))});
+      st.test.forEach(function(t){
+        t.taughtIn.forEach(function(c){ok(cards[c],"existe la ficha "+c);if(st.kind==="lesson")eq(cards[c],k,"la pregunta "+t.id+" se enseña en su estacion")});
+        ok(!REF.test([t.question,t.explanation||"",t.reference||""].concat(t.options||[]).join(" ")),"pregunta con cita: "+t.id);
+        if(t.type==="mcq"){var q=findById(t.source.appId);ok(q,"la pregunta "+t.id+" existe en el banco");if(q){eq(t.options.join("|"),q.options.join("|"),"mismas alternativas y orden: "+t.id);eq(t.correct,q.correct,"misma respuesta: "+t.id)}}
+        else ok(ORAL_VOICE_BANK.some(function(o){return o.id===t.source.id}),"existe la oral "+t.source.id);
+      });
+    });
+    ok(!JSON.stringify(window.ESTACIONES_DATA).match(/\b(el|del|al) PTU\b(?! pb)/),"las clases dicen la PTU (el PTU pb es el pushbutton)");
+  });
+  T("14 RUTA-03 el avance de la ruta se sanea, viaja en el respaldo y un tipo invalido rechaza el respaldo",function(){
+    var r=roundTrip({ruta:{stars:{"hid-1":3,"ele-2":2,"no-existe":3,"hid-2":7,"hid-3":"3"},streak:{last:"2026-10-01",days:4},unlockAll:true}});
+    eq(JSON.stringify(r.ruta.stars),JSON.stringify({"hid-1":3,"ele-2":2}),"solo estaciones que existen, con 1 a 3 estrellas");
+    eq(r.ruta.streak.days,4,"racha");ok(r.ruta.unlockAll===true,"abrir todas");
+    eq(JSON.stringify(roundTrip({}).ruta),JSON.stringify(defaultState().ruta),"un respaldo antiguo sin ruta queda vacio");
+    eq(roundTrip({ruta:{streak:{last:"ayer",days:2}}}).ruta.streak.days,0,"una fecha invalida se descarta");
+    ok(!looksLikeValidBackup({ruta:[1]}),"una ruta con tipo invalido rechaza el respaldo");
+    ok(looksLikeValidBackup({ruta:{stars:{}}}),"una ruta valida se acepta");
+  });
+  T("14 RUTA-04 una mision completa da estrellas, abre la siguiente, suma racha y sus respuestas cuentan en las estadisticas",function(){
+    reset();
+    eq(RUTA.currentIndex(),0,"empieza en la mision 1");ok(!RUTA.isUnlocked(1),"la 2 parte cerrada");
+    var m=RUTA.missions[0],st=RUTA.stations[m.id];
+    RUTA.startMission(0);ok(!byId("rtPlayer").hidden,"se abre la mision");
+    var S=RUTA.state();S.view="question";
+    st.test.forEach(function(t,i){S.q=i;if(t.type==="mcq")RUTA.answer(t.correct);else RUTA.answerOral(t.reference,false)});
+    S.q=st.test.length-1;RUTA.nextQuestion();
+    eq(RUTA.state().view,"result","pantalla de resultado");
+    eq(appState.ruta.stars[m.id],3,"3 estrellas");
+    ok(RUTA.isUnlocked(1),"la mision 2 se abre");eq(RUTA.currentIndex(),1,"ahora toca la 2");
+    eq(appState.ruta.streak.last,today(),"racha de hoy");ok(appState.ruta.streak.days>=1,"dias de racha");
+    var mcq=st.test.filter(function(t){return t.type==="mcq"&&t.source.system!==DGAC_KEY});ok(mcq.length,"hay preguntas de alternativas");
+    mcq.forEach(function(t){var s=appState.stats[t.source.appId];ok(s&&s.a===1&&s.c===1,"cuenta en estadisticas: "+t.id)});
+    eq(JSON.parse(localStorage.getItem(KEY)).ruta.stars[m.id],3,"guardado en el dispositivo");
+    RUTA.showCover();
+  });
+  T("14 RUTA-05 una DGAC de la ruta no toca las estadisticas y una oral se evalua con el motor de Entrevista oral",function(){
+    reset();appState.ruta.unlockAll=true;
+    var i=RUTA.missions.findIndex(function(m){return m.id==="hid-repaso"}),st=RUTA.stations["hid-repaso"];
+    RUTA.startMission(i);var S=RUTA.state();S.view="question";
+    var dg=st.test.findIndex(function(t){return t.type==="mcq"&&t.source.system===DGAC_KEY});ok(dg>=0,"el repaso trae una DGAC");
+    S.q=dg;RUTA.answer(st.test[dg].correct);ok(!appState.stats[st.test[dg].source.appId],"la DGAC no cuenta");
+    var or=st.test.findIndex(function(t){return t.type==="oral"});ok(or>=0,"el repaso trae una oral");
+    S.q=or;RUTA.answerOral(st.test[or].reference,false);
+    var a=S.answers[or];ok(a&&a.result&&a.result.score>=6&&a.ok,"la respuesta de referencia aprueba con el motor ("+(a&&a.result&&a.result.score)+")");
+    ok(/\/10/.test(byId("rtPlayer").textContent)&&/Cobertura/.test(byId("rtPlayer").textContent),"se muestra el puntaje y la cobertura");
+    ok(appState.oralVoice[st.test[or].source.id],"queda registrada en Entrevista oral");
+    var j=st.test.findIndex(function(t,k){return t.type==="mcq"&&k!==dg});S.q=j;RUTA.answer(st.test[j].correct);
+    S.q=or;S.answers[or]=null;RUTA.answerOral("",false);ok(S.answers[or]&&!S.answers[or].ok,"una oral vacia no aprueba");
+    RUTA.showCover();
+  });
+  T("14 RUTA-06 el segundo intento no cuenta doble y las alternativas DGAC salen en su orden original",function(){
+    reset();
+    var st=RUTA.stations[RUTA.missions[0].id];RUTA.startMission(0);var S=RUTA.state();S.view="question";
+    var t0=st.test[0];S.q=0;RUTA.answer((t0.correct+1)%t0.options.length);
+    for(var i=1;i<st.test.length;i++){S.q=i;RUTA.answer(st.test[i].correct)}
+    S.q=st.test.length-1;RUTA.nextQuestion();
+    eq(appState.ruta.stars[st.id],2,"4 de 5 dan 2 estrellas");
+    byId("rtPlayer").querySelector('[data-act="retry"]').click();
+    eq(RUTA.state().retry.join(),"0","el segundo intento repite solo la fallada");
+    RUTA.answer(t0.correct);
+    var s=appState.stats[t0.source.appId];eq(s.a,1,"el segundo intento no suma un intento");eq(s.w,1,"queda el error del primer intento");
+    appState.ruta.unlockAll=true;
+    var i2=RUTA.missions.findIndex(function(m){return m.id==="hid-repaso"}),st2=RUTA.stations["hid-repaso"];
+    RUTA.startMission(i2);var S2=RUTA.state();S2.view="question";S2.q=0;RUTA.answer(st2.test[0].correct);
+    var shown=[].map.call(byId("rtPlayer").querySelectorAll(".rt-opt span:last-child"),function(e){return e.textContent});
+    eq(shown.join("|"),st2.test[0].options.join("|"),"alternativas en su orden");
+    RUTA.showCover();
+  });
+  T("14 RUTA-07 la portada muestra avance, racha y estrellas; el mapa dibuja 18 misiones con candados, la actual y el avion",function(){
+    reset();appState.ruta=sanitizeRuta({stars:{"hid-1":3},streak:{last:today(),days:2}});
+    RUTA.showCover();
+    ok(/Continuar · Misión 2/.test(byId("rtRouteTitle").textContent),"Continuar en la mision 2");
+    eq(byId("rtStarTotal").textContent,"3","estrellas");eq(byId("rtStreak").textContent,"2","racha");
+    ok(/1 de 18/.test(byId("rtRouteCount").textContent),"misiones hechas");
+    RUTA.showMap();
+    eq(byId("rtCanvas").querySelectorAll(".rt-node").length,18,"misiones en el mapa");
+    eq(byId("rtCanvas").querySelectorAll(".rt-node.rt-locked").length,16,"con candado");
+    ok(byId("rtCanvas").querySelector('.rt-node.rt-current[data-m="1"]'),"la actual es la 2");
+    ok(byId("rtPlane")&&byId("rtPlane").style.left,"el avion esta sobre la ruta");
+    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,6,"6 fondos");
+    RUTA.showCover();
   });
 
   /* ---------- Ejecucion ---------- */

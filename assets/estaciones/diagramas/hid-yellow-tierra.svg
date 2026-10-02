@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">El Yellow en tierra y las cargo doors</title>
+  <desc id="d">Con los motores apagados, la Yellow electric pump se enciende sola al mover el selector de una cargo door; sin electricidad se usa la hand pump. Mientras se opera la puerta y 40 segundos después, la PTU queda inhibida.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+
+  <!-- línea Yellow -->
+  <line x1="150" y1="44" x2="150" y2="186" stroke="#D99A00" stroke-width="6" stroke-linecap="round"/>
+  <line x1="150" y1="115" x2="236" y2="115" stroke="#D99A00" stroke-width="6" stroke-linecap="round"/>
+  <text x="150" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#A87700">YELLOW</text>
+
+  <!-- fuentes -->
+  <rect x="14" y="48" width="112" height="38" rx="9" fill="#F3F6F8" stroke="#B8C4CE" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="70" y="64" text-anchor="middle" font-size="12" font-weight="600" fill="#6B7A86">ENG 2 pump</text>
+  <text x="70" y="79" text-anchor="middle" font-size="10.5" fill="#6B7A86">motor apagado</text>
+  <line x1="126" y1="67" x2="150" y2="67" stroke="#B8C4CE" stroke-width="3"/>
+
+  <rect x="14" y="96" width="112" height="38" rx="9" fill="#FCF4DE" stroke="#D99A00" stroke-width="2"/>
+  <text x="70" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#1E2A33">Elec pump</text>
+  <text x="70" y="127" text-anchor="middle" font-size="10.5" fill="#33424D">sola, con el selector</text>
+  <line x1="126" y1="115" x2="150" y2="115" stroke="#D99A00" stroke-width="3"/>
+
+  <rect x="14" y="144" width="112" height="38" rx="9" fill="#FCF4DE" stroke="#D99A00" stroke-width="2"/>
+  <text x="70" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="#1E2A33">Hand pump</text>
+  <text x="70" y="175" text-anchor="middle" font-size="10.5" fill="#33424D">sin electricidad</text>
+  <line x1="126" y1="163" x2="150" y2="163" stroke="#D99A00" stroke-width="3"/>
+
+  <!-- cargo door -->
+  <rect x="236" y="90" width="108" height="50" rx="10" fill="#FFFFFF" stroke="#33424D" stroke-width="2"/>
+  <text x="290" y="112" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E2A33">Cargo door</text>
+  <text x="290" y="128" text-anchor="middle" font-size="10.5" fill="#33424D">OPEN / CLOSE</text>
+
+  <!-- PTU inhibido -->
+  <line x1="150" y1="186" x2="150" y2="214" stroke="#D99A00" stroke-width="3"/>
+  <rect x="104" y="214" width="92" height="30" rx="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="2"/>
+  <text x="138" y="234" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E2A33">PTU</text>
+  <rect x="166" y="222" width="5" height="14" rx="1.5" fill="#C0392B"/>
+  <rect x="175" y="222" width="5" height="14" rx="1.5" fill="#C0392B"/>
+  <line x1="196" y1="229" x2="236" y2="229" stroke="#B8C4CE" stroke-width="3" stroke-dasharray="5 4"/>
+  <text x="270" y="233" text-anchor="middle" font-size="12" font-weight="600" fill="#8A99A6">GREEN</text>
+  <text x="180" y="266" text-anchor="middle" font-size="11.5" font-weight="700" fill="#A93226">PTU inhibida: durante la operación de la puerta</text>
+  <text x="180" y="281" text-anchor="middle" font-size="11.5" font-weight="700" fill="#A93226">y 40 s después</text>
+</svg>

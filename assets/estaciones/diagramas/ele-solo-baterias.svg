@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Solo baterías</title>
+  <desc id="d">BAT 1 alimenta el STAT INV, que alimenta AC STAT INV BUS y, sobre 50 kt, AC ESS BUS. BAT 2 alimenta DC ESS BUS. Las barras SHED se cortan. En tierra bajo 100 kt el DC BAT BUS se conecta a las baterías; bajo 50 kt se corta AC ESS y no quedan pantallas.</desc>
+  <rect x="1" y="1" width="358" height="328" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <path d="M100 31 L110 31" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260 31 L250 31" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 44 L70 70" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 92 L70 118" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 134 L70 160" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="65.5" y="142.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <path d="M290 44 L290 160" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 178 L70 204" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="65.5" y="186.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <path d="M290 178 L290 204" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="285.5" y="186.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <path d="M90 44 L90 58 L166 58 L166 92" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="123.5" y="53.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <path d="M272 44 L272 58 L194 58 L194 92" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="227.5" y="53.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <rect x="40" y="18" width="60" height="26" rx="5" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="70" y="34.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1E2A33">BAT 1</text>
+  <rect x="260" y="18" width="60" height="26" rx="5" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="290" y="34.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1E2A33">BAT 2</text>
+  <rect x="110" y="23" width="62" height="16" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="141" y="34.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">HOT BUS 1</text>
+  <rect x="188" y="23" width="62" height="16" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="219" y="34.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">HOT BUS 2</text>
+  <rect x="40" y="70" width="60" height="22" rx="5" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="70" y="84.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1F6E41">STAT INV</text>
+  <rect x="18" y="118" width="104" height="16" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="70" y="129.42" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1F6E41">AC STAT INV BUS</text>
+  <text x="80" y="151" font-size="10.5" font-weight="600" fill="#1F6E41">sobre 50 kt</text>
+  <rect x="18" y="160" width="104" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="70" y="172.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC ESS BUS</text>
+  <rect x="238" y="160" width="104" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="290" y="172.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">DC ESS BUS</text>
+  <rect x="18" y="204" width="104" height="18" rx="5" fill="#FFFFFF" stroke="#D98A00" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <text x="70" y="216.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8A5300">AC ESS SHED</text>
+  <rect x="238" y="204" width="104" height="18" rx="5" fill="#FFFFFF" stroke="#D98A00" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <text x="290" y="216.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8A5300">DC ESS SHED</text>
+  <text x="70" y="236" text-anchor="middle" font-size="10.5" fill="#8A5300">cortada (SHED)</text>
+  <text x="290" y="236" text-anchor="middle" font-size="10.5" fill="#8A5300">cortada (SHED)</text>
+  <rect x="140" y="92" width="80" height="18" rx="5" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.6"/>
+  <text x="180" y="104.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8A5300">DC BAT BUS</text>
+  <text x="180" y="124" text-anchor="middle" font-size="10.5" fill="#8A5300">en vuelo: sin</text>
+  <text x="180" y="136" text-anchor="middle" font-size="10.5" fill="#8A5300">energía</text>
+  <rect x="14" y="252" width="106" height="66" rx="8" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.2"/>
+  <text x="22" y="269" font-size="10.5" font-weight="700" fill="#1F6E41">Sobre 50 kt</text>
+  <text x="22" y="286" font-size="10" fill="#1E2A33">BAT 1 → AC ESS</text>
+  <text x="22" y="300" font-size="10" fill="#1E2A33">BAT 2 → DC ESS</text>
+  <rect x="127" y="252" width="106" height="66" rx="8" fill="#F3F5F7" stroke="#A9B4BD" stroke-width="1.2"/>
+  <text x="135" y="269" font-size="10.5" font-weight="700" fill="#5B6B78">Tierra, &lt; 100 kt</text>
+  <text x="135" y="286" font-size="10" fill="#1E2A33">DC BAT BUS se</text>
+  <text x="135" y="300" font-size="10" fill="#1E2A33">conecta a baterías</text>
+  <rect x="240" y="252" width="106" height="66" rx="8" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.2"/>
+  <text x="248" y="269" font-size="10.5" font-weight="700" fill="#8A5300">Bajo 50 kt</text>
+  <text x="248" y="286" font-size="10" fill="#1E2A33">AC ESS cortado:</text>
+  <text x="248" y="300" font-size="10" fill="#1E2A33">sin pantallas</text>
+</svg>

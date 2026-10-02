@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 98/98 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 100/100 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -501,7 +501,8 @@ preguntas** (el inicio de siempre, ahora titulado «Banco de preguntas», con un
 botón «Portada» para volver). Ningún módulo cambió.
 
 - **Mapa** — los 7 fondos apilados, de la pista de salida a la pista de
-  llegada; las 18 estaciones de Hidráulico y Eléctrico mezcladas por nivel
+  llegada; las estaciones de las materias (desde la 1.14.0, 29: Hidráulico,
+  Eléctrico y Controles de vuelo) mezcladas por nivel
   (`data/estaciones.js`); la estación actual destacada, las demás con candado
   hasta ganar una estrella en la anterior, y el avión (la imagen
   `mapa-avion.webp`, fuera de escala) que espera antes de la estación que toca
@@ -523,7 +524,14 @@ botón «Portada» para volver). Ningún módulo cambió.
     para que cada tramo mida al menos 136 px y el avión quepa sin tapar
     ninguna (en la tormenta queda esquivando las celdas);
   - termina con una aproximación punteada a la RWY 36 del fondo de llegada,
-    todavía sin estaciones.
+    todavía sin estaciones;
+  - una zona con más de 5 estaciones se alarga (1.14.0): su fondo se repite,
+    alternando una copia al revés para que las uniones calcen, siempre en número
+    impar; las pistas no se repiten nunca.
+- **Avance al agregar materias (1.14.0)** — una materia nueva intercala sus
+  estaciones de nivel 1 al comienzo de la ruta. Una estación está abierta si
+  es la primera, si la anterior tiene estrellas o si ya la ganaste: lo ganado
+  no queda con candado, y el avión vuelve a la primera estación sin hacer.
 - **Estación** — presentación, fichas con diagramas, prueba y resultado: 3, 2
   y 1 estrellas con 90, 70 y 50 % de respuestas correctas en el primer
   intento, y segundo intento de las falladas. Al terminar se vuelve siempre al
@@ -578,13 +586,20 @@ botón «Portada» para volver). Ningún módulo cambió.
   distancia, y el del primer tramo de aerovía coincide con su dirección en el
   mapa; la aerovía tiene nombre; cada tramo fuera de la pista mide al menos
   136 px; y la aproximación punteada con la RWY 36 en las dos pistas.
+- **RUTA-11** — con estrellas en la segunda estación y no en la primera, la
+  ganada y la siguiente quedan abiertas y toca la primera; en el mapa ninguna
+  zona pasa de 5 estaciones por fondo, cada zona tiene un número impar de
+  fondos con las copias pares al revés, la tormenta se alarga y las pistas no
+  se repiten.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de
 600 px en una textura de 640 px, o sin ninguna regla de «Reducir movimiento»,
 falló RUTA-08. Con un botón para pasar a la siguiente estación o con «Misión»
 en el globo del mapa, falló RUTA-09; con las estaciones de pista corridas
-30 px del eje o sin el tramo recto pasado el fin de pista, falló RUTA-10.
+30 px del eje o sin el tramo recto pasado el fin de pista, falló RUTA-10. Con
+la regla de apertura antigua (solo por la anterior) o sin alargar las zonas,
+falló RUTA-11.
 
 ## 15. «La PTU»: enunciados corregidos sin perder el progreso (QID-01)
 
@@ -601,6 +616,25 @@ es el pushbutton.
 - **QID-01** comprueba el traslado de los cuatro registros, que los ids
   nuevos existan y los antiguos no, y que ningún texto del banco diga «el
   PTU».
+
+## 16. Banco DGAC: preguntas de controles de vuelo revisadas contra el manual (DGAC-02)
+
+Al armar la materia Controles de vuelo se revisaron las preguntas DGAC del tema.
+Tres no calzaban con el manual; enunciados y alternativas siguen como los
+escribió la DGAC:
+
+- **«WHICH OF THE FOLLOWING CONTROLS AND MONITORS FLAPS AND SLATS?»**: marcaba
+  «ONE SFCC», con una explicación que decía que uno trabaja y el otro queda de
+  reserva. Son dos SFCC y trabajan los dos a la vez (cada uno con un canal de
+  slats y uno de flaps; si falla uno, todo va a media velocidad). Ahora marca
+  «TWO SLAT FLAP CONTROL COMPUTER (SFCC'S)».
+- **«WHEN IS ALPHA FLOOR NOT AVAILABLE?»**: la respuesta (fuera de normal law)
+  era correcta, pero la explicación decía que las tres condiciones lo inhiben.
+- **La de los ELAC**: la explicación decía que no controlan el THS, y sí lo
+  hacen.
+
+**DGAC-02** comprueba la respuesta de los SFCC y que las tres explicaciones
+calcen con su respuesta.
 
 ## Límite explícito de esta batería
 

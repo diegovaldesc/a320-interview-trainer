@@ -75,6 +75,8 @@
 .rt-canvas{position:relative;margin:0 auto;max-width:520px}
 .rt-panel{position:absolute;left:0;width:100%;aspect-ratio:2/3;max-width:100%;background:center/cover no-repeat}
 .rt-fade{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 93%,transparent 100%)}
+/* Copia al revés del fondo de una zona alargada (la máscara de la unión queda en el contenedor, sin dar vuelta). */
+.rt-flip{position:absolute;inset:0;background:center/cover no-repeat;transform:scaleY(-1)}
 .rt-route{position:absolute;left:0;top:0;width:100%;pointer-events:none;overflow:visible}
 .rt-zone{position:absolute;left:14px;display:flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;color:var(--rt-on-photo);
   font:600 12px/1 var(--rt-display);letter-spacing:.12em;text-transform:uppercase;background:var(--rt-glass);border:1px solid var(--rt-glass-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}

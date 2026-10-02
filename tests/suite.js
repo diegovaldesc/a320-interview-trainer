@@ -60,6 +60,16 @@
     ok(/master levers[^.]*en OFF/i.test(hit[0].expl)&&/parking brake suelto/i.test(hit[0].expl),"la explicacion debe dar la logica de los master levers y del parking brake");
     ok(!/\b(FCOM|FCTM|AFM|PDF)\b/.test(hit[0].expl+" "+hit[0].cite),"la explicacion y la referencia no citan manuales");
   });
+  T("0 DGAC-02 la pregunta DGAC de los SFCC marca dos SFCC (trabajan los dos a la vez) y las explicaciones de alpha floor y de los ELAC calzan con su respuesta",function(){
+    var pool=rawPool(DGAC_KEY);function one(re){var h=pool.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]}
+    var s=one(/^WHICH OF THE FOLLOWING CONTROLS AND MONITORS FLAPS AND SLATS/);
+    eq(correctText(s),"TWO SLAT FLAP CONTROL COMPUTER (SFCC'S).","respuesta: dos SFCC");
+    ok(/los dos a la vez/.test(s.expl)&&/media velocidad/.test(s.expl)&&!/uno solo/.test(s.expl),"la explicacion dice que trabajan los dos y que con uno van a media velocidad");
+    var a=one(/^WHEN IS ALPHA FLOOR NOT AVAILABLE/);eq(correctText(a),"OUT OF NORMAL LAW.","alpha floor: fuera de normal law");
+    ok(!/cualquiera de estas tres/.test(a.expl)&&/solo en normal law/.test(a.expl),"la explicacion de alpha floor no contradice su respuesta");
+    var e=one(/^WHICH OF THE FOLLOWING STATEMENTS IS CORRECT CONCERNING THE ELEVATOR AILERON/);
+    ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
+  });
   T("0 QID-01 al corregir un enunciado (la PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
     var olds=Object.keys(QID_RENAMES);eq(olds.length,6,"enunciados corregidos");
     olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
@@ -1520,8 +1530,8 @@
     RUTA.showBank();
   });
   T("14 RUTA-02 contenido: 18 misiones de Hidraulico y Electrico, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,18,"misiones");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"electrico,hidraulico","materias");
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=29,"al menos las 29 estaciones de Hidraulico, Electrico y Controles de vuelo");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -1600,14 +1610,15 @@
     RUTA.showCover();
     ok(/Continuar · Estación 2/.test(byId("rtRouteTitle").textContent),"Continuar en la estacion 2");
     eq(byId("rtStarTotal").textContent,"3","estrellas");eq(byId("rtStreak").textContent,"2","racha");
-    ok(/1 de 18/.test(byId("rtRouteCount").textContent),"misiones hechas");
+    ok(new RegExp("1 de "+RUTA.missions.length+" estaciones").test(byId("rtRouteCount").textContent),"estaciones hechas");
     RUTA.showMap();
-    eq(byId("rtCanvas").querySelectorAll(".rt-node").length,18,"misiones en el mapa");
-    eq(byId("rtCanvas").querySelectorAll(".rt-node.rt-locked").length,16,"con candado");
+    eq(byId("rtCanvas").querySelectorAll(".rt-node").length,RUTA.missions.length,"estaciones en el mapa");
+    eq(byId("rtCanvas").querySelectorAll(".rt-node.rt-locked").length,RUTA.missions.length-2,"con candado (abiertas: la hecha y la siguiente)");
     ok(byId("rtCanvas").querySelector('.rt-node.rt-current[data-m="1"]'),"la actual es la 2");
     ok(byId("rtPlane")&&byId("rtPlane").style.left,"el avion esta sobre la ruta");
-    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,window.ESTACIONES_DATA.route.zones.filter(function(z){return z.bg}).length,"un fondo por zona con imagen");
-    eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,7,"los 7 fondos, con la pista de llegada");
+    var zonesWithBg=window.ESTACIONES_DATA.route.zones.filter(function(z){return z.bg});
+    eq(new Set([].map.call(byId("rtCanvas").querySelectorAll(".rt-panel"),function(p){return p.dataset.zone})).size,zonesWithBg.length,"cada zona con imagen tiene su fondo");
+    eq(zonesWithBg.length,7,"los 7 fondos, con la pista de llegada");
     RUTA.showCover();
   });
   T("14 RUTA-08 las nubes de la portada pasan en bucle sin salto, bajo el titulo y los botones, y se detienen con Reducir movimiento",function(){
@@ -1691,6 +1702,24 @@
     ok(/UA320/.test(cv.textContent),"la aerovia tiene nombre");
     for(var i=onRwy.length;i<g.sIdx.length;i++){var L=g.route.cum[g.sIdx[i]]-g.route.cum[g.sIdx[i-1]];ok(L>=135.5,"tramo "+i+" con espacio para el avion ("+Math.round(L)+" px)")}
     ok(cv.querySelector(".rt-appr")&&cv.querySelectorAll(".rt-rwy").length===2,"aproximacion punteada a la pista de llegada y RWY 36 en las dos pistas");
+    RUTA.showCover();
+  });
+  T("14 RUTA-11 una materia nueva no cierra lo ya ganado, y una zona con muchas estaciones se alarga en vez de amontonarlas",function(){
+    reset();var M=RUTA.missions;appState.ruta=sanitizeRuta({stars:{}});appState.ruta.stars[M[1].id]=3;
+    eq(RUTA.currentIndex(),0,"toca la primera, que quedo sin hacer (como una estacion nueva intercalada)");
+    ok(RUTA.isUnlocked(1),"la estacion ya ganada sigue abierta aunque la anterior no tenga estrellas");
+    ok(RUTA.isUnlocked(2),"y la que sigue a una ganada tambien");ok(!RUTA.isUnlocked(3),"las demas siguen cerradas");
+    RUTA.showMap();var cv=byId("rtCanvas");
+    ok(!cv.querySelector('.rt-node[data-m="1"]').classList.contains("rt-locked"),"en el mapa la ganada no tiene candado");
+    var count={};M.forEach(function(m){count[m.zone]=(count[m.zone]||0)+1});
+    Object.keys(count).forEach(function(z){
+      var panels=[].filter.call(cv.querySelectorAll(".rt-panel"),function(p){return p.dataset.zone===z});
+      ok(count[z]<=5*panels.length,"zona "+z+": "+count[z]+" estaciones en "+panels.length+" fondo(s)");
+      ok(panels.length%2===1,"zona "+z+": numero impar de fondos, para que la union con la siguiente calce");
+      panels.forEach(function(p,i){eq(!!p.querySelector(".rt-flip"),i%2===1,"zona "+z+": copia "+(i+1)+(i%2?" al reves":" derecha"))});
+    });
+    ok([].filter.call(cv.querySelectorAll(".rt-panel"),function(p){return p.dataset.zone==="tormenta"}).length>1,"la tormenta, con mas de 5 estaciones, se alarga");
+    eq([].filter.call(cv.querySelectorAll(".rt-panel"),function(p){return p.dataset.zone==="pista"||p.dataset.zone==="llegada"}).length,2,"las pistas no se repiten");
     RUTA.showCover();
   });
 

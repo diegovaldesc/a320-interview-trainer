@@ -17,7 +17,9 @@
   // ---------- avance (appState.ruta) ----------
   function R(){ if (!appState.ruta) appState.ruta = sanitizeRuta(null); return appState.ruta; }
   function stars(id){ return R().stars[id] || 0; }
-  function isUnlocked(i){ return R().unlockAll || i === 0 || stars(M[i - 1].id) > 0; }
+  // Abierta si es la primera, si la anterior tiene estrellas o si ya la ganaste (una materia nueva puede
+  // intercalar estaciones antes de las que ya hiciste: esas siguen abiertas).
+  function isUnlocked(i){ return R().unlockAll || i === 0 || stars(M[i - 1].id) > 0 || stars(M[i].id) > 0; }
   function currentIndex(){ for (var i = 0; i < M.length; i++) if (!stars(M[i].id)) return i; return M.length; }
   function totalStars(){ return M.reduce(function(n, m){ return n + stars(m.id); }, 0); }
   function day(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
@@ -77,6 +79,7 @@
   var THR1 = 0.16, END1 = 0.915;   // fondo 1: umbral y fin de pista (fracción del alto, desde abajo)
   var THR7 = 0.21;                 // fondo 7: umbral de la pista de llegada
   var NM_PER_W = 40;               // escala de la carta: millas náuticas por ancho de pantalla
+  var ZONE_CAP = 5;                // estaciones que caben en un fondo; con más, la zona se alarga
   var AIRWAY = 'UA320';
   var WAIT = 0.5;                  // el avión espera a la mitad del tramo que lleva a la estación que toca
   var geo = null, pendingFlight = null;
@@ -129,21 +132,32 @@
     var canvas = $('rtCanvas');
     var W = canvas.clientWidth || Math.min(window.innerWidth, 520);
     var PH = W * 1.5, OV = PH * 0.075, STEP = PH - OV;
-    var panels = ZONES.filter(function(z){ return z.bg; });
-    var H = PH + (panels.length - 1) * STEP, last = panels.length - 1;
+    var panels = ZONES.filter(function(z){ return z.bg; }), last = panels.length - 1;
     var zoneIndex = {}; panels.forEach(function(z, k){ zoneIndex[z.id] = k; });
     var arrival = last > 0 && panels[last].id === 'llegada' ? last : -1;
     function kOf(m){ var k = zoneIndex[m.zone]; return k == null ? last : k; }
-    function yAt(k, f){ return Math.round(H - (k * STEP + PH * f)); }
     var cx = Math.round(W * RWY_X), byZone = {};
     M.forEach(function(m){ var k = kOf(m); (byZone[k] = byZone[k] || []).push(m); });
+    // Una zona con más de ZONE_CAP estaciones se alarga: su fondo se repite, alternando una copia al revés (así las
+    // uniones calzan) y siempre en número impar (así termina con el borde que empalma con la zona siguiente).
+    // Las pistas (primer y último fondo) no se repiten nunca.
+    var slots = [], first = {};
+    panels.forEach(function(z, k){
+      var n = (byZone[k] || []).length, c = (k === 0 || k === arrival || n <= ZONE_CAP) ? 1 : Math.ceil(n / ZONE_CAP);
+      if (c % 2 === 0) c++;
+      first[k] = slots.length;
+      for (var s = 0; s < c; s++) slots.push({ z: z, k: k, flip: s % 2 === 1 });
+    });
+    var H = PH + (slots.length - 1) * STEP;
+    function yAt(slot, f){ return Math.round(H - (slot * STEP + PH * f)); }
+    function zoneSpan(k){ var c = slots.filter(function(s){ return s.k === k; }).length; return { lo: first[k] * STEP + PH * 0.16, hi: (first[k] + c - 1) * STEP + PH * (k === last && arrival < 0 ? 0.62 : 0.84) }; }
     var pts = M.map(function(m, i){
       var k = kOf(m), list = byZone[k], j = list.indexOf(m), n = list.length;
       // En la pista de salida, sobre el eje, entre el umbral y el fin de pista.
       if (k === 0) return { x: cx, y: yAt(0, n > 1 ? 0.36 + 0.48 * j / (n - 1) : 0.5) };
-      // En los demás fondos, la franja central (en el último, si no hay pista de llegada, la parte baja).
-      var lo = 0.16, span = k === last && arrival < 0 ? 0.46 : 0.68;
-      return { x: Math.round(W / 2 + W * 0.24 * Math.sin(i * 1.05 + 0.35)), y: yAt(k, lo + span * (j + 0.5) / n) };
+      // En los demás fondos, repartidas en la franja central de la zona (en el último, si no hay pista de llegada, la parte baja).
+      var zs = zoneSpan(k);
+      return { x: Math.round(W / 2 + W * 0.24 * Math.sin(i * 1.05 + 0.35)), y: Math.round(H - (zs.lo + (zs.hi - zs.lo) * (j + 0.5) / n)) };
     });
     // Tramos de al menos MIN_LEG: si dos estaciones quedan muy juntas en altura, se abren hacia los lados (zigzag),
     // para que el avión quepa entre ellas sin tapar ninguna.
@@ -167,13 +181,16 @@
       for (var v = 1; v < verts.length; v++){ var a = verts[v - 1], b = verts[v]; if ((y - a.y) * (y - b.y) <= 0) return a.x + (b.x - a.x) * ((y - a.y) / ((b.y - a.y) || 1)); }
       return W / 2;
     }
-    var appr = arrival >= 0 && pts.length ? line([pts[pts.length - 1], { x: cx, y: yAt(arrival, -0.05) }, { x: cx, y: yAt(arrival, THR7) }]) : null;
+    var arrSlot = arrival >= 0 ? first[arrival] : -1;
+    var appr = arrival >= 0 && pts.length ? line([pts[pts.length - 1], { x: cx, y: yAt(arrSlot, -0.05) }, { x: cx, y: yAt(arrSlot, THR7) }]) : null;
     geo = { W: W, H: H, PH: PH, cx: cx, pts: pts, route: route, sIdx: sIdx, appr: appr };
     var ci = currentIndex();
     var flown = !M.length ? 0 : pendingFlight ? waitDist(pendingFlight.from) : ci < M.length ? waitDist(ci) : route.total;
     var html = '';
-    panels.forEach(function(z, k){
-      html += '<div class="rt-panel' + (k > 0 ? ' rt-fade' : '') + '" style="bottom:' + Math.round(k * STEP) + 'px;background-image:url(&quot;' + esc(z.bg) + '&quot;);z-index:' + (k + 1) + '"></div>';
+    slots.forEach(function(s, i){
+      var bg = 'background-image:url(&quot;' + esc(s.z.bg) + '&quot;)';
+      html += '<div class="rt-panel' + (i > 0 ? ' rt-fade' : '') + '" data-zone="' + esc(s.z.id) + '" style="bottom:' + Math.round(i * STEP) + 'px;' + (s.flip ? '' : bg + ';') + 'z-index:' + (i + 1) + '">' +
+        (s.flip ? '<i class="rt-flip" style="' + bg + '"></i>' : '') + '</div>';
     });
     var casing = 'rgba(8,18,26,.5)';
     html += '<svg class="rt-route" style="height:' + H + 'px;z-index:10" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
@@ -184,7 +201,7 @@
       '<path id="rtFlown" d="' + route.path(0, flown) + '" fill="none" stroke="#E9C46A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>' +
       '</svg>';
     html += '<span class="rt-rwy" style="left:' + (cx + 28) + 'px;top:' + yAt(0, THR1) + 'px;z-index:11">RWY 36</span>';
-    if (appr) html += '<span class="rt-rwy" style="left:' + (cx + 28) + 'px;top:' + yAt(arrival, THR7) + 'px;z-index:11">RWY 36</span>';
+    if (appr) html += '<span class="rt-rwy" style="left:' + (cx + 28) + 'px;top:' + yAt(arrSlot, THR7) + 'px;z-index:11">RWY 36</span>';
     // Rumbo y distancia de cada tramo de la aerovía (en la pista no hay; el que sale de la estación actual lo tapa su globo).
     var legs = 0;
     for (var i = 1; i < M.length; i++){
@@ -197,7 +214,7 @@
     }
     panels.forEach(function(z, k){
       if (!byZone[k]) return;
-      var zy = Math.round(H - (k * STEP + PH * 0.1));   // al lado contrario de la ruta, para no taparla
+      var zy = yAt(first[k], 0.1);   // al comienzo de la zona, al lado contrario de la ruta, para no taparla
       html += '<span class="rt-zone" style="top:' + zy + 'px;' + (routeX(zy) < W / 2 ? 'left:auto;right:14px;' : '') + 'z-index:11">' + esc(z.title) + ' <small>· ' + esc(LEVEL[z.id] || '') + '</small></span>';
     });
     M.forEach(function(m, i){

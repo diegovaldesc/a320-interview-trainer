@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 95/95 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 96/96 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -438,6 +438,7 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
 | `css/ruta.css`, `js/ruta.js` | La Ruta de entrenamiento: portada, mapa y misiones (sección 14). Todo lleva el prefijo `rt-`. |
 | `data/estaciones.js` | Las materias, estaciones y la ruta del mapa. Lo genera `Escritorio\APP\Estaciones\_herramientas\exportar_app.js`: no se edita a mano. |
 | `assets/estaciones/` | Los diagramas, imágenes y fondos del mapa que usan las estaciones (los copia el mismo exportador). |
+| `assets/portada/` | La textura de las nubes de la portada (sección 14). El exportador no toca esta carpeta. |
 
 - **Orden de carga** — `index.html` carga los tres bancos antes que
   `js/app.js`, porque la lógica los usa al arrancar. La lógica sigue en un solo
@@ -529,9 +530,24 @@ botón «Portada» para volver). Ningún módulo cambió.
   racha y estadísticas); la DGAC no cuenta y la oral pasa por el motor; el
   segundo intento no cuenta doble y las alternativas DGAC salen en su orden;
   la portada y el mapa muestran avance, candados, la misión actual y el avión.
+- **Nubes de la portada (1.12.1)** — dos capas de nubes pasan sobre el
+  aeropuerto a distinta velocidad. Usan una textura que se repite sin costuras
+  (`assets/portada/nubes.webp`, 73 KB; la genera
+  `Escritorio\APP\Estaciones\_herramientas\nubes_portada.ps1`). Solo se anima
+  el transform, así que la página no se repinta; se desvanecen antes del
+  título y quedan quietas con «Reducir movimiento». Con la portada oculta no
+  se animan.
+- **RUTA-08** — las dos capas están ocultas para lectores de pantalla, no
+  bloquean los toques y quedan bajo el degradado y el contenido; cada una
+  avanza en bucle, a velocidad pareja, exactamente el ancho de su textura (si
+  no, se vería un salto al repetirse), solo con transform y cubriendo la
+  pantalla todo el recorrido; y alguna regla `(prefers-reduced-motion:
+  reduce)` las detiene.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
-intento en las estadísticas, fallaron RUTA-05 y RUTA-06.
+intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de
+600 px en una textura de 640 px, o sin ninguna regla de «Reducir movimiento»,
+falló RUTA-08.
 
 ## 15. «La PTU»: enunciados corregidos sin perder el progreso (QID-01)
 

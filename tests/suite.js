@@ -1609,6 +1609,36 @@
     eq(byId("rtCanvas").querySelectorAll(".rt-panel").length,6,"6 fondos");
     RUTA.showCover();
   });
+  T("14 RUTA-08 las nubes de la portada pasan en bucle sin salto, bajo el titulo y los botones, y se detienen con Reducir movimiento",function(){
+    reset();RUTA.showCover();
+    var c=byId("rtCover"),box=c.querySelector(".rt-clouds");
+    ok(box&&box.getAttribute("aria-hidden")==="true","capa de nubes oculta para lectores de pantalla");
+    var layers=box?[].slice.call(box.querySelectorAll(".rt-cloud")):[];eq(layers.length,2,"dos capas de nubes");
+    eq(getComputedStyle(box).pointerEvents,"none","las nubes no bloquean los toques");
+    var zc=+getComputedStyle(box).zIndex,zg=+getComputedStyle(c,"::before").zIndex,zi=+getComputedStyle(c.querySelector(".rt-cover-in")).zIndex;
+    ok(zc<zg&&zg<zi,"nubes bajo el degradado y bajo el contenido ("+zc+" < "+zg+" < "+zi+")");
+    var frames={},still=false;
+    [].forEach.call(document.styleSheets,function(sh){var rules;try{rules=sh.cssRules}catch(e){return}
+      [].forEach.call(rules,function(r){
+        if(r.type===7)frames[r.name]=r;
+        if(r.type===4&&/^\(prefers-reduced-motion:\s*reduce\)$/.test(r.conditionText||"")&&layers.length)[].forEach.call(r.cssRules,function(s){
+          if(s.selectorText&&layers.every(function(el){return el.matches(s.selectorText)})&&s.style.getPropertyValue("animation-name")==="none"&&s.style.getPropertyPriority("animation-name")==="important")still=true;
+        });
+      });
+    });
+    layers.forEach(function(el){
+      var cs=getComputedStyle(el),name=cs.animationName,f=frames[name];
+      ok(f,"animacion "+name);if(!f)return;
+      eq(cs.animationIterationCount,"infinite","en bucle: "+name);eq(cs.animationTimingFunction,"linear","velocidad pareja: "+name);
+      var tile=parseFloat(cs.backgroundSize),last=f.cssRules[f.cssRules.length-1].style,m=/translateX\((-?[\d.]+)px\)/.exec(last.transform);
+      eq(last.length,1,"solo se anima el transform (no repinta): "+name);
+      ok(m&&Math.abs(+m[1])===tile,"avanza justo una textura ("+(m&&m[1])+" de "+tile+" px), asi no salta al repetirse: "+name);
+      ok(Math.abs(parseFloat(cs.left))>=tile,"la capa cubre la pantalla durante todo el recorrido: "+name);
+      ok(/assets\/portada\/nubes\.webp/.test(cs.backgroundImage),"usa la textura de nubes: "+name);
+    });
+    ok(still,"con Reducir movimiento las nubes quedan quietas");
+    RUTA.showCover();
+  });
 
   /* ---------- Ejecucion ---------- */
   async function run(){

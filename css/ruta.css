@@ -21,9 +21,19 @@
 /* ---------- Portada ---------- */
 .rt-cover{position:fixed;inset:0;z-index:60;overflow:auto;color:var(--rt-on-photo);
   background:#0D1B26 url("../assets/estaciones/imagenes/mapa-1-aeropuerto-salida.webp") center/cover no-repeat}
-.rt-cover::before{content:"";position:fixed;inset:0;pointer-events:none;
+.rt-cover::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,rgba(9,20,30,.30) 0%,rgba(9,20,30,.05) 30%,rgba(9,20,30,.55) 62%,rgba(9,20,30,.88) 100%)}
-.rt-cover-in{position:relative;min-height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;
+/* Nubes que pasan sobre el aeropuerto: una textura que se repite sin costuras (assets/portada/nubes.webp, la genera
+   Estaciones/_herramientas/nubes_portada.ps1) en dos capas a distinta velocidad. Solo se anima el transform, así que
+   no se repinta nada; con «Reducir movimiento» quedan quietas (regla del final). */
+.rt-clouds{position:fixed;left:0;right:0;top:0;height:62%;z-index:0;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 45%,transparent 92%);mask-image:linear-gradient(180deg,#000 0%,#000 45%,transparent 92%)}
+.rt-cloud{position:absolute;top:0;bottom:0;right:0;background:url("../assets/portada/nubes.webp") repeat;will-change:transform}
+.rt-cloud-far{left:-640px;background-size:640px 640px;opacity:.8;animation:rt-drift-far 120s linear infinite}
+.rt-cloud-near{left:-960px;background-size:960px 960px;background-position:300px 180px;opacity:.65;animation:rt-drift-near 70s linear infinite}
+@keyframes rt-drift-far{to{transform:translateX(640px)}}
+@keyframes rt-drift-near{to{transform:translateX(960px)}}
+.rt-cover-in{position:relative;z-index:2;min-height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;
   padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px))}
 .rt-hero{margin-top:auto;padding-top:4vh}
 .rt-hero .rt-eyebrow{color:rgba(255,255,255,.88);text-shadow:0 1px 6px rgba(0,0,0,.5)}

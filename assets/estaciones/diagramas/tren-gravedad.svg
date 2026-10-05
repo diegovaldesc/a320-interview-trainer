@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Si el tren no se traba</title>
+  <desc id="d">Diagrama de pasos: confirmar en la página WHEEL si hay un triángulo verde por pata; si no, recycle UP y DOWN, que cambia el LGCIU, hasta 4 veces si hay tiempo; si no se resuelve en 120 segundos, extensión por gravedad con la manivela, 3 vueltas en sentido horario, que aísla el tren del Green, libera las doors y las trabas, y deja que la gravedad baje el tren. Después, palanca en DOWN, doors abiertas y no resetear en vuelo.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Si el tren no se traba</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">L/G GEAR NOT DOWNLOCKED.</text>
+  <rect x="18" y="52" width="324" height="34" rx="7" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="180" y="67" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">¿Un triángulo verde por pata en WHEEL?</text>
+  <text x="180" y="79" text-anchor="middle" font-size="9" fill="#5B6B78">sí: está abajo y trabado; no se aplica la gravedad</text>
+  <line x1="180" y1="86" x2="180" y2="98" stroke="#33424D" stroke-width="1.2" marker-end="url(#a33424D)"/>
+  <text x="188" y="95" font-size="9" font-weight="800" fill="#33424D">no</text>
+  <rect x="18" y="100" width="324" height="40" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="180" y="118" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Recycle: UP, esperar arriba y doors cerradas, DOWN</text>
+  <text x="180" y="130" text-anchor="middle" font-size="9" fill="#5B6B78">cambia el LGCIU · hasta 4 veces si hay tiempo</text>
+  <line x1="180" y1="140" x2="180" y2="152" stroke="#33424D" stroke-width="1.2" marker-end="url(#a33424D)"/>
+  <text x="188" y="149" font-size="9" font-weight="800" fill="#33424D">sin éxito tras 120 s</text>
+  <rect x="18" y="154" width="324" height="104" rx="8" fill="#FCEBD3" stroke="#C77700" stroke-width="1.5"/>
+  <text x="180" y="172" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Gravedad: manivela, 3 vueltas en sentido horario</text>
+  <circle cx="38" cy="188" r="8" fill="#C77700"/>
+  <text x="38" y="192" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="54" y="192" font-size="9.5" fill="#33424D">aísla el tren del sistema Green</text>
+  <circle cx="38" cy="208" r="8" fill="#C77700"/>
+  <text x="38" y="212" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="54" y="212" font-size="9.5" fill="#33424D">libera las doors y las trabas de las patas</text>
+  <circle cx="38" cy="228" r="8" fill="#C77700"/>
+  <text x="38" y="232" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">3</text>
+  <text x="54" y="232" font-size="9.5" fill="#33424D">la gravedad baja el tren (resortes y aire ayudan a trabarlo)</text>
+  <text x="18" y="278" font-size="9.4" fill="#33424D">Después: palanca en DOWN, doors abiertas y no resetear en vuelo.</text>
+</svg>

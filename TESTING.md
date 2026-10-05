@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~8 s con `OK 106/106 casos...` (código
+funciones y a su estado real. Termina en ~13 s con `OK 108/108 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -635,6 +635,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   (el first segment va del liftoff al tren arriba). Se corrigieron la
   alternativa correcta y la explicación; el enunciado no cambió, así que el
   progreso guardado sigue en la misma pregunta.
+- **RUTA-14** (2026-10-05, 1.18.0) — la materia Tren de aterrizaje y frenos
+  tiene 12 estaciones con su repaso al final. La clase del nosewheel steering
+  enseña Yellow, que es lo de la mayor parte de la flota, y avisa que los A320
+  más antiguos usan Green. Ninguna estación usa las tres preguntas DGAC del
+  steering que responden según los aviones antiguos. RUTA-02 espera ahora
+  cinco materias. Prueba de mutación: con el steering de la clase cambiado a
+  Green, falló.
+- **REG-08** (2026-10-05, 1.18.0) — esas tres preguntas DGAC conservan la
+  respuesta del examen (solo el steering inoperativo después de una extensión
+  por gravedad, no hay steering después de la gravedad, el steering usa Green),
+  pero su explicación ya no dice que toda la flota es así: aclara que la mayor
+  parte de la flota usa Yellow y conserva el steering.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

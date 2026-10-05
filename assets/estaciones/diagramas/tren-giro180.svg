@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 342" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Giro de 180° en la pista</title>
+  <desc id="d">Pista de 30 m vista desde arriba con la trayectoria del giro: el avión rueda por el lado derecho entre 5 y 8 kt, abre 25° a la izquierda, cuando el capitán pasa sobre el borde gira a la derecha con todo el tiller, y termina alineado con el tiller en neutro. Prohibido el brake pivot.</desc>
+  <rect x="1" y="1" width="358" height="340" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker><marker id="b0E5E6F" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#0E5E6F"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Giro de 180° en la pista</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Técnica de Airbus, con el capitán como PF.</text>
+  <rect x="100" y="74" width="136" height="240" rx="0" fill="#5A6670" stroke="#5A6670" stroke-width="1.4"/>
+  <line x1="100" y1="74" x2="100" y2="314" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="236" y1="74" x2="236" y2="314" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="168" y1="80" x2="168" y2="308" stroke="#FFFFFF" stroke-width="1.6" stroke-dasharray="12 10"/>
+  <line x1="102" y1="66" x2="234" y2="66" stroke="#0E5E6F" stroke-width="1" marker-end="url(#a0E5E6F)" marker-start="url(#b0E5E6F)"/>
+  <text x="168" y="61" text-anchor="middle" font-size="10" font-weight="800" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">30 m</text>
+  <path d="M 212 308 L 212 262 L 144 128 C 130 102 144 86 166 88 C 192 90 202 116 190 140 C 182 156 168 166 168 186 L 168 300" fill="none" stroke="#FFD166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a0E5E6F)"/>
+  <line x1="212" y1="262" x2="212" y2="214" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="206" y="236" text-anchor="end" font-size="10" font-weight="800" fill="#FFFFFF">25°</text>
+  <text x="244" y="290" font-size="9.4" font-weight="800" fill="#33424D">1 · lado derecho,</text>
+  <text x="244" y="302" font-size="9.4" font-weight="500" fill="#33424D">entre 5 y 8 kt</text>
+  <text x="244" y="214" font-size="9.4" font-weight="800" fill="#33424D">2 · abrir 25°</text>
+  <text x="244" y="226" font-size="9.4" font-weight="500" fill="#33424D">a la izquierda</text>
+  <text x="14" y="92" font-size="9.4" font-weight="800" fill="#33424D">3 · el capitán</text>
+  <text x="14" y="104" font-size="9.4" font-weight="500" fill="#33424D">sobre el borde:</text>
+  <text x="14" y="116" font-size="9.4" font-weight="500" fill="#33424D">todo el tiller</text>
+  <text x="14" y="128" font-size="9.4" font-weight="500" fill="#33424D">a la derecha</text>
+  <text x="14" y="262" font-size="9.4" font-weight="800" fill="#33424D">4 · alinear y</text>
+  <text x="14" y="274" font-size="9.4" font-weight="500" fill="#33424D">tiller en neutro</text>
+  <text x="180" y="330" text-anchor="middle" font-size="9" fill="#C0392B">Prohibido el brake pivot; si hace falta, empuje asimétrico o frenado diferencial.</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 302" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">LOSS OF BRAKING</title>
+  <desc id="d">Memory items en cinco pasos: REV MAX; soltar los pedales; A/SKID OFF, que pide el PF y hace el PM; presionar los pedales con un máximo de 1 000 PSI; y si aún no frena, parking brake con aplicaciones cortas. Se pierden el antiskid y el steering.</desc>
+  <rect x="1" y="1" width="358" height="300" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">LOSS OF BRAKING</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Solo si al frenar con los pedales no hay ningún efecto.</text>
+  <rect x="18" y="52" width="324" height="38" rx="7" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="38" cy="71" r="10" fill="#0E5E6F"/>
+  <text x="38" y="75" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="58" y="68" font-size="10.5" font-weight="800" fill="#1E2A33">REV ...... MAX</text>
+  <text x="58" y="82" font-size="9.2" fill="#33424D">se puede mantener hasta detenerse</text>
+  <line x1="38" y1="90" x2="38" y2="98" stroke="#33424D" stroke-width="1.2"/>
+  <rect x="18" y="98" width="324" height="38" rx="7" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="38" cy="117" r="10" fill="#0E5E6F"/>
+  <text x="38" y="121" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="58" y="114" font-size="10.5" font-weight="800" fill="#1E2A33">BRAKE PEDALS ...... RELEASE</text>
+  <text x="58" y="128" font-size="9.2" fill="#33424D">antes de cambiar de sistema</text>
+  <line x1="38" y1="136" x2="38" y2="144" stroke="#33424D" stroke-width="1.2"/>
+  <rect x="18" y="144" width="324" height="38" rx="7" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="38" cy="163" r="10" fill="#0E5E6F"/>
+  <text x="38" y="167" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <text x="58" y="160" font-size="10.5" font-weight="800" fill="#1E2A33">A/SKID OFF ...... ORDER</text>
+  <text x="58" y="174" font-size="9.2" fill="#33424D">el PF lo pide; el PM pone el switch en OFF</text>
+  <line x1="38" y1="182" x2="38" y2="190" stroke="#33424D" stroke-width="1.2"/>
+  <rect x="18" y="190" width="324" height="38" rx="7" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="38" cy="209" r="10" fill="#0E5E6F"/>
+  <text x="38" y="213" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">4</text>
+  <text x="58" y="206" font-size="10.5" font-weight="800" fill="#1E2A33">BRAKE PEDALS ...... PRESS</text>
+  <text x="58" y="220" font-size="9.2" fill="#33424D">máximo 1 000 PSI (triple indicator)</text>
+  <line x1="38" y1="228" x2="38" y2="236" stroke="#33424D" stroke-width="1.2"/>
+  <rect x="18" y="236" width="324" height="38" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <circle cx="38" cy="255" r="10" fill="#C77700"/>
+  <text x="38" y="259" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">5</text>
+  <text x="58" y="252" font-size="10.5" font-weight="800" fill="#1E2A33">PARK BRAKE ...... USE</text>
+  <text x="58" y="266" font-size="9.2" fill="#33424D">si aún no frena: aplicaciones cortas</text>
+  <text x="18" y="290" font-size="9.3" fill="#33424D">Se pierden el antiskid y el steering: rudder y frenado diferencial.</text>
+</svg>

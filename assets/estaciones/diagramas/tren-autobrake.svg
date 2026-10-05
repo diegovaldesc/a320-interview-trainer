@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 252" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Autobrake</title>
+  <desc id="d">Panel AUTO/BRK con los botones LO, MED y MAX, cada uno con su luz DECEL verde y su luz ON azul. LO para el aterrizaje, 2 m/s² a los 2 segundos; MED para el aterrizaje, 3 m/s² a los 2 segundos; MAX para el despegue, presión máxima en un despegue abortado. Se activa con la orden de los ground spoilers; DECEL se enciende al 80 % de la desaceleración elegida.</desc>
+  <rect x="1" y="1" width="358" height="250" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Autobrake</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Una desaceleración objetivo, no una presión fija.</text>
+  <rect x="18" y="50" width="324" height="74" rx="10" fill="#2A343C" stroke="#2A343C" stroke-width="1.4"/>
+  <text x="180" y="64" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">AUTO/BRK</text>
+  <rect x="40" y="70" width="72" height="46" rx="4" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="76" y="86" text-anchor="middle" font-size="9" font-weight="800" fill="#2E9D5B">DECEL</text>
+  <text x="76" y="106" text-anchor="middle" font-size="9" font-weight="800" fill="#5AA9E6">ON</text>
+  <line x1="44" y1="93" x2="108" y2="93" stroke="#55636E" stroke-width="1"/>
+  <text x="76" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#0E5E6F">LO</text>
+  <text x="76" y="154" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">aterrizaje</text>
+  <text x="76" y="168" text-anchor="middle" font-size="9.3" fill="#33424D">2 m/s²</text>
+  <text x="76" y="180" text-anchor="middle" font-size="9.3" fill="#33424D">a los 2 s</text>
+  <rect x="144" y="70" width="72" height="46" rx="4" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="180" y="86" text-anchor="middle" font-size="9" font-weight="800" fill="#2E9D5B">DECEL</text>
+  <text x="180" y="106" text-anchor="middle" font-size="9" font-weight="800" fill="#5AA9E6">ON</text>
+  <line x1="148" y1="93" x2="212" y2="93" stroke="#55636E" stroke-width="1"/>
+  <text x="180" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#0E5E6F">MED</text>
+  <text x="180" y="154" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">aterrizaje</text>
+  <text x="180" y="168" text-anchor="middle" font-size="9.3" fill="#33424D">3 m/s²</text>
+  <text x="180" y="180" text-anchor="middle" font-size="9.3" fill="#33424D">a los 2 s</text>
+  <rect x="248" y="70" width="72" height="46" rx="4" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="284" y="86" text-anchor="middle" font-size="9" font-weight="800" fill="#2E9D5B">DECEL</text>
+  <text x="284" y="106" text-anchor="middle" font-size="9" font-weight="800" fill="#5AA9E6">ON</text>
+  <line x1="252" y1="93" x2="316" y2="93" stroke="#55636E" stroke-width="1"/>
+  <text x="284" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#0E5E6F">MAX</text>
+  <text x="284" y="154" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">despegue</text>
+  <text x="284" y="168" text-anchor="middle" font-size="9.3" fill="#33424D">presión máxima</text>
+  <text x="284" y="180" text-anchor="middle" font-size="9.3" fill="#33424D">en un RTO</text>
+  <text x="18" y="210" font-size="9.4" fill="#33424D">Se activa con la orden de extensión de los ground spoilers.</text>
+  <text x="18" y="224" font-size="9.4" fill="#33424D">DECEL verde: la desaceleración real llegó al 80 % de la elegida.</text>
+  <text x="18" y="238" font-size="9.4" fill="#33424D">ON azul: el modo está armado.</text>
+</svg>

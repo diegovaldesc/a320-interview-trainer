@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 268" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Subir o bajar el tren</title>
+  <desc id="d">Secuencia en tres pasos: se abren las doors, las patas van a la posición elegida y se traban, y se cierran las doors. Cinta de velocidades: VLO 220 kt para subir el tren, VLO 250 kt para bajarlo, safety valve a 264 kt y VLE 280 kt con el tren abajo.</desc>
+  <rect x="1" y="1" width="358" height="266" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Subir o bajar el tren</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Los LGCIU ordenan la secuencia; Green la mueve.</text>
+  <rect x="18" y="54" width="100" height="52" rx="8" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="34" cy="70" r="9" fill="#0E5E6F"/>
+  <text x="34" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="76" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Se abren</text>
+  <text x="68" y="92" text-anchor="middle" font-size="9.5" fill="#33424D">las doors</text>
+  <line x1="118" y1="80" x2="128" y2="80" stroke="#33424D" stroke-width="1.2" marker-end="url(#a33424D)"/>
+  <rect x="130" y="54" width="100" height="52" rx="8" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="146" cy="70" r="9" fill="#0E5E6F"/>
+  <text x="146" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="188" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Las patas</text>
+  <text x="180" y="92" text-anchor="middle" font-size="9.5" fill="#33424D">van y se traban</text>
+  <line x1="230" y1="80" x2="240" y2="80" stroke="#33424D" stroke-width="1.2" marker-end="url(#a33424D)"/>
+  <rect x="242" y="54" width="100" height="52" rx="8" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="258" cy="70" r="9" fill="#0E5E6F"/>
+  <text x="258" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <text x="300" y="74" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Se cierran</text>
+  <text x="292" y="92" text-anchor="middle" font-size="9.5" fill="#33424D">las doors</text>
+  <text x="18" y="124" font-size="9.3" fill="#33424D">La palanca se mueve en un solo movimiento. En tierra queda trabada en DOWN.</text>
+  <text x="18" y="148" font-size="10" font-weight="800" fill="#0E5E6F">VELOCIDADES DEL TREN (kt)</text>
+  <rect x="30" y="172" width="150" height="12" rx="3" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1"/>
+  <rect x="180" y="172" width="90" height="12" rx="0" fill="#FCEBD3" stroke="#C77700" stroke-width="1"/>
+  <rect x="270" y="172" width="60" height="12" rx="3" fill="#F8E1DE" stroke="#C0392B" stroke-width="1"/>
+  <line x1="30" y1="169" x2="30" y2="187" stroke="#1E2A33" stroke-width="0.8"/>
+  <text x="30" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">200</text>
+  <line x1="90" y1="169" x2="90" y2="187" stroke="#1E2A33" stroke-width="1.4"/>
+  <text x="90" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">220</text>
+  <line x1="180" y1="169" x2="180" y2="187" stroke="#1E2A33" stroke-width="1.4"/>
+  <text x="180" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">250</text>
+  <line x1="222" y1="169" x2="222" y2="187" stroke="#1E2A33" stroke-width="1.4"/>
+  <text x="222" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#C0392B">264</text>
+  <line x1="270" y1="169" x2="270" y2="187" stroke="#1E2A33" stroke-width="1.4"/>
+  <text x="270" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">280</text>
+  <line x1="330" y1="169" x2="330" y2="187" stroke="#1E2A33" stroke-width="0.8"/>
+  <text x="330" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">300</text>
+  <line x1="90" y1="187" x2="90" y2="193" stroke="#5B6B78" stroke-width="0.9"/>
+  <text x="93" y="202" text-anchor="end" font-size="9.5" font-weight="800" fill="#1E2A33">VLO subir</text>
+  <line x1="270" y1="187" x2="270" y2="193" stroke="#5B6B78" stroke-width="0.9"/>
+  <text x="267" y="202" text-anchor="start" font-size="9.5" font-weight="800" fill="#1E2A33">VLE</text>
+  <line x1="180" y1="187" x2="180" y2="209" stroke="#5B6B78" stroke-width="0.9"/>
+  <text x="183" y="218" text-anchor="end" font-size="9.5" font-weight="800" fill="#1E2A33">VLO bajar</text>
+  <line x1="222" y1="187" x2="222" y2="209" stroke="#5B6B78" stroke-width="0.9"/>
+  <text x="219" y="218" text-anchor="start" font-size="9.5" font-weight="800" fill="#C0392B">safety valve</text>
+  <text x="18" y="242" font-size="9.2" fill="#33424D">Sobre 264 kt la safety valve corta el Green al tren; bajo 260 kt sigue</text>
+  <text x="18" y="255" font-size="9.2" fill="#33424D">cortado mientras la palanca esté arriba. VLE: 280 kt con el tren abajo.</text>
+</svg>

@@ -1547,9 +1547,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo y Performance, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=42,"al menos las 42 estaciones de Hidraulico, Electrico, Controles de vuelo y Performance");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico,performance","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance y Tren de aterrizaje, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=54,"al menos las 54 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance y Tren de aterrizaje");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -1797,6 +1797,26 @@
     eq(badgeFor("hid-1",function(t){return t.type==="mcq"&&t.source.system==="hydraulic"}),"","una pregunta del banco de sistemas no lleva etiqueta");
     var txt=byId("rtPlayer").textContent;ok(!/FCOM|FCTM|Tutorial|Getting to Grips|PDF/.test(txt),"la pantalla no nombra documentos");
     RUTA.showCover();
+  });
+
+  T("14 RUTA-14 Tren de aterrizaje: 12 estaciones con el repaso al final; el steering se enseña con Yellow (y Green en los A320 antiguos) y ninguna estacion usa las 3 preguntas DGAC que responden segun los aviones antiguos",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="tren"});
+    eq(P.length,12,"estaciones de Tren de aterrizaje");eq(P[P.length-1].id,"tren-repaso","el repaso va al final");
+    var nws=RUTA.stations["tren-4"];ok(nws,"existe la estacion del steering");
+    var body=nws.cards.map(function(c){return c.body}).join(" ");
+    ok(/\*\*Yellow\*\*/.test(body)&&/antiguos, Green/.test(body),"el steering: Yellow en la mayor parte de la flota y Green en los antiguos");
+    var viejas=SYSTEMS[DGAC_KEY].questions.filter(function(q){return /WHAT OTHER SYSTEMS WILL BE INOPERATIVE|WILL NOSE WHEEL STEERING BE AVAILABLE|SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/.test(q.q)});
+    eq(viejas.length,3,"las 3 preguntas DGAC del steering");
+    var ids=viejas.map(function(q){return qid(DGAC_KEY,q)});
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC del steering antiguo: "+usadas.join(", "));
+  });
+  T("14 REG-08 las 3 preguntas DGAC del steering conservan la respuesta del examen y su explicacion aclara que la mayor parte de la flota usa Yellow",function(){
+    var Q=SYSTEMS[DGAC_KEY].questions;
+    function one(re){var h=Q.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]}
+    var a=one(/WHAT OTHER SYSTEMS WILL BE INOPERATIVE/),b=one(/WILL NOSE WHEEL STEERING BE AVAILABLE/),c=one(/SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/);
+    eq(a.options[a.correct],"NOSE WHEEL STEERING ONLY.","clave de la 1");eq(b.options[b.correct],"NO.","clave de la 2");eq(c.options[c.correct],"GREEN.","clave de la 3");
+    [a,b,c].forEach(function(q){ok(/mayor parte de la flota/.test(q.expl)&&/Yellow/.test(q.expl)&&/antiguos/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
   });
 
   /* ---------- Ejecucion ---------- */

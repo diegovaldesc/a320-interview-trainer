@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 274" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Indicaciones del tren</title>
+  <desc id="d">Panel LDG GEAR, conectado al LGCIU 1, con un triángulo verde y un UNLK rojo por pata. Página WHEEL con dos triángulos por pata, el izquierdo del LGCIU 1 y el derecho del LGCIU 2. Leyenda: verde, trabada abajo; rojo, en tránsito; sin triángulo, arriba y trabada; cruces ámbar, el LGCIU falló.</desc>
+  <rect x="1" y="1" width="358" height="272" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Indicaciones del tren</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Un triángulo verde por pata basta.</text>
+  <rect x="18" y="52" width="132" height="96" rx="8" fill="#2A343C" stroke="#2A343C" stroke-width="1.4"/>
+  <text x="84" y="66" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">LDG GEAR</text>
+  <rect x="24" y="74" width="32" height="26" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <polygon points="32,80.6 48,80.6 40,94.2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="24" y="106" width="32" height="18" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="40" y="119" text-anchor="middle" font-size="8" font-weight="800" fill="#5A2A26">UNLK</text>
+  <rect x="68" y="74" width="32" height="26" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <polygon points="76,80.6 92,80.6 84,94.2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="68" y="106" width="32" height="18" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="84" y="119" text-anchor="middle" font-size="8" font-weight="800" fill="#5A2A26">UNLK</text>
+  <rect x="112" y="74" width="32" height="26" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <polygon points="120,80.6 136,80.6 128,94.2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="112" y="106" width="32" height="18" rx="3" fill="#11181D" stroke="#55636E" stroke-width="1"/>
+  <text x="128" y="119" text-anchor="middle" font-size="8" font-weight="800" fill="#5A2A26">UNLK</text>
+  <text x="84" y="140" text-anchor="middle" font-size="9" fill="#C9D3DB">conectado al LGCIU 1</text>
+  <rect x="166" y="52" width="176" height="96" rx="8" fill="#0F1A22" stroke="#0F1A22" stroke-width="1.4"/>
+  <text x="254" y="66" text-anchor="middle" font-size="9.5" font-weight="800" fill="#FFFFFF">WHEEL</text>
+  <line x1="196" y1="76" x2="196" y2="126" stroke="#55636E" stroke-width="1"/>
+  <polygon points="179,94.4 193,94.4 186,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="199,94.4 213,94.4 206,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="254" y1="76" x2="254" y2="126" stroke="#55636E" stroke-width="1"/>
+  <polygon points="237,94.4 251,94.4 244,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="257,94.4 271,94.4 264,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="312" y1="76" x2="312" y2="126" stroke="#55636E" stroke-width="1"/>
+  <polygon points="295,94.4 309,94.4 302,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="315,94.4 329,94.4 322,106.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="254" y="140" text-anchor="middle" font-size="9" fill="#C9D3DB">izquierdo: LGCIU 1 · derecho: LGCIU 2</text>
+  <polygon points="23,166.4 37,166.4 30,178.3" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="46" y="176" font-size="10" fill="#33424D">Verde: trabada abajo</text>
+  <polygon points="23,186.4 37,186.4 30,198.3" fill="#C0392B" stroke="#C0392B" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="46" y="196" font-size="10" fill="#33424D">Rojo: en tránsito</text>
+  <rect x="23" y="205" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4" stroke-dasharray="2 2"/>
+  <text x="46" y="216" font-size="10" fill="#33424D">Sin triángulo: arriba y trabada</text>
+  <line x1="24" y1="226" x2="36" y2="238" stroke="#C77700" stroke-width="2.2"/>
+  <line x1="24" y1="238" x2="36" y2="226" stroke="#C77700" stroke-width="2.2"/>
+  <text x="46" y="236" font-size="10" fill="#33424D">Cruces ámbar: el LGCIU falló</text>
+  <text x="18" y="262" font-size="9.3" fill="#33424D">UNLK rojo en el panel: la pata no está trabada donde se eligió.</text>
+</svg>

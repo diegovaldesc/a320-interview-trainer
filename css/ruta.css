@@ -180,6 +180,10 @@
 .rt-more .rt-prose{margin-top:8px;font-size:15px;color:var(--rt-muted)}
 .rt-nav{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
 .rt-q{margin:0;font:700 22px/1.2 var(--rt-display)}
+.rt-qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.rt-origin{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font:700 11px/1 var(--rt-display);letter-spacing:.08em;text-transform:uppercase;border:1px solid transparent}
+.rt-origin-int{background:var(--rt-mid-bg);color:var(--rt-gold-ink);border-color:rgba(138,100,24,.35)}
+.rt-origin-dgac{background:#E2ECF2;color:var(--rt-navy);border-color:rgba(30,58,76,.30)}
 .rt-opts{display:grid;gap:10px}
 .rt-opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--rt-line);background:var(--rt-surface);font-size:16px;line-height:1.35}
 .rt-l{flex:0 0 28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--rt-sunken);font:700 15px/1 var(--rt-display)}

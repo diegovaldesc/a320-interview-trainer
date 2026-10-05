@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 264" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">FLEX: la temperatura asumida</title>
+  <desc id="d">Empuje máximo según la temperatura exterior: plano hasta la TREF y después decreciente hasta la TFLEX máxima. A la OAT del día el motor podría dar el TOGA; el peso real pide menos empuje, y la temperatura a la que la curva da ese empuje es la TFLEX. La reducción máxima es 25 %.</desc>
+  <rect x="1" y="1" width="358" height="262" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a8C99A3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8C99A3"/></marker><marker id="b8C99A3" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#8C99A3"/></marker><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker><marker id="bC77700" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#C77700"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">FLEX: la temperatura asumida</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">El empuje máximo baja cuando la temperatura sube.</text>
+  <line x1="46" y1="204" x2="342" y2="204" stroke="#8C99A3" stroke-width="1.2" marker-end="url(#a8C99A3)"/>
+  <line x1="46" y1="204" x2="46" y2="58" stroke="#8C99A3" stroke-width="1.2" marker-end="url(#a8C99A3)"/>
+  <text x="342" y="220" text-anchor="end" font-size="9.5" fill="#5B6B78">temperatura exterior →</text>
+  <text x="52" y="62" font-size="9.5" fill="#5B6B78">empuje máximo</text>
+  <line x1="46" y1="123.9" x2="262" y2="123.9" stroke="#0E5E6F" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="262" y1="123.9" x2="262" y2="204" stroke="#0E5E6F" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <polyline points="46,80 168,80 318,150" fill="none" stroke="#1E2A33" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="168" y1="80" x2="168" y2="204" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="318" y1="150" x2="318" y2="204" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="108" y1="80" x2="108" y2="204" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="262" cy="123.9" r="4" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="1.5"/>
+  <text x="108" y="72" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">TOGA (flat rated)</text>
+  <text x="52" y="117.9" font-size="9.5" font-weight="700" fill="#0E5E6F">empuje que pide el peso real</text>
+  <line x1="108" y1="201" x2="108" y2="207" stroke="#1E2A33" stroke-width="1.2"/>
+  <text x="108" y="234" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">OAT</text>
+  <line x1="168" y1="201" x2="168" y2="207" stroke="#1E2A33" stroke-width="1.2"/>
+  <text x="168" y="234" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">TREF</text>
+  <line x1="262" y1="201" x2="262" y2="207" stroke="#1E2A33" stroke-width="1.2"/>
+  <text x="262" y="234" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0E5E6F">TFLEX</text>
+  <line x1="318" y1="201" x2="318" y2="207" stroke="#1E2A33" stroke-width="1.2"/>
+  <text x="318" y="234" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">TFLEX máx.</text>
+  <line x1="336" y1="82" x2="336" y2="148" stroke="#C77700" stroke-width="1.3" marker-end="url(#aC77700)" marker-start="url(#bC77700)"/>
+  <text x="331" y="113" text-anchor="end" font-size="9" font-weight="700" fill="#C77700">máx.</text>
+  <text x="331" y="125" text-anchor="end" font-size="9.5" font-weight="800" fill="#C77700">−25 %</text>
+  <text x="18" y="252" font-size="9.5" fill="#33424D">TFLEX: mayor que la TREF y que la OAT, sin pasar la máxima.</text>
+</svg>

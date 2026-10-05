@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 284" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cómo se construye el peso</title>
+  <desc id="d">Pila de pesos de abajo hacia arriba: MEW; más los ítems del operador da el OEW; más lo propio del vuelo da el DOW; más la carga paga da el ZFW, que no puede pasar el MZFW; más el combustible de despegue da el TOW, que no puede pasar el MTOW. Restando el trip fuel queda el LW, que no puede pasar el MLW.</desc>
+  <rect x="1" y="1" width="358" height="282" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Cómo se construye el peso</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Cada peso se apoya en el anterior.</text>
+  <rect x="24" y="194" width="168" height="62" rx="3" fill="#E4EAEF" stroke="#7F8D99" stroke-width="1.3"/>
+  <text x="108" y="223" text-anchor="middle" font-size="10.5" font-weight="800" fill="#33424D">MEW</text>
+  <text x="108" y="236" text-anchor="middle" font-size="9" fill="#33424D">estructura, motores y sistemas</text>
+  <rect x="24" y="172" width="168" height="22" rx="3" fill="#DCE6EC" stroke="#7F8D99" stroke-width="1.3"/>
+  <text x="108" y="186.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">Ítems del operador</text>
+  <rect x="24" y="154" width="168" height="18" rx="3" fill="#D3E1E8" stroke="#7F8D99" stroke-width="1.3"/>
+  <text x="108" y="166.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">Lo propio del vuelo</text>
+  <rect x="24" y="116" width="168" height="38" rx="3" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.3"/>
+  <text x="108" y="138.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">Carga paga</text>
+  <rect x="24" y="58" width="168" height="58" rx="3" fill="#FCEBD3" stroke="#C77700" stroke-width="1.3"/>
+  <line x1="28" y1="92" x2="188" y2="92" stroke="#C77700" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="108" y="78" text-anchor="middle" font-size="9.5" font-weight="700" fill="#C77700">trip fuel</text>
+  <text x="108" y="107" text-anchor="middle" font-size="9" fill="#C77700">combustible al aterrizar</text>
+  <line x1="192" y1="172" x2="206" y2="172" stroke="#1E2A33" stroke-width="1.1"/>
+  <text x="210" y="176" font-size="10.5" font-weight="800" fill="#1E2A33">OEW</text>
+  <line x1="192" y1="154" x2="206" y2="154" stroke="#1E2A33" stroke-width="1.1"/>
+  <text x="210" y="158" font-size="10.5" font-weight="800" fill="#1E2A33">DOW</text>
+  <text x="244" y="158" font-size="9.5" font-weight="700" fill="#5B6B78">listo para el vuelo</text>
+  <line x1="192" y1="116" x2="206" y2="116" stroke="#1E2A33" stroke-width="1.1"/>
+  <text x="210" y="120" font-size="10.5" font-weight="800" fill="#1E2A33">ZFW</text>
+  <text x="244" y="120" font-size="9.5" font-weight="700" fill="#C77700">≤ MZFW</text>
+  <line x1="192" y1="92" x2="206" y2="92" stroke="#1E2A33" stroke-width="1.1"/>
+  <text x="210" y="96" font-size="10.5" font-weight="800" fill="#1E2A33">LW</text>
+  <text x="244" y="96" font-size="9.5" font-weight="700" fill="#C77700">≤ MLW</text>
+  <line x1="192" y1="58" x2="206" y2="58" stroke="#1E2A33" stroke-width="1.1"/>
+  <text x="210" y="62" font-size="10.5" font-weight="800" fill="#1E2A33">TOW</text>
+  <text x="244" y="62" font-size="9.5" font-weight="700" fill="#C77700">≤ MTOW</text>
+  <text x="18" y="274" font-size="9" fill="#33424D">ZFW = DOW + carga paga · TOW = ZFW + combustible · LW = TOW − trip fuel</text>
+</svg>

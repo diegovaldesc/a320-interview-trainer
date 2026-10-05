@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 103/103 casos...` (código
+funciones y a su estado real. Termina en ~8 s con `OK 106/106 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -162,6 +162,15 @@ resolver primero, antes de seguir auditando.
   conectan si fallan los generadores" sigue penalizado. La referencia ya no
   dice que el BUS TIE "comparte" la alimentación (sugería generadores en
   paralelo). Prueba de mutación: con el término devuelto, REG-05 falla.
+- **REG-06 — ninguna oral cita un manual en lo que se ve** (2026-10-05,
+  1.17.0): al armar Performance aparecieron dos referencias antiguas que lo
+  hacían («fuera del FCOM…» en ETOPS, «la razón que da el FCTM» en sterile
+  cockpit). Se reescribieron, y la prueba revisa pregunta, referencia,
+  resumen, conceptos, pasos y avisos de las 53 orales. El FCOM puede
+  aparecer solo como documento que la tripulación consulta («revisa el FCOM
+  si hay tiempo»). También fija la corrección de `ov_v1_continue`: con FLEX,
+  poner TOGA después de una falla da margen pero no es obligatorio; con
+  derated, nunca bajo la velocidad F.
 - **Entrevista oral, performance y operación (9 preguntas nuevas,
   2026-09-30)**: MAC% y envolvente, pesos operativos, cost index, combustible
   DAN 121, pista contaminada, FLEX vs derated, approach vs landing climb,
@@ -615,6 +624,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   Prueba de mutación: con «Todas las secciones» de vuelta en la portada,
   falló. Lección: en cadenas JS con comillas simples, los apóstrofos del
   inglés («don’t», «can’t») van tipográficos, o rompen el script.
+- **RUTA-13** (2026-10-05, 1.17.0) — la materia Performance tiene 13
+  estaciones, con su repaso al final, y cada pregunta de una estación
+  muestra su origen sin nombrar documentos: «Interview question» en las de
+  entrevista (alternativas y orales) y «DGAC exam» en las del examen DGAC;
+  las del banco de sistemas no llevan etiqueta. Prueba de mutación: sin la
+  etiqueta en la pantalla de la pregunta, falló.
+- **REG-07** (2026-10-05, 1.17.0) — la pregunta de entrevista del second
+  segment decía que empieza a 35 ft; empieza cuando el tren queda arriba
+  (el first segment va del liftoff al tren arriba). Se corrigieron la
+  alternativa correcta y la explicación; el enunciado no cambió, así que el
+  progreso guardado sigue en la misma pregunta.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

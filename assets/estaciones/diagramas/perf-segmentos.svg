@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 256" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Despegue con un motor fallado</title>
+  <desc id="d">Perfil del despegue con un motor fallado: first segment desde el liftoff hasta el tren arriba, gradiente positivo; second segment a V2 hasta la acceleration altitude, como mínimo 400 ft, 2,4 %; third segment acelerando de V2 a green dot con los flaps subiendo; final segment limpio, a green dot y con MCT hasta 1 500 ft, 1,2 %. El takeoff thrust dura como máximo 10 minutos.</desc>
+  <rect x="1" y="1" width="358" height="254" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Despegue con un motor fallado</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Gradientes mínimos de un bimotor en cada segmento.</text>
+  <line x1="14" y1="216" x2="346" y2="216" stroke="#8C99A3" stroke-width="1"/>
+  <rect x="14" y="211" width="66" height="6" rx="1.5" fill="#4A5560" stroke="#4A5560" stroke-width="1"/>
+  <line x1="14" y1="162" x2="200" y2="162" stroke="#8C99A3" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="18" y="157" font-size="9" font-weight="700" fill="#5B6B78">400 ft mín.</text>
+  <line x1="14" y1="66" x2="340" y2="66" stroke="#8C99A3" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="18" y="61" font-size="9" font-weight="700" fill="#5B6B78">1 500 ft</text>
+  <path d="M50 216 Q62 215 74 209" fill="none" stroke="#0E5E6F" stroke-width="2.4" stroke-linecap="round"/>
+  <polyline points="74,209 104,199 198,162 258,160 338,68" fill="none" stroke="#0E5E6F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="104" y1="220" x2="104" y2="195" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="198" y1="220" x2="198" y2="158" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="258" y1="220" x2="258" y2="156" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="74" cy="209" r="2.6" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="1.5"/>
+  <text x="70" y="203" text-anchor="end" font-size="8.5" fill="#5B6B78">35 ft</text>
+  <text x="77" y="232" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">First</text>
+  <text x="77" y="245" text-anchor="middle" font-size="10" font-weight="800" fill="#0E5E6F">&gt; 0 %</text>
+  <text x="151" y="232" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">Second</text>
+  <text x="151" y="245" text-anchor="middle" font-size="10" font-weight="800" fill="#C77700">2,4 %</text>
+  <text x="228" y="232" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">Third</text>
+  <text x="228" y="245" text-anchor="middle" font-size="10" font-weight="800" fill="#0E5E6F">acelera</text>
+  <text x="298" y="232" text-anchor="middle" font-size="9.5" font-weight="800" fill="#33424D">Final</text>
+  <text x="298" y="245" text-anchor="middle" font-size="10" font-weight="800" fill="#0E5E6F">1,2 %</text>
+  <text x="150" y="205" font-size="9" fill="#33424D">a V2, tren arriba</text>
+  <text x="228" y="176" text-anchor="middle" font-size="9" fill="#33424D">V2 → green dot</text>
+  <text x="228" y="187" text-anchor="middle" font-size="9" fill="#33424D">flaps arriba</text>
+  <text x="282" y="102" text-anchor="end" font-size="9" fill="#33424D">limpio</text>
+  <text x="282" y="113" text-anchor="end" font-size="9" fill="#33424D">green dot</text>
+  <text x="282" y="124" text-anchor="end" font-size="9" fill="#33424D">MCT</text>
+  <line x1="50" y1="132" x2="258" y2="132" stroke="#C77700" stroke-width="1.2"/>
+  <line x1="50" y1="128" x2="50" y2="136" stroke="#C77700" stroke-width="1.2"/>
+  <line x1="258" y1="128" x2="258" y2="136" stroke="#C77700" stroke-width="1.2"/>
+  <text x="154" y="126" text-anchor="middle" font-size="9" font-weight="700" fill="#C77700">takeoff thrust (TOGA o FLEX): máx. 10 min</text>
+</svg>

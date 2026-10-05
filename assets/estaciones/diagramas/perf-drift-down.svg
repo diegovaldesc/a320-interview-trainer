@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 264" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Falla de motor en crucero</title>
+  <desc id="d">Perfil de descenso después de una falla de motor en crucero. La standard strategy, a M 0,78 / 300 kt, baja más y nivela en el REC MAX con un motor. El drift down, a green dot, baja menos y nivela más alto, en el drift down ceiling. Su net flight path, más baja, debe pasar al menos 2 000 ft sobre el terreno.</desc>
+  <rect x="1" y="1" width="358" height="262" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Falla de motor en crucero</text>
+  <text x="18" y="42" font-size="10" fill="#5B6B78">Dos formas de descender con un motor.</text>
+  <polygon points="14,236 14,222 80,214 150,208 210,196 262,178 284,172 306,186 346,202 346,236" fill="#EFE5DA" stroke="#A07C55" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="332" y="228" text-anchor="end" font-size="9" font-weight="700" fill="#A07C55">terreno</text>
+  <line x1="14" y1="62" x2="56" y2="62" stroke="#0E5E6F" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="16" y="54" font-size="9" font-weight="700" fill="#5B6B78">crucero</text>
+  <polyline points="56,62 150,160 192,160" fill="none" stroke="#2F6FB5" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="56,62 220,96 342,96" fill="none" stroke="#0E5E6F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="56,62 220,118 342,118" fill="none" stroke="#5B6B78" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+  <circle cx="56" cy="62" r="4.2" fill="#C0392B" stroke="#FFFFFF" stroke-width="1.5"/>
+  <text x="64" y="54" font-size="9.5" font-weight="800" fill="#C0392B">falla de motor</text>
+  <text x="342" y="90" text-anchor="end" font-size="9.5" font-weight="800" fill="#0E5E6F">drift down ceiling</text>
+  <text x="342" y="112" text-anchor="end" font-size="9" font-weight="700" fill="#5B6B78">net flight path</text>
+  <text x="172" y="80" font-size="9.5" font-weight="800" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">drift down · green dot</text>
+  <text x="112" y="128" text-anchor="end" font-size="9.5" font-weight="800" fill="#2F6FB5" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">standard</text>
+  <text x="112" y="140" text-anchor="end" font-size="9.5" font-weight="700" fill="#2F6FB5" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">M 0,78 / 300 kt</text>
+  <text x="192" y="176" text-anchor="end" font-size="9.5" font-weight="800" fill="#2F6FB5" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">REC MAX con un motor</text>
+  <line x1="284" y1="122" x2="284" y2="168" stroke="#33424D" stroke-width="1.2" marker-end="url(#a33424D)" marker-start="url(#b33424D)"/>
+  <text x="290" y="150" font-size="9.5" font-weight="800" fill="#33424D" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">≥ 2 000 ft</text>
+  <text x="18" y="254" font-size="9.3" fill="#33424D">Sobre terreno alto, el drift down mantiene el avión lo más alto posible.</text>
+</svg>

@@ -4,7 +4,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.16.0";
+const APP_VERSION="1.17.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");

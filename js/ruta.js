@@ -362,9 +362,17 @@
   // La pregunta oral del banco de la app (con su rúbrica); si no está, la copia que trae la estación.
   function oralQuestion(t){ var q = t.source && typeof ORAL_VOICE_BANK !== 'undefined' ? ORAL_VOICE_BANK.find(function(x){ return x.id === t.source.id; }) : null; return q || t; }
   function grade(score){ return score >= 9 ? 'Very high coverage' : score >= 7.5 ? 'High coverage' : score >= 6 ? 'Medium coverage' : score >= 4 ? 'Partial coverage' : 'Low coverage'; }
+  // Origen de la pregunta, sin nombrar documentos: las de entrevista (alternativas y orales) y las del examen DGAC.
+  function origin(t){
+    var s = t.source || {};
+    if (t.type === 'oral' || s.bank === 'oral' || s.system === 'interview_technical') return ['int', 'Interview question'];
+    if (s.bank === 'dgac' || s.system === DGAC_KEY) return ['dgac', 'DGAC exam'];
+    return null;
+  }
+  function originHtml(t){ var o = origin(t); return o ? '<span class="rt-origin rt-origin-' + o[0] + '">' + o[1] + '</span>' : ''; }
   function viewQuestion(){
     var st = S.st, order = queue(), ti = order[S.q], t = st.test[ti], ans = S.answers[ti];
-    var h = head(st.cards.length) + '<div class="rt-p-body"><span class="rt-eyebrow">' + (S.retry ? 'Second try · ' : '') + 'Question ' + (S.q + 1) + ' of ' + order.length + '</span>';
+    var h = head(st.cards.length) + '<div class="rt-p-body"><div class="rt-qhead"><span class="rt-eyebrow">' + (S.retry ? 'Second try · ' : '') + 'Question ' + (S.q + 1) + ' of ' + order.length + '</span>' + originHtml(t) + '</div>';
     if (t.image) h += '<figure class="rt-figure"><img src="' + esc(t.image.src) + '" alt="' + esc(t.image.alt) + '"></figure>';
     h += '<p class="rt-q">' + esc(t.question) + '</p>';
     if (t.type === 'mcq'){
@@ -469,6 +477,6 @@
   // Para la batería de pruebas y para el enlace «Portada» del banco de preguntas.
   window.RUTA = { missions: M, stations: ST, subjects: SUBJ, showCover: showCover, showMap: showMap, showBank: showBank,
     startMission: startMission, answer: answer, answerOral: answerOral, nextQuestion: nextQuestion,
-    state: function(){ return S; }, geo: function(){ return geo; }, currentIndex: currentIndex, isUnlocked: isUnlocked, totalStars: totalStars, renderCover: renderCover };
+    state: function(){ return S; }, geo: function(){ return geo; }, currentIndex: currentIndex, isUnlocked: isUnlocked, totalStars: totalStars, renderCover: renderCover, render: renderPlayer };
   showCover();
 })();

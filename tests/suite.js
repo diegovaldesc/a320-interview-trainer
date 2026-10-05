@@ -449,6 +449,17 @@
     ok(evaluateLocally(q,"Las baterías solo se conectan si fallan los generadores.").errors.length===1,"el error de verdad debe seguir penalizado");
     ok(!/compartir la alimentaci/.test(q.reference),"la referencia no debe sugerir generadores en paralelo");
   });
+  T("6 REG-06 ninguna pregunta oral cita un manual en lo que se ve (pregunta, referencia, resumen, conceptos y avisos)",function(){
+    var CITA=/(fuera del|que da el|seg[uú]n el|explica el|dice el|lo dice el|que el) (FCOM|FCTM|manual)|\bFCTM\b|Getting to Grips|Tutorial|\bAFM\b|\bPDF\b|§|en prosa/i;
+    var bad=[];
+    ORAL_VOICE_BANK.forEach(function(q){
+      var visible=[q.question,q.reference,q.short||""].concat((q.concepts||[]).map(function(c){return c.label}),(q.steps||[]).map(function(c){return c.label||c.concept||""}),(q.criticalErrors||[]).map(function(e){return e.feedback}));
+      visible.forEach(function(s){if(CITA.test(String(s)))bad.push(q.id+": "+String(s).match(CITA)[0])});
+    });
+    eq(bad.length,0,"orales que citan un manual: "+bad.slice(0,6).join(" | "));
+    ok(/EDTO/.test(oral("ov_etops").reference),"ETOPS dice su nombre en la norma OACI (EDTO)");
+    var c=oral("ov_v1_continue").reference;ok(/no es obligatorio/.test(c)&&/nunca bajo la velocidad F/.test(c),"despues de V1: con FLEX el TOGA no es obligatorio y con derated nunca bajo F");
+  });
   T("6 entrevista oral, performance y operacion: las 9 preguntas nuevas reconocen respuestas correctas dichas con otras palabras",function(){
     [["ov_mac_envelope","Es la posición del CG expresada en porcentaje de la cuerda media aerodinámica. La envolvente define los límites del CG según el peso: si está muy adelante cuesta rotar, si está muy atrás pierde estabilidad. El A320 tiene CG básico, T1, y extended forward. La escala del volante de trim va más o menos de 15 a 41 por ciento. Se carga el ZFWCG en el FMS y con eso se pone el trim.",7.5],
      ["ov_weights","Primero está el peso de fábrica, el manufacturer empty weight, que es la estructura, motores y sistemas. Después el peso vacío operativo que suma los ítems del operador. El DOW es el avión listo para volar sin combustible utilizable ni carga paga. El ZFW es el DOW más la carga paga. Luego con el combustible está el peso de despegue y el de aterrizaje, y cada uno tiene su máximo: MZFW, MTOW, MLW.",7.5],
@@ -1536,9 +1547,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: 18 misiones de Hidraulico y Electrico, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=29,"al menos las 29 estaciones de Hidraulico, Electrico y Controles de vuelo");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo y Performance, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=42,"al menos las 42 estaciones de Hidraulico, Electrico, Controles de vuelo y Performance");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico,performance","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -1763,6 +1774,31 @@
     ok(!/Estación|fichas|preguntas|Empezar|Cerrar/.test(sheet),"sin restos en espanol en la ficha: "+sheet.slice(0,160));
     RUTA.showCover();
   });
+  T("14 REG-07 el segundo segmento empieza con el tren arriba, no a 35 ft (pregunta de entrevista corregida)",function(){
+    var q=SYSTEMS.interview_technical.questions.find(function(x){return x.q.indexOf("Dentro de los segmentos de despegue")===0});
+    ok(q,"existe la pregunta del segundo segmento");
+    var a=q.options[q.correct];
+    ok(!/desde 35 ft/.test(a)&&/tren queda arriba/.test(a)&&/400 ft/.test(a)&&/V2/.test(a),"alternativa correcta: "+a);
+    ok(!/desde los 35 ft/.test(q.expl)&&/2,4/.test(q.expl),"explicacion: "+q.expl.slice(0,80));
+  });
+  T("14 RUTA-13 Performance: 13 estaciones con el repaso al final, y cada pregunta muestra su origen (entrevista o examen DGAC) sin nombrar documentos",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="performance"});
+    eq(P.length,13,"estaciones de Performance");eq(P[P.length-1].id,"perf-repaso","el repaso de Performance va al final");
+    reset();appState.ruta.unlockAll=true;
+    function badgeFor(stId,pick){
+      var i=RUTA.missions.findIndex(function(m){return m.id===stId}),st=RUTA.stations[stId];
+      var ti=st.test.findIndex(pick);ok(ti>=0,"hay una pregunta asi en "+stId);
+      RUTA.startMission(i);var S=RUTA.state();S.view="question";S.q=ti;RUTA.render();
+      var b=byId("rtPlayer").querySelector(".rt-origin");return b?b.textContent:"";
+    }
+    eq(badgeFor("perf-2",function(t){return t.type==="mcq"&&t.source.system==="interview_technical"}),"Interview question","alternativa de entrevista");
+    eq(badgeFor("perf-7",function(t){return t.type==="mcq"&&t.source.system===DGAC_KEY}),"DGAC exam","pregunta del examen DGAC");
+    eq(badgeFor("perf-4",function(t){return t.type==="oral"}),"Interview question","pregunta oral");
+    eq(badgeFor("hid-1",function(t){return t.type==="mcq"&&t.source.system==="hydraulic"}),"","una pregunta del banco de sistemas no lleva etiqueta");
+    var txt=byId("rtPlayer").textContent;ok(!/FCOM|FCTM|Tutorial|Getting to Grips|PDF/.test(txt),"la pantalla no nombra documentos");
+    RUTA.showCover();
+  });
+
   /* ---------- Ejecucion ---------- */
   async function run(){
     var res={total:tests.length,passed:0,failed:0,failures:[],errs:(window.__errs||[]).slice()};

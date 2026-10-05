@@ -4,7 +4,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.18.0";
+const APP_VERSION="1.18.1";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -172,7 +172,7 @@ function sanitizeResume(r){
    nuevo (estadísticas, guardadas, autoevaluación y Need to know).
    2026-10-01: «el PTU» → «la PTU» en 6 preguntas de Hidráulico.
    2026-10-05: «la PTU» → «PTU», sin artículo, en 5 de ellas; los ids de ambas versiones anteriores apuntan directo al nuevo. */
-const QID_RENAMES={"hydraulic:1os0brc":"hydraulic:1tbt8ld","hydraulic:1eznmr1":"hydraulic:wxjsp5","hydraulic:98eoy5":"hydraulic:14jvqlm","hydraulic:uvvyh":"hydraulic:odnbls","hydraulic:1qfuvr9":"hydraulic:tnkbsc","hydraulic:19f34k":"hydraulic:1yk534j","hydraulic:106iugc":"hydraulic:1tbt8ld","hydraulic:1rx3pif":"hydraulic:14jvqlm","hydraulic:yu9ict":"hydraulic:odnbls","hydraulic:dhos2p":"hydraulic:tnkbsc","hydraulic:152269q":"hydraulic:1yk534j"};
+const QID_RENAMES={"hydraulic:1os0brc":"hydraulic:1tbt8ld","hydraulic:1eznmr1":"hydraulic:wxjsp5","hydraulic:98eoy5":"hydraulic:14jvqlm","hydraulic:uvvyh":"hydraulic:odnbls","hydraulic:1qfuvr9":"hydraulic:tnkbsc","hydraulic:19f34k":"hydraulic:1yk534j","hydraulic:106iugc":"hydraulic:1tbt8ld","hydraulic:1rx3pif":"hydraulic:14jvqlm","hydraulic:yu9ict":"hydraulic:odnbls","hydraulic:dhos2p":"hydraulic:tnkbsc","hydraulic:152269q":"hydraulic:1yk534j","operations_airbus:1yhv78r":"operations_airbus:5oywvc","operations_airbus:vzmxfv":"operations_airbus:1ijy8qj","operations_airbus:hg8ipi":"operations_airbus:sd4h12","operations_airbus:1w0wha6":"operations_airbus:iv9agd","operations_airbus:1vwlann":"operations_airbus:cd62sc","operations_airbus:1lgscph":"operations_airbus:1qyg8l4","operations_airbus:7qcjcw":"operations_airbus:t6q783","operations_airbus:5o5u81":"operations_airbus:bsylyk","operations_airbus:1facwnf":"operations_airbus:snbemf","operations_airbus:1cjookz":"operations_airbus:1nw9qtb","operations_airbus:1rfrhzt":"operations_airbus:5si7wx","operations_airbus:4g82zf":"operations_airbus:34a5dy","operations_airbus:18b7lhd":"operations_airbus:1n1vzf6","operations_airbus:4lohyb":"operations_airbus:18qlur2","operations_airbus:7ctcli":"operations_airbus:1pp6xm2","operations_airbus:nf77u5":"operations_airbus:6ktm8d","operations_airbus:ftczwt":"operations_airbus:wani40","operations_airbus:1w4lpmy":"operations_airbus:bo9mpd","operations_airbus:v9fa2j":"operations_airbus:1nkissb","operations_airbus:8l2mtg":"operations_airbus:1nkszyc","operations_airbus:gnnf8j":"operations_airbus:1ysn11m","operations_airbus:psxts9":"operations_airbus:1yy58xm","operations_airbus:1kqlsyy":"operations_airbus:xxewiu","operations_airbus:oalhef":"operations_airbus:1ls3gzo","operations_airbus:1744a7b":"operations_airbus:1uhxpuv","operations_airbus:3w0l2l":"operations_airbus:1ht2hkn","operations_airbus:1m17c7z":"operations_airbus:k3br02","operations_airbus:1u9j9j8":"operations_airbus:u4uvpg","operations_airbus:147xh0d":"operations_airbus:twj5lb","operations_airbus:dtahbm":"operations_airbus:cojfs7","operations_airbus:ytathc":"operations_airbus:177rc93"};
 function renameQidKeys(map){
   Object.keys(QID_RENAMES).forEach(old=>{
     if(!(old in map))return;

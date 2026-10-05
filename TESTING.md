@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~13 s con `OK 108/108 casos...` (código
+funciones y a su estado real. Termina en ~18 s con `OK 109/109 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -647,6 +647,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   por gravedad, no hay steering después de la gravedad, el steering usa Green),
   pero su explicación ya no dice que toda la flota es así: aclara que la mayor
   parte de la flota usa Yellow y conserva el steering.
+- **REG-09** (2026-10-05, 1.18.1) — ninguna pregunta del banco menciona los
+  Tutorials en lo que se ve (enunciado, alternativas, explicación): se
+  reescribieron 29 enunciados y 29 explicaciones del banco de operaciones, y
+  dos enunciados que atribuían la técnica a Airbus. Las alternativas y las
+  respuestas no cambiaron. Los 31 enunciados nuevos tienen su id viejo → nuevo
+  en `QID_RENAMES` (QID-01 espera ahora 42), así que el progreso se conserva.
+  La prueba también exige que las estaciones muestren el enunciado del banco
+  tal cual (ya no necesitan reescribirlo) y que el flow después de un RTO
+  incluya avisar al ATC (la explicación anterior decía lo contrario). Prueba
+  de mutación: con «Según el Tutorial» en una explicación, falló.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

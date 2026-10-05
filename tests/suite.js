@@ -71,7 +71,7 @@
     ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
   });
   T("0 QID-01 al corregir un enunciado (PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
-    var olds=Object.keys(QID_RENAMES);eq(olds.length,11,"ids antiguos (las dos versiones anteriores de los enunciados corregidos)");
+    var olds=Object.keys(QID_RENAMES);eq(olds.length,42,"ids antiguos (11 de los enunciados de PTU y 31 de operaciones sin la mencion a los Tutorials)");
     olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
     var o=olds[0],n=QID_RENAMES[o];
     var st={stats:{},bookmarks:{},oral:{},needToKnow:{added:["q:"+o],removed:["q:"+olds[1]]}};
@@ -1817,6 +1817,22 @@
     var a=one(/WHAT OTHER SYSTEMS WILL BE INOPERATIVE/),b=one(/WILL NOSE WHEEL STEERING BE AVAILABLE/),c=one(/SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/);
     eq(a.options[a.correct],"NOSE WHEEL STEERING ONLY.","clave de la 1");eq(b.options[b.correct],"NO.","clave de la 2");eq(c.options[c.correct],"GREEN.","clave de la 3");
     [a,b,c].forEach(function(q){ok(/mayor parte de la flota/.test(q.expl)&&/Yellow/.test(q.expl)&&/antiguos/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
+  });
+
+  T("14 REG-09 ninguna pregunta del banco menciona los Tutorials (enunciado, alternativas ni explicacion) y las estaciones muestran el enunciado del banco tal cual",function(){
+    var bad=[];
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q,i){
+      [q.q,q.expl||"",q.scenario_q||""].concat(q.options).forEach(function(s){if(/tutorial/i.test(s))bad.push(k+"#"+i+": "+String(s).slice(0,60))});
+    })});
+    eq(bad.length,0,"menciones a los Tutorials: "+bad.slice(0,4).join(" | "));
+    var ops=SYSTEMS.operations_airbus.questions;
+    ok(!ops.some(function(q){return /(mostrad[ao]|descrit[ao]|declarado) por Airbus/.test(q.q)}),"ningun enunciado atribuye la tecnica a Airbus como fuente");
+    var rto=ops.find(function(q){return q.q.indexOf("Una vez detenido el avión tras un RTO")===0});
+    ok(rto&&/ATC/.test(rto.expl)&&!/no incluye notificar/.test(rto.expl),"el flow despues del RTO incluye avisar al ATC");
+    var mal=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){
+      if(x.source&&x.source.system==="operations_airbus"){var q=findById(x.source.appId);if(!q||q.q!==x.question)mal.push(k+"/"+x.id)}
+    })});
+    eq(mal.length,0,"estaciones con un enunciado de operaciones distinto del banco: "+mal.join(", "));
   });
 
   /* ---------- Ejecucion ---------- */

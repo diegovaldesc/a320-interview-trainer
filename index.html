@@ -14,26 +14,26 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Barlow+Semi+Condensed:wght@500;600;700&amp;display=swap" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-<link href="css/app.css?v=1.15.0" rel="stylesheet"/>
-<link href="css/ruta.css?v=1.15.0" rel="stylesheet"/>
+<link href="css/app.css?v=1.16.0" rel="stylesheet"/>
+<link href="css/ruta.css?v=1.16.0" rel="stylesheet"/>
 </head>
 <body>
 <div class="app">
 <header class="topbar">
 <button class="brand" onclick="goHome()"><strong>A320 INTERVIEW TRAINER</strong><span>FCOM · AIRBUS · DGAC · ORAL</span></button>
-<div class="bank-chip" id="bankChip">BANCO</div>
+<div class="bank-chip" id="bankChip">BANK</div>
 </header>
 <main>
 <section id="home">
 <div class="home-hero">
-<button class="rt-back-cover" onclick="RUTA.showCover()" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>Portada</button>
+<button class="rt-back-cover" onclick="RUTA.showCover()" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>Home</button>
 <div class="eyebrow">A320 INTERVIEW TRAINER</div>
-<h1>Banco de preguntas</h1>
-<p>Banco FCOM verificado, operación Airbus y práctica de entrevista organizados para estudiar rápido desde iPhone.</p>
+<h1>Question bank</h1>
+<p>FCOM-verified bank, Airbus operations and interview practice, organized for quick study on your iPhone.</p>
 </div>
 
 <div class="home-search">
-<div class="searchbox"><input autocomplete="off" id="searchInput" oninput="debouncedSearch(this.value)" placeholder="Buscar temas o sistemas" aria-label="Buscar temas o sistemas"/><button aria-label="Limpiar búsqueda" class="search-clear hidden" id="searchClear" onclick="clearSearch()" type="button">×</button><span class="search-icon">⌕</span></div>
+<div class="searchbox"><input autocomplete="off" id="searchInput" oninput="debouncedSearch(this.value)" placeholder="Search topics or systems" aria-label="Search topics or systems"/><button aria-label="Clear search" class="search-clear hidden" id="searchClear" onclick="clearSearch()" type="button">×</button><span class="search-icon">⌕</span></div>
 <div class="search-results" id="searchResults"></div>
 </div>
 
@@ -42,19 +42,19 @@
 <div class="home-section ntk-home">
 <button class="ntk-card" id="ntkHomeCard" onclick="openNeedToKnow()" type="button">
   <span class="ntk-star" aria-hidden="true">★</span>
-  <span class="ntk-main"><span class="ntk-kicker">LO ESENCIAL</span><strong>Need to know</strong><span class="ntk-sub" id="homeNtkCount">Las preguntas clave de la entrevista</span></span>
+  <span class="ntk-main"><span class="ntk-kicker">ESSENTIALS</span><strong>Need to know</strong><span class="ntk-sub" id="homeNtkCount">The key interview questions</span></span>
   <span class="ntk-chev" aria-hidden="true">›</span>
 </button>
 </div>
 
 <div class="home-section">
-<div class="section-label">Estudiar</div>
+<div class="section-label">Study</div>
 <div class="module-list">
 <button class="module-card" onclick="openSystemsFolder()" type="button">
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>
   </span>
-  <span class="module-main"><strong>Sistemas A320</strong><span id="homeSystemsCount">Banco FCOM verificado</span></span>
+  <span class="module-main"><strong>A320 systems</strong><span id="homeSystemsCount">FCOM-verified bank</span></span>
   <span class="module-chevron">›</span>
 </button>
 
@@ -62,7 +62,7 @@
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M12 7 4.5 11v2l7.5-1.7"/><path d="m12 7 7.5 4v2L12 11.3"/><path d="m12 17-4 2v1l4-.8"/><path d="m12 17 4 2v1l-4-.8"/></svg>
   </span>
-  <span class="module-main"><strong>Operación Airbus A320</strong><span id="homeOpsCount">Airbus Tutorials Rev 15</span></span>
+  <span class="module-main"><strong>A320 Airbus operations</strong><span id="homeOpsCount">Airbus Tutorials Rev 15</span></span>
   <span class="module-chevron">›</span>
 </button>
 
@@ -70,7 +70,7 @@
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 18.5z"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
   </span>
-  <span class="module-main"><strong>Entrevista técnica</strong><span id="homeInterviewCount">LATAM · meteorología · performance · IFR · CRM</span></span>
+  <span class="module-main"><strong>Technical interview</strong><span id="homeInterviewCount">LATAM · meteorology · performance · IFR · CRM</span></span>
   <span class="module-chevron">›</span>
 </button>
 
@@ -78,7 +78,7 @@
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 19 6v5c0 4.7-2.8 8-7 10-4.2-2-7-5.3-7-10V6l7-3Z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
   </span>
-  <span class="module-main"><strong>Banco DGAC</strong><span id="homeDgacCount">Práctica independiente</span></span>
+  <span class="module-main"><strong>DGAC bank</strong><span id="homeDgacCount">Standalone practice</span></span>
   <span class="module-chevron">›</span>
 </button>
 
@@ -86,7 +86,7 @@
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>
   </span>
-  <span class="module-main"><strong>Entrevista Oral</strong><span id="homeOralVoiceCount">Habla y recibe evaluacion automatica por conceptos</span></span>
+  <span class="module-main"><strong>Oral interview</strong><span id="homeOralVoiceCount">Speak and get automatic concept-based feedback</span></span>
   <span class="module-chevron">&rsaquo;</span>
 </button>
 
@@ -94,7 +94,7 @@
 <span class="module-icon" aria-hidden="true">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
 </span>
-<span class="module-main"><strong>Inglés OACI</strong><span id="homeEnglishCount">Pruebas al azar: alternativas, audios, imágenes y role-play</span></span>
+<span class="module-main"><strong>ICAO English</strong><span id="homeEnglishCount">Random tests: multiple choice, audio, pictures and role-play</span></span>
 <span class="module-chevron">›</span>
 </button>
 
@@ -102,36 +102,36 @@
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7 8h10"/><path d="M7 12h6"/><path d="M5 4h.01"/><path d="M5 8h.01"/><path d="M5 12h.01"/><path d="m14 18 2 2 4-5"/></svg>
   </span>
-  <span class="module-main"><strong>Mis errores</strong><span id="homeWeakCount">Repasa lo que más te cuesta</span></span>
+  <span class="module-main"><strong>My mistakes</strong><span id="homeWeakCount">Review what you miss most</span></span>
   <span class="module-chevron">›</span>
 </button>
 </div>
 </div>
 
 <div class="home-section">
-<div class="section-label">Práctica rápida</div>
+<div class="section-label">Quick practice</div>
 <div class="quick-row">
-<button class="quick-action" onclick="startQuickTest()" type="button"><div class="qa-top">Simulacro</div><strong>Test mixto 20</strong><span>Preguntas aleatorias del banco verificado.</span></button>
-<button class="quick-action" onclick="startScenario()" type="button"><div class="qa-top">Operacional</div><strong>Escenarios · 8</strong><span>Fallas y emergencias para razonar.</span></button>
+<button class="quick-action" onclick="startQuickTest()" type="button"><div class="qa-top">Mock test</div><strong>Mixed test · 20</strong><span>Random questions from the verified bank.</span></button>
+<button class="quick-action" onclick="startScenario()" type="button"><div class="qa-top">Operational</div><strong>Scenarios · 8</strong><span>Failures and emergencies to reason through.</span></button>
 </div>
 </div>
 
 <div class="progress-compact">
-<div class="section-label">Tu progreso</div>
+<div class="section-label">Your progress</div>
 <div class="dashboard">
-<div class="metric"><strong id="mQuestions">—</strong><span>FCOM verificadas</span></div>
-<div class="metric"><strong id="mAccuracy">—</strong><span>precisión</span></div>
-<div class="metric"><strong id="mWeak">—</strong><span>por repasar</span></div>
+<div class="metric"><strong id="mQuestions">—</strong><span>FCOM verified</span></div>
+<div class="metric"><strong id="mAccuracy">—</strong><span>accuracy</span></div>
+<div class="metric"><strong id="mWeak">—</strong><span>to review</span></div>
 </div>
 </div>
 
 <details class="data-panel">
-<summary><span>Datos y diagnóstico</span><span class="data-status" id="bankStatus">Comprobando…</span></summary>
+<summary><span>Data and diagnostics</span><span class="data-status" id="bankStatus">Checking…</span></summary>
 <div class="data-body">
 <div class="data-meta" id="appMeta"></div>
 <div class="data-actions">
-<button class="data-action" onclick="exportProgress()" type="button">Crear copia</button>
-<button class="data-action" onclick="document.getElementById('importProgressFile').click()" type="button">Restaurar copia</button>
+<button class="data-action" onclick="exportProgress()" type="button">Create backup</button>
+<button class="data-action" onclick="document.getElementById('importProgressFile').click()" type="button">Restore backup</button>
 </div>
 <input accept="application/json,.json" class="hidden" id="importProgressFile" onchange="importProgress(event)" type="file"/>
 <div class="integrity-note" id="integrityNote"></div>
@@ -140,17 +140,17 @@
 </section>
 
 <section class="hidden" id="systemsFolder">
-<button class="back" onclick="goHome()">‹ Inicio</button>
+<button class="back" onclick="goHome()">‹ Bank</button>
 <div class="hero folder-head">
-<div class="eyebrow">BANCO TÉCNICO · FCOM VERIFICADO</div>
-<h1>Sistemas A320</h1>
-<p>Elige un sistema para estudiar, hacer test o practicarlo en formato de entrevista.</p>
+<div class="eyebrow">TECHNICAL BANK · FCOM VERIFIED</div>
+<h1>A320 systems</h1>
+<p>Pick a system to study, take a test or practice it interview-style.</p>
 </div>
-<div class="folder-summary"><span>Contenido disponible</span><b id="folderSystemsCount">—</b></div>
+<div class="folder-summary"><span>Available content</span><b id="folderSystemsCount">—</b></div>
 <div id="systemsList"></div>
 </section>
 <section class="hidden" id="detail">
-<button class="back" onclick="goHome()">‹ Inicio</button>
+<button class="back" onclick="goHome()">‹ Bank</button>
 <div class="hero">
 <div class="eyebrow" id="detailAta"></div>
 <h1 id="detailTitle"></h1>
@@ -158,98 +158,98 @@
 </div>
 <div class="detail-stats" id="detailStats"></div>
 <div class="mode-grid">
-<button class="mode-card study" id="studyModeCard" onclick="startTechnical('study')"><span class="mode-label">Estudio</span><h3>Aprender</h3><p id="studyModeDesc">Respuesta y explicación FCOM justo después de contestar.</p></button>
-<button class="mode-card test" id="testModeCard" onclick="startTechnical('test')"><span class="mode-label">Test</span><h3>Simular</h3><p>20 preguntas. Sin pistas hasta el resultado final.</p></button>
-<button class="mode-card interview" id="interviewModeCard" onclick="startInterview(currentSystemKey)"><span class="mode-label">Autoevaluación</span><h3>Responder sin alternativas</h3><p>La misma materia, pero como frente a un instructor: primero respondes tú, después revelas la respuesta y te autocalificas.</p></button>
+<button class="mode-card study" id="studyModeCard" onclick="startTechnical('study')"><span class="mode-label">Study</span><h3>Learn</h3><p id="studyModeDesc">FCOM answer and explanation right after you answer.</p></button>
+<button class="mode-card test" id="testModeCard" onclick="startTechnical('test')"><span class="mode-label">Test</span><h3>Simulate</h3><p>20 questions. No hints until the final result.</p></button>
+<button class="mode-card interview" id="interviewModeCard" onclick="startInterview(currentSystemKey)"><span class="mode-label">Self-assessment</span><h3>Answer without options</h3><p>The same subject, as if facing an instructor: you answer first, then reveal the answer and grade yourself.</p></button>
 </div>
 <button class="weak-inline hidden" id="systemWeakBtn" onclick="startWeakSession(currentSystemKey)"></button>
 </section>
 <section class="hidden" id="quiz">
-<button class="back" onclick="exitSession()">‹ Salir</button>
-<div class="qtop"><div class="qmeta" id="qMeta"></div><div class="qtop-actions"><button class="ntk-toggle hidden" id="ntkQuizBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button><button aria-label="Guardar pregunta" class="star" id="bookmarkBtn" onclick="toggleBookmark()" title="Guardar pregunta" type="button">☆</button></div></div>
+<button class="back" onclick="exitSession()">‹ Exit</button>
+<div class="qtop"><div class="qmeta" id="qMeta"></div><div class="qtop-actions"><button class="ntk-toggle hidden" id="ntkQuizBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button><button aria-label="Save question" class="star" id="bookmarkBtn" onclick="toggleBookmark()" title="Save question" type="button">☆</button></div></div>
 <div class="progress"><div id="qProgress"></div></div>
 <div class="source-tag" id="qSource"></div>
 <h2 class="question" id="qText"></h2>
 <div id="options"></div>
-<button class="dontknow" id="dontKnowBtn" onclick="answerDontKnow()">No la sé · mostrar respuesta</button>
+<button class="dontknow" id="dontKnowBtn" onclick="answerDontKnow()">I don't know · show answer</button>
 <div class="answer-wrap" id="answerWrap"></div>
 <div class="bottom-nav">
-<button class="btn ghost" id="prevBtn" onclick="prevQuestion()">‹ Anterior</button>
-<button class="btn primary" disabled="" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+<button class="btn ghost" id="prevBtn" onclick="prevQuestion()">‹ Previous</button>
+<button class="btn primary" disabled="" id="nextBtn" onclick="nextQuestion()">Next</button>
 </div>
 </section>
 <section class="hidden" id="interview">
-<button class="back" onclick="exitSession()">‹ Salir</button>
+<button class="back" onclick="exitSession()">‹ Exit</button>
 <div class="qtop"><div class="qmeta" id="iMeta"></div><button class="ntk-toggle hidden" id="ntkInterviewBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button></div>
 <div class="progress"><div id="iProgress"></div></div>
 <div class="source-tag" id="iSource"></div>
 <div class="interview-card">
-<div class="eyebrow" id="iEyebrow">RESPONDE EN VOZ ALTA</div>
+<div class="eyebrow" id="iEyebrow">ANSWER OUT LOUD</div>
 <div class="prompt" id="iQuestion"></div>
-<div class="interview-tip" id="iTip">Intenta una respuesta corta, ordenada y segura. Cuando termines, revela la respuesta.</div>
+<div class="interview-tip" id="iTip">Give a short, structured and confident answer. When you finish, reveal the answer.</div>
 </div>
 <div class="answer-wrap hidden" id="iAnswer"></div>
-<button class="btn green" id="revealBtn" onclick="revealInterview()" style="width:100%;margin-top:12px">Mostrar respuesta esperada</button>
+<button class="btn green" id="revealBtn" onclick="revealInterview()" style="width:100%;margin-top:12px">Show expected answer</button>
 <div class="hidden" id="rateWrap">
-<div class="section-label">¿Cómo te fue?</div>
+<div class="section-label">How did it go?</div>
 <div class="rate-row">
-<button class="rate no" onclick="rateInterview(0)">No la sabía</button>
-<button class="rate partial" onclick="rateInterview(1)">Parcial</button>
-<button class="rate yes" onclick="rateInterview(2)">La sabía</button>
+<button class="rate no" onclick="rateInterview(0)">Didn't know it</button>
+<button class="rate partial" onclick="rateInterview(1)">Partly</button>
+<button class="rate yes" onclick="rateInterview(2)">Knew it</button>
 </div>
 </div>
 <div class="bottom-nav">
-<button class="btn ghost" id="iPrevBtn" onclick="prevInterview()">Anterior</button>
-<button class="btn primary" disabled="" id="iNextBtn" onclick="nextInterview()">Siguiente</button>
+<button class="btn ghost" id="iPrevBtn" onclick="prevInterview()">Previous</button>
+<button class="btn primary" disabled="" id="iNextBtn" onclick="nextInterview()">Next</button>
 </div>
 </section>
 <section class="hidden" id="oralVoice">
-<button class="back" onclick="exitOralVoice()" type="button">&lsaquo; Salir</button>
+<button class="back" onclick="exitOralVoice()" type="button">&lsaquo; Exit</button>
 <div class="qtop"><div class="qmeta" id="ovMeta"></div><button class="ntk-toggle hidden" id="ntkOralBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button></div>
 <div class="progress"><div id="ovProgress"></div></div>
 <div class="interview-card">
-<div class="eyebrow">ENTREVISTA ORAL &middot; EVALUACION AUTOMATICA</div>
+<div class="eyebrow">ORAL INTERVIEW &middot; AUTOMATIC FEEDBACK</div>
 <div class="prompt" id="oralQuestion"></div>
 <img class="oral-question-image hidden" id="oralQuestionImage" alt="">
 </div>
 <div class="oral-mic-box">
-<button class="oral-mic-btn" id="oralMicBtn" onclick="toggleOralAnswer()" type="button"><span id="oralMicIcon">&#127908;</span><span id="oralMicText">Responder</span></button>
-<div class="oral-status" id="oralStatus" role="status" aria-live="polite">Toca el microfono cuando estes listo.</div>
+<button class="oral-mic-btn" id="oralMicBtn" onclick="toggleOralAnswer()" type="button"><span id="oralMicIcon">&#127908;</span><span id="oralMicText">Answer</span></button>
+<div class="oral-status" id="oralStatus" role="status" aria-live="polite">Tap the microphone when you're ready.</div>
 <div class="oral-time" id="oralTime" style="display:none">00:00</div>
 <div class="oral-mic-fallback" id="oralMicFallback"></div>
-<button class="oral-text-fallback-btn" onclick="showOralTextFallback()" type="button">Prefiero escribir mi respuesta</button>
+<button class="oral-text-fallback-btn" onclick="showOralTextFallback()" type="button">I'd rather type my answer</button>
 <div class="hidden" id="oralTextFallbackBox">
-<textarea class="oral-transcript" id="oralTextFallbackInput" placeholder="Escribe tu respuesta aqui..." aria-label="Escribe tu respuesta" rows="5"></textarea>
-<button class="btn primary" onclick="submitOralTextFallback()" style="width:100%;margin-top:8px" type="button">Evaluar respuesta</button>
+<textarea class="oral-transcript" id="oralTextFallbackInput" placeholder="Type your answer here..." aria-label="Type your answer" rows="5"></textarea>
+<button class="btn primary" onclick="submitOralTextFallback()" style="width:100%;margin-top:8px" type="button">Evaluate answer</button>
 </div>
 <div class="oral-result hidden" id="oralResult">
 <div class="oral-score-row">
-<div><div class="oral-result-label">ESTIMACIÓN</div><div class="oral-score" id="oralScore">0/10</div></div>
+<div><div class="oral-result-label">ESTIMATE</div><div class="oral-score" id="oralScore">0/10</div></div>
 <div class="oral-grade" id="oralGrade"></div>
 </div>
-<div class="oral-score-note">Estimación automática según los conceptos de tu respuesta que coinciden con la referencia — no reemplaza tu propio juicio ni el de un instructor.</div>
+<div class="oral-score-note">Automatic estimate based on the concepts in your answer that match the reference — it doesn't replace your own judgment or an instructor's.</div>
 <div class="oral-feedback" id="oralFeedback"></div>
 <div class="oral-transcript-reveal hidden" id="oralTranscriptReveal"></div>
-<button class="oral-clear-btn" onclick="toggleOralTranscriptReveal()" type="button">Ver que se transcribio</button>
-<button class="oral-repeat-btn btn ghost" onclick="restartOralAnswer()" style="width:100%;margin-top:10px" type="button">&#127908; Responder nuevamente</button>
+<button class="oral-clear-btn" onclick="toggleOralTranscriptReveal()" type="button">See what was transcribed</button>
+<button class="oral-repeat-btn btn ghost" onclick="restartOralAnswer()" style="width:100%;margin-top:10px" type="button">&#127908; Answer again</button>
 </div>
 </div>
 <div class="bottom-nav">
-<button class="btn ghost" id="ovPrevBtn" onclick="prevOralVoice()">Anterior</button>
-<button class="btn primary" disabled="" id="ovNextBtn" onclick="nextOralVoice()">Siguiente</button>
+<button class="btn ghost" id="ovPrevBtn" onclick="prevOralVoice()">Previous</button>
+<button class="btn primary" disabled="" id="ovNextBtn" onclick="nextOralVoice()">Next</button>
 </div>
 </section>
 <section class="hidden" id="ntk">
-<button class="back" onclick="goHome()" type="button">‹ Inicio</button>
+<button class="back" onclick="goHome()" type="button">‹ Bank</button>
 <div class="hero folder-head">
-<div class="eyebrow ntk-eyebrow">★ LO ESENCIAL</div>
+<div class="eyebrow ntk-eyebrow">★ ESSENTIALS</div>
 <h1>Need to know</h1>
-<p>Las preguntas clave para la entrevista. Respóndelas con tu voz o escribiendo, o lee la respuesta. Puedes agregar cualquier pregunta de la app con el botón “+ Need to know” y quitar las que no quieras.</p>
+<p>The key questions for the interview. Answer them by voice or in writing, or read the answer. You can add any question in the app with the “+ Need to know” button and remove the ones you don't want.</p>
 <div class="ntk-summary" id="ntkSummary"></div>
 </div>
-<div class="ntk-actions"><button class="btn ntk-go" id="ntkStartBtn" onclick="ntkStart()" type="button">Practicar desde la primera</button></div>
+<div class="ntk-actions"><button class="btn ntk-go" id="ntkStartBtn" onclick="ntkStart()" type="button">Practice from the first one</button></div>
 <div id="ntkBody"></div>
-<button class="btn ghost hidden" id="ntkRestoreBtn" onclick="ntkRestoreDefaults()" style="width:100%;margin-top:14px" type="button">Restaurar las preguntas iniciales</button>
+<button class="btn ghost hidden" id="ntkRestoreBtn" onclick="ntkRestoreDefaults()" style="width:100%;margin-top:14px" type="button">Restore the default questions</button>
 </section>
 <section class="hidden" id="ntkCard">
 <button class="back" onclick="ntkExitCard()" type="button">‹ Need to know</button>
@@ -257,50 +257,50 @@
 <div class="progress ntk-progress"><div id="ntkProgress"></div></div>
 <div class="source-tag ntk-theme" id="ntkTheme"></div>
 <div class="interview-card ntk-qcard">
-<div class="eyebrow" id="ntkEyebrow">PREGUNTA</div>
+<div class="eyebrow" id="ntkEyebrow">QUESTION</div>
 <div class="prompt" id="ntkQuestion"></div>
 </div>
 <div class="hidden" id="ntkMcq"></div>
 <div id="ntkOralSlot"></div>
-<button class="btn green" id="ntkRevealBtn" onclick="ntkReveal()" style="width:100%;margin-top:12px" type="button">Ver respuesta</button>
+<button class="btn green" id="ntkRevealBtn" onclick="ntkReveal()" style="width:100%;margin-top:12px" type="button">Show answer</button>
 <div class="answer-wrap hidden" id="ntkReveal" aria-live="polite"></div>
 <div class="bottom-nav">
-<button class="btn ghost" id="ntkPrevBtn" onclick="ntkPrev()" type="button">‹ Anterior</button>
-<button class="btn primary" id="ntkNextBtn" onclick="ntkNext()" type="button">Siguiente</button>
+<button class="btn ghost" id="ntkPrevBtn" onclick="ntkPrev()" type="button">‹ Previous</button>
+<button class="btn primary" id="ntkNextBtn" onclick="ntkNext()" type="button">Next</button>
 </div>
 </section>
 <section class="hidden" id="results">
-<button class="back" onclick="goHome()">‹ Inicio</button>
+<button class="back" onclick="goHome()">‹ Bank</button>
 <div class="result-hero">
 <div class="score-circle"><strong id="resultPct">0%</strong><span id="resultRaw">0 / 20</span></div>
 <div class="result-summary" id="resultSummary"></div><div class="result-breakdown" id="resultBreakdown"></div>
 </div>
 <div class="result-actions">
-<button class="btn" onclick="retrySession()">Nuevo intento</button>
-<button class="btn primary" id="retryWrongBtn" onclick="retryWrong()">Solo errores</button>
+<button class="btn" onclick="retrySession()">Try again</button>
+<button class="btn primary" id="retryWrongBtn" onclick="retryWrong()">Mistakes only</button>
 </div>
-<div class="section-label">Repaso</div>
+<div class="section-label">Review</div>
 <div class="review" id="review"></div>
 </section>
 <section class="hidden" id="weak">
-<button class="back" onclick="goHome()">‹ Inicio</button>
-<div class="hero"><div class="eyebrow">REPASO ADAPTATIVO</div><h1>Mis errores</h1><p>Ordenados por frecuencia. No tienes que elegir qué estudiar: la app te devuelve a lo que más has fallado.</p></div>
+<button class="back" onclick="goHome()">‹ Bank</button>
+<div class="hero"><div class="eyebrow">ADAPTIVE REVIEW</div><h1>My mistakes</h1><p>Sorted by frequency. You don't have to choose what to study: the app brings you back to what you've missed most.</p></div>
 <div id="weakActions"></div>
-<div class="section-label">Preguntas</div>
-<div class="weak-list" id="weakList"></div><div class="hidden" id="savedWrap"><div class="section-label">Guardadas</div><div id="savedActions"></div><div class="weak-list" id="savedList"></div></div>
+<div class="section-label">Questions</div>
+<div class="weak-list" id="weakList"></div><div class="hidden" id="savedWrap"><div class="section-label">Saved</div><div id="savedActions"></div><div class="weak-list" id="savedList"></div></div>
 </section>
 <section class="hidden" id="englishHub">
-<button class="back" onclick="goHome()" type="button">‹ Inicio</button>
+<button class="back" onclick="goHome()" type="button">‹ Bank</button>
 <div class="hero folder-head">
-<div class="eyebrow">PRÁCTICA SIN NOTA · FRASEOLOGÍA OACI</div>
-<h1>Inglés OACI</h1>
-<p>Cada prueba es una sola tanda que mezcla al azar alternativas, audios, descripción de imágenes y un role-play con ATC. Te toca una al azar y no se repite hasta que hagas las demás. Aquí no se asigna nota ni nivel: compara con el modelo y sigue.</p>
+<div class="eyebrow">UNGRADED PRACTICE · ICAO PHRASEOLOGY</div>
+<h1>ICAO English</h1>
+<p>Each test is a single round that randomly mixes multiple choice, audio, picture description and a role-play with ATC. You get one at random, and it won't repeat until you've done the others. No grade or level is given here: compare with the model and move on.</p>
 </div>
 <div id="enHubBody"></div>
-<div class="integrity-note">Los audios se leen con voces en inglés de tu dispositivo: en cada audio suena una voz distinta, elegida al azar y siempre a la misma velocidad; su calidad depende del teléfono o del navegador. El micrófono solo transcribe lo que dices y nunca calcula una nota ni un nivel OACI. Si sales a mitad de una prueba puedes continuarla después; el ejercicio en el que ibas vuelve a empezar.</div>
+<div class="integrity-note">The audio is read by the English voices on your device: each clip uses a different voice, chosen at random and always at the same speed; quality depends on your phone or browser. The microphone only transcribes what you say and never calculates a grade or an ICAO level. If you leave in the middle of a test you can continue it later; the exercise you were on starts over.</div>
 </section>
 <section class="hidden" id="englishPractice">
-<button class="back" onclick="exitEnglishPractice()" type="button">‹ Salir</button>
+<button class="back" onclick="exitEnglishPractice()" type="button">‹ Exit</button>
 <div class="qtop"><div class="qmeta" id="epMeta"></div></div>
 <div class="progress"><div id="epProgress"></div></div>
 <div class="source-tag" id="epTag"></div>
@@ -311,55 +311,55 @@
 <div class="interview-tip" id="epTip"></div>
 </div>
 <div id="epWork"></div>
-<button class="btn green" id="epRevealBtn" onclick="revealEnglish()" style="width:100%;margin-top:12px" type="button">Mostrar modelo</button>
+<button class="btn green" id="epRevealBtn" onclick="revealEnglish()" style="width:100%;margin-top:12px" type="button">Show model</button>
 <div class="answer-wrap hidden" id="epReveal" aria-live="polite"></div>
 <div class="hidden" id="epRateWrap">
-<div class="section-label">¿Cómo te fue?</div>
+<div class="section-label">How did it go?</div>
 <div class="rate-row">
-<button class="rate no" onclick="rateEnglish(0)" type="button">Repetir</button>
-<button class="rate partial" onclick="rateEnglish(1)" type="button">Casi</button>
-<button class="rate yes" onclick="rateEnglish(2)" type="button">Bien</button>
+<button class="rate no" onclick="rateEnglish(0)" type="button">Repeat</button>
+<button class="rate partial" onclick="rateEnglish(1)" type="button">Almost</button>
+<button class="rate yes" onclick="rateEnglish(2)" type="button">Good</button>
 </div>
 </div>
 <div class="bottom-nav single">
-<button class="btn primary" disabled="" id="epNextBtn" onclick="nextEnglish()" type="button">Siguiente</button>
+<button class="btn primary" disabled="" id="epNextBtn" onclick="nextEnglish()" type="button">Next</button>
 </div>
 </section>
 </main>
 </div>
 <!-- Ruta de entrenamiento (js/ruta.js): portada, mapa de estaciones y estación. -->
-<div aria-label="Portada" class="rt-cover" id="rtCover">
+<div aria-label="Home" class="rt-cover" id="rtCover">
 <div aria-hidden="true" class="rt-clouds"><div class="rt-cloud rt-cloud-far"></div><div class="rt-cloud rt-cloud-near"></div></div>
 <div class="rt-cover-in">
 <div class="rt-hero">
-<div class="rt-eyebrow">Preparación técnica</div>
+<div class="rt-eyebrow">Technical preparation</div>
 <h1 class="rt-title"><span>A320</span>Interview Trainer</h1>
-<p>Clases cortas, una prueba y estrellas.</p>
+<p>Short lessons, a quiz and stars.</p>
 </div>
 <div class="rt-doors">
-<button class="rt-door rt-primary" id="rtGoRoute" type="button"><span aria-hidden="true" class="rt-door-ico"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 19c3-1 3-5 7-6s4-5 7-6"></path><circle cx="5" cy="19" r="2"></circle><circle cx="19" cy="7" r="2"></circle></svg></span><span class="rt-door-main"><span class="rt-eyebrow">Ruta de entrenamiento</span><strong id="rtRouteTitle">Empezar · Estación 1</strong><span class="rt-sub" id="rtRouteSub"></span><span class="rt-door-meta"><span class="rt-bar"><i id="rtRouteBar" style="width:0%"></i></span><span id="rtRouteCount"></span></span></span><svg aria-hidden="true" class="rt-chev" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></button>
-<button class="rt-door" id="rtGoBank" type="button"><span aria-hidden="true" class="rt-door-ico"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><rect height="5" rx="1.5" width="16" x="4" y="4"></rect><rect height="5" rx="1.5" width="16" x="4" y="10.5"></rect><rect height="3" rx="1.2" width="16" x="4" y="17"></rect></svg></span><span class="rt-door-main"><span class="rt-eyebrow">Banco de preguntas</span><strong>Todas las secciones</strong><span class="rt-sub">Need to know, Sistemas, DGAC, Entrevista oral, Inglés OACI y más.</span></span><svg aria-hidden="true" class="rt-chev" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></button>
+<button class="rt-door rt-primary" id="rtGoRoute" type="button"><span aria-hidden="true" class="rt-door-ico"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 19c3-1 3-5 7-6s4-5 7-6"></path><circle cx="5" cy="19" r="2"></circle><circle cx="19" cy="7" r="2"></circle></svg></span><span class="rt-door-main"><span class="rt-eyebrow">Training route</span><strong id="rtRouteTitle">Start · Station 1</strong><span class="rt-sub" id="rtRouteSub"></span><span class="rt-door-meta"><span class="rt-bar"><i id="rtRouteBar" style="width:0%"></i></span><span id="rtRouteCount"></span></span></span><svg aria-hidden="true" class="rt-chev" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></button>
+<button class="rt-door" id="rtGoBank" type="button"><span aria-hidden="true" class="rt-door-ico"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><rect height="5" rx="1.5" width="16" x="4" y="4"></rect><rect height="5" rx="1.5" width="16" x="4" y="10.5"></rect><rect height="3" rx="1.2" width="16" x="4" y="17"></rect></svg></span><span class="rt-door-main"><span class="rt-eyebrow">Question bank</span><strong>All sections</strong><span class="rt-sub">Need to know, Systems, DGAC, Oral interview, ICAO English and more.</span></span><svg aria-hidden="true" class="rt-chev" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></button>
 </div>
 <div class="rt-stats">
-<span class="rt-stat"><svg aria-hidden="true" class="rt-ico" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1 3.5 5 5.6 5 10.2A5 5 0 0 1 12 17a5 5 0 0 1-5-4.8c0-2 1-3.4 2.2-4.6.2 1.6 1 2.6 2 3C11 8.6 11.3 5 12 2zm0 20a3 3 0 0 1-3-3c0-1.4 1-2.4 3-4 2 1.6 3 2.6 3 4a3 3 0 0 1-3 3z"></path></svg><span><b id="rtStreak">0</b> <span id="rtStreakLbl">días seguidos</span></span></span>
+<span class="rt-stat"><svg aria-hidden="true" class="rt-ico" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1 3.5 5 5.6 5 10.2A5 5 0 0 1 12 17a5 5 0 0 1-5-4.8c0-2 1-3.4 2.2-4.6.2 1.6 1 2.6 2 3C11 8.6 11.3 5 12 2zm0 20a3 3 0 0 1-3-3c0-1.4 1-2.4 3-4 2 1.6 3 2.6 3 4a3 3 0 0 1-3 3z"></path></svg><span><b id="rtStreak">0</b> <span id="rtStreakLbl">day streak</span></span></span>
 <span class="rt-stat"><svg aria-hidden="true" class="rt-ico" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z"></path></svg><span><b id="rtStarTotal">0</b> / <span id="rtStarMax">0</span></span></span>
-<button aria-label="Ajustes de la ruta" class="rt-stat rt-btn-ico" id="rtOpenSettings" type="button"><svg aria-hidden="true" class="rt-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg></button>
+<button aria-label="Route settings" class="rt-stat rt-btn-ico" id="rtOpenSettings" type="button"><svg aria-hidden="true" class="rt-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg></button>
 </div>
 </div>
 </div>
-<div aria-label="Ruta de entrenamiento" class="rt-map" hidden="" id="rtMap">
-<div class="rt-map-head"><button class="rt-pill" id="rtMapBack" type="button"><svg aria-hidden="true" class="rt-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>Inicio</button><h1>Ruta de entrenamiento</h1><span class="rt-map-stars"><svg aria-hidden="true" class="rt-ico" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z"></path></svg><span id="rtMapStars">0</span></span></div>
+<div aria-label="Training route" class="rt-map" hidden="" id="rtMap">
+<div class="rt-map-head"><button class="rt-pill" id="rtMapBack" type="button"><svg aria-hidden="true" class="rt-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>Home</button><h1>Training route</h1><span class="rt-map-stars"><svg aria-hidden="true" class="rt-ico" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z"></path></svg><span id="rtMapStars">0</span></span></div>
 <div class="rt-canvas" id="rtCanvas"></div>
 </div>
 <div class="rt-veil" hidden="" id="rtVeil"></div>
 <div aria-labelledby="rtSheetTitle" aria-modal="true" class="rt-sheet" hidden="" id="rtSheet" role="dialog"></div>
-<div aria-label="Estación" aria-modal="true" class="rt-player" hidden="" id="rtPlayer" role="dialog"></div>
+<div aria-label="Station" aria-modal="true" class="rt-player" hidden="" id="rtPlayer" role="dialog"></div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-<script src="data/banco.js?v=1.15.0"></script>
-<script src="data/ingles.js?v=1.15.0"></script>
-<script src="data/oral.js?v=1.15.0"></script>
-<script src="data/estaciones.js?v=1.15.0"></script>
-<script src="js/app.js?v=1.15.0"></script>
-<script src="js/ruta.js?v=1.15.0"></script>
+<script src="data/banco.js?v=1.16.0"></script>
+<script src="data/ingles.js?v=1.16.0"></script>
+<script src="data/oral.js?v=1.16.0"></script>
+<script src="data/estaciones.js?v=1.16.0"></script>
+<script src="js/app.js?v=1.16.0"></script>
+<script src="js/ruta.js?v=1.16.0"></script>
 </body>
 </html>

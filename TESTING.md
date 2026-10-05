@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 102/102 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 103/103 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -605,6 +605,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   «o sea», «recién», «apretar», «cañería», «estanque», «botar», «Ojo:»,
   «harto», «nomás», «partimos por» ni «letra chica». Prueba de mutación: con
   un título en español falló; con «al tiro» en una ficha, falló.
+- **UI-01** (2026-10-05, 1.16.0) — la interfaz está en inglés (menús, botones,
+  avisos, ajustes; pedido de Diego). Revisa la página tal como se publica, la
+  portada y el inicio del banco recién dibujados, y la ficha de una estación
+  del mapa: ningún texto ni atributo con tildes o palabras de interfaz en
+  español. El contenido (clases, preguntas, explicaciones) sigue en español y
+  no se revisa aquí. Los nombres de sistemas, secciones DGAC y temas de
+  entrevista del banco también pasaron al inglés (son etiquetas de menú).
+  Prueba de mutación: con «Todas las secciones» de vuelta en la portada,
+  falló. Lección: en cadenas JS con comillas simples, los apóstrofos del
+  inglés («don’t», «can’t») van tipográficos, o rompen el script.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

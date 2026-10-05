@@ -6,12 +6,12 @@
 (function(){
   var D = window.ESTACIONES_DATA;
   var $ = function(id){ return document.getElementById(id); };
-  if (!D || !Array.isArray(D.subjects) || !D.route){ console.error('No se pudo cargar data/estaciones.js'); return; }
+  if (!D || !Array.isArray(D.subjects) || !D.route){ console.error('Could not load data/estaciones.js'); return; }
   var SUBJ = {}, ST = {}, CARDS = {};
   D.subjects.forEach(function(s){ SUBJ[s.id] = s; s.stations.forEach(function(st){ ST[st.id] = st; st.cards.forEach(function(c){ CARDS[c.id] = c; }); }); });
   var M = D.route.missions.filter(function(m){ return ST[m.id]; });
   var ZONES = D.route.zones;
-  var LEVEL = { pista: 'Nivel 1', nubes: 'Nivel 1', crucero: 'Nivel 2', 'mal-tiempo': 'Nivel 2', tormenta: 'Nivel 3', descenso: 'Repasos', llegada: 'Final' };
+  var LEVEL = { pista: 'Level 1', nubes: 'Level 1', crucero: 'Level 2', 'mal-tiempo': 'Level 2', tormenta: 'Level 3', descenso: 'Reviews', llegada: 'Final' };
   var ORAL_PASS = 6;   // «Cobertura media» o más aprueba una respuesta oral
 
   // ---------- avance (appState.ruta) ----------
@@ -56,16 +56,16 @@
     var ci = currentIndex(), done = M.filter(function(m){ return stars(m.id) > 0; }).length;
     if (ci < M.length){
       var m = M[ci];
-      $('rtRouteTitle').textContent = (done ? 'Continuar' : 'Empezar') + ' · Estación ' + m.n;
+      $('rtRouteTitle').textContent = (done ? 'Continue' : 'Start') + ' · Station ' + m.n;
       $('rtRouteSub').textContent = m.title + ' · ' + SUBJ[m.subject].title;
     } else {
-      $('rtRouteTitle').textContent = 'Ruta completa';
-      $('rtRouteSub').textContent = 'Repite estaciones para sumar estrellas. Vienen más materias.';
+      $('rtRouteTitle').textContent = 'Route complete';
+      $('rtRouteSub').textContent = 'Repeat stations to earn more stars. More subjects are coming.';
     }
     $('rtRouteBar').style.width = Math.round(done / M.length * 100) + '%';
-    $('rtRouteCount').textContent = done + ' de ' + M.length + ' estaciones';
+    $('rtRouteCount').textContent = done + ' of ' + M.length + ' stations';
     var s = streakNow();
-    $('rtStreak').textContent = s; $('rtStreakLbl').textContent = s === 1 ? 'día seguido' : 'días seguidos';
+    $('rtStreak').textContent = s; $('rtStreakLbl').textContent = s === 1 ? 'day streak' : 'day streak';
     $('rtStarTotal').textContent = totalStars(); $('rtStarMax').textContent = M.length * 3;
   }
 
@@ -220,7 +220,7 @@
     M.forEach(function(m, i){
       var p = pts[i], st = ST[m.id], s = SUBJ[m.subject], open = isUnlocked(i), n = stars(m.id);
       var state = !open ? 'locked' : i === ci ? 'current' : n ? 'done' : 'open', right = p.x <= W / 2;
-      var label = 'Estación ' + m.n + ': ' + m.title + (open ? (n ? ', ' + n + ' de 3 estrellas' : '') : ', bloqueada');
+      var label = 'Station ' + m.n + ': ' + m.title + (open ? (n ? ', ' + n + ' of 3 stars' : '') : ', locked');
       html += '<button class="rt-node rt-' + state + (st.kind === 'review' ? ' rt-review' : '') + '" type="button" data-m="' + i + '" style="left:' + p.x + 'px;top:' + p.y + 'px;z-index:12" aria-label="' + esc(label) + '">' +
         navaid(st.kind, state, s.color) + (open ? '<span class="rt-nv-n">' + (st.kind === 'review' ? '★' : m.n) + '</span>' : '<span class="rt-nv-lock">' + LOCK + '</span>') + '</button>';
       if (n) html += '<span class="rt-node-stars" style="left:' + p.x + 'px;top:' + (p.y + 34) + 'px;z-index:12">' + starRow(n) + '</span>';
@@ -228,10 +228,10 @@
     });
     if (ci < M.length){
       var cp = pts[ci], cxl = Math.max(122, Math.min(W - 122, cp.x));   // el globo no se sale por los lados
-      html += '<div class="rt-callout" style="left:' + cxl + 'px;top:' + (cp.y - 46) + 'px;--dx:' + (cp.x - cxl) + 'px;z-index:13"><b>Estación ' + M[ci].n + ' · ' + esc(SUBJ[M[ci].subject].title) + '</b><span>' + esc(M[ci].title) + '</span></div>';
+      html += '<div class="rt-callout" style="left:' + cxl + 'px;top:' + (cp.y - 46) + 'px;--dx:' + (cp.x - cxl) + 'px;z-index:13"><b>Station ' + M[ci].n + ' · ' + esc(SUBJ[M[ci].subject].title) + '</b><span>' + esc(M[ci].title) + '</span></div>';
     }
     var endTop = arrival >= 0 ? 70 : Math.max(70, Math.round((pts.length ? pts[pts.length - 1].y : H / 2) - PH * 0.42));
-    html += '<div class="rt-route-end" style="top:' + endTop + 'px;z-index:11"><b>Más materias en camino</b><span>La ruta crece con cada materia nueva. Al final viene el aterrizaje.</span></div>';
+    html += '<div class="rt-route-end" style="top:' + endTop + 'px;z-index:11"><b>More subjects on the way</b><span>The route grows with every new subject. The landing comes at the end.</span></div>';
     html += '<div class="rt-plane" id="rtPlane" style="z-index:14">' + (D.route.plane ? '<img src="' + esc(D.route.plane) + '" alt="" decoding="async">' : planeSvg('#FFFFFF', '#14212B')) + '</div>';
     canvas.style.height = H + 'px';
     canvas.innerHTML = html;
@@ -291,13 +291,13 @@
   });
   function openStation(i){
     var m = M[i], st = ST[m.id], s = SUBJ[m.subject], open = isUnlocked(i), n = stars(m.id);
-    var meta = (st.kind === 'review' ? 'Repaso' : 'Nivel ' + st.level) + ' · ' + zoneTitle(m.zone);
-    var html = subjChip(s) + '<p class="rt-eyebrow" style="margin-top:10px">Estación ' + m.n + ' · ' + esc(meta) + '</p>' +
+    var meta = (st.kind === 'review' ? 'Review' : 'Level ' + st.level) + ' · ' + zoneTitle(m.zone);
+    var html = subjChip(s) + '<p class="rt-eyebrow" style="margin-top:10px">Station ' + m.n + ' · ' + esc(meta) + '</p>' +
       '<h2 id="rtSheetTitle">' + esc(st.title) + '</h2><p>' + esc(st.goal) + '</p>' +
-      '<div class="rt-row-meta"><span class="rt-chip">VOR/DME ' + esc(st.ident || '') + ' ' + freq(m.n) + '</span><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' ficha' : ' fichas') + '</span><span class="rt-chip">' + st.test.length + ' preguntas</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
-      '<div class="rt-sheet-stars">' + starRow(n, true) + '<span>' + (n ? 'Tu mejor resultado' : 'Todavía sin estrellas') + '</span></div>';
-    if (open) html += '<div class="rt-actions"><button class="rt-btn rt-btn-primary" data-start="' + i + '">' + (n ? 'Repetir la estación' : 'Empezar la estación') + '</button><button class="rt-btn" data-close="1">Cerrar</button></div>';
-    else html += '<p class="rt-note" style="margin-top:14px">Se desbloquea al completar la estación ' + M[i - 1].n + ' con al menos una estrella.</p><div class="rt-actions"><button class="rt-btn" data-close="1">Entendido</button></div>';
+      '<div class="rt-row-meta"><span class="rt-chip">VOR/DME ' + esc(st.ident || '') + ' ' + freq(m.n) + '</span><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' card' : ' cards') + '</span><span class="rt-chip">' + st.test.length + ' questions</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
+      '<div class="rt-sheet-stars">' + starRow(n, true) + '<span>' + (n ? 'Your best result' : 'No stars yet') + '</span></div>';
+    if (open) html += '<div class="rt-actions"><button class="rt-btn rt-btn-primary" data-start="' + i + '">' + (n ? 'Repeat station' : 'Start station') + '</button><button class="rt-btn" data-close="1">Close</button></div>';
+    else html += '<p class="rt-note" style="margin-top:14px">Unlocks when you complete station ' + M[i - 1].n + ' with at least one star.</p><div class="rt-actions"><button class="rt-btn" data-close="1">Got it</button></div>';
     openSheet(html);
   }
   $('rtSheet').addEventListener('click', function(e){
@@ -310,13 +310,13 @@
     if (b.dataset.reset === 'yes'){ appState.ruta = sanitizeRuta(null); saveState(); closeSheet(); renderCover(); return; }
   });
   function openSettings(){
-    openSheet('<h2 id="rtSheetTitle">Ajustes de la ruta</h2>' +
-      '<div class="rt-toggle"><span><b>Abrir todas las estaciones</b><small>Para repasar sin seguir el orden de la ruta.</small></span>' +
-      '<button class="rt-switch" role="switch" aria-checked="' + R().unlockAll + '" aria-label="Abrir todas las estaciones" data-toggle="unlock"></button></div>' +
-      '<div class="rt-toggle"><span><b>Borrar el avance de la ruta</b><small>Estrellas, racha y estaciones hechas. No toca el resto de tu progreso.</small></span><button class="rt-btn" id="rtResetAsk" data-reset="ask" style="width:auto;min-height:42px">Borrar</button></div>' +
-      '<div class="rt-confirm" id="rtResetBox" hidden><p style="margin:0">¿Borrar el avance de la ruta? No se puede deshacer.</p><div class="rt-actions"><button class="rt-btn" data-reset="no">Cancelar</button><button class="rt-btn rt-btn-primary" data-reset="yes">Borrar</button></div></div>' +
-      '<p class="rt-note" style="margin-top:14px">La copia de seguridad del banco de preguntas también guarda el avance de la ruta.</p>' +
-      '<div class="rt-actions"><button class="rt-btn" data-close="1">Listo</button></div>');
+    openSheet('<h2 id="rtSheetTitle">Route settings</h2>' +
+      '<div class="rt-toggle"><span><b>Unlock all stations</b><small>To review without following the route order.</small></span>' +
+      '<button class="rt-switch" role="switch" aria-checked="' + R().unlockAll + '" aria-label="Unlock all stations" data-toggle="unlock"></button></div>' +
+      '<div class="rt-toggle"><span><b>Reset route progress</b><small>Stars, streak and completed stations. The rest of your progress is kept.</small></span><button class="rt-btn" id="rtResetAsk" data-reset="ask" style="width:auto;min-height:42px">Reset</button></div>' +
+      '<div class="rt-confirm" id="rtResetBox" hidden><p style="margin:0">Reset route progress? This can’t be undone.</p><div class="rt-actions"><button class="rt-btn" data-reset="no">Cancel</button><button class="rt-btn rt-btn-primary" data-reset="yes">Reset</button></div></div>' +
+      '<p class="rt-note" style="margin-top:14px">The question bank backup also saves your route progress.</p>' +
+      '<div class="rt-actions"><button class="rt-btn" data-close="1">Done</button></div>');
   }
 
   // ---------- estación: clase, prueba y resultado ----------
@@ -335,36 +335,36 @@
     return '<article class="rt-card">' + (label ? '<span class="rt-eyebrow">' + label + '</span>' : '') + '<h2>' + esc(c.title) + '</h2>' +
       '<div class="rt-prose">' + prose(c.body) + '</div>' +
       (c.diagram ? '<figure class="rt-figure"><img src="' + esc(c.diagram.src) + '" alt="' + esc(c.diagram.alt) + '" loading="lazy" decoding="async"></figure>' : '') +
-      (c.example ? '<div class="rt-example"><b>Ejemplo</b>' + inline(c.example) + '</div>' : '') +
-      '<div class="rt-key"><b>La idea</b><p>' + inline(c.keyIdea) + '</p></div>' +
-      (c.more ? '<details class="rt-more"><summary>Para saber más</summary><div class="rt-prose">' + prose(c.more) + '</div></details>' : '') + '</article>';
+      (c.example ? '<div class="rt-example"><b>Example</b>' + inline(c.example) + '</div>' : '') +
+      '<div class="rt-key"><b>Key idea</b><p>' + inline(c.keyIdea) + '</p></div>' +
+      (c.more ? '<details class="rt-more"><summary>Learn more</summary><div class="rt-prose">' + prose(c.more) + '</div></details>' : '') + '</article>';
   }
-  function seenHtml(t){ return '<p class="rt-seen">Se vio en: ' + t.taughtIn.map(function(id){ return '«' + esc(CARDS[id] ? CARDS[id].title : id) + '»'; }).join(', ') + '</p>'; }
+  function seenHtml(t){ return '<p class="rt-seen">Covered in: ' + t.taughtIn.map(function(id){ return '«' + esc(CARDS[id] ? CARDS[id].title : id) + '»'; }).join(', ') + '</p>'; }
   function head(pos){
-    return '<div class="rt-p-head"><button class="rt-x" data-act="exit" aria-label="Salir de la estación">' + CLOSE + '</button>' + progressHtml(pos) + '</div>' +
-      (S.confirmExit ? '<div class="rt-p-body" style="padding-bottom:0"><div class="rt-confirm"><p style="margin:0">¿Salir de la estación? Se pierde el avance de esta prueba.</p><div class="rt-actions"><button class="rt-btn" data-act="stay">Seguir</button><button class="rt-btn rt-btn-primary" data-act="leave">Salir</button></div></div></div>' : '');
+    return '<div class="rt-p-head"><button class="rt-x" data-act="exit" aria-label="Exit station">' + CLOSE + '</button>' + progressHtml(pos) + '</div>' +
+      (S.confirmExit ? '<div class="rt-p-body" style="padding-bottom:0"><div class="rt-confirm"><p style="margin:0">Exit the station? Your progress in this quiz will be lost.</p><div class="rt-actions"><button class="rt-btn" data-act="stay">Stay</button><button class="rt-btn rt-btn-primary" data-act="leave">Exit</button></div></div></div>' : '');
   }
   function viewIntro(){
     var st = S.st, s = SUBJ[st.subject], m = M[S.i];
     return head(-1) + '<div class="rt-p-body">' + subjChip(s) +
-      '<span class="rt-eyebrow">Estación ' + m.n + ' · ' + (st.kind === 'review' ? 'Repaso' : 'Nivel ' + st.level) + '</span>' +
+      '<span class="rt-eyebrow">Station ' + m.n + ' · ' + (st.kind === 'review' ? 'Review' : 'Level ' + st.level) + '</span>' +
       '<h1>' + esc(st.title) + '</h1>' +
-      '<div class="rt-row-meta" style="margin-top:0"><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' ficha' : ' fichas') + '</span><span class="rt-chip">' + st.test.length + ' preguntas</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
+      '<div class="rt-row-meta" style="margin-top:0"><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' card' : ' cards') + '</span><span class="rt-chip">' + st.test.length + ' questions</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
       '<div class="rt-copilot"><span class="rt-av">' + planeSvg('#E9C46A', '#1E3A4C') + '</span><p>' + esc(st.intro) + '</p></div>' +
-      '<p style="margin:0"><strong>Objetivo:</strong> ' + esc(st.goal) + '</p>' +
-      '<button class="rt-btn rt-btn-primary" data-act="start">Empezar la clase</button></div>';
+      '<p style="margin:0"><strong>Goal:</strong> ' + esc(st.goal) + '</p>' +
+      '<button class="rt-btn rt-btn-primary" data-act="start">Start lesson</button></div>';
   }
   function viewCard(){
     var st = S.st, c = st.cards[S.card], last = S.card === st.cards.length - 1;
-    return head(S.card) + '<div class="rt-p-body">' + cardHtml(c, 'Ficha ' + (S.card + 1) + ' de ' + st.cards.length) +
-      '<div class="rt-nav"><button class="rt-btn" data-act="prev"' + (S.card === 0 ? ' disabled' : '') + '>‹ Anterior</button><button class="rt-btn rt-btn-primary" data-act="next">' + (last ? 'Ir a la prueba' : 'Siguiente ›') + '</button></div></div>';
+    return head(S.card) + '<div class="rt-p-body">' + cardHtml(c, 'Card ' + (S.card + 1) + ' of ' + st.cards.length) +
+      '<div class="rt-nav"><button class="rt-btn" data-act="prev"' + (S.card === 0 ? ' disabled' : '') + '>‹ Previous</button><button class="rt-btn rt-btn-primary" data-act="next">' + (last ? 'Go to quiz' : 'Next ›') + '</button></div></div>';
   }
   // La pregunta oral del banco de la app (con su rúbrica); si no está, la copia que trae la estación.
   function oralQuestion(t){ var q = t.source && typeof ORAL_VOICE_BANK !== 'undefined' ? ORAL_VOICE_BANK.find(function(x){ return x.id === t.source.id; }) : null; return q || t; }
-  function grade(score){ return score >= 9 ? 'Cobertura muy alta' : score >= 7.5 ? 'Cobertura alta' : score >= 6 ? 'Cobertura media' : score >= 4 ? 'Cobertura parcial' : 'Cobertura baja'; }
+  function grade(score){ return score >= 9 ? 'Very high coverage' : score >= 7.5 ? 'High coverage' : score >= 6 ? 'Medium coverage' : score >= 4 ? 'Partial coverage' : 'Low coverage'; }
   function viewQuestion(){
     var st = S.st, order = queue(), ti = order[S.q], t = st.test[ti], ans = S.answers[ti];
-    var h = head(st.cards.length) + '<div class="rt-p-body"><span class="rt-eyebrow">' + (S.retry ? 'Segundo intento · ' : '') + 'Pregunta ' + (S.q + 1) + ' de ' + order.length + '</span>';
+    var h = head(st.cards.length) + '<div class="rt-p-body"><span class="rt-eyebrow">' + (S.retry ? 'Second try · ' : '') + 'Question ' + (S.q + 1) + ' of ' + order.length + '</span>';
     if (t.image) h += '<figure class="rt-figure"><img src="' + esc(t.image.src) + '" alt="' + esc(t.image.alt) + '"></figure>';
     h += '<p class="rt-q">' + esc(t.question) + '</p>';
     if (t.type === 'mcq'){
@@ -373,38 +373,38 @@
         var cls = ans ? (i === t.correct ? ' rt-ok' : i === ans.choice ? ' rt-bad' : '') : '';
         return '<button class="rt-opt' + cls + '" data-choice="' + i + '"' + (ans ? ' disabled' : '') + '><span class="rt-l">' + String.fromCharCode(65 + i) + '</span><span>' + esc(o) + '</span></button>';
       }).join('') + '</div>';
-      if (ans) h += '<div class="rt-fb ' + (ans.ok ? 'rt-ok' : 'rt-bad') + '"><span class="rt-h">' + (ans.ok ? 'Correcta' : 'Incorrecta') + '</span><p>' + esc(t.explanation) + '</p>' + seenHtml(t) + '</div>';
+      if (ans) h += '<div class="rt-fb ' + (ans.ok ? 'rt-ok' : 'rt-bad') + '"><span class="rt-h">' + (ans.ok ? 'Correct' : 'Incorrect') + '</span><p>' + esc(t.explanation) + '</p>' + seenHtml(t) + '</div>';
     } else {
-      h += '<label class="rt-note" for="rtOralText">Explícalo con tus palabras, como en la entrevista.</label>' +
-        '<textarea id="rtOralText" placeholder="Tu respuesta…"' + (ans ? ' disabled' : '') + '>' + esc(ans ? ans.text : '') + '</textarea>';
-      if (!ans) h += '<div class="rt-two"><button class="rt-btn" data-act="oralSkip">No la sé</button><button class="rt-btn rt-btn-primary" data-act="oralEval">Evaluar mi respuesta</button></div>';
+      h += '<label class="rt-note" for="rtOralText">Explain it in your own words, as in the interview.</label>' +
+        '<textarea id="rtOralText" placeholder="Your answer…"' + (ans ? ' disabled' : '') + '>' + esc(ans ? ans.text : '') + '</textarea>';
+      if (!ans) h += '<div class="rt-two"><button class="rt-btn" data-act="oralSkip">I don’t know</button><button class="rt-btn rt-btn-primary" data-act="oralEval">Evaluate my answer</button></div>';
       if (ans){
         if (ans.result){
           var r = ans.result, cls = r.score >= 7.5 ? 'rt-ok' : r.score >= ORAL_PASS ? 'rt-mid' : 'rt-bad';
           h += '<div class="rt-fb ' + cls + '"><div class="rt-oral-score"><b>' + r.score.toFixed(r.score % 1 ? 1 : 0) + '/10</b><span class="rt-h" style="margin:0">' + grade(r.score) + '</span></div>' +
-            (r.detected && r.detected.length ? '<p><strong>Lo que dijiste bien:</strong></p><ul>' + r.detected.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
-            (r.missing && r.missing.length ? '<p style="margin-top:8px"><strong>Te faltó:</strong></p><ul>' + r.missing.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
-            (r.errors && r.errors.length ? '<p style="margin-top:8px"><strong>Atención:</strong></p><ul>' + r.errors.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
-            '<p class="rt-seen">Es una estimación por conceptos: compárala con la respuesta de referencia.</p></div>';
+            (r.detected && r.detected.length ? '<p><strong>What you got right:</strong></p><ul>' + r.detected.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+            (r.missing && r.missing.length ? '<p style="margin-top:8px"><strong>You missed:</strong></p><ul>' + r.missing.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+            (r.errors && r.errors.length ? '<p style="margin-top:8px"><strong>Watch out:</strong></p><ul>' + r.errors.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+            '<p class="rt-seen">This is a concept-based estimate: compare it with the reference answer.</p></div>';
         }
-        h += '<div class="rt-fb"><span class="rt-h">Respuesta de referencia</span><div class="rt-prose">' + prose(t.reference) + '</div>' + seenHtml(t) + '</div>';
+        h += '<div class="rt-fb"><span class="rt-h">Reference answer</span><div class="rt-prose">' + prose(t.reference) + '</div>' + seenHtml(t) + '</div>';
       }
     }
-    if (ans) h += '<button class="rt-btn rt-btn-primary" data-act="nextq">' + (S.q === order.length - 1 ? 'Ver resultado' : 'Siguiente ›') + '</button>';
+    if (ans) h += '<button class="rt-btn rt-btn-primary" data-act="nextq">' + (S.q === order.length - 1 ? 'See result' : 'Next ›') + '</button>';
     return h + '</div>';
   }
   function starsFor(r){ return r >= 0.9 ? 3 : r >= 0.7 ? 2 : r >= 0.5 ? 1 : 0; }
   function viewResult(){
     var st = S.st, total = st.test.length, first = S.firstScore, n = starsFor(first / total);
     var wrong = st.test.map(function(t, i){ return { t: t, i: i }; }).filter(function(x){ return !(S.answers[x.i] && S.answers[x.i].ok); });
-    var msg = n === 3 ? 'Impecable. Lo tienes claro.' : n === 2 ? 'Muy bien. Repasa lo que falló y sigue.' : n === 1 ? 'Pasaste. Conviene repasar las fichas.' : 'Todavía no: repasa las fichas y vuelve a intentarlo. Con la mitad correcta se gana la primera estrella.';
+    var msg = n === 3 ? 'Flawless. You have it down.' : n === 2 ? 'Very good. Review what you missed and move on.' : n === 1 ? 'You passed. Reviewing the cards is a good idea.' : 'Not yet: review the cards and try again. Half right earns the first star.';
     var h = head(st.cards.length) + '<div class="rt-p-body rt-result"><span class="rt-eyebrow">' + esc(st.title) + '</span>' +
-      '<div class="rt-bigstars" aria-label="' + n + ' de 3 estrellas">' + starRow(n, true) + '</div>' +
-      '<h2>' + first + ' de ' + total + ' correctas</h2><p style="margin:0">' + msg + '</p>';
-    if (S.retryDone) h += '<p class="rt-note">Segundo intento: ' + (wrong.length ? 'quedan ' + wrong.length + ' por reforzar.' : 'corregiste todas las que habías fallado.') + '</p>';
-    h += '<button class="rt-btn rt-btn-primary" data-act="tomap">Volver al mapa</button>';
-    if (wrong.length) h += '<button class="rt-btn" data-act="retry">Reintentar las que fallaste</button>';
-    h += '<div class="rt-card rt-recap"><span class="rt-eyebrow">Lo que aprendiste</span><ul>' + st.cards.map(function(c){ return '<li>' + inline(c.keyIdea) + '</li>'; }).join('') + '</ul></div>';
+      '<div class="rt-bigstars" aria-label="' + n + ' of 3 stars">' + starRow(n, true) + '</div>' +
+      '<h2>' + first + ' of ' + total + ' correct</h2><p style="margin:0">' + msg + '</p>';
+    if (S.retryDone) h += '<p class="rt-note">Second try: ' + (wrong.length ? wrong.length + ' still to reinforce.' : 'you fixed every one you had missed.') + '</p>';
+    h += '<button class="rt-btn rt-btn-primary" data-act="tomap">Back to map</button>';
+    if (wrong.length) h += '<button class="rt-btn" data-act="retry">Retry the ones you missed</button>';
+    h += '<div class="rt-card rt-recap"><span class="rt-eyebrow">What you learned</span><ul>' + st.cards.map(function(c){ return '<li>' + inline(c.keyIdea) + '</li>'; }).join('') + '</ul></div>';
     h += wrong.map(function(x){ return '<div class="rt-miss"><strong>' + esc(x.t.question) + '</strong>' + seenHtml(x.t) + '</div>'; }).join('');
     return h + '</div>';
   }

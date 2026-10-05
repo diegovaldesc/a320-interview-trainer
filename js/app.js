@@ -4,18 +4,18 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.15.0";
+const APP_VERSION="1.16.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
 let RAW_SYSTEMS;
 try{
   const parsedBank=JSON.parse(window.SYSTEMS_DATA_JSON);
-  if(!parsedBank||typeof parsedBank!=="object"||Array.isArray(parsedBank))throw new Error("Estructura raíz del banco inválida");
+  if(!parsedBank||typeof parsedBank!=="object"||Array.isArray(parsedBank))throw new Error("Invalid bank root structure");
   RAW_SYSTEMS=parsedBank;
 }catch(bankLoadError){
-  document.body.innerHTML='<div style="padding:28px 20px;font-family:-apple-system,system-ui,sans-serif;max-width:420px;margin:15vh auto 0;text-align:center;color:#1B2329"><h1 style="font-size:17px;margin:0 0 8px">No se pudo cargar el banco de preguntas</h1><p style="color:#666;font-size:14px;line-height:1.5;margin:0 0 16px">Los datos de la aplicación no se leyeron correctamente. Recarga la página; si el problema sigue, es probable que la última actualización publicada tenga un error.</p><button onclick="location.reload()" style="padding:10px 22px;border-radius:10px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer">Recargar</button></div>';
-  console.error("Fallo al cargar data/banco.js:",bankLoadError);
+  document.body.innerHTML='<div style="padding:28px 20px;font-family:-apple-system,system-ui,sans-serif;max-width:420px;margin:15vh auto 0;text-align:center;color:#1B2329"><h1 style="font-size:17px;margin:0 0 8px">Couldn’t load the question bank</h1><p style="color:#666;font-size:14px;line-height:1.5;margin:0 0 16px">The app data wasn’t read correctly. Reload the page; if the problem persists, the latest published update probably has an error.</p><button onclick="location.reload()" style="padding:10px 22px;border-radius:10px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer">Reload</button></div>';
+  console.error("Failed to load data/banco.js:",bankLoadError);
   throw bankLoadError;
 }
 const $=id=>document.getElementById(id);
@@ -34,7 +34,7 @@ function dgacTotal(){return (SYSTEMS[DGAC_KEY]?.questions||[]).length}
 function interviewTechnicalTotal(){return (SYSTEMS[INTERVIEW_TECH_KEY]?.questions||[]).length}
 function isDgacKey(k){return k===DGAC_KEY}
 function isInterviewTechKey(k){return k===INTERVIEW_TECH_KEY}
-function systemName(k){return k===null?"Todos los sistemas":(SYSTEMS[k]?.name||k)}
+function systemName(k){return k===null?"All systems":(SYSTEMS[k]?.name||k)}
 function systemAta(k){return k===null?"ALL":(SYSTEMS[k]?.ata||"—")}
 function correctText(q){return q.options?.[q.correct] ?? ""}
 function isStructurallyValid(q){
@@ -158,7 +158,7 @@ function sanitizeResume(r){
     type:typeof r.type==="string"?r.type.slice(0,40):"study",
     systemKey:typeof r.systemKey==="string"||r.systemKey===null?r.systemKey:null,
     questions,index,total,
-    label:typeof r.label==="string"?r.label.slice(0,200):"Sesión anterior",
+    label:typeof r.label==="string"?r.label.slice(0,200):"Previous session",
     bankFingerprint:typeof r.bankFingerprint==="string"?r.bankFingerprint:null
   };
   if(typeof r.kind==="string")out.kind=r.kind.slice(0,40);
@@ -245,7 +245,7 @@ let stateSaveWarned=false;
 function saveState(){
   try{localStorage.setItem(KEY,JSON.stringify(appState));return true}
   catch(e){
-    if(!stateSaveWarned){stateSaveWarned=true;toast("No se pudo guardar el progreso en este dispositivo")}
+    if(!stateSaveWarned){stateSaveWarned=true;toast("Couldn't save progress on this device")}
     return false;
   }
 }
@@ -326,36 +326,36 @@ function renderHome(){
   $("mWeak").textContent=ov.wq;
   $("bankChip").textContent=(totalQuestions()+operationsQuestions()+interviewTechnicalTotal()+dgacTotal()+ORAL_VOICE_BANK.length)+" PREGUNTAS";
 
-  $("homeSystemsCount").textContent=totalQuestions()+" preguntas · FCOM 2025 ✓";
-  $("homeOpsCount").textContent=operationsQuestions()+" preguntas · Airbus Tutorials Rev 15 ✓";
-  $("homeInterviewCount").textContent=interviewTechnicalTotal()+" preguntas · banco de entrevista depurado";
+  $("homeSystemsCount").textContent=totalQuestions()+" questions · FCOM 2025 ✓";
+  $("homeOpsCount").textContent=operationsQuestions()+" questions · Airbus Tutorials Rev 15 ✓";
+  $("homeInterviewCount").textContent=interviewTechnicalTotal()+" questions · curated interview bank";
   const dgacExplained=(SYSTEMS[DGAC_KEY]?.questions||[]).filter(q=>q.expl).length;
-  $("homeDgacCount").textContent=dgacTotal()+(dgacExplained>=dgacTotal()?" preguntas históricas · explicadas":` preguntas históricas · ${dgacExplained} explicadas`);
-  $("homeWeakCount").textContent=ov.wq?`${ov.wq} ${plural(ov.wq,"pregunta","preguntas")} por repasar`:"Sin preguntas pendientes";
-  {const nk=ntkRefs(),nd=nk.filter(r=>ntkPracticed(r)).length;$("homeNtkCount").textContent=nk.length?`${nk.length} ${plural(nk.length,"pregunta clave","preguntas clave")}${nd?` · ${nd} ${plural(nd,"practicada","practicadas")}`:" · responde con tu voz o lee la respuesta"}`:"Agrega las preguntas que no puedes olvidar"}
+  $("homeDgacCount").textContent=dgacTotal()+(dgacExplained>=dgacTotal()?" historical questions · explained":` historical questions · ${dgacExplained} explained`);
+  $("homeWeakCount").textContent=ov.wq?`${ov.wq} ${plural(ov.wq,"question","questions")} to review`:"No questions pending";
+  {const nk=ntkRefs(),nd=nk.filter(r=>ntkPracticed(r)).length;$("homeNtkCount").textContent=nk.length?`${nk.length} ${plural(nk.length,"key question","key questions")}${nd?` · ${nd} practiced`:" · answer by voice or read the answer"}`:"Add the questions you can't forget"}
   {
     const tt=enTests(),dn=enTestState().done.filter(n=>tt.some(t=>t.n===n)).length;
-    $("homeEnglishCount").textContent=tt.length?`${tt.length} ${plural(tt.length,"prueba","pruebas")} al azar · alternativas, audios, imágenes y role-play${dn?` · ${dn} de ${tt.length} hechas`:""}`:"Pruebas de inglés";
+    $("homeEnglishCount").textContent=tt.length?`${tt.length} ${plural(tt.length,"test","tests")} at random · multiple choice, audio, pictures and role-play${dn?` · ${dn} of ${tt.length} done`:""}`:"English tests";
   }
-  $("folderSystemsCount").textContent=totalQuestions()+" preguntas";
+  $("folderSystemsCount").textContent=totalQuestions()+" questions";
 
   const health=BANK_HEALTH;
   $("bankStatus").textContent=health.ok?"Integridad estructural OK":`${health.issues} ${plural(health.issues,"incidencia","incidencias")}`;
   $("bankStatus").classList.toggle("warn",!health.ok);
-  $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Banco <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} entrevista técnica · ${dgacTotal()} DGAC históricas · ${ORAL_VOICE_BANK.length} entrevista oral · ${ENGLISH.mcq.length} inglés OACI (alternativas en ${enTests().length} pruebas)`;
+  $("appMeta").innerHTML=`App <b>v${APP_VERSION}</b> · Bank <b>v${BANK_VERSION}</b><br>${totalQuestions()+operationsQuestions()} FCOM/Airbus · ${interviewTechnicalTotal()} technical interview · ${dgacTotal()} historical DGAC · ${ORAL_VOICE_BANK.length} oral interview · ${ENGLISH.mcq.length} ICAO English (multiple choice across ${enTests().length} tests)`;
   $("integrityNote").classList.toggle("warn",!health.ok);
   $("integrityNote").textContent=health.ok
-    ?"Comprobación estructural al iniciar: forma de preguntas y rúbricas orales válida, y explicación/referencia presente. La exactitud del contenido aeronáutico se audita aparte, contra el FCOM/FCTM."
-    :`Se detectaron ${health.issues} incidencias de estructura${health.oralIssues?` (incluye ${health.oralIssues} en el banco oral)`:""}${health.englishIssues?` (incluye ${health.englishIssues} en Inglés OACI)`:""}. Las preguntas con estructura inválida quedan fuera de las sesiones hasta corregirlas.`;
+    ?"Structural check at startup: valid question shapes and oral rubrics, with explanation/reference present. Aviation content accuracy is audited separately, against the FCOM/FCTM."
+    :`${health.issues} structural issues detected${health.oralIssues?` (including ${health.oralIssues} in the oral bank)`:""}${health.englishIssues?` (including ${health.englishIssues} in ICAO English)`:""}. Questions with an invalid structure are left out of sessions until they are fixed.`;
 
   const r=appState.resume;
-  $("resumeWrap").innerHTML=r?`<button type="button" class="resume-card" onclick="resumeSession()"><div class="resume-main"><div class="resume-label">Continuar</div><strong>${esc(r.label||"Sesión anterior")}</strong><span>Pregunta ${Math.min(finiteNum(r.index)+1,finiteNum(r.total,1))} de ${finiteNum(r.total,1)}</span></div><div class="chev">›</div></button>`:"";
+  $("resumeWrap").innerHTML=r?`<button type="button" class="resume-card" onclick="resumeSession()"><div class="resume-main"><div class="resume-label">Continue</div><strong>${esc(r.label||"Previous session")}</strong><span>Question ${Math.min(finiteNum(r.index)+1,finiteNum(r.total,1))} of ${finiteNum(r.total,1)}</span></div><div class="chev">›</div></button>`:"";
 
   const all=systemStats(null);
-  let html=`<button type="button" class="system-card all" onclick="openSystem(null)"><div class="ata">ALL</div><div class="sys-info"><h3>Todos los sistemas</h3><p>${totalQuestions()} preguntas · explicación y respaldo FCOM</p>${all.best?`<div class="sys-score">Mejor test: ${finiteNum(all.best.score)}/${finiteNum(all.best.total)}</div>`:""}</div><div class="chev">›</div></button>`;
+  let html=`<button type="button" class="system-card all" onclick="openSystem(null)"><div class="ata">ALL</div><div class="sys-info"><h3>All systems</h3><p>${totalQuestions()} questions · explanation and FCOM backing</p>${all.best?`<div class="sys-score">Best test: ${finiteNum(all.best.score)}/${finiteNum(all.best.total)}</div>`:""}</div><div class="chev">›</div></button>`;
   html+=orderedKeys().map(k=>{
     const s=SYSTEMS[k],st=systemStats(k),count=(s.questions||[]).length;
-    return `<button type="button" class="system-card" data-search="${esc(norm((s.name||"")+" "+(s.ata||"")))}" onclick="openSystem('${esc(k)}')"><div class="ata">ATA<br>${esc(s.ata||"—")}</div><div class="sys-info"><h3>${esc(s.name||k)}</h3><p>${count} preguntas · FCOM 2025 ✓${st.a?` · ${st.p}% precisión`:""}</p>${st.best?`<div class="sys-score">Mejor test: ${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</div>`:""}</div><div class="chev">›</div></button>`
+    return `<button type="button" class="system-card" data-search="${esc(norm((s.name||"")+" "+(s.ata||"")))}" onclick="openSystem('${esc(k)}')"><div class="ata">ATA<br>${esc(s.ata||"—")}</div><div class="sys-info"><h3>${esc(s.name||k)}</h3><p>${count} questions · FCOM 2025 ✓${st.a?` · ${st.p}% accuracy`:""}</p>${st.best?`<div class="sys-score">Best test: ${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</div>`:""}</div><div class="chev">›</div></button>`
   }).join("");
   $("systemsList").innerHTML=html;
 }
@@ -363,39 +363,39 @@ function openSystem(k){
   currentSystemKey=k;appState.lastSystem=k;saveState();
   const st=systemStats(k),pool=rawPool(k);
   const dgac=isDgacKey(k),ops=operationsKeys().includes(k),interviewTech=isInterviewTechKey(k);
-  $("detailAta").textContent=dgac?"BANCO HISTÓRICO · DGAC 2018":interviewTech?"ENTREVISTA · BANCO TÉCNICO GENERAL":ops?"OPERACIÓN · AIRBUS TUTORIALS REV 15":(k===null?"BANCO TÉCNICO · FCOM":`ATA ${systemAta(k)} · FCOM`);
+  $("detailAta").textContent=dgac?"HISTORICAL BANK · DGAC 2018":interviewTech?"INTERVIEW · GENERAL TECHNICAL BANK":ops?"OPERATIONS · AIRBUS TUTORIALS REV 15":(k===null?"TECHNICAL BANK · FCOM":`ATA ${systemAta(k)} · FCOM`);
   $("detailTitle").textContent=systemName(k);
   if(dgac){
     const explained=pool.filter(q=>q.expl).length;
-    $("detailDesc").textContent=explained>=pool.length?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. Las ${pool.length} tienen explicación técnica y referencia verificadas.`:explained?`${pool.length} preguntas reales del examen DGAC A320 2018, con sus alternativas originales sin modificar. ${explained} de ${pool.length} ya tienen explicación técnica verificada; seguimos completando el resto.`:`${pool.length} preguntas del examen DGAC A320 2018. Este banco se conserva para practicar el formato y las preguntas históricas. No forma parte del banco técnico validado y deliberadamente no muestra explicaciones.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas DGAC</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span><span class="pill"><b>${explained}</b> explicadas</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
-    $("studyModeDesc").textContent=explained?"Muestra la respuesta marcada en el examen; si ya fue auditada, incluye explicación técnica y cita FCOM.":"Muestra la respuesta marcada en el examen después de contestar. Sin explicación.";
+    $("detailDesc").textContent=explained>=pool.length?`${pool.length} real questions from the DGAC A320 exam (2018), with their original options unchanged. All ${pool.length} have a verified technical explanation and reference.`:explained?`${pool.length} real questions from the DGAC A320 exam (2018), with their original options unchanged. ${explained} of ${pool.length} already have a verified technical explanation; we keep completing the rest.`:`${pool.length} questions from the DGAC A320 exam (2018). This bank is kept to practice the format and the historical questions. It is not part of the validated technical bank and deliberately shows no explanations.`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> DGAC questions</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> accuracy</span><span class="pill"><b>${explained}</b> explained</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> best test</span>`:""}`;
+    $("studyModeDesc").textContent=explained?"Shows the answer marked in the exam; if it has been audited, it includes a technical explanation and an FCOM quote.":"Shows the answer marked in the exam after you answer. No explanation.";
     $("interviewModeCard").classList.add("hidden");
     $("systemWeakBtn").classList.add("hidden");
   }else if(interviewTech){
     const curated=pool.filter(q=>q.audit==="interview_curated"&&q.expl).length;
-    $("detailDesc").textContent=`${pool.length} preguntas derivadas de material de entrevistas LATAM, depuradas para estudiar meteorología, performance, IFR, aerodinámica, operación, CRM y conceptos A320.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${curated}</b> depuradas</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
-    $("studyModeDesc").textContent="Respuesta y explicación después de contestar, con referencia al material de entrevista y a la revisión aplicada.";
+    $("detailDesc").textContent=`${pool.length} questions drawn from LATAM interview material, curated to study meteorology, performance, IFR, aerodynamics, operations, CRM and A320 concepts.`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> questions</span><span class="pill"><b>${curated}</b> curated</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> accuracy</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> best test</span>`:""}`;
+    $("studyModeDesc").textContent="Answer and explanation after you answer, with a reference to the interview material and the review applied.";
     $("interviewModeCard").classList.remove("hidden");
     const weak=weakQuestions(k).length,b=$("systemWeakBtn");
-    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} para repasar</b> · practicar solo preguntas falladas`;
+    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} to review</b> · practice only missed questions`;
   }else if(ops){
     const verified=pool.filter(q=>q.audit==="airbus_tutorials_verified"&&q.expl&&q.cite).length;
-    $("detailDesc").textContent=`${pool.length} preguntas de operación Airbus construidas desde Airbus Tutorials Revision 15. Aquí se evalúan filosofía Airbus, flows, técnicas operacionales y manejo de fases de vuelo.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${verified}</b> AIRBUS ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> mejor test</span>`:""}`;
-    $("studyModeDesc").textContent="Respuesta, explicación y referencia Airbus Tutorials justo después de contestar.";
+    $("detailDesc").textContent=`${pool.length} Airbus operations questions built from Airbus Tutorials Revision 15. They cover Airbus philosophy, flows, operating techniques and handling of each flight phase.`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> questions</span><span class="pill"><b>${verified}</b> AIRBUS ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> accuracy</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> best test</span>`:""}`;
+    $("studyModeDesc").textContent="Answer, explanation and Airbus Tutorials reference right after you answer.";
     $("interviewModeCard").classList.remove("hidden");
     const weak=weakQuestions(k).length,b=$("systemWeakBtn");
-    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} para repasar</b> · practicar solo preguntas falladas`;
+    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} to review</b> · practice only missed questions`;
   }else{
     const verified=pool.filter(q=>q.audit==="fcom_verified"&&q.expl&&q.cite).length;
-    $("detailDesc").textContent=`${pool.length} preguntas de nuestro banco principal. Todas las preguntas visibles aquí tienen una respuesta concreta, explicación útil y respaldo en FCOM 15 SEP 25.`;
-    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> preguntas</span><span class="pill"><b>${verified}</b> FCOM ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> precisión</span>`;
-    $("studyModeDesc").textContent="Respuesta, explicación y referencia FCOM justo después de contestar.";
+    $("detailDesc").textContent=`${pool.length} questions from our main bank. Every question shown here has a specific answer, a useful explanation and backing in the FCOM 15 SEP 25.`;
+    $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> questions</span><span class="pill"><b>${verified}</b> FCOM ✓</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> accuracy</span>`;
+    $("studyModeDesc").textContent="Answer, explanation and FCOM reference right after you answer.";
     $("interviewModeCard").classList.remove("hidden");
     const weak=weakQuestions(k).length,b=$("systemWeakBtn");
-    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} para repasar</b> · practicar solo preguntas falladas`;
+    b.classList.toggle("hidden",weak===0);if(weak)b.innerHTML=`<b>${weak} to review</b> · practice only missed questions`;
   }
   show("detail");
 }
@@ -414,27 +414,27 @@ function runSearch(v){
     const hay=norm(x.q+" "+x.options.join(" ")+" "+systemName(x._sys)+" "+(x.src||""));
     return tokens.every(t=>hay.includes(t));
   }).slice(0,40);
-  wrap.innerHTML=hits.length?hits.map(x=>`<button type="button" class="search-item" onclick="startSingle('${x._id}')"><div class="smeta">${esc(systemName(x._sys))}${appState.bookmarks[x._id]?" · ★":""}</div><div class="sq">${esc(x.q)}</div></button>`).join(""):`<div class="empty">No encontré preguntas con “${esc(v)}”.</div>`;
+  wrap.innerHTML=hits.length?hits.map(x=>`<button type="button" class="search-item" onclick="startSingle('${x._id}')"><div class="smeta">${esc(systemName(x._sys))}${appState.bookmarks[x._id]?" · ★":""}</div><div class="sq">${esc(x.q)}</div></button>`).join(""):`<div class="empty">No questions found for “${esc(v)}”.</div>`;
 }
 function clearSearch(){clearTimeout(searchDebounceTimer);const i=$("searchInput");i.value="";runSearch("");i.focus()}
 function findById(id){return allLookupPool().find(q=>q._id===id)}
 function startSingle(id){const q=findById(id);if(!q)return;currentSystemKey=q._sys;startTechnical("study",[q])}
 function startQuickTest(){currentSystemKey=null;startTechnical("test")}
 function startWeakSession(k=null){
-  const p=weakQuestions(k);if(!p.length){toast("Todavía no hay errores guardados");return}
+  const p=weakQuestions(k);if(!p.length){toast("No mistakes saved yet");return}
   currentSystemKey=k;startTechnical("weak",p.slice(0,Math.min(30,p.length)))
 }
 function showWeak(){
   const p=weakQuestions(null),saved=savedQuestions(null);show("weak");
   $("weakActions").innerHTML=p.length?`<button type="button" class="btn primary" style="width:100%" onclick="startWeakSession(null)">Practicar ${Math.min(30,p.length)} prioritarias</button>`:"";
-  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${finiteNum(s.w)} ${plural(finiteNum(s.w),"error","errores")} · ${finiteNum(s.c)} ${plural(finiteNum(s.c),"correcta","correctas")}${finiteNum(s.streak)>=2?" · recuperada":""}</div></button>`}).join(""):`<div class="empty">No tienes preguntas pendientes de refuerzo. Las preguntas salen de esta lista cuando demuestras recuperación con respuestas correctas consecutivas.</div>`;
+  $("weakList").innerHTML=p.length?p.slice(0,80).map(q=>{const s=attemptsFor(q);return `<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta">${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div><div class="wstats">${finiteNum(s.w)} ${plural(finiteNum(s.w),"mistake","mistakes")} · ${finiteNum(s.c)} correct${finiteNum(s.streak)>=2?" · recovered":""}</div></button>`}).join(""):`<div class="empty">You have no questions to reinforce. Questions leave this list once you show recovery with consecutive correct answers.</div>`;
   $("savedWrap").classList.toggle("hidden",saved.length===0);
   if(saved.length){
-    $("savedActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="startSavedSession()">Practicar ${Math.min(30,saved.length)} guardadas</button>`;
+    $("savedActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="startSavedSession()">Practice ${Math.min(30,saved.length)} saved</button>`;
     $("savedList").innerHTML=saved.slice(0,80).map(q=>`<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta saved-badge">★ ${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div></button>`).join("");
   }
 }
-function startSavedSession(){const p=savedQuestions(null);if(!p.length){toast("No tienes preguntas guardadas");return}currentSystemKey=null;startTechnical("saved",p.slice(0,Math.min(30,p.length)))}
+function startSavedSession(){const p=savedQuestions(null);if(!p.length){toast("You have no saved questions");return}currentSystemKey=null;startTechnical("saved",p.slice(0,Math.min(30,p.length)))}
 
 let session=null;
 function buildSessionQ(q){
@@ -451,7 +451,7 @@ function startTechnical(type,provided=null){
   if(type==="test")pool=shuffle(pool).slice(0,Math.min(TEST_SIZE,pool.length));
   else if(type==="study"&&!provided)pool=shuffle(pool);
   else if(type==="weak"||type==="saved")pool=shuffle(pool);
-  if(!pool.length){toast("No hay preguntas disponibles");return}
+  if(!pool.length){toast("No questions available");return}
   session={type,systemKey:currentSystemKey,questions:pool.map(buildSessionQ),answers:new Array(pool.length).fill(null),index:0,counted:new Array(pool.length).fill(false),completed:false};
   show("quiz");renderQuestion();persistResume();
 }
@@ -462,7 +462,7 @@ function persistResume(){
       mode:"oral",type:"interview",kind:session.kind,systemKey:session.systemKey,
       questions:session.questions,ratings:session.ratings,revealed:session.revealed,
       index:session.index,total:session.questions.length,
-      label:`${session.kind==="scenario"?"Escenarios":"Autoevaluación"} · ${systemName(session.systemKey)}`,
+      label:`${session.kind==="scenario"?"Scenarios":"Self-assessment"} · ${systemName(session.systemKey)}`,
       bankFingerprint:BANK_FINGERPRINT
     };
   }else{
@@ -470,7 +470,7 @@ function persistResume(){
       mode:"technical",type:session.type,systemKey:session.systemKey,
       questions:session.questions,answers:session.answers,index:session.index,counted:session.counted,
       total:session.questions.length,
-      label:`${session.type==="test"?"Test":session.type==="weak"?"Repaso de errores":session.type==="saved"?"Guardadas":"Estudio"} · ${systemName(session.systemKey)}`,
+      label:`${session.type==="test"?"Test":session.type==="weak"?"Mistake review":session.type==="saved"?"Saved":"Study"} · ${systemName(session.systemKey)}`,
       bankFingerprint:BANK_FINGERPRINT
     };
   }
@@ -479,10 +479,10 @@ function persistResume(){
 function resumeSession(){
   const r=appState.resume;if(!r)return;
   const qs=Array.isArray(r.questions)?r.questions:[];
-  if(!qs.length){appState.resume=null;saveState();renderHome();toast("La sesión anterior ya no es válida");return}
+  if(!qs.length){appState.resume=null;saveState();renderHome();toast("The previous session is no longer valid");return}
   if(r.bankFingerprint!==BANK_FINGERPRINT){
     appState.resume=null;saveState();renderHome();
-    toast("El banco se actualizó desde tu última sesión; empieza una nueva para ver el contenido vigente");
+    toast("The bank was updated since your last session; start a new one to see the current content");
     return;
   }
   currentSystemKey=r.systemKey;
@@ -529,9 +529,9 @@ function answerDontKnow(){
 }
 function renderQuestion(){
   const q=sessionQuestion(),n=session.questions.length,ans=session.answers[session.index];
-  $("qMeta").textContent=`${session.type==="test"?"TEST":session.type==="weak"?"REPASO":session.type==="saved"?"GUARDADAS":"ESTUDIO"} · ${session.index+1} / ${n}`;
+  $("qMeta").textContent=`${session.type==="test"?"TEST":session.type==="weak"?"REVIEW":session.type==="saved"?"SAVED":"STUDY"} · ${session.index+1} / ${n}`;
   $("qProgress").style.width=`${((session.index+1)/n)*100}%`;
-  $("qSource").innerHTML=q.bank==="dgac"?`DGAC 2018 · ${esc(q.bank_section||"Sistemas A320")}<span class="${q.expl?"verify-badge":"dgac-badge"}">${q.expl?"✓ EXPLICADA":"BANCO ORIGINAL · SIN EXPLICACIÓN"}</span>`:q.bank==="interview_technical"?`${esc(systemName(q._sys))} · ${esc(q.topic||"Entrevista")}<span class="verify-badge">BANCO DEPURADO</span>`:q.bank==="airbus_tutorials"?`${esc(systemName(q._sys))} · ${esc(q.src||"Airbus Tutorials Rev 15")}<span class="verify-badge">✓ AIRBUS REV 15</span>`:`${esc(systemName(q._sys))} · ${esc(q.src||"FCOM")}<span class="verify-badge">✓ FCOM 2025</span>`;
+  $("qSource").innerHTML=q.bank==="dgac"?`DGAC 2018 · ${esc(q.bank_section||"A320 systems")}<span class="${q.expl?"verify-badge":"dgac-badge"}">${q.expl?"✓ EXPLAINED":"ORIGINAL BANK · NO EXPLANATION"}</span>`:q.bank==="interview_technical"?`${esc(systemName(q._sys))} · ${esc(q.topic||"Interview")}<span class="verify-badge">CURATED BANK</span>`:q.bank==="airbus_tutorials"?`${esc(systemName(q._sys))} · ${esc(q.src||"Airbus Tutorials Rev 15")}<span class="verify-badge">✓ AIRBUS REV 15</span>`:`${esc(systemName(q._sys))} · ${esc(q.src||"FCOM")}<span class="verify-badge">✓ FCOM 2025</span>`;
   $("qText").textContent=q.q;
   $("options").innerHTML=q.options.map((o,i)=>{
     let cls="option";
@@ -542,7 +542,7 @@ function renderQuestion(){
     }
     return `<button type="button" class="${cls}" onclick="selectOption(${i})" aria-pressed="${i===ans?"true":"false"}"${locked?" disabled":""}><div class="letter">${LETTERS[i]||i+1}</div><div class="otxt">${esc(o)}</div></button>`
   }).join("");
-  $("dontKnowBtn").classList.toggle("hidden",ans!==null);$("dontKnowBtn").textContent=session.type==="test"?"No la sé · continuar":"No la sé · mostrar respuesta";renderBookmark(q);renderNtkToggle("ntkQuizBtn",q._id?"q:"+q._id:null);
+  $("dontKnowBtn").classList.toggle("hidden",ans!==null);$("dontKnowBtn").textContent=session.type==="test"?"I don't know · continue":"I don't know · show answer";renderBookmark(q);renderNtkToggle("ntkQuizBtn",q._id?"q:"+q._id:null);
   $("answerWrap").innerHTML="";
   if(session.type!=="test"&&ans!==null)$("answerWrap").innerHTML=answerHtml(q,ans===q.correct);
 
@@ -553,35 +553,35 @@ function renderQuestion(){
   if(quizNav)quizNav.classList.toggle("single",isTest);
 
   const last=session.index===n-1;
-  $("nextBtn").textContent=last?(isTest?"Ver resultados":"Finalizar"):"Siguiente";
+  $("nextBtn").textContent=last?(isTest?"See results":"Finish"):"Next";
   $("nextBtn").disabled=ans===null;
 }
-function renderBookmark(q){const b=$("bookmarkBtn");const on=!!appState.bookmarks[q._id];b.classList.toggle("active",on);b.textContent=on?"★":"☆";b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?"Quitar de guardadas":"Guardar pregunta")}
-function toggleBookmark(){const q=sessionQuestion();if(!q)return;if(appState.bookmarks[q._id]){delete appState.bookmarks[q._id];toast("Quitada de guardadas")}else{appState.bookmarks[q._id]=true;toast("Pregunta guardada")}saveState();renderBookmark(q)}
+function renderBookmark(q){const b=$("bookmarkBtn");const on=!!appState.bookmarks[q._id];b.classList.toggle("active",on);b.textContent=on?"★":"☆";b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?"Remove from saved":"Save question")}
+function toggleBookmark(){const q=sessionQuestion();if(!q)return;if(appState.bookmarks[q._id]){delete appState.bookmarks[q._id];toast("Removed from saved")}else{appState.bookmarks[q._id]=true;toast("Question saved")}saveState();renderBookmark(q)}
 
 function answerHtml(q,isOk){
-  let h=`<div class="feedback-head ${isOk?"ok":"bad"}"><div class="status">${isOk?"Correcta":"Respuesta correcta"}</div><strong>${esc(q._correctText||q.options[q.correct])}</strong></div>`;
+  let h=`<div class="feedback-head ${isOk?"ok":"bad"}"><div class="status">${isOk?"Correct":"Correct answer"}</div><strong>${esc(q._correctText||q.options[q.correct])}</strong></div>`;
   if(q.bank==="dgac"){
     if(q.expl){
-      h=`<div class="verified-line">EXPLICACIÓN AGREGADA · EXAMEN DGAC 2018</div>`+h;
-      h+=`<div class="explain"><div class="label">Por qué</div><p>${esc(q.expl)}</p></div>`;
-      h+=`<div class="citation"><div class="label">REFERENCIA TÉCNICA</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"Examen DGAC A320 2018")}</div></div>`;
+      h=`<div class="verified-line">ADDED EXPLANATION · DGAC EXAM 2018</div>`+h;
+      h+=`<div class="explain"><div class="label">Why</div><p>${esc(q.expl)}</p></div>`;
+      h+=`<div class="citation"><div class="label">TECHNICAL REFERENCE</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"DGAC A320 exam 2018")}</div></div>`;
       return h;
     }
-    h+=`<div class="dgac-warning"><b>Banco DGAC A320 2018.</b> Aquí se muestra únicamente la respuesta marcada en el examen original. No añadimos una explicación porque esta pregunta todavía no ha sido auditada contra el FCOM actual.</div>`;
+    h+=`<div class="dgac-warning"><b>DGAC A320 bank (2018).</b> Only the answer marked in the original exam is shown here. We haven't added an explanation because this question hasn't been audited against the current FCOM yet.</div>`;
     return h;
   }
   const isAirbus=q.bank==="airbus_tutorials",isInterview=q.bank==="interview_technical";
-  h=`<div class="verified-line">${isInterview?"BANCO DE ENTREVISTA · RESPUESTA DEPURADA":"✓ CONTENIDO VERIFICADO CONTRA "+(isAirbus?"AIRBUS TUTORIALS REV 15":"FCOM 15 SEP 25")}</div>`+h;
-  h+=`<div class="explain"><div class="label">Por qué</div><p>${esc(q.expl)}</p></div>`;
-  h+=isInterview?`<div class="citation"><div class="label">REFERENCIA DE ESTUDIO</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"Material de entrevista")}</div></div>`:`<div class="citation"><div class="label">${isAirbus?"AIRBUS TUTORIALS · VERIFICADO":"FCOM · VERIFICADO"}</div><blockquote>“${esc(q.cite)}”</blockquote><div class="src">${esc(q.src||(isAirbus?"Airbus Tutorials Rev 15":"FCOM 15 SEP 25"))}</div>${q.audit_note?`<div class="audit-note">${esc(q.audit_note)}</div>`:""}</div>`;
+  h=`<div class="verified-line">${isInterview?"INTERVIEW BANK · CURATED ANSWER":"✓ CONTENT VERIFIED AGAINST "+(isAirbus?"AIRBUS TUTORIALS REV 15":"FCOM 15 SEP 25")}</div>`+h;
+  h+=`<div class="explain"><div class="label">Why</div><p>${esc(q.expl)}</p></div>`;
+  h+=isInterview?`<div class="citation"><div class="label">STUDY REFERENCE</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"Interview material")}</div></div>`:`<div class="citation"><div class="label">${isAirbus?"AIRBUS TUTORIALS · VERIFIED":"FCOM · VERIFIED"}</div><blockquote>“${esc(q.cite)}”</blockquote><div class="src">${esc(q.src||(isAirbus?"Airbus Tutorials Rev 15":"FCOM 15 SEP 25"))}</div>${q.audit_note?`<div class="audit-note">${esc(q.audit_note)}</div>`:""}</div>`;
   return h;
 }
 function prevQuestion(){if(session.index>0){session.index--;renderQuestion();persistResume()}}
 function nextQuestion(){
   if(session.answers[session.index]===null)return;
   if(session.index<session.questions.length-1){session.index++;renderQuestion();persistResume();return}
-  if(session.type==="test")finishTest();else{session.completed=true;appState.resume=null;saveState();currentSystemKey=session.systemKey;openSystem(currentSystemKey);toast("Sesión completada")}
+  if(session.type==="test")finishTest();else{session.completed=true;appState.resume=null;saveState();currentSystemKey=session.systemKey;openSystem(currentSystemKey);toast("Session complete")}
 }
 function finishTest(){
   if(session.completed)return;
@@ -593,14 +593,14 @@ function finishTest(){
   saveState();
   const total=session.questions.length,pct=Math.round(correct/total*100),wrong=total-correct;
   $("resultPct").textContent=pct+"%";$("resultPct").style.color=pct>=90?"var(--green)":pct>=75?"var(--amber)":"var(--red)";$("resultRaw").textContent=`${correct} / ${total}`;
-  $("resultSummary").textContent=wrong===0?"Puntaje perfecto. Repite el test en unos días para confirmar que se mantiene.":pct>=90?"Nivel sólido. Revisa los pocos errores antes de cerrar el tema.":pct>=75?"Buen nivel, pero todavía hay asociaciones que conviene fijar.":"Hay brechas claras. Te conviene repetir solo los errores antes de hacer otro test.";
-  if(session.systemKey===DGAC_KEY)$("resultSummary").textContent="Resultado del banco DGAC 2018. Sirve como práctica histórica y no modifica tu precisión ni tus áreas débiles del banco FCOM.";
+  $("resultSummary").textContent=wrong===0?"Perfect score. Repeat the test in a few days to confirm it sticks.":pct>=90?"Solid level. Review the few mistakes before closing the topic.":pct>=75?"Good level, but some associations still need to settle.":"There are clear gaps. Repeat only the mistakes before taking another test.";
+  if(session.systemKey===DGAC_KEY)$("resultSummary").textContent="DGAC 2018 bank result. It serves as historical practice and doesn't change your accuracy or your weak areas in the FCOM bank.";
   const bySys={};session.questions.forEach((q,i)=>{const k=q._sys||"general";bySys[k]??={c:0,t:0};bySys[k].t++;if(session.answers[i]===q.correct)bySys[k].c++});
   $("resultBreakdown").innerHTML=Object.entries(bySys).sort((a,b)=>b[1].t-a[1].t).map(([k,v])=>`<span class="breakdown-pill">${esc(systemName(k))} · <b>${v.c}/${v.t}</b></span>`).join("");
   $("retryWrongBtn").disabled=wrong===0;
   $("review").innerHTML=session.questions.map((q,i)=>{
     const ans=session.answers[i],ok=ans===q.correct;
-    return `<details ${ok?"":"open"}><summary><span class="rbadge ${ok?"ok":"bad"}">${ok?"OK":"ERROR"}</span><span class="rq">${esc(q.q)}</span></summary><div class="rbody">${ok?`<div class="right">Tu respuesta: ${esc(q.options[ans])}</div>`:`<div class="your">Tu respuesta: ${ans===-1?"No la sé":esc(q.options[ans]||"Sin responder")}</div><div class="right">Correcta: ${esc(q.options[q.correct])}</div>`}${q.bank==="dgac"?(q.expl?`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">DGAC · ${esc(q.src||"")}</div>`:`<div class="dgac-warning">Sin explicación: pregunta perteneciente al banco DGAC original, todavía no auditada contra FCOM.</div>`):`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">${q.bank==="interview_technical"?"Entrevista · ":q.bank==="airbus_tutorials"?"Airbus · ":"FCOM · "}${esc(q.src||"")}</div>`}</div></details>`
+    return `<details ${ok?"":"open"}><summary><span class="rbadge ${ok?"ok":"bad"}">${ok?"OK":"ERROR"}</span><span class="rq">${esc(q.q)}</span></summary><div class="rbody">${ok?`<div class="right">Your answer: ${esc(q.options[ans])}</div>`:`<div class="your">Your answer: ${ans===-1?"I don't know":esc(q.options[ans]||"Not answered")}</div><div class="right">Correct: ${esc(q.options[q.correct])}</div>`}${q.bank==="dgac"?(q.expl?`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">DGAC · ${esc(q.src||"")}</div>`:`<div class="dgac-warning">No explanation: question from the original DGAC bank, not yet audited against the FCOM.</div>`):`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">${q.bank==="interview_technical"?"Interview · ":q.bank==="airbus_tutorials"?"Airbus · ":"FCOM · "}${esc(q.src||"")}</div>`}</div></details>`
   }).join("");
   show("results");
 }
@@ -635,7 +635,7 @@ function startOralSession(k=null,kind="interview"){
   }
   if(pool.length<limit)pool=base.filter(q=>q.options&&q.options.length>=2&&!isBool(q));
   pool=shuffle(pool).slice(0,Math.min(limit,pool.length));
-  if(!pool.length){toast("No hay preguntas disponibles");return}
+  if(!pool.length){toast("No questions available");return}
   session={type:"interview",kind,systemKey:k,questions:pool,index:0,ratings:new Array(pool.length).fill(null),revealed:new Array(pool.length).fill(false),completed:false};
   show("interview");renderInterview();persistResume();
 }
@@ -646,13 +646,13 @@ function syncRateButtons(r){
 function renderInterview(){
   const q=iQuestion(),n=session.questions.length,r=session.ratings[session.index],isScenario=session.kind==="scenario";
   syncRateButtons(r);renderNtkToggle("ntkInterviewBtn",q._id?"q:"+q._id:null);
-  $("iMeta").textContent=`${isScenario?"ESCENARIO":"AUTOEVALUACIÓN"} · ${session.index+1} / ${n}`;$("iProgress").style.width=`${((session.index+1)/n)*100}%`;
-  $("iSource").innerHTML=`${esc(systemName(q._sys))} · ${esc(q.bank==="interview_technical"?(q.topic||"Entrevista"):(q.src||"Banco técnico"))}${q.audit==="fcom_verified"?`<span class="verify-badge">✓ FCOM 2025</span>`:q.audit==="airbus_tutorials_verified"?`<span class="verify-badge">✓ AIRBUS REV 15</span>`:q.bank==="interview_technical"?`<span class="verify-badge">BANCO DEPURADO</span>`:""}`;
+  $("iMeta").textContent=`${isScenario?"SCENARIO":"SELF-ASSESSMENT"} · ${session.index+1} / ${n}`;$("iProgress").style.width=`${((session.index+1)/n)*100}%`;
+  $("iSource").innerHTML=`${esc(systemName(q._sys))} · ${esc(q.bank==="interview_technical"?(q.topic||"Interview"):(q.src||"Technical bank"))}${q.audit==="fcom_verified"?`<span class="verify-badge">✓ FCOM 2025</span>`:q.audit==="airbus_tutorials_verified"?`<span class="verify-badge">✓ AIRBUS REV 15</span>`:q.bank==="interview_technical"?`<span class="verify-badge">BANCO DEPURADO</span>`:""}`;
   $("iQuestion").textContent=isScenario?(q.scenario_q||q.oral_q||q.q):(q.oral_q||q.q);
-  $("iEyebrow").textContent=isScenario?"ANALIZA EL CASO":"RESPONDE EN VOZ ALTA";
-  $("iTip").textContent=isScenario?"Explica qué está ocurriendo y cuál es la acción o criterio operacional que corresponde. Después compara tu razonamiento con la guía.":"Responde primero con una idea central y después justifícala. Evita recitar alternativas: habla como frente a un instructor.";
+  $("iEyebrow").textContent=isScenario?"ANALYZE THE CASE":"ANSWER OUT LOUD";
+  $("iTip").textContent=isScenario?"Explain what is happening and which action or operational criterion applies. Then compare your reasoning with the guide.":"Start with a central idea and then justify it. Avoid reciting options: speak as if facing an instructor.";
   $("iAnswer").classList.add("hidden");$("iAnswer").innerHTML="";$("revealBtn").classList.remove("hidden");$("rateWrap").classList.add("hidden");
-  $("iPrevBtn").disabled=session.index===0;$("iNextBtn").disabled=r===null;$("iNextBtn").textContent=session.index===n-1?"Finalizar":"Siguiente";
+  $("iPrevBtn").disabled=session.index===0;$("iNextBtn").disabled=r===null;$("iNextBtn").textContent=session.index===n-1?"Finish":"Next";
   const wasRevealed=Array.isArray(session.revealed)&&!!session.revealed[session.index];
   if(r!==null||wasRevealed){revealInterview(true)}
 }
@@ -660,7 +660,7 @@ function revealInterview(already=false){
   const q=iQuestion();
   if(!Array.isArray(session.revealed))session.revealed=new Array(session.questions.length).fill(false);
   session.revealed[session.index]=true;
-  $("iAnswer").innerHTML=`<div class="feedback-head ok"><div class="status">Respuesta esperada</div><strong>${esc(correctText(q))}</strong></div><div class="explain"><div class="label">${q._generated?"Guía de estudio":"Cómo explicarlo"}</div><p>${esc(q.expl||"")}</p>${q._generated?`<div class="src" style="margin-top:7px;color:var(--muted);font-size:10.5px">Basada en la respuesta verificada del banco.</div>`:""}</div>${q.cite?(q.bank==="interview_technical"?`<div class="citation"><div class="label">REFERENCIA DE ESTUDIO</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"Material de entrevista")}</div></div>`:`<div class="citation"><div class="label">${q.audit==="fcom_verified"?"FCOM · VERIFICADO":q.audit==="airbus_tutorials_verified"?"AIRBUS TUTORIALS · VERIFICADO":"Fuente"}</div><blockquote>“${esc(q.cite)}”</blockquote><div class="src">${esc(q.src||"")}</div>${q.audit_note?`<div class="audit-note">${esc(q.audit_note)}</div>`:""}</div>`):`<div class="citation"><div class="label">Fuente</div><div class="src">${esc(q.src||"Banco técnico")}</div></div>`}`;
+  $("iAnswer").innerHTML=`<div class="feedback-head ok"><div class="status">Expected answer</div><strong>${esc(correctText(q))}</strong></div><div class="explain"><div class="label">${q._generated?"Study guide":"How to explain it"}</div><p>${esc(q.expl||"")}</p>${q._generated?`<div class="src" style="margin-top:7px;color:var(--muted);font-size:10.5px">Based on the bank's verified answer.</div>`:""}</div>${q.cite?(q.bank==="interview_technical"?`<div class="citation"><div class="label">STUDY REFERENCE</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(q.cite)}</div><div class="src" style="margin-top:7px">${esc(q.src||"Interview material")}</div></div>`:`<div class="citation"><div class="label">${q.audit==="fcom_verified"?"FCOM · VERIFIED":q.audit==="airbus_tutorials_verified"?"AIRBUS TUTORIALS · VERIFIED":"Source"}</div><blockquote>“${esc(q.cite)}”</blockquote><div class="src">${esc(q.src||"")}</div>${q.audit_note?`<div class="audit-note">${esc(q.audit_note)}</div>`:""}</div>`):`<div class="citation"><div class="label">Source</div><div class="src">${esc(q.src||"Technical bank")}</div></div>`}`;
   $("iAnswer").classList.remove("hidden");$("revealBtn").classList.add("hidden");$("rateWrap").classList.remove("hidden");
   if(already)$("iNextBtn").disabled=false;
   persistResume();
@@ -668,14 +668,14 @@ function revealInterview(already=false){
 function rateInterview(v){
   const q=iQuestion();session.ratings[session.index]=v;
   const s=appState.oral[q._id]||{a:0,total:0,low:0,last:0};s.a++;s.total+=v;if(v===0)s.low++;s.last=Date.now();appState.oral[q._id]=s;saveState();
-  $("iNextBtn").disabled=false;syncRateButtons(v);persistResume();toast(v===2?"Sólida":v===1?"Parcial · conviene repetir":"Marcada para repaso");
+  $("iNextBtn").disabled=false;syncRateButtons(v);persistResume();toast(v===2?"Solid":v===1?"Partial · worth repeating":"Marked for review");
 }
 function prevInterview(){if(session.index>0){session.index--;renderInterview();persistResume()}}
 function nextInterview(){
   if(session.ratings[session.index]===null)return;
   if(session.index<session.questions.length-1){session.index++;renderInterview();persistResume();return}
   session.completed=true;appState.resume=null;saveState();
-  const done=session.kind==="scenario"?"Escenarios completados":"Entrevista completada";goHome();toast(done)
+  const done=session.kind==="scenario"?"Scenarios complete":"Interview complete";goHome();toast(done)
 }
 
 function isStandaloneMode(){
@@ -706,10 +706,10 @@ function exitOralVoice(){stopEverythingOral();goHome()}
 function oralVoiceQuestion(){return oralState.pool[oralState.index]}
 function loadOralVoiceQuestion(){
   const q=oralVoiceQuestion();
-  $("ovMeta").textContent=`ENTREVISTA ORAL · ${oralState.index+1} / ${oralState.pool.length}`;
+  $("ovMeta").textContent=`ORAL INTERVIEW · ${oralState.index+1} / ${oralState.pool.length}`;
   $("ovProgress").style.width=`${((oralState.index+1)/oralState.pool.length)*100}%`;
   $("ovPrevBtn").disabled=oralState.index===0;
-  $("ovNextBtn").textContent=oralState.index===oralState.pool.length-1?"Finalizar":"Siguiente";
+  $("ovNextBtn").textContent=oralState.index===oralState.pool.length-1?"Finish":"Next";
   $("ovNextBtn").disabled=oralState.scores[q.id]===undefined;
   loadQuestionFromA320Bank(q);
   renderNtkToggle("ntkOralBtn","o:"+q.id);
@@ -722,7 +722,7 @@ function nextOralVoice(){
   if(oralState.index<oralState.pool.length-1){oralState.index++;loadOralVoiceQuestion();return}
   const scores=Object.values(oralState.scores);
   const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length):0;
-  toast(`Entrevista completada · promedio ${avg.toFixed(1)}/10 en ${scores.length} preguntas`);
+  toast(`Interview complete · average ${avg.toFixed(1)}/10 over ${scores.length} questions`);
   goHome();
 }
 
@@ -730,21 +730,21 @@ function setOralQuestion(question){
   stopEverythingOral();
   oralState.question=question;
   oralState.transcript="";
-  $("oralQuestion").textContent=question.question||"Pregunta oral";
+  $("oralQuestion").textContent=question.question||"Oral question";
   const qImg=$("oralQuestionImage");
-  if(question.image){qImg.src=question.image;qImg.alt=question.imageAlt||"Diagrama de referencia para esta pregunta";qImg.classList.remove("hidden")}
+  if(question.image){qImg.src=question.image;qImg.alt=question.imageAlt||"Reference diagram for this question";qImg.classList.remove("hidden")}
   else{qImg.classList.add("hidden");qImg.removeAttribute("src");qImg.alt=""}
   $("oralResult").classList.add("hidden");
   $("oralTextFallbackBox").classList.add("hidden");
   $("oralTextFallbackInput").value="";
-  setOralStatus("Toca el micrófono cuando estés listo.");
+  setOralStatus("Tap the microphone when you're ready.");
   resetMicButton();
   const fallback=$("oralMicFallback"),micBtn=$("oralMicBtn");
   if(!speechRecognitionSupported()){
-    fallback.textContent="Tu navegador no soporta reconocimiento de voz. Usa la opción de escribir tu respuesta.";
+    fallback.textContent="Your browser doesn't support speech recognition. Use the option to type your answer.";
     fallback.classList.add("show");micBtn.classList.add("hidden");
   }else if(isStandaloneMode()){
-    fallback.textContent="El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Abre este sitio en Safari para usar el micrófono, o escribe tu respuesta abajo.";
+    fallback.textContent="Safari speech recognition doesn't work inside apps installed on the home screen. Open this site in Safari to use the microphone, or type your answer below.";
     fallback.classList.add("show");micBtn.classList.remove("hidden");
   }else{
     fallback.classList.remove("show");micBtn.classList.remove("hidden");
@@ -759,7 +759,7 @@ function showOralTextFallback(){
 }
 function submitOralTextFallback(){
   const text=$("oralTextFallbackInput").value.trim();
-  if(!text){toast("Escribe algo antes de evaluar");return}
+  if(!text){toast("Type something before evaluating");return}
   oralState.transcript=text;
   evaluateCollectedOralAnswer();
 }
@@ -769,9 +769,9 @@ async function toggleOralAnswer(){
   await startOralAnswer();
 }
 async function startOralAnswer(){
-  if(!oralState.question){alert("No hay una pregunta oral cargada.");return}
-  if(!window.isSecureContext&&location.hostname!=="localhost"){alert("El micrófono requiere que la aplicación se abra mediante HTTPS.");return}
-  if(!speechRecognitionSupported()){alert("El reconocimiento de voz no está disponible en este navegador. En iPhone abre la aplicación con Safari.");return}
+  if(!oralState.question){alert("No oral question is loaded.");return}
+  if(!window.isSecureContext&&location.hostname!=="localhost"){alert("The microphone requires the app to be opened over HTTPS.");return}
+  if(!speechRecognitionSupported()){alert("Speech recognition isn't available in this browser. On iPhone, open the app in Safari.");return}
   const startGeneration=oralGeneration;
   if(!oralMicPermissionGranted){
     try{
@@ -781,8 +781,8 @@ async function startOralAnswer(){
       }
       oralMicPermissionGranted=true;
     }catch(error){
-      console.warn("Permiso de micrófono:",error);
-      if(startGeneration===oralGeneration)setOralStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
+      console.warn("Microphone permission:",error);
+      if(startGeneration===oralGeneration)setOralStatus(isStandaloneMode()?"Couldn't access the microphone. If you're in the installed app, open the site in Safari.":"Couldn't access the microphone.");
       return;
     }
     /* Se salio de la entrevista, cambio de pregunta, o cualquier otra
@@ -799,7 +799,7 @@ async function startOralAnswer(){
   $("oralResult").classList.add("hidden");
   startOralTimer();
   setRecordingButton();
-  setOralStatus("Escuchando… responde como si estuvieras en una entrevista.",true);
+  setOralStatus("Listening… answer as if you were in an interview.",true);
   createRecognition();
   startRecognitionInstance();
   clearTimeout(oralState.maxTimer);
@@ -829,10 +829,10 @@ function createRecognition(){
       oralState.listening=false;
       stopOralTimer();
       resetMicButton();
-      if(error==="not-allowed")setOralStatus("Debes autorizar el uso del micrófono.");
-      else if(error==="audio-capture")setOralStatus("No se pudo acceder al micrófono.");
+      if(error==="not-allowed")setOralStatus("You need to allow microphone access.");
+      else if(error==="audio-capture")setOralStatus("Couldn't access the microphone.");
       else{
-        setOralStatus(isStandaloneMode()?"El reconocimiento de voz no está disponible en la app instalada. Abre el sitio en Safari.":"Problema de conexión con el reconocimiento de voz.");
+        setOralStatus(isStandaloneMode()?"Speech recognition isn't available in the installed app. Open the site in Safari.":"Connection problem with speech recognition.");
         if(isStandaloneMode())$("oralMicFallback").classList.add("show");
       }
     }
@@ -842,7 +842,7 @@ function createRecognition(){
       oralState.restartCount=(oralState.restartCount||0)+1;
       if(oralState.restartCount>ORAL_MAX_RESTARTS){
         oralState.listening=false;stopOralTimer();resetMicButton();
-        setOralStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");
+        setOralStatus("The microphone disconnected several times. Try again.");
         return;
       }
       clearTimeout(oralState.restartTimer);
@@ -863,7 +863,7 @@ function startRecognitionInstance(){
     oralState.restartCount=(oralState.restartCount||0)+1;
     if(oralState.restartCount>ORAL_MAX_RESTARTS){
       oralState.listening=false;stopOralTimer();resetMicButton();
-      setOralStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");
+      setOralStatus("The microphone disconnected several times. Try again.");
       return;
     }
     oralState.restartTimer=setTimeout(function(){
@@ -878,7 +878,7 @@ function finishOralAnswer(){
   clearTimeout(oralState.restartTimer);
   clearTimeout(oralState.maxTimer);
   stopOralTimer();
-  setOralStatus("Analizando respuesta…");
+  setOralStatus("Analyzing answer…");
   const btn=$("oralMicBtn");
   btn.classList.remove("recording");
   $("oralMicIcon").textContent="⏳";
@@ -894,7 +894,7 @@ async function evaluateCollectedOralAnswer(){
   const transcript=oralState.transcript.trim();
   if(!transcript){
     resetMicButton();
-    setOralStatus("No pude reconocer una respuesta. Inténtalo nuevamente o escribe tu respuesta.");
+    setOralStatus("I couldn't recognize an answer. Try again or type your answer.");
     return;
   }
   const result=evaluateLocally(oralState.question,transcript);
@@ -1172,7 +1172,7 @@ function detectCriticalErrors(transcriptTokens,transcriptStr,question){
   if(Array.isArray(question.criticalErrors)){
     question.criticalErrors.forEach(item=>{
       if(criticalItemDetected(transcriptTokens,item)){
-        errors.push(item.feedback||"Se detectó un error conceptual.");
+        errors.push(item.feedback||"A conceptual error was detected.");
         penaltyTotal+=Number(item.penalty)||1.5;
       }
     });
@@ -1239,7 +1239,7 @@ function evaluateSteps(question,transcript){
   rawScore-=Math.min(penaltyTotal,6);
   if(missingRequired)rawScore=Math.min(rawScore,4);
   rawScore=Math.max(0,Math.min(10,rawScore));
-  if(orderPenalty>0)errors.push("El orden de algunos pasos no coincide con la secuencia esperada.");
+  if(orderPenalty>0)errors.push("The order of some steps doesn't match the expected sequence.");
   return {score:Math.round(rawScore*10)/10,detected,missing,errors,similarity:Math.round(similarity*100),source:"local"};
 }
 function showOralEvaluation(result,transcript){
@@ -1248,21 +1248,21 @@ function showOralEvaluation(result,transcript){
   const score=Number(result.score)||0;
   $("oralScore").textContent=score.toFixed(score%1?1:0)+"/10";
   let grade,gradeClass;
-  if(score>=9){grade="Cobertura muy alta";gradeClass="good"}
-  else if(score>=7.5){grade="Cobertura alta";gradeClass="good"}
-  else if(score>=6){grade="Cobertura media";gradeClass="mid"}
-  else if(score>=4){grade="Cobertura parcial";gradeClass="mid"}
-  else{grade="Cobertura baja";gradeClass="low"}
+  if(score>=9){grade="Very high coverage";gradeClass="good"}
+  else if(score>=7.5){grade="High coverage";gradeClass="good"}
+  else if(score>=6){grade="Medium coverage";gradeClass="mid"}
+  else if(score>=4){grade="Partial coverage";gradeClass="mid"}
+  else{grade="Low coverage";gradeClass="low"}
   $("oralGrade").textContent=grade;
   $("oralGrade").className="oral-grade "+gradeClass;
   let html="";
   if(result.detected&&result.detected.length){
-    html+='<div class="oral-feedback-block"><div class="oral-feedback-title ok">✓ BIEN</div>';
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title ok">✓ GOOD</div>';
     result.detected.forEach(item=>{html+='<div class="oral-feedback-item">✓ '+esc(item)+'</div>'});
     html+="</div>";
   }
   if(result.missing&&result.missing.length){
-    html+='<div class="oral-feedback-block"><div class="oral-feedback-title warn">PODRÍAS AGREGAR</div>';
+    html+='<div class="oral-feedback-block"><div class="oral-feedback-title warn">YOU COULD ADD</div>';
     result.missing.forEach(item=>{html+='<div class="oral-feedback-item">• '+esc(item)+'</div>'});
     html+="</div>";
   }
@@ -1274,12 +1274,12 @@ function showOralEvaluation(result,transcript){
   if(result.feedback){
     html+='<div class="oral-feedback-block"><div class="oral-feedback-title">COMENTARIO</div><div class="oral-feedback-item">'+esc(result.feedback)+'</div></div>';
   }
-  html+='<div class="oral-feedback-block"><div class="oral-feedback-title">RESPUESTA DE REFERENCIA</div><div class="oral-feedback-item">'+(oralState.question.short?'<p class="ref-short">'+esc(oralState.question.short)+'</p>':'')+formatRefHtml(oralState.question.reference||"")+'</div></div>';
+  html+='<div class="oral-feedback-block"><div class="oral-feedback-title">REFERENCE ANSWER</div><div class="oral-feedback-item">'+(oralState.question.short?'<p class="ref-short">'+esc(oralState.question.short)+'</p>':'')+formatRefHtml(oralState.question.reference||"")+'</div></div>';
   $("oralFeedback").innerHTML=html;
   const revealBox=$("oralTranscriptReveal");
   revealBox.classList.add("hidden");
   revealBox.dataset.transcript=transcript||"";
-  setOralStatus("Respuesta evaluada.");
+  setOralStatus("Answer evaluated.");
   const q=oralVoiceQuestion();
   if(q&&oralState.question&&q.id===oralState.question.id){
     oralState.scores[q.id]=score;
@@ -1292,14 +1292,14 @@ function showOralEvaluation(result,transcript){
 function toggleOralTranscriptReveal(){
   const box=$("oralTranscriptReveal");
   if(box.classList.contains("hidden")){
-    box.textContent=box.dataset.transcript?("Se transcribió: “"+box.dataset.transcript+"”"):"No se guardó transcripción para esta respuesta.";
+    box.textContent=box.dataset.transcript?("Transcribed: “"+box.dataset.transcript+"”"):"No transcript was saved for this answer.";
     box.classList.remove("hidden");
   }else{box.classList.add("hidden")}
 }
 function restartOralAnswer(){
   oralState.transcript="";
   $("oralResult").classList.add("hidden");
-  setOralStatus("Toca el micrófono cuando estés listo.");
+  setOralStatus("Tap the microphone when you're ready.");
 }
 function startOralTimer(){
   stopOralTimer();
@@ -1317,7 +1317,7 @@ function stopOralTimer(){clearInterval(oralState.timer);oralState.timer=null}
 function setRecordingButton(){
   $("oralMicBtn").classList.add("recording");
   $("oralMicIcon").textContent="●";
-  $("oralMicText").textContent="Terminar respuesta";
+  $("oralMicText").textContent="Finish answer";
 }
 function resetMicButton(){
   const btn=$("oralMicBtn");if(!btn)return;
@@ -1358,12 +1358,12 @@ document.addEventListener("keydown",e=>{
    mismo microfono y la misma evaluacion de Entrevista oral (se mueve .oral-mic-box a la tarjeta);
    las de alternativas, con sus alternativas y una explicacion sin citas. */
 const NTK_GROUPS=[
-  {title:"Performance y pesos",items:["o:ov_mac_envelope","o:ov_weights","o:ov_cost_index","o:ov_fuel_dan121","o:ov_cg_effects"]},
-  {title:"Despegue",items:["o:ov_contaminated_rwy","o:ov_flex_derate_def","o:ov_flex_derate_contam","o:ov_balanced_unbalanced","o:ov_improve_takeoff","o:ov_improved_climb","o:ov_takeoff_segments","o:ov_tailwind_takeoff","o:ov_vmc_cg_weight"]},
-  {title:"Velocidades",items:["o:ov_limit_speeds","o:ov_green_dot","o:ov_srs","o:ov_gs_mini","o:ov_coffin_corner"]},
-  {title:"Sistemas y leyes",items:["o:ov_fmgs_functions","o:ov_fc_laws","o:ov_dual_ra_direct"]},
-  {title:"Aproximación y crucero",items:["o:ov_appr_ldg_climb","o:ov_stab_appr","o:ov_eng_fail_cruise","o:ov_rvsm_equipment"]},
-  {title:"Procedimientos",items:["o:ov_ecam_priorities","o:ov_ecam_handling","o:ov_ecam_after","o:ov_emergency_atc","o:ov_golden_rules"]}
+  {title:"Performance and weights",items:["o:ov_mac_envelope","o:ov_weights","o:ov_cost_index","o:ov_fuel_dan121","o:ov_cg_effects"]},
+  {title:"Takeoff",items:["o:ov_contaminated_rwy","o:ov_flex_derate_def","o:ov_flex_derate_contam","o:ov_balanced_unbalanced","o:ov_improve_takeoff","o:ov_improved_climb","o:ov_takeoff_segments","o:ov_tailwind_takeoff","o:ov_vmc_cg_weight"]},
+  {title:"Speeds",items:["o:ov_limit_speeds","o:ov_green_dot","o:ov_srs","o:ov_gs_mini","o:ov_coffin_corner"]},
+  {title:"Systems and laws",items:["o:ov_fmgs_functions","o:ov_fc_laws","o:ov_dual_ra_direct"]},
+  {title:"Approach and cruise",items:["o:ov_appr_ldg_climb","o:ov_stab_appr","o:ov_eng_fail_cruise","o:ov_rvsm_equipment"]},
+  {title:"Procedures",items:["o:ov_ecam_priorities","o:ov_ecam_handling","o:ov_ecam_after","o:ov_emergency_atc","o:ov_golden_rules"]}
 ];
 /* Como funcion (no const): sanitizeState la usa al cargar el estado, antes de que el script llegue hasta aqui. */
 function ntkRefOk(x){return typeof x==="string"&&/^[oq]:[A-Za-z0-9_:.\-]{1,200}$/.test(x)}
@@ -1405,10 +1405,10 @@ function ntkRemove(ref){
   saveState();
 }
 function ntkToggle(ref){
-  if(ntkHas(ref)){ntkRemove(ref);toast("Quitada de Need to know")}
+  if(ntkHas(ref)){ntkRemove(ref);toast("Removed from Need to know")}
   else if(ntkAdd(ref))toast("Agregada a Need to know");
 }
-function ntkThemeOf(ref){const g=NTK_GROUPS.find(x=>x.items.includes(ref));return g?g.title:"Agregada por ti"}
+function ntkThemeOf(ref){const g=NTK_GROUPS.find(x=>x.items.includes(ref));return g?g.title:"Added by you"}
 function ntkPracticed(ref){
   const it=ntkResolve(ref);if(!it)return null;
   if(it.kind==="oral"){const e=appState.oralVoice[it.q.id];return e?{score:finiteNum(e.score)}:null}
@@ -1424,7 +1424,7 @@ function renderNtkToggle(btnId,ref){
   b.classList.toggle("active",on);
   b.textContent=on?"★ Need to know":"+ Need to know";
   b.setAttribute("aria-pressed",on?"true":"false");
-  b.setAttribute("aria-label",on?"Quitar de Need to know":"Agregar a Need to know");
+  b.setAttribute("aria-label",on?"Remove from Need to know":"Add to Need to know");
 }
 function ntkToggleFromBtn(btn){const ref=btn&&btn.dataset.ref;if(!ref)return;ntkToggle(ref);renderNtkToggle(btn.id,ref)}
 /* El microfono de Entrevista oral se presta a la tarjeta y vuelve a su lugar al salir. */
@@ -1454,7 +1454,7 @@ function renderNtkList(){
   const refs=ntkRefs(),set=new Set(refs),defaults=ntkDefaults(),st=ntkState();
   const groups=NTK_GROUPS.map(g=>({title:g.title,items:g.items.filter(r=>set.has(r))}));
   const extra=refs.filter(r=>!defaults.includes(r));
-  if(extra.length)groups.push({title:"Agregadas por ti",items:extra});
+  if(extra.length)groups.push({title:"Added by you",items:extra});
   let h="";
   groups.forEach(g=>{
     if(!g.items.length)return;
@@ -1462,18 +1462,18 @@ function renderNtkList(){
     g.items.forEach(r=>{
       const it=ntkResolve(r),p=ntkPracticed(r);
       const text=it.kind==="oral"?it.q.question:it.q.q;
-      const meta=(it.kind==="oral"?"Respuesta oral":"Alternativas · "+systemName(it.q._sys))+(p?(p.score!==undefined?` · última vez ${ntkScoreText(p.score)}/10`:(p.ok?" · última vez correcta":" · última vez incorrecta")):"");
+      const meta=(it.kind==="oral"?"Oral answer":"Multiple choice · "+systemName(it.q._sys))+(p?(p.score!==undefined?` · last time ${ntkScoreText(p.score)}/10`:(p.ok?" · last time correct":" · last time incorrect")):"");
       h+=`<div class="ntk-item"><button type="button" class="ntk-open" data-ref="${esc(r)}" onclick="ntkStart(this.dataset.ref)"><span class="ntk-meta">${esc(meta)}</span><span class="ntk-q">${esc(text)}</span></button><button type="button" class="ntk-remove" data-ref="${esc(r)}" onclick="ntkRemoveFromList(this.dataset.ref)" aria-label="Quitar de Need to know">Quitar</button></div>`;
     });
   });
-  $("ntkBody").innerHTML=h||`<div class="empty">No tienes preguntas en Need to know. Agrégalas con el botón “+ Need to know” en cualquier pregunta de la app, o restaura las preguntas iniciales.</div>`;
+  $("ntkBody").innerHTML=h||`<div class="empty">You have no questions in Need to know. Add them with the “+ Need to know” button on any question in the app, or restore the default questions.</div>`;
   const done=refs.filter(r=>ntkPracticed(r)).length;
-  $("ntkSummary").textContent=refs.length?`${refs.length} ${plural(refs.length,"pregunta","preguntas")}${done?` · ${done} ${plural(done,"practicada","practicadas")}`:""}`:"";
+  $("ntkSummary").textContent=refs.length?`${refs.length} ${plural(refs.length,"question","questions")}${done?` · ${done} practiced`:""}`:"";
   $("ntkStartBtn").classList.toggle("hidden",!refs.length);
   $("ntkRestoreBtn").classList.toggle("hidden",!st.removed.some(r=>defaults.includes(r)));
 }
-function ntkRemoveFromList(ref){ntkRemove(ref);renderNtkList();toast("Quitada de Need to know")}
-function ntkRestoreDefaults(){ntkState().removed=[];saveState();renderNtkList();toast("Se restauraron las preguntas iniciales")}
+function ntkRemoveFromList(ref){ntkRemove(ref);renderNtkList();toast("Removed from Need to know")}
+function ntkRestoreDefaults(){ntkState().removed=[];saveState();renderNtkList();toast("Default questions restored")}
 function ntkStart(ref){
   const refs=ntkRefs();if(!refs.length)return;
   const i=typeof ref==="string"?Math.max(0,refs.indexOf(ref)):0;
@@ -1491,11 +1491,11 @@ function renderNtkCard(){
   $("ntkTheme").textContent=ntkThemeOf(it.ref);
   $("ntkReveal").classList.add("hidden");$("ntkReveal").innerHTML="";
   $("ntkPrevBtn").disabled=i===0;
-  $("ntkNextBtn").textContent=i===n-1?"Terminar":"Siguiente";
+  $("ntkNextBtn").textContent=i===n-1?"Finish":"Next";
   const mcq=$("ntkMcq");
   if(it.kind==="oral"){
     ntkSession.mcq=null;
-    $("ntkEyebrow").textContent="RESPONDE CON TU VOZ O ESCRIBIENDO";
+    $("ntkEyebrow").textContent="ANSWER BY VOICE OR IN WRITING";
     $("ntkQuestion").textContent=it.q.question;
     mcq.innerHTML="";mcq.classList.add("hidden");
     ntkPlaceOralBox();
@@ -1505,7 +1505,7 @@ function renderNtkCard(){
   }else{
     ntkRestoreOralBox();
     if(!ntkSession.mcq||ntkSession.mcq.ref!==it.ref)ntkSession.mcq={ref:it.ref,q:buildSessionQ(it.q),ans:null};
-    $("ntkEyebrow").textContent="ELIGE LA ALTERNATIVA CORRECTA";
+    $("ntkEyebrow").textContent="CHOOSE THE CORRECT OPTION";
     $("ntkQuestion").textContent=it.q.q;
     mcq.classList.remove("hidden");
     $("ntkRevealBtn").classList.add("hidden");
@@ -1520,7 +1520,7 @@ function renderNtkMcq(){
     if(ans!==null){cls+=" locked";if(i===q.correct)cls+=" correct";else if(i===ans)cls+=" wrong"}
     return `<button type="button" class="${cls}" onclick="ntkSelect(${i})" aria-pressed="${i===ans?"true":"false"}"${ans!==null?" disabled":""}><div class="letter">${LETTERS[i]||i+1}</div><div class="otxt">${esc(o)}</div></button>`;
   }).join("");
-  if(ans===null)h+=`<button type="button" class="dontknow" onclick="ntkSelect(-1)">No la sé · mostrar respuesta</button>`;
+  if(ans===null)h+=`<button type="button" class="dontknow" onclick="ntkSelect(-1)">I don't know · show answer</button>`;
   else h+=`<div class="answer-wrap">${ntkMcqFeedback(q,ans===q.correct)}</div>`;
   $("ntkMcq").innerHTML=h;
 }
@@ -1531,10 +1531,10 @@ function ntkSelect(i){
   renderNtkMcq();
 }
 function ntkMcqFeedback(q,isOk){
-  return `<div class="feedback-head ${isOk?"ok":"bad"}"><div class="status">${isOk?"Correcta":"Respuesta correcta"}</div><strong>${esc(q._correctText||q.options[q.correct])}</strong></div>${q.expl?`<div class="explain"><div class="label">Por qué</div><p>${esc(q.expl)}</p></div>`:""}`;
+  return `<div class="feedback-head ${isOk?"ok":"bad"}"><div class="status">${isOk?"Correct":"Correct answer"}</div><strong>${esc(q._correctText||q.options[q.correct])}</strong></div>${q.expl?`<div class="explain"><div class="label">Why</div><p>${esc(q.expl)}</p></div>`:""}`;
 }
 function ntkAnswerHtml(q){
-  return `${q.short?`<div class="ntk-short"><div class="label">La idea</div><p>${esc(q.short)}</p></div>`:""}<div class="explain ntk-explain"><div class="label">Explicación</div>${formatRefHtml(q.reference)}</div>`;
+  return `${q.short?`<div class="ntk-short"><div class="label">Key idea</div><p>${esc(q.short)}</p></div>`:""}<div class="explain ntk-explain"><div class="label">Explanation</div>${formatRefHtml(q.reference)}</div>`;
 }
 function ntkReveal(){
   const it=ntkCurrent();if(!it||it.kind!=="oral")return;
@@ -1548,7 +1548,7 @@ function ntkNext(){
   if(!ntkSession)return;
   if(ntkSession.index<ntkSession.refs.length-1){ntkSession.index++;renderNtkCard();window.scrollTo(0,0);return}
   const n=ntkSession.refs.length;
-  ntkExitCard();toast(`Repasaste ${n} ${plural(n,"pregunta","preguntas")} de Need to know`);
+  ntkExitCard();toast(`You reviewed ${n} Need to know ${plural(n,"question","questions")}`);
 }
 function ntkExitCard(){stopEverythingOral();ntkRestoreOralBox();ntkSession=null;show("ntk");renderNtkList()}
 
@@ -1599,16 +1599,16 @@ async function exportProgress(){
   try{
     const file=new File([text],fileName,{type:"application/json"});
     if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],title:"Copia de progreso A320 Trainer"});
-      toast("Copia preparada");return;
+      await navigator.share({files:[file],title:"A320 Trainer progress backup"});
+      toast("Backup ready");return;
     }
   }catch(e){if(e&&e.name==="AbortError")return}
   try{
     const blob=new Blob([text],{type:"application/json"});
     const url=URL.createObjectURL(blob),a=document.createElement("a");
     a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1500);toast("Copia de progreso creada");
-  }catch(e){toast("No fue posible crear la copia")}
+    setTimeout(()=>URL.revokeObjectURL(url),1500);toast("Progress backup created");
+  }catch(e){toast("Couldn't create the backup")}
 }
 function importProgress(event){
   const input=event.target,file=input.files&&input.files[0];if(!file)return;
@@ -1617,16 +1617,16 @@ function importProgress(event){
     try{
       const parsed=JSON.parse(reader.result);
       const incoming=parsed&&parsed.state?parsed.state:parsed;
-      if(!looksLikeValidBackup(incoming))throw new Error("Formato inválido");
-      if(!confirm("Restaurar esta copia reemplazará el progreso guardado actualmente en este dispositivo. ¿Continuar?")){input.value="";return}
+      if(!looksLikeValidBackup(incoming))throw new Error("Invalid format");
+      if(!confirm("Restoring this backup will replace the progress currently saved on this device. Continue?")){input.value="";return}
       const candidate=sanitizeState(incoming);
       const ok=(()=>{appState=candidate;return saveState()})();
       session=null;currentSystemKey=null;renderHome();show("home");
-      toast(ok?"Progreso restaurado":"Progreso restaurado en esta sesión, pero no se pudo guardar en el dispositivo");
-    }catch(e){toast("La copia no es válida")}
+      toast(ok?"Progress restored":"Progress restored for this session, but it couldn't be saved on the device");
+    }catch(e){toast("The backup isn't valid")}
     input.value="";
   };
-  reader.onerror=()=>{toast("No fue posible leer la copia");input.value=""};
+  reader.onerror=()=>{toast("Couldn't read the backup");input.value=""};
   reader.readAsText(file);
 }
 /* ==========================================================
@@ -1813,7 +1813,7 @@ function enFinishTest(){
   if(!st.done.includes(cur.n))st.done.push(cur.n);
   st.last=cur.n;st.current=null;
   const m=cur.mcq;
-  enHubNote=`✓ Prueba ${cur.n} completada${m?` · alternativas: ${m.c} de ${m.t} correctas`:""}.`;
+  enHubNote=`✓ Test ${cur.n} complete${m?` · multiple choice: ${m.c} of ${m.t} correct`:""}.`;
   saveState();
   openEnglish(true);
 }
@@ -1849,12 +1849,12 @@ function enVoiceFor(who){
 }
 function enUpdateAudioUi(){
   const b=$("enPlayBtn");
-  if(b)b.textContent=enMedia.speaking?"■ Detener":"▶ Escuchar";
+  if(b)b.textContent=enMedia.speaking?"■ Stop":"▶ Listen";
   document.querySelectorAll(".en-say").forEach(x=>x.classList.toggle("playing",enMedia.speaking&&x===enMedia.sayBtn));
 }
 function enUpdateVoiceStatus(){
   const st=$("enAudioStatus");if(!st)return;
-  st.textContent=!enSpeechOk()?"Este navegador no tiene voz sintética: usa la transcripción.":(enVoices().length?"":(enMedia.voicesLoaded?"No se encontró ninguna voz en inglés en este dispositivo. Instala una en los ajustes del sistema o usa la transcripción.":"Buscando voces en inglés del dispositivo…"));
+  st.textContent=!enSpeechOk()?"This browser has no speech synthesis: use the transcript.":(enVoices().length?"":(enMedia.voicesLoaded?"No English voice was found on this device. Install one in the system settings or use the transcript.":"Looking for English voices on the device…"));
 }
 function enStopAudio(){
   enMedia.audioGen++;enMedia.speaking=false;enMedia.sayBtn=null;
@@ -1863,7 +1863,7 @@ function enStopAudio(){
 }
 function enPlay(lines,btn){
   enStopAudio();
-  if(!enSpeechOk()){toast("Este navegador no puede leer el audio en voz alta. Usa la transcripción.");return false}
+  if(!enSpeechOk()){toast("This browser can't read the audio aloud. Use the transcript.");return false}
   enStopMic(true);
   const gen=++enMedia.audioGen;
   let i=0;
@@ -1906,7 +1906,7 @@ function enSetMicStatus(t,live){const s=$("enMicStatus");if(s){s.textContent=t;s
 function enMicButton(recording){
   const b=$("enMicBtn");if(!b)return;
   b.classList.toggle("recording",!!recording);
-  b.innerHTML=recording?'<span aria-hidden="true">●</span><span>Detener</span>':'<span aria-hidden="true">🎙️</span><span>Grabar mi respuesta</span>';
+  b.innerHTML=recording?'<span aria-hidden="true">●</span><span>Stop</span>':'<span aria-hidden="true">🎙️</span><span>Record my answer</span>';
 }
 function enRenderTranscript(){
   const box=$("enTranscript");if(!box)return;
@@ -1925,8 +1925,8 @@ async function enToggleMic(){
   await enStartMic();
 }
 async function enStartMic(){
-  if(!window.isSecureContext&&location.hostname!=="localhost"){alert("El micrófono requiere que la aplicación se abra mediante HTTPS.");return}
-  if(!enMicSupported()){alert("El reconocimiento de voz no está disponible en este navegador. Escribe tu respuesta en el cuadro.");return}
+  if(!window.isSecureContext&&location.hostname!=="localhost"){alert("The microphone requires the app to be opened over HTTPS.");return}
+  if(!enMicSupported()){alert("Speech recognition isn't available in this browser. Type your answer in the box.");return}
   enStopAudio();
   const gen=++enMedia.micGen;
   if(!enMedia.micOk){
@@ -1937,8 +1937,8 @@ async function enStartMic(){
       }
       enMedia.micOk=true;
     }catch(error){
-      console.warn("Permiso de micrófono:",error);
-      if(gen===enMedia.micGen)enSetMicStatus(isStandaloneMode()?"No se pudo acceder al micrófono. Si estás en la app instalada, abre el sitio en Safari.":"No se pudo acceder al micrófono.");
+      console.warn("Microphone permission:",error);
+      if(gen===enMedia.micGen)enSetMicStatus(isStandaloneMode()?"Couldn't access the microphone. If you're in the installed app, open the site in Safari.":"Couldn't access the microphone.");
       return;
     }
     /* Si mientras se pedía el permiso el usuario cambió de pantalla o de ejercicio,
@@ -1948,7 +1948,7 @@ async function enStartMic(){
   const box=$("enTranscript");
   enMedia.base=box?box.value.trim():"";enMedia.final="";enMedia.interim="";
   enMedia.stopping=false;enMedia.listening=true;enMedia.restarts=0;enMedia.startTime=Date.now();
-  enMicButton(true);enSetMicStatus("Escuchando… habla en inglés.",true);
+  enMicButton(true);enSetMicStatus("Listening… speak in English.",true);
   enStartTimer();
   enCreateRec();enStartRec();
   clearTimeout(enMedia.maxTimer);
@@ -1974,17 +1974,17 @@ function enCreateRec(){
     if(gen!==enMedia.micGen)return;
     const err=(e&&e.error)||"unknown";
     if(err==="no-speech"||err==="aborted")return;
-    console.warn("SpeechRecognition (inglés) error:",err);
+    console.warn("SpeechRecognition (English) error:",err);
     if(err==="not-allowed"||err==="audio-capture"||err==="network"||err==="service-not-allowed"){
       enMedia.listening=false;enStopTimer();enMicButton(false);
-      enSetMicStatus(err==="not-allowed"?"Debes autorizar el uso del micrófono.":err==="audio-capture"?"No se pudo acceder al micrófono.":(isStandaloneMode()?"El reconocimiento de voz no está disponible en la app instalada. Abre el sitio en Safari.":"Problema de conexión con el reconocimiento de voz."));
+      enSetMicStatus(err==="not-allowed"?"You need to allow microphone access.":err==="audio-capture"?"Couldn't access the microphone.":(isStandaloneMode()?"Speech recognition isn't available in the installed app. Open the site in Safari.":"Connection problem with speech recognition."));
     }
   };
   r.onend=()=>{
     if(gen!==enMedia.micGen)return;
     if(enMedia.listening&&!enMedia.stopping){
       enMedia.restarts++;
-      if(enMedia.restarts>EN_MAX_RESTARTS){enMedia.listening=false;enStopTimer();enMicButton(false);enSetMicStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");return}
+      if(enMedia.restarts>EN_MAX_RESTARTS){enMedia.listening=false;enStopTimer();enMicButton(false);enSetMicStatus("The microphone disconnected several times. Try again.");return}
       clearTimeout(enMedia.restartTimer);
       enMedia.restartTimer=setTimeout(()=>{if(gen===enMedia.micGen&&enMedia.listening&&!enMedia.stopping){enCreateRec();enStartRec()}},350);
       return;
@@ -1999,9 +1999,9 @@ function enStartRec(){
   catch(err){
     clearTimeout(enMedia.restartTimer);
     enMedia.restarts++;
-    if(enMedia.restarts>EN_MAX_RESTARTS){enMedia.listening=false;enStopTimer();enMicButton(false);enSetMicStatus("El micrófono se desconectó varias veces. Intenta de nuevo.");return}
+    if(enMedia.restarts>EN_MAX_RESTARTS){enMedia.listening=false;enStopTimer();enMicButton(false);enSetMicStatus("The microphone disconnected several times. Try again.");return}
     const gen=enMedia.micGen;
-    enMedia.restartTimer=setTimeout(()=>{if(gen===enMedia.micGen&&enMedia.listening){enCreateRec();try{enMedia.rec.start()}catch(e){console.warn("SpeechRecognition (inglés) restart:",e)}}},500);
+    enMedia.restartTimer=setTimeout(()=>{if(gen===enMedia.micGen&&enMedia.listening){enCreateRec();try{enMedia.rec.start()}catch(e){console.warn("SpeechRecognition (English) restart:",e)}}},500);
   }
 }
 function enFinishMic(){
@@ -2012,7 +2012,7 @@ function enFinishMic(){
   const gen=enMedia.micGen;
   if(enMedia.rec){
     try{enMedia.rec.stop();setTimeout(()=>{if(gen===enMedia.micGen&&enMedia.stopping)enFinalizeMic()},1200);return}
-    catch(e){console.warn("Stop recognition (inglés):",e)}
+    catch(e){console.warn("Stop recognition (English):",e)}
   }
   setTimeout(enFinalizeMic,300);
 }
@@ -2023,7 +2023,7 @@ function enFinalizeMic(){
   const box=$("enTranscript");
   if(box)enTextChanged(box.value);
   enMicButton(false);
-  enSetMicStatus(box&&box.value.trim()?"Listo. Este texto es lo que entendió el reconocimiento de voz; puedes corregirlo. No hay nota: compáralo con el modelo.":"No pude reconocer nada. Inténtalo de nuevo o escribe tu respuesta.");
+  enSetMicStatus(box&&box.value.trim()?"Done. This text is what speech recognition understood; you can correct it. There's no grade: compare it with the model.":"I couldn't recognize anything. Try again or type your answer.");
 }
 function enStopMic(updateUi){
   enMedia.micGen++;
@@ -2087,19 +2087,19 @@ function renderEnglishHub(){
   const tests=enTests(),st=enTestState(),body=$("enHubBody");
   const total=tests.length,done=tests.filter(t=>st.done.includes(t.n)).length;
   const cur=st.current&&enTestByN(st.current.n)&&!st.done.includes(st.current.n)?st.current:null;
-  if(!total){body.innerHTML=`<div class="empty">Todavía no hay pruebas cargadas.</div>`;return}
-  let h=`<div class="folder-summary"><span>Pruebas completadas</span><b>${done} de ${total}${st.cycle?` · vuelta ${st.cycle+1}`:""}</b></div>`;
+  if(!total){body.innerHTML=`<div class="empty">No tests loaded yet.</div>`;return}
+  let h=`<div class="folder-summary"><span>Tests completed</span><b>${done} of ${total}${st.cycle?` · round ${st.cycle+1}`:""}</b></div>`;
   h+=`<div class="en-dots" role="list" aria-label="Pruebas">${tests.map(t=>{
     const d=st.done.includes(t.n),now=!!cur&&cur.n===t.n;
-    return `<span class="en-dot${d?" done":now?" now":""}" role="listitem" aria-label="Prueba ${t.n}: ${d?"completada":now?"la que te tocó":"pendiente"}">${d?"✓":t.n}</span>`;
+    return `<span class="en-dot${d?" done":now?" now":""}" role="listitem" aria-label="Test ${t.n}: ${d?"completed":now?"your current test":"pending"}">${d?"✓":t.n}</span>`;
   }).join("")}</div>`;
   if(enHubNote)h+=`<div class="en-banner" role="status">${esc(enHubNote)}</div>`;
   if(cur){
     const t=enTestByN(cur.n),n=cur.order.length,started=cur.i>0;
     const c=(t.mcq||[]).length,a=(t.listening||[]).length,f=(t.images||[]).length;
-    h+=`<div class="en-test-card"><div class="en-test-kicker">${started?"EN CURSO":"TE TOCÓ AL AZAR"}</div><h2 class="en-test-title">Prueba ${cur.n}</h2><p class="en-test-sub">${c} ${plural(c,"alternativa","alternativas")}, ${a} ${plural(a,"audio","audios")}, ${f} ${plural(f,"foto","fotos")} y 1 role-play, mezclados al azar en una sola tanda.</p>${started?`<div class="progress en-test-progress"><div style="width:${Math.round(cur.i/n*100)}%"></div></div><p class="en-test-sub">Vas en el ejercicio ${cur.i+1} de ${n}.</p>`:""}<button class="btn primary en-test-go" onclick="enStartOrContinue()" type="button">${started?"Continuar prueba":"Comenzar prueba"}</button></div>`;
+    h+=`<div class="en-test-card"><div class="en-test-kicker">${started?"IN PROGRESS":"PICKED AT RANDOM"}</div><h2 class="en-test-title">Test ${cur.n}</h2><p class="en-test-sub">${c} multiple choice, ${a} ${plural(a,"audio clip","audio clips")}, ${f} ${plural(f,"picture","pictures")} and 1 role-play, randomly mixed in a single round.</p>${started?`<div class="progress en-test-progress"><div style="width:${Math.round(cur.i/n*100)}%"></div></div><p class="en-test-sub">You're on exercise ${cur.i+1} of ${n}.</p>`:""}<button class="btn primary en-test-go" onclick="enStartOrContinue()" type="button">${started?"Continue test":"Start test"}</button></div>`;
   }else{
-    h+=`<div class="en-test-card"><div class="en-test-kicker">¡LISTO!</div><h2 class="en-test-title">Completaste las ${total} pruebas</h2><p class="en-test-sub">Puedes empezar otra vuelta: el orden vuelve a salir al azar.</p><button class="btn primary en-test-go" onclick="enStartNewRound()" type="button">Empezar otra vuelta</button></div>`;
+    h+=`<div class="en-test-card"><div class="en-test-kicker">DONE!</div><h2 class="en-test-title">You completed all ${total} tests</h2><p class="en-test-sub">You can start another round: the order is shuffled again.</p><button class="btn primary en-test-go" onclick="enStartNewRound()" type="button">Start another round</button></div>`;
   }
   body.innerHTML=h;
 }
@@ -2146,98 +2146,98 @@ function enMcqWork(q,st){
     let cls="option";
     if(locked){cls+=" locked";if(orig===q.correct)cls+=" correct";else if(orig===st.chosen)cls+=" wrong"}
     return `<button type="button" class="${cls}" onclick="enChoose(${orig})" aria-pressed="${orig===st.chosen?"true":"false"}"${locked?" disabled":""}><div class="letter">${LETTERS[k]||k+1}</div><div class="otxt">${esc(q.options[orig])}</div></button>`;
-  }).join("")}</div>${locked?"":`<button class="dontknow" onclick="enDontKnow()" type="button">No la sé · mostrar respuesta</button>`}`;
+  }).join("")}</div>${locked?"":`<button class="dontknow" onclick="enDontKnow()" type="button">I don't know · show answer</button>`}`;
 }
 function enMcqFeedback(q,st){
   const ok=st.chosen===q.correct;
-  return `<div class="feedback-head ${ok?"ok":"bad"}"><div class="status">${ok?"Correcta":"Respuesta correcta"}</div><strong>${esc(q.options[q.correct])}</strong></div><div class="explain"><div class="label">Por qué</div><p>${esc(q.expl)}</p></div>`;
+  return `<div class="feedback-head ${ok?"ok":"bad"}"><div class="status">${ok?"Correct":"Correct answer"}</div><strong>${esc(q.options[q.correct])}</strong></div><div class="explain"><div class="label">Why</div><p>${esc(q.expl)}</p></div>`;
 }
 
 /* ---------- piezas de HTML ---------- */
 function enUl(items){return `<ul class="en-list">${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`}
 function enOl(items){return `<ol class="en-list">${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`}
 function enChips(vocab){return `<div class="en-chips">${vocab.map(v=>`<span class="en-chip"><b>${esc(v.en)}</b> · ${esc(v.es)}</span>`).join("")}</div>`}
-function enSayBtn(text,who){return `<button class="en-say" data-say="${esc(text)}" data-who="${esc(who)}" onclick="enPlayFromBtn(this)" type="button" aria-label="Escuchar este texto en inglés">▶</button>`}
+function enSayBtn(text,who){return `<button class="en-say" data-say="${esc(text)}" data-who="${esc(who)}" onclick="enPlayFromBtn(this)" type="button" aria-label="Listen to this text in English">▶</button>`}
 function enChecklist(points){
-  return `<div class="section-label">Compárate (marca lo que cumpliste)</div><div class="en-check">${points.map(p=>`<label><input type="checkbox"><span>${esc(p)}</span></label>`).join("")}</div><div class="oral-score-note">Es solo para ti: no se guarda ni se convierte en nota.</div>`;
+  return `<div class="section-label">Compare yourself (check what you did)</div><div class="en-check">${points.map(p=>`<label><input type="checkbox"><span>${esc(p)}</span></label>`).join("")}</div><div class="oral-score-note">It's just for you: it isn't saved or turned into a grade.</div>`;
 }
 function enNotesBox(){
-  return `<div class="section-label">Tus apuntes</div>
-<textarea class="oral-transcript en-notes" id="enNotes" rows="9" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Escribe aquí lo que vas oyendo, como si tomaras nota en cabina…" aria-label="Tus apuntes de lo que escuchas" oninput="enTextChanged(this.value)"></textarea>`;
+  return `<div class="section-label">Your notes</div>
+<textarea class="oral-transcript en-notes" id="enNotes" rows="9" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Write down what you hear, as if taking notes in the cockpit…" aria-label="Your notes on what you hear" oninput="enTextChanged(this.value)"></textarea>`;
 }
 /* Un solo botón: la velocidad es siempre la normal y la voz cambia sola de un audio a otro. */
 function enAudioBox(){
   return `<div class="en-audio">
-<div class="en-audio-row"><button class="btn primary" id="enPlayBtn" onclick="enPlayCurrent()" type="button">▶ Escuchar</button></div>
+<div class="en-audio-row"><button class="btn primary" id="enPlayBtn" onclick="enPlayCurrent()" type="button">▶ Listen</button></div>
 <div class="oral-status" id="enAudioStatus" role="status" aria-live="polite"></div>
 </div>`;
 }
 function enMicBox(){
   const supported=enMicSupported(),standalone=isStandaloneMode();
-  const warn=!supported?"Tu navegador no soporta reconocimiento de voz. Escribe tu respuesta en el cuadro.":standalone?"El reconocimiento de voz de Safari no funciona dentro de apps instaladas en la pantalla de inicio. Abre este sitio en Safari para usar el micrófono, o escribe tu respuesta.":"";
+  const warn=!supported?"Your browser doesn't support speech recognition. Type your answer in the box.":standalone?"Safari speech recognition doesn't work inside apps installed on the home screen. Open this site in Safari to use the microphone, or type your answer.":"";
   return `<div class="oral-mic-box">
-<div class="section-label">Tu respuesta</div>
-${supported?`<button class="oral-mic-btn" id="enMicBtn" onclick="enToggleMic()" type="button"><span aria-hidden="true">🎙️</span><span>Grabar mi respuesta</span></button>`:""}
+<div class="section-label">Your answer</div>
+${supported?`<button class="oral-mic-btn" id="enMicBtn" onclick="enToggleMic()" type="button"><span aria-hidden="true">🎙️</span><span>Record my answer</span></button>`:""}
 ${warn?`<div class="oral-mic-fallback show">${esc(warn)}</div>`:""}
-<div class="oral-status" id="enMicStatus" role="status" aria-live="polite">${supported?"Toca el micrófono cuando estés listo. Se escribe aquí lo que entiende el dispositivo; no se calcula ninguna nota.":"Puedes decirlo en voz alta y luego compararlo con el modelo."}</div>
+<div class="oral-status" id="enMicStatus" role="status" aria-live="polite">${supported?"Tap the microphone when you're ready. What the device understands is written here; no grade is calculated.":"You can say it out loud and then compare it with the model."}</div>
 <div class="oral-time" id="enMicTime" style="display:none">00:00</div>
-<textarea class="oral-transcript" id="enTranscript" rows="4" placeholder="Aquí aparece lo que dices, o escríbelo tú…" aria-label="Tu respuesta en inglés" oninput="enTextChanged(this.value)"></textarea>
+<textarea class="oral-transcript" id="enTranscript" rows="4" placeholder="What you say appears here, or type it yourself…" aria-label="Your answer in English" oninput="enTextChanged(this.value)"></textarea>
 </div>`;
 }
-const EN_HELP=`<details class="en-help"><summary>Frases útiles para describir</summary><div>
-<p><b>Dónde está algo:</b> in the foreground / in the background / in the middle · on the left / on the right · next to · behind · in front of · above · below · near</p>
-<p><b>Qué pasa ahora:</b> There is… / There are… · The firefighters are spraying… (presente continuo)</p>
-<p><b>Suposiciones:</b> It looks like… · It seems that… · It may / might / could have… · It must have… · Perhaps… · I think…</p>
-<p><b>Qué hacer después:</b> The crew should… · The next step would be… · Emergency services need to…</p>
+const EN_HELP=`<details class="en-help"><summary>Useful phrases for describing</summary><div>
+<p><b>Where something is:</b> in the foreground / in the background / in the middle · on the left / on the right · next to · behind · in front of · above · below · near</p>
+<p><b>What is happening now:</b> There is… / There are… · The firefighters are spraying… (present continuous)</p>
+<p><b>Guesses:</b> It looks like… · It seems that… · It may / might / could have… · It must have… · Perhaps… · I think…</p>
+<p><b>What to do next:</b> The crew should… · The next step would be… · Emergency services need to…</p>
 </div></details>`;
 /* Lo que ya pasó en el role-play: lo que ATC dijo y lo que tú (según el modelo) respondiste. */
 function enHistory(hist){
   if(!hist||!hist.length)return "";
-  const rows=hist.map(h=>(h.heard||[]).map(l=>`<div class="en-tr"><b>ATC:</b> ${esc(l.text)}</div>`).join("")+(h.said?`<div class="en-tr"><b>Tú:</b> ${esc(h.said)}</div>`:"")).join("");
-  return `<div class="en-scenario"><b>Hasta ahora:</b>${rows}</div>`;
+  const rows=hist.map(h=>(h.heard||[]).map(l=>`<div class="en-tr"><b>ATC:</b> ${esc(l.text)}</div>`).join("")+(h.said?`<div class="en-tr"><b>You:</b> ${esc(h.said)}</div>`:"")).join("");
+  return `<div class="en-scenario"><b>So far:</b>${rows}</div>`;
 }
 
 /* ---------- pantalla de práctica (sirve para los cuatro tipos de ejercicio) ---------- */
 function renderEnglishPractice(){
   const s=enSession,it=enItem(),n=s.items.length,i=s.index,st=s.state[i];
   stopEnglishMedia();
-  $("epMeta").textContent=`PRUEBA ${s.n} · ${s.pos+1} / ${s.total}`;
+  $("epMeta").textContent=`TEST ${s.n} · ${s.pos+1} / ${s.total}`;
   $("epProgress").style.width=`${((s.pos+(i+1)/n)/s.total)*100}%`;
   let work="",tip="";
   if(s.kind==="mcq"){
-    $("epTag").innerHTML="INGLÉS OACI · ALTERNATIVA";
-    $("epEyebrow").textContent="ELIGE LA RESPUESTA CORRECTA";
+    $("epTag").innerHTML="ICAO ENGLISH · MULTIPLE CHOICE";
+    $("epEyebrow").textContent="CHOOSE THE CORRECT ANSWER";
     $("epTitle").textContent=it.q;
     $("epStimulus").innerHTML="";
     work=enMcqWork(it,st);
   }else if(s.kind==="image"){
     /* Ni el título ni el tema de la foto se muestran antes de describirla: darían vocabulario hecho. Aparecen al revelar el modelo. */
-    $("epTag").innerHTML="INGLÉS OACI · DESCRIBIR IMÁGENES";
-    $("epEyebrow").textContent="DESCRIBE LA IMAGEN";
+    $("epTag").innerHTML="ICAO ENGLISH · PICTURE DESCRIPTION";
+    $("epEyebrow").textContent="DESCRIBE THE PICTURE";
     $("epTitle").textContent="Describe the picture.";
-    $("epStimulus").innerHTML=`<figure class="en-figure"><img src="${esc(it.file)}" alt="${esc(it.alt)}"></figure><div class="en-credit">Foto: ${esc(it.credit.text)} · <a href="${esc(it.credit.url)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
-    tip="Tómate un minuto: di lo que ves (dónde, qué, quién) y después lo que podría haber pasado. Puedes grabarte o escribir. Luego revela el modelo y compárate.";
-    work=`<div class="section-label">Preguntas guía</div>${enOl(it.prompts)}${EN_HELP}${enMicBox()}`;
-    $("epRevealBtn").textContent="Mostrar modelo";
+    $("epStimulus").innerHTML=`<figure class="en-figure"><img src="${esc(it.file)}" alt="${esc(it.alt)}"></figure><div class="en-credit">Photo: ${esc(it.credit.text)} · <a href="${esc(it.credit.url)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
+    tip="Take a minute: say what you see (where, what, who) and then what might have happened. You can record yourself or type. Then reveal the model and compare.";
+    work=`<div class="section-label">Guiding questions</div>${enOl(it.prompts)}${EN_HELP}${enMicBox()}`;
+    $("epRevealBtn").textContent="Show model";
   }else if(s.kind==="roleplay"){
-    $("epTag").innerHTML=`ROLE-PLAY · TURNO ${it.rp.turn} DE ${it.rp.turns}`;
-    $("epEyebrow").textContent="RESPONDE POR RADIO";
+    $("epTag").innerHTML=`ROLE-PLAY · TURN ${it.rp.turn} OF ${it.rp.turns}`;
+    $("epEyebrow").textContent="ANSWER ON THE RADIO";
     $("epTitle").textContent=it.prompt;
-    $("epStimulus").innerHTML=`<div class="en-scenario"><b>Situación:</b> ${esc(it.scenario)}</div>${enHistory(it.rp.history)}`;
-    tip="Habla como en la radio: cifras una por una y tu indicativo al final. Después revela el modelo y compárate.";
+    $("epStimulus").innerHTML=`<div class="en-scenario"><b>Situation:</b> ${esc(it.scenario)}</div>${enHistory(it.rp.history)}`;
+    tip="Speak as on the radio: digits one by one and your call sign at the end. Then reveal the model and compare.";
     if(it.heard&&it.heard.length){
-      work+=`${enAudioBox()}<button class="oral-text-fallback-btn en-heard-btn" onclick="enToggleHeard()" type="button">Ver el texto de lo que escuchas</button><div class="en-scenario hidden" id="enHeardText">${it.heard.map(l=>`<div class="en-tr"><b>${l.who==="pilot"?"Piloto":"ATC"}:</b> ${esc(l.text)}</div>`).join("")}</div>`;
+      work+=`${enAudioBox()}<button class="oral-text-fallback-btn en-heard-btn" onclick="enToggleHeard()" type="button">Show the text of what you hear</button><div class="en-scenario hidden" id="enHeardText">${it.heard.map(l=>`<div class="en-tr"><b>${l.who==="pilot"?"Pilot":"ATC"}:</b> ${esc(l.text)}</div>`).join("")}</div>`;
     }
     work+=enMicBox();
-    $("epRevealBtn").textContent="Mostrar modelo";
+    $("epRevealBtn").textContent="Show model";
   }else{
-    $("epTag").innerHTML=`AUDIO · ${it.type==="atis"?"ATIS":"AUTORIZACIÓN DE ATC"}`;
-    $("epEyebrow").textContent="ESCUCHA Y ESCRIBE";
+    $("epTag").innerHTML=`AUDIO · ${it.type==="atis"?"ATIS":"ATC CLEARANCE"}`;
+    $("epEyebrow").textContent="LISTEN AND WRITE";
     $("epTitle").textContent=it.title;
     $("epStimulus").innerHTML=`<div class="en-scenario">${esc(it.scenario)}</div>`;
-    tip="Anota lo que oigas como lo escribirías en cabina, en tu propio formato. Al comprobar verás la transcripción y qué datos encontré en tus apuntes; no se calcula ninguna nota.";
+    tip="Write down what you hear as you would in the cockpit, in your own format. When you check, you'll see the transcript and which data I found in your notes; no grade is calculated.";
     work=`${enAudioBox()}${enNotesBox()}`;
-    $("epRevealBtn").textContent="Comprobar y ver transcripción";
+    $("epRevealBtn").textContent="Check and show transcript";
   }
   $("epTip").textContent=tip;$("epTip").classList.toggle("hidden",!tip);
   $("epWork").innerHTML=work;
@@ -2249,35 +2249,35 @@ function renderEnglishPractice(){
 }
 function enToggleHeard(){const b=$("enHeardText");if(b)b.classList.toggle("hidden")}
 function enImageReveal(it){
-  let h=`<div class="explain"><div class="label">Lo que se ve</div><p><b>${esc(it.title)}</b>${it.topic?` · ${esc(it.topic)}`:""}</p>${enUl(it.seen)}</div>`;
-  h+=`<div class="memory"><div class="label">Lo que podría haber pasado (hipótesis)</div>${enUl(it.might)}</div>`;
-  h+=`<div class="citation"><div class="label">Contexto del suceso</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(it.context)}</div></div>`;
-  h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Descripción modelo</div><div class="en-line"><span class="en-model">${esc(it.model)}</span>${enSayBtn(it.model,"pilot")}</div></div>`;
+  let h=`<div class="explain"><div class="label">What you can see</div><p><b>${esc(it.title)}</b>${it.topic?` · ${esc(it.topic)}`:""}</p>${enUl(it.seen)}</div>`;
+  h+=`<div class="memory"><div class="label">What might have happened (hypotheses)</div>${enUl(it.might)}</div>`;
+  h+=`<div class="citation"><div class="label">Context of the event</div><div style="font-size:12.5px;line-height:1.5;color:#596A75">${esc(it.context)}</div></div>`;
+  h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Model description</div><div class="en-line"><span class="en-model">${esc(it.model)}</span>${enSayBtn(it.model,"pilot")}</div></div>`;
   h+=`<div class="section-label">Vocabulario clave</div>${enChips(it.vocab)}`;
-  if(it.radio)h+=`<div class="explain" style="margin-top:10px"><div class="label">Por radio</div><p>${esc(it.radio.intro)}</p>${it.radio.lines.map(l=>`<div class="en-line"><span class="en-model">${esc(l)}</span>${enSayBtn(l,"pilot")}</div>`).join("")}</div>`;
+  if(it.radio)h+=`<div class="explain" style="margin-top:10px"><div class="label">On the radio</div><p>${esc(it.radio.intro)}</p>${it.radio.lines.map(l=>`<div class="en-line"><span class="en-model">${esc(l)}</span>${enSayBtn(l,"pilot")}</div>`).join("")}</div>`;
   h+=enChecklist(it.points);
   return h;
 }
 function enSpeakingReveal(it){
-  let h=`<div class="feedback-head ok"><div class="status">${it.model.length>1?"Respuestas modelo":"Respuesta modelo"}</div>${it.model.map(m=>`<div class="en-line"><span class="en-model">${esc(m)}</span>${enSayBtn(m,"pilot")}</div>`).join("")}</div>`;
+  let h=`<div class="feedback-head ok"><div class="status">${it.model.length>1?"Model answers":"Model answer"}</div>${it.model.map(m=>`<div class="en-line"><span class="en-model">${esc(m)}</span>${enSayBtn(m,"pilot")}</div>`).join("")}</div>`;
   if(it.note)h+=`<div class="memory"><div class="label">Nota</div><p>${esc(it.note)}</p></div>`;
   h+=enChecklist(it.points);
   if(it.vocab&&it.vocab.length)h+=`<div class="section-label">Vocabulario</div>${enChips(it.vocab)}`;
-  if(it.rp)h+=`<div class="oral-score-note">Los turnos de ATC son de práctica: están redactados para este ejercicio.</div>`;
+  if(it.rp)h+=`<div class="oral-score-note">The ATC turns are for practice: they were written for this exercise.</div>`;
   return h;
 }
 function enListeningReveal(it,st){
-  const who=w=>w==="pilot"?"Piloto":"ATC";
+  const who=w=>w==="pilot"?"Pilot":"ATC";
   const tok=enNoteTokens(st.text),wrote=String(st.text||"").trim().length>0;
   const rows=it.keys.map(k=>{
     const ok=wrote&&enKeyFound(k,tok);
-    return `<div class="en-key ${ok?"ok":"miss"}"><span class="en-key-mark" aria-hidden="true">${ok?"✓":"•"}</span><span><b>${esc(k.label)}</b> · ${esc(k.value)}${ok?"":`<em> — no lo encontré en tus apuntes</em>`}</span></div>`;
+    return `<div class="en-key ${ok?"ok":"miss"}"><span class="en-key-mark" aria-hidden="true">${ok?"✓":"•"}</span><span><b>${esc(k.label)}</b> · ${esc(k.value)}${ok?"":`<em> — not found in your notes</em>`}</span></div>`;
   }).join("");
-  let h=`<div class="explain"><div class="label">Transcripción</div>${it.lines.map(l=>`<div class="en-tr"><b>${who(l.who)}:</b> ${esc(l.text)}</div>`).join("")}</div>`;
-  h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Datos clave, en el orden en que sonaron</div>${wrote?"":`<div class="en-tr">No escribiste nada: escucha de nuevo, anota lo que oigas y vuelve a comprobar.</div>`}${rows}<div class="oral-score-note">La comparación es automática y flexible: entiende «200/12», «two zero zero» o «RWY27». Si lo anotaste de otra forma y está bien, cuéntalo como bien. Es solo una ayuda, no una nota.</div></div>`;
-  if(it.after&&it.after.length)h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Colación / llamada modelo</div>${it.after.map(l=>`<div class="en-line"><span class="en-model"><b>${who(l.who)}:</b> ${esc(l.text)}</span>${enSayBtn(l.text,l.who)}</div>`).join("")}</div>`;
-  h+=`<div class="memory" style="margin-top:8px"><div class="label">Para fijar</div>${enUl(it.notes||[])}</div>`;
-  h+=`<button class="btn ghost" onclick="retryEnglish()" style="width:100%;margin-top:10px" type="button">Volver a intentarlo (borra tus apuntes)</button>`;
+  let h=`<div class="explain"><div class="label">Transcript</div>${it.lines.map(l=>`<div class="en-tr"><b>${who(l.who)}:</b> ${esc(l.text)}</div>`).join("")}</div>`;
+  h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Key data, in the order heard</div>${wrote?"":`<div class="en-tr">You didn't write anything: listen again, note what you hear and check again.</div>`}${rows}<div class="oral-score-note">The comparison is automatic and flexible: it understands “200/12”, “two zero zero” or “RWY27”. If you wrote it another way and it's right, count it as right. It's only an aid, not a grade.</div></div>`;
+  if(it.after&&it.after.length)h+=`<div class="feedback-head ok" style="margin-top:8px"><div class="status">Model readback / call</div>${it.after.map(l=>`<div class="en-line"><span class="en-model"><b>${who(l.who)}:</b> ${esc(l.text)}</span>${enSayBtn(l.text,l.who)}</div>`).join("")}</div>`;
+  h+=`<div class="memory" style="margin-top:8px"><div class="label">Key takeaways</div>${enUl(it.notes||[])}</div>`;
+  h+=`<button class="btn ghost" onclick="retryEnglish()" style="width:100%;margin-top:10px" type="button">Try again (clears your notes)</button>`;
   return h;
 }
 function renderEnglishReveal(){
@@ -2294,7 +2294,7 @@ function renderEnglishReveal(){
   enSyncRate();
   $("epNextBtn").disabled=!shown;
   const lastItem=s.index===s.items.length-1,lastUnit=s.pos===s.total-1;
-  $("epNextBtn").textContent=lastItem&&lastUnit?"Terminar prueba":"Siguiente";
+  $("epNextBtn").textContent=lastItem&&lastUnit?"Finish test":"Next";
 }
 function revealEnglish(){
   if(!enSession||enSession.kind==="mcq")return;
@@ -2312,7 +2312,7 @@ function rateEnglish(v){
   appState.english[it.id]={r:v,a:finiteNum(prev.a)+1,last:Date.now()};
   saveState();
   enSyncRate();
-  toast(v===2?"Bien":v===1?"Casi · vuelve a intentarlo":"Marcada para repetir");
+  toast(v===2?"Good":v===1?"Almost · try again":"Marked to repeat");
 }
 /* Repetir el mismo audio desde cero: borra los apuntes, vuelve a ocultar la comparación y sortea otra voz. */
 function retryEnglish(){
@@ -2327,5 +2327,5 @@ function enSyncRate(){
   document.querySelectorAll("#epRateWrap .rate").forEach((b,k)=>b.classList.toggle("active",!!st&&st.rating===k));
 }
 const BANK_HEALTH=bankIntegrity();
-if(!BANK_HEALTH.ok)console.warn("A320 Trainer · integridad del banco",BANK_HEALTH);
+if(!BANK_HEALTH.ok)console.warn("A320 Trainer · bank integrity",BANK_HEALTH);
 renderHome();

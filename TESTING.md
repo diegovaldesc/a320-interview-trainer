@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~7 s con `OK 101/101 casos...` (código
+funciones y a su estado real. Termina en ~7 s con `OK 102/102 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -599,6 +599,12 @@ botón «Portada» para volver). Ningún módulo cambió.
   zona pasa de 5 estaciones por fondo, cada zona tiene un número impar de
   fondos con las copias pares al revés, la tormenta se alarga y las pistas no
   se repiten.
+- **RUTA-12** (2026-10-05, 1.15.0) — títulos de materias, estaciones y
+  fichas en inglés (ninguno empieza con artículo o palabra en español, ni
+  lleva tildes), y el texto de las clases en español neutro: sin «al tiro»,
+  «o sea», «recién», «apretar», «cañería», «estanque», «botar», «Ojo:»,
+  «harto», «nomás», «partimos por» ni «letra chica». Prueba de mutación: con
+  un título en español falló; con «al tiro» en una ficha, falló.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de
@@ -609,21 +615,23 @@ en el globo del mapa, falló RUTA-09; con las estaciones de pista corridas
 la regla de apertura antigua (solo por la anterior) o sin alargar las zonas,
 falló RUTA-11.
 
-## 15. «La PTU»: enunciados corregidos sin perder el progreso (QID-01)
+## 15. PTU: enunciados corregidos sin perder el progreso (QID-01)
 
-En la app se decía «el PTU»; lo correcto es **la PTU** (la unidad). Se corrigió
-en 35 textos del banco (con su concordancia: «inhibida», «activada»,
-«impulsada»), en
-Entrevista oral, en las clases y en sus diagramas. «El PTU pb» se mantiene:
+En la app se decía «el PTU»; el 2026-10-01 pasó a **la PTU** (la unidad), en
+35 textos del banco, en Entrevista oral, en las clases y en sus diagramas. El
+2026-10-05 Diego pidió decir **PTU**, sin artículo (sonaba poco neutro): se
+corrigió en el banco (enunciados, alternativas, explicaciones y referencias),
+en Entrevista oral, en las clases y en los diagramas. «El PTU pb» se mantiene:
 es el pushbutton.
 
-- Seis enunciados de Hidráulico cambiaron, y el id de una pregunta sale de su
-  enunciado. `QID_RENAMES` traslada al id nuevo lo que el usuario tenía en el
+- Seis enunciados de Hidráulico cambiaron el 2026-10-01 y cinco de ellos de
+  nuevo el 2026-10-05; el id de una pregunta sale de su enunciado. `QID_RENAMES` traslada al id nuevo lo que el usuario tenía en el
   id antiguo: estadísticas, guardadas, autoevaluación y Need to know (si ya
-  hay datos en el id nuevo, se conservan).
+  hay datos en el id nuevo, se conservan). El mapa tiene 11 ids antiguos:
+  los de las dos versiones anteriores apuntan directo al id actual.
 - **QID-01** comprueba el traslado de los cuatro registros, que los ids
   nuevos existan y los antiguos no, y que ningún texto del banco diga «el
-  PTU».
+  PTU» ni «la PTU» (desde 1.15.0 también revisa las referencias).
 
 ## 16. Banco DGAC: preguntas de controles de vuelo revisadas contra el manual (DGAC-02)
 

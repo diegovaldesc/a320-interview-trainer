@@ -29,7 +29,7 @@
   <text x="208" y="128" font-size="10" fill="#5B6B78">Se apaga al desconectarlo</text>
   <rect x="198" y="146" width="148" height="92" rx="8" fill="#FFFFFF" stroke="#C8473B" stroke-width="1.6"/>
   <text x="208" y="164" font-size="11" font-weight="700" fill="#A53A30">IDG pb (con guarda)</text>
-  <text x="208" y="180" font-size="10.5" fill="#1E2A33">• máximo 3 s apretado</text>
+  <text x="208" y="180" font-size="10.5" fill="#1E2A33">• máximo 3 s presionado</text>
   <text x="208" y="194" font-size="10.5" fill="#1E2A33">• solo con el motor girando</text>
   <text x="216" y="208" font-size="10.5" fill="#1E2A33">o en windmilling</text>
   <text x="208" y="222" font-size="10.5" fill="#1E2A33">• en vuelo no se reconecta</text>

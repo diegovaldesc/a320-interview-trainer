@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">El Yellow en tierra y las cargo doors</title>
-  <desc id="d">Con los motores apagados, la Yellow electric pump se enciende sola al mover el selector de una cargo door; sin electricidad se usa la hand pump. Mientras se opera la puerta y 40 segundos después, la PTU queda inhibida.</desc>
+  <desc id="d">Con los motores apagados, la Yellow electric pump se enciende sola al mover el selector de una cargo door; sin electricidad se usa la hand pump. Mientras se opera la puerta y 40 segundos después, PTU queda inhibida.</desc>
   <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
 
   <!-- línea Yellow -->

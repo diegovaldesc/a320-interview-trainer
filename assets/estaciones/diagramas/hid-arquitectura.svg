@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Arquitectura hidráulica del A320</title>
-  <desc id="d">Tres sistemas independientes: Green con la bomba del motor 1, Blue con una bomba eléctrica y el RAT, Yellow con la bomba del motor 2, una bomba eléctrica y una hand pump. La PTU une Green y Yellow.</desc>
+  <desc id="d">Tres sistemas independientes: Green con la bomba del motor 1, Blue con una bomba eléctrica y el RAT, Yellow con la bomba del motor 2, una bomba eléctrica y una hand pump. PTU une Green y Yellow.</desc>
   <rect x="1" y="1" width="358" height="328" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
 
   <!-- PTU: une Green y Yellow (pasa por detrás del Blue) -->
@@ -14,7 +14,7 @@
   <line x1="60" y1="50" x2="60" y2="262" stroke="#2E9D5B" stroke-width="6" stroke-linecap="round"/>
   <line x1="180" y1="50" x2="180" y2="262" stroke="#2F6FD6" stroke-width="6" stroke-linecap="round"/>
   <line x1="300" y1="50" x2="300" y2="262" stroke="#D99A00" stroke-width="6" stroke-linecap="round"/>
-  <!-- puente: el Blue cruza por encima de la línea de la PTU -->
+  <!-- puente: el Blue cruza por encima de la línea de PTU -->
   <rect x="172" y="72" width="16" height="12" fill="#FFFFFF"/>
   <line x1="180" y1="66" x2="180" y2="90" stroke="#2F6FD6" stroke-width="6"/>
 

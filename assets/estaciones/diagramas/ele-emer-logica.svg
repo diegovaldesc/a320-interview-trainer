@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 344" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">RAT y EMER GEN</title>
-  <desc id="d">Sin AC BUS 1 ni AC BUS 2 y sobre 100 kt, o con MAN ON, sale el RAT. El RAT presuriza el Blue, que mueve el motor hidráulico del EMER GEN. El EMER GEN alimenta AC ESS BUS y, por el ESS TR, DC ESS BUS.</desc>
+  <desc id="d">Sin AC BUS 1 ni AC BUS 2 y sobre 100 kt, o con MAN ON, se despliega el RAT. El RAT presuriza el Blue, que mueve el motor hidráulico del EMER GEN. El EMER GEN alimenta AC ESS BUS y, por el ESS TR, DC ESS BUS.</desc>
   <rect x="1" y="1" width="358" height="342" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
   <text x="16" y="34" font-size="10.5" fill="#1E2A33">AC BUS 1 sin energía</text>
   <text x="16" y="52" font-size="10.5" fill="#1E2A33">AC BUS 2 sin energía</text>
@@ -20,7 +20,7 @@
   <path d="M274 68 L266.8 64 L266.8 72 Z" fill="#5B6B78"/>
   <rect x="274" y="50" width="72" height="36" rx="8" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.6"/>
   <text x="310" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="#2F6FD6">RAT</text>
-  <text x="310" y="80" text-anchor="middle" font-size="10" fill="#33424D">sale y gira</text>
+  <text x="310" y="80" text-anchor="middle" font-size="10" fill="#33424D">se despliega</text>
   <path d="M310 86 L310 152" fill="none" stroke="#2F6FD6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="318" y="124" font-size="10.5" font-weight="700" fill="#2F6FD6">Blue</text>
   <rect x="196" y="140" width="150" height="66" rx="10" fill="none" stroke="#5B6B78" stroke-width="1.3" stroke-dasharray="4 3"/>
@@ -46,6 +46,6 @@
   <text x="150" y="248" font-size="10.5" fill="#1E2A33">Se acopla 3 s después de</text>
   <text x="150" y="262" font-size="10.5" fill="#1E2A33">que el RAT lo alimenta.</text>
   <rect x="14" y="292" width="332" height="40" rx="8" fill="#F3F5F7" stroke="#DDE3E8"/>
-  <text x="24" y="308" font-size="10.5" fill="#1E2A33">Mientras sale (unos 8 s), alimentan las baterías.</text>
+  <text x="24" y="308" font-size="10.5" fill="#1E2A33">Mientras se despliega (8 s), alimentan las baterías.</text>
   <text x="24" y="323" font-size="10.5" fill="#A53A30">Luz roja FAULT: el EMER GEN aún no alimenta.</text>
 </svg>

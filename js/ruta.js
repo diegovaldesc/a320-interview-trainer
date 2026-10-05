@@ -384,7 +384,7 @@
           h += '<div class="rt-fb ' + cls + '"><div class="rt-oral-score"><b>' + r.score.toFixed(r.score % 1 ? 1 : 0) + '/10</b><span class="rt-h" style="margin:0">' + grade(r.score) + '</span></div>' +
             (r.detected && r.detected.length ? '<p><strong>Lo que dijiste bien:</strong></p><ul>' + r.detected.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
             (r.missing && r.missing.length ? '<p style="margin-top:8px"><strong>Te faltó:</strong></p><ul>' + r.missing.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
-            (r.errors && r.errors.length ? '<p style="margin-top:8px"><strong>Ojo:</strong></p><ul>' + r.errors.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+            (r.errors && r.errors.length ? '<p style="margin-top:8px"><strong>Atención:</strong></p><ul>' + r.errors.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
             '<p class="rt-seen">Es una estimación por conceptos: compárala con la respuesta de referencia.</p></div>';
         }
         h += '<div class="rt-fb"><span class="rt-h">Respuesta de referencia</span><div class="rt-prose">' + prose(t.reference) + '</div>' + seenHtml(t) + '</div>';

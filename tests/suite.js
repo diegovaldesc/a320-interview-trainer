@@ -70,8 +70,8 @@
     var e=one(/^WHICH OF THE FOLLOWING STATEMENTS IS CORRECT CONCERNING THE ELEVATOR AILERON/);
     ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
   });
-  T("0 QID-01 al corregir un enunciado (la PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
-    var olds=Object.keys(QID_RENAMES);eq(olds.length,6,"enunciados corregidos");
+  T("0 QID-01 al corregir un enunciado (PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
+    var olds=Object.keys(QID_RENAMES);eq(olds.length,11,"ids antiguos (las dos versiones anteriores de los enunciados corregidos)");
     olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
     var o=olds[0],n=QID_RENAMES[o];
     var st={stats:{},bookmarks:{},oral:{},needToKnow:{added:["q:"+o],removed:["q:"+olds[1]]}};
@@ -84,7 +84,7 @@
     eq(r.needToKnow.removed.join(),"q:"+QID_RENAMES[olds[1]],"Need to know (quitadas) trasladado");
     var both={stats:{}};both.stats[o]={a:1,c:0,w:1,last:1,streak:0,lastResult:0};both.stats[n]={a:9,c:9,w:0,last:9,streak:9,lastResult:1};
     eq(roundTrip(both).stats[n].a,9,"si ya hay datos en el id nuevo, se conservan");
-    ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||""))}),"ningun texto dice el PTU");
+    ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b|\b[Ll]a PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||"")+" "+(q.cite||""))}),"ningun texto dice el PTU ni la PTU (se dice PTU, sin articulo)");
   });
   T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden y con la version actual",function(){
     var want=["css/app.css","css/ruta.css","data/banco.js","data/ingles.js","data/oral.js","data/estaciones.js","js/app.js","js/ruta.js"];
@@ -1551,7 +1551,7 @@
         else ok(ORAL_VOICE_BANK.some(function(o){return o.id===t.source.id}),"existe la oral "+t.source.id);
       });
     });
-    ok(!JSON.stringify(window.ESTACIONES_DATA).match(/\b(el|del|al) PTU\b(?! pb)/),"las clases dicen la PTU (el PTU pb es el pushbutton)");
+    ok(!JSON.stringify(window.ESTACIONES_DATA).match(/\b(el|del|al) PTU\b(?! pb)|\b[Ll]a PTU\b/),"las clases dicen PTU, sin articulo (el PTU pb es el pushbutton)");
   });
   T("14 RUTA-03 el avance de la ruta se sanea, viaja en el respaldo y un tipo invalido rechaza el respaldo",function(){
     var r=roundTrip({ruta:{stars:{"hid-1":3,"ele-2":2,"no-existe":3,"hid-2":7,"hid-3":"3"},streak:{last:"2026-10-01",days:4},unlockAll:true}});
@@ -1728,6 +1728,20 @@
     ok([].filter.call(cv.querySelectorAll(".rt-panel"),function(p){return p.dataset.zone==="tormenta"}).length>1,"la tormenta, con mas de 5 estaciones, se alarga");
     eq([].filter.call(cv.querySelectorAll(".rt-panel"),function(p){return p.dataset.zone==="pista"||p.dataset.zone==="llegada"}).length,2,"las pistas no se repiten");
     RUTA.showCover();
+  });
+
+  T("14 RUTA-12 materias, estaciones y fichas con titulo en ingles; el texto de las clases en espanol neutro, sin modismos",function(){
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});
+    var ES=/^(La|El|Los|Las|Un|Una|Cada|Qué|Cómo|Cuándo|Dónde|Quién|Para|Si|Con|Sin|En|Del|Tres|Dos|Cinco|Toda|Todo)\b|^[¿¡]|[áéíóúñ]/;
+    var titles=[];Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];titles.push([k,st.title]);st.cards.forEach(function(c){titles.push([c.id,c.title])})});
+    (window.ESTACIONES_DATA.subjects||[]).forEach(function(s){titles.push([s.id,s.title])});
+    var bad=titles.filter(function(p){return ES.test(p[1])});
+    eq(bad.length,0,"titulos en espanol: "+JSON.stringify(bad.slice(0,5)));
+    var REG=/\bal tiro\b|\bo sea\b|\brecién\b|\bapret[a-z]*|\bcañer[ií]a|\bestanque\b|\bbotar\b|\bOjo:|\bharto\b|\bnomás\b|\bpartimos por\b|\bletra chica\b/i;
+    var hits=[];Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];
+      [st.goal,st.intro].concat(st.cards.map(function(c){return [c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" ")})).forEach(function(s){var m=String(s).match(REG);if(m)hits.push(k+": "+m[0])});
+    });
+    eq(hits.length,0,"modismos en las clases: "+hits.slice(0,5).join(" | "));
   });
 
   /* ---------- Ejecucion ---------- */

@@ -4,8 +4,8 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.14.2";
-const BANK_VERSION="2026.10.02 · DGAC 573";
+const APP_VERSION="1.15.0";
+const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
 let RAW_SYSTEMS;
@@ -170,8 +170,9 @@ function sanitizeResume(r){
 }
 /* El id de una pregunta sale de su enunciado: al corregir un enunciado, su progreso pasa al id
    nuevo (estadísticas, guardadas, autoevaluación y Need to know).
-   2026-10-01: «el PTU» → «la PTU» en 6 preguntas de Hidráulico. */
-const QID_RENAMES={"hydraulic:1os0brc":"hydraulic:106iugc","hydraulic:1eznmr1":"hydraulic:wxjsp5","hydraulic:98eoy5":"hydraulic:1rx3pif","hydraulic:uvvyh":"hydraulic:yu9ict","hydraulic:1qfuvr9":"hydraulic:dhos2p","hydraulic:19f34k":"hydraulic:152269q"};
+   2026-10-01: «el PTU» → «la PTU» en 6 preguntas de Hidráulico.
+   2026-10-05: «la PTU» → «PTU», sin artículo, en 5 de ellas; los ids de ambas versiones anteriores apuntan directo al nuevo. */
+const QID_RENAMES={"hydraulic:1os0brc":"hydraulic:1tbt8ld","hydraulic:1eznmr1":"hydraulic:wxjsp5","hydraulic:98eoy5":"hydraulic:14jvqlm","hydraulic:uvvyh":"hydraulic:odnbls","hydraulic:1qfuvr9":"hydraulic:tnkbsc","hydraulic:19f34k":"hydraulic:1yk534j","hydraulic:106iugc":"hydraulic:1tbt8ld","hydraulic:1rx3pif":"hydraulic:14jvqlm","hydraulic:yu9ict":"hydraulic:odnbls","hydraulic:dhos2p":"hydraulic:tnkbsc","hydraulic:152269q":"hydraulic:1yk534j"};
 function renameQidKeys(map){
   Object.keys(QID_RENAMES).forEach(old=>{
     if(!(old in map))return;

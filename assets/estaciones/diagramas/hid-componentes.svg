@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Reservorio, acumulador y priority valve</title>
-  <desc id="d">El reservorio está presurizado con aire de bleed para que la bomba no cavite. La bomba genera la presión del sistema. El acumulador absorbe picos de demanda. Si la presión baja, la priority valve corta a los grandes consumidores para proteger los flight controls.</desc>
+  <desc id="d">El reservorio está presurizado con aire de bleed para que la bomba no cavite. La bomba genera la presión del sistema. El acumulador cubre los picos de demanda. Si la presión baja, la priority valve corta a los grandes consumidores para proteger los flight controls.</desc>
   <defs>
     <marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0 0 L10 5 L0 10 z" fill="#5B6B78"/>
@@ -32,12 +32,12 @@
   <circle cx="132" cy="176" r="18" fill="#EAF1F6" stroke="#3D6B8C" stroke-width="2"/>
   <line x1="116" y1="176" x2="148" y2="176" stroke="#3D6B8C" stroke-width="1.5" stroke-dasharray="3 2"/>
   <text x="132" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1E2A33">Acumulador</text>
-  <text x="132" y="151" text-anchor="middle" font-size="10.5" fill="#33424D">absorbe picos</text>
+  <text x="132" y="151" text-anchor="middle" font-size="10.5" fill="#33424D">cubre picos</text>
 
   <!-- flight controls -->
   <rect x="246" y="36" width="104" height="40" rx="9" fill="#FFFFFF" stroke="#1E2A33" stroke-width="2"/>
   <text x="298" y="53" text-anchor="middle" font-size="12" font-weight="700" fill="#1E2A33">Flight controls</text>
-  <text x="298" y="67" text-anchor="middle" font-size="10" fill="#33424D">siempre protegidos</text>
+  <text x="298" y="67" text-anchor="middle" font-size="10" fill="#33424D">tienen prioridad</text>
 
   <!-- priority valve y gran consumo -->
   <path d="M201 104 L201 128 L219 116 Z M237 104 L237 128 L219 116 Z" fill="#FFFFFF" stroke="#C0392B" stroke-width="2" stroke-linejoin="round"/>

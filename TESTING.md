@@ -611,7 +611,8 @@ botón «Portada» para volver). Ningún módulo cambió.
 - **RUTA-12** (2026-10-05, 1.15.0) — títulos de materias, estaciones y
   fichas en inglés (ninguno empieza con artículo o palabra en español, ni
   lleva tildes), y el texto de las clases en español neutro: sin «al tiro»,
-  «o sea», «recién», «apretar», «cañería», «estanque», «botar», «Ojo:»,
+  «o sea», «recién», «apretar», «cañería», «estanque», «botar» (y desde la
+  1.21.0 también «bota» y «botan»), «Ojo:»,
   «harto», «nomás», «partimos por» ni «letra chica». Prueba de mutación: con
   un título en español falló; con «al tiro» en una ficha, falló.
 - **UI-01** (2026-10-05, 1.16.0) — la interfaz está en inglés (menús, botones,
@@ -687,6 +688,23 @@ botón «Portada» para volver). Ningún módulo cambió.
   falló. La letra mínima de 10 px de los dibujos no se prueba aquí (la copia de
   prueba no carga imágenes): la revisa `construir.js`, que no escribe nada si
   un dibujo en uso tiene un texto más chico.
+- **REG-12** (2026-10-06, 1.21.0) — auditoría de las 54 estaciones contra el
+  FCOM, el FCTM y Getting to Grips (pedido de Diego: «he encontrado muchos
+  errores»). Lo que estaba mal o impreciso: el flare de normal law («hay que
+  hacer un flare suave»; en realidad desde 30 ft el sistema baja la nariz y
+  hay que tirar suavemente), el reset del pitch trim (no al tocar la rueda de
+  nariz, sino con el pitch bajo 2,5° por más de 5 s), la media velocidad de
+  flaps y slats (sin un hidráulico, solo lo que usa ese sistema), los wing
+  tip brakes (bloquean los flaps o los slats, en las dos alas, y el otro
+  sistema sigue), el aterrizaje con tren anormal (nunca autobrake; con el
+  nose gear anormal tampoco reversa), el RTO sin el aviso a ATC, la oral de
+  viento de cola («se calcula con el viento real»: el cálculo cuenta el 150%)
+  y explicaciones del banco (PTU como «una bomba movida por otra bomba», el
+  RAT sin los 100 kt, los wing tip brakes, el reset del THS y otras). La
+  prueba revisa las fichas, la oral y el banco. RUTA-12 rechaza además
+  «bota», «botan» y «botar». Pruebas de mutación: con «hacer un flare suave»
+  de vuelta, con los wing tip brakes en «solo las superficies afectadas» y
+  con «botan la sustentación», fallaron.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

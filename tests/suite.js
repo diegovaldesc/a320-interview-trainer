@@ -1748,7 +1748,7 @@
     (window.ESTACIONES_DATA.subjects||[]).forEach(function(s){titles.push([s.id,s.title])});
     var bad=titles.filter(function(p){return ES.test(p[1])});
     eq(bad.length,0,"titulos en espanol: "+JSON.stringify(bad.slice(0,5)));
-    var REG=/\bal tiro\b|\bo sea\b|\brecién\b|\bapret[a-z]*|\bcañer[ií]a|\bestanque\b|\bbotar\b|\bOjo:|\bharto\b|\bnomás\b|\bpartimos por\b|\bletra chica\b/i;
+    var REG=/\bal tiro\b|\bo sea\b|\brecién\b|\bapret[a-z]*|\bcañer[ií]a|\bestanque\b|\bbota[nr]?\b|\bOjo:|\bharto\b|\bnomás\b|\bpartimos por\b|\bletra chica\b/i;
     var hits=[];Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];
       [st.goal,st.intro].concat(st.cards.map(function(c){return [c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" ")})).forEach(function(s){var m=String(s).match(REG);if(m)hits.push(k+": "+m[0])});
     });
@@ -1876,6 +1876,27 @@
     })});
     eq(sinAlt.length,0,"dibujos sin descripcion: "+sinAlt.join(", "));
     eq(viejo.length,0,"todavia se usa el dibujo que mezclaba tren y frenos: "+viejo.join(", "));
+  });
+  T("15 REG-12 auditoria de las clases contra el FCOM (1.21.0): flare, reset del trim, media velocidad de flaps y slats, wing tip brakes, tren anormal, RTO con ATC, viento de cola al 150% y explicaciones del banco",function(){
+    var fm=rtCard("ctl-4","Ground and flare modes").body;
+    ok(/tirar suavemente del sidestick/.test(fm)&&!/hacer un flare suave/.test(fm),"flare: hay que tirar suavemente del sidestick");
+    ok(/2,5° por más de 5 segundos/.test(fm),"reset del trim: con el pitch bajo 2,5° por mas de 5 s");
+    var rl=rtCard("ctl-repaso","On landing").body;
+    ok(/tirando suavemente/.test(rl)&&/2,5°/.test(rl),"repaso: el flare y el reset del trim");
+    ok(/solo van a media velocidad las superficies que usan ese sistema/.test(rtCard("ctl-9","Two SFCCs working together").body),"sin un hidraulico, solo va a media velocidad lo que usa ese sistema");
+    var wtb=rtCard("ctl-9","High-lift protections").body;
+    ok(/solo el sistema afectado\*\*, en las dos alas/.test(wtb)&&/El otro sigue funcionando/.test(wtb),"wing tip brakes: el sistema afectado, en las dos alas, y el otro sigue");
+    var ab=rtCard("tren-9","Landing with abnormal gear").body;
+    ok(/\*\*Sin autobrake\*\*/.test(ab)&&/nose gear anormal: sin reversa/.test(ab),"tren anormal: nunca autobrake; con el nose gear, sin reversa");
+    ok(/avisa a ATC/.test(rtCard("perf-5","Flying the RTO").body),"RTO: el F/O avisa a ATC");
+    ok(!/no depende de un motor/.test(rtCard("hid-1","What pressurizes each system").body),"la bomba del Blue usa la energia AC del avion");
+    var tw=ORAL_VOICE_BANK.find(function(q){return q.id==="ov_tailwind_takeoff"});
+    ok(tw&&/150%/.test(tw.reference)&&!/se calcula con el viento real\./.test(tw.reference),"oral de viento de cola: el calculo cuenta el 150%");
+    function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    ok(!/bomba hidráulica movida por otra bomba/.test(bq("hydraulic","¿Qué es correcto sobre la Power Transfer Unit").expl),"PTU: un motor y una bomba, no dos bombas");
+    ok(/100 kt/.test(bq("hydraulic","¿Qué condición provoca el despliegue automático del RAT").expl),"RAT automatico: sobre 100 kt");
+    ok(/en las dos alas/.test(bq(DGAC_KEY,"THE WING TIP BRAKES, ONCE ACTIVATED").expl),"wing tip brakes en el banco");
+    ok(/2,5°/.test(bq(DGAC_KEY,"HORIZONTAL STABILIZER TRIM AUTOMATICALLY RESETS").expl),"reset del THS en el banco");
   });
 
   /* ---------- Ejecucion ---------- */

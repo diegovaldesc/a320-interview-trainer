@@ -1,70 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 344" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Pitch y yaw: quién mueve cada superficie</title>
-  <desc id="d">Elevator izquierdo con actuadores Blue y Green, elevator derecho con Yellow y Blue. El THS lo mueven dos motores hidráulicos, Green y Yellow, mandados por tres motores eléctricos o por el pitch trim wheel, que es mecánico. Computadores del pitch en orden: ELAC 2, ELAC 1, SEC 1 o SEC 2. El rudder tiene tres servojacks, Green, Blue y Yellow; los pedales lo mueven mecánicamente y los FAC mandan el yaw damper, el rudder trim y el travel limit.</desc>
-  <rect x="1" y="1" width="358" height="342" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <defs><marker id="a1E2A33" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1E2A33"/></marker></defs>
-  <text x="18" y="24" font-size="11" font-weight="800" fill="#0E7C86">PITCH</text>
-  <rect x="18" y="38" width="92" height="52" rx="8" fill="#DDF0F1" stroke="#0E7C86" stroke-width="1.6"/>
-  <text x="64" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#1E2A33">Elevator L</text>
-  <rect x="44" y="64" width="15" height="15" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
-  <text x="51.5" y="75.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FD6">B</text>
-  <rect x="69" y="64" width="15" height="15" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
-  <text x="76.5" y="75.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2E9D5B">G</text>
-  <rect x="250" y="38" width="92" height="52" rx="8" fill="#DDF0F1" stroke="#0E7C86" stroke-width="1.6"/>
-  <text x="296" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#1E2A33">Elevator R</text>
-  <rect x="276" y="64" width="15" height="15" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="283.5" y="75.3" text-anchor="middle" font-size="10" font-weight="700" fill="#D99A00">Y</text>
-  <rect x="301" y="64" width="15" height="15" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
-  <text x="308.5" y="75.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FD6">B</text>
-  <rect x="124" y="38" width="112" height="92" rx="8" fill="#FFFFFF" stroke="#0E7C86" stroke-width="1.6"/>
-  <text x="180" y="54" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0E7C86">THS</text>
-  <text x="180" y="68" text-anchor="middle" font-size="9" fill="#5B6B78">motores hidráulicos</text>
-  <rect x="156" y="72" width="15" height="15" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
-  <text x="163.5" y="83.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2E9D5B">G</text>
-  <rect x="189" y="72" width="15" height="15" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="196.5" y="83.3" text-anchor="middle" font-size="10" font-weight="700" fill="#D99A00">Y</text>
-  <text x="180" y="100" text-anchor="middle" font-size="9" fill="#5B6B78">motores eléctricos 1 · 2 · 3</text>
-  <text x="180" y="117" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">pitch trim wheel: mecánico</text>
-  <text x="180" y="152" text-anchor="middle" font-size="9.5" fill="#5B6B78">Computadores, en orden de prioridad</text>
-  <rect x="40" y="160" width="72" height="26" rx="6" fill="#DDF0F1" stroke="#0E7C86" stroke-width="1.4"/>
-  <text x="76" y="177" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1E2A33">ELAC 2</text>
-  <rect x="140" y="160" width="72" height="26" rx="6" fill="#FFFFFF" stroke="#0E7C86" stroke-width="1.4"/>
-  <text x="176" y="177" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1E2A33">ELAC 1</text>
-  <rect x="230" y="160" width="92" height="26" rx="6" fill="#FFFFFF" stroke="#0E7C86" stroke-width="1.4"/>
-  <text x="276" y="177" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1E2A33">SEC 1 o SEC 2</text>
-  <line x1="114" y1="173" x2="136" y2="173" stroke="#1E2A33" stroke-width="1.2" marker-end="url(#a1E2A33)"/>
-  <line x1="214" y1="173" x2="226" y2="173" stroke="#1E2A33" stroke-width="1.2" marker-end="url(#a1E2A33)"/>
-  <text x="180" y="202" text-anchor="middle" font-size="9" fill="#5B6B78">Si falla el ELAC 2, pasa al ELAC 1 (con los jacks Blue y el motor eléctrico 2).</text>
-  <line x1="18" y1="216" x2="342" y2="216" stroke="#E4EAEF" stroke-width="1"/>
-  <text x="18" y="238" font-size="11" font-weight="800" fill="#D9822B">YAW</text>
-  <rect x="124" y="248" width="112" height="62" rx="8" fill="#FBEBDC" stroke="#D9822B" stroke-width="1.6"/>
-  <text x="180" y="266" text-anchor="middle" font-size="11.5" font-weight="800" fill="#D9822B">Rudder</text>
-  <text x="180" y="280" text-anchor="middle" font-size="9" fill="#5B6B78">3 servojacks</text>
-  <rect x="149" y="286" width="15" height="15" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
-  <text x="156.5" y="297.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2E9D5B">G</text>
-  <rect x="172" y="286" width="15" height="15" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
-  <text x="179.5" y="297.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FD6">B</text>
-  <rect x="195" y="286" width="15" height="15" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="202.5" y="297.3" text-anchor="middle" font-size="10" font-weight="700" fill="#D99A00">Y</text>
-  <rect x="18" y="250" width="92" height="58" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
-  <text x="64" y="268" text-anchor="middle" font-size="11" font-weight="700" fill="#1E2A33">Pedales</text>
-  <text x="64" y="283" text-anchor="middle" font-size="9.5" fill="#5B6B78">mando mecánico</text>
-  <text x="64" y="297" text-anchor="middle" font-size="9" fill="#5B6B78">(unidos entre sí)</text>
-  <line x1="110" y1="279" x2="120" y2="279" stroke="#1E2A33" stroke-width="1.2" marker-end="url(#a1E2A33)"/>
-  <rect x="250" y="250" width="92" height="58" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
-  <text x="296" y="266" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1E2A33">FAC 1 (FAC 2)</text>
-  <text x="296" y="280" text-anchor="middle" font-size="9.5" fill="#5B6B78">yaw damper</text>
-  <text x="296" y="292" text-anchor="middle" font-size="9.5" fill="#5B6B78">rudder trim</text>
-  <text x="296" y="304" text-anchor="middle" font-size="9.5" fill="#5B6B78">travel limit</text>
-  <line x1="250" y1="279" x2="240" y2="279" stroke="#1E2A33" stroke-width="1.2" marker-end="url(#a1E2A33)"/>
-  <rect x="18" y="322" width="13" height="13" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
-  <text x="24.5" y="332.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="36" y="332" font-size="10" fill="#1E2A33">Green</text>
-  <rect x="80" y="322" width="13" height="13" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
-  <text x="86.5" y="332.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FD6">B</text>
-  <text x="98" y="332" font-size="10" fill="#1E2A33">Blue</text>
-  <rect x="136" y="322" width="13" height="13" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="142.5" y="332.3" text-anchor="middle" font-size="10" font-weight="700" fill="#D99A00">Y</text>
-  <text x="154" y="332" font-size="10" fill="#1E2A33">Yellow</text>
-  <text x="342" y="332" text-anchor="end" font-size="9" fill="#5B6B78">cada casilla: un actuador y su hidráulico</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 348" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Quién mueve el pitch</title>
+  <desc id="d">Elevator izquierdo con dos actuadores, Blue y Green; elevator derecho con Yellow y Blue. El THS lo mueven dos motores hidráulicos, Green y Yellow, mandados por tres motores eléctricos o por el trim wheel. Manda un computador a la vez: en normal el ELAC 2, con los jacks Green a la izquierda y Yellow a la derecha y el motor 1 del THS; si falla, el ELAC 1, con los jacks Blue y el motor 2; sin ELAC, el SEC 1 o el SEC 2, con el motor 2 o el 3. El otro jack de cada elevator acompaña en damping.</desc>
+  <rect x="1" y="1" width="358" height="346" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Quién mueve el pitch</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Dos elevators y el THS; manda un computador a la vez.</text>
+  <rect x="18" y="56" width="100" height="86" rx="8" fill="#DDF0F1" stroke="#0E7C86" stroke-width="1.6"/>
+  <text x="68" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Elevator izq.</text>
+  <rect x="48" y="86" width="16" height="16" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="56" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <rect x="72" y="86" width="16" height="16" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="80" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="68" y="124" text-anchor="middle" font-size="10" fill="#5B6B78">2 actuadores</text>
+  <rect x="242" y="56" width="100" height="86" rx="8" fill="#DDF0F1" stroke="#0E7C86" stroke-width="1.6"/>
+  <text x="292" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Elevator der.</text>
+  <rect x="272" y="86" width="16" height="16" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="280" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <rect x="296" y="86" width="16" height="16" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="304" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="292" y="124" text-anchor="middle" font-size="10" fill="#5B6B78">2 actuadores</text>
+  <rect x="128" y="56" width="104" height="86" rx="8" fill="#FFFFFF" stroke="#0E7C86" stroke-width="1.6"/>
+  <text x="180" y="74" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0E7C86">THS</text>
+  <rect x="154" y="80" width="16" height="16" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="162" y="92" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <rect x="190" y="80" width="16" height="16" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="198" y="92" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <text x="180" y="110" text-anchor="middle" font-size="10" fill="#5B6B78">3 motores eléctricos</text>
+  <text x="180" y="126" text-anchor="middle" font-size="10" fill="#5B6B78">y trim wheel</text>
+  <text x="18" y="172" font-size="10" font-weight="800" fill="#5B6B78">Manda</text>
+  <text x="140" y="172" font-size="10" font-weight="800" fill="#5B6B78">Jacks de elevators</text>
+  <text x="266" y="172" font-size="10" font-weight="800" fill="#5B6B78">Motor del THS</text>
+  <line x1="18" y1="180" x2="342" y2="180" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="18" y="197" font-size="11" font-weight="800" fill="#0E7C86">1 · ELAC 2</text>
+  <text x="32" y="211" font-size="10" fill="#5B6B78">normal</text>
+  <rect x="140" y="191" width="16" height="16" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="148" y="203" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="160" y="203" font-size="10.5" fill="#33424D">izq.</text>
+  <rect x="192" y="191" width="16" height="16" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="200" y="203" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <text x="212" y="203" font-size="10.5" fill="#33424D">der.</text>
+  <text x="266" y="203" font-size="10.5" font-weight="700" fill="#1E2A33">motor 1</text>
+  <line x1="18" y1="218" x2="342" y2="218" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="18" y="235" font-size="11" font-weight="800" fill="#1E2A33">2 · ELAC 1</text>
+  <text x="32" y="249" font-size="10" fill="#5B6B78">si falla ELAC 2</text>
+  <rect x="140" y="229" width="16" height="16" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="148" y="241" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="160" y="241" font-size="10.5" fill="#33424D">los dos</text>
+  <text x="266" y="241" font-size="10.5" font-weight="700" fill="#1E2A33">motor 2</text>
+  <line x1="18" y1="256" x2="342" y2="256" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="18" y="273" font-size="11" font-weight="800" fill="#1E2A33">3 · SEC 1 o 2</text>
+  <text x="32" y="287" font-size="10" fill="#5B6B78">sin ELAC</text>
+  <text x="140" y="279" font-size="10.5" fill="#33424D">según la falla</text>
+  <text x="266" y="279" font-size="10.5" font-weight="700" fill="#1E2A33">motor 2 o 3</text>
+  <line x1="18" y1="294" x2="342" y2="294" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="18" y="312" font-size="10.5" fill="#33424D">El otro jack de cada elevator acompaña en damping.</text>
+  <rect x="18" y="322" width="14" height="14" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="25" y="333" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="37" y="334" font-size="10.5" fill="#1E2A33">Green</text>
+  <rect x="84" y="322" width="14" height="14" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="91" y="333" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="103" y="334" font-size="10.5" fill="#1E2A33">Blue</text>
+  <rect x="144" y="322" width="14" height="14" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="151" y="333" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <text x="163" y="334" font-size="10.5" fill="#1E2A33">Yellow</text>
 </svg>

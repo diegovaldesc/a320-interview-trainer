@@ -1,36 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 334" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Leyes de flight controls</title>
-  <desc id="d">Normal law: pitch pide g con trim automático, roll pide roll rate, todas las protecciones y alpha floor. Alternate law: pitch pide g con protecciones reducidas, roll directo, solo yaw damper, sin alpha floor, máximo 320 kt y direct law con el tren abajo. Direct law: el sidestick mueve las superficies, sin protecciones y con trim manual. Mechanical backup: pitch con el pitch trim wheel y control lateral con los pedales.</desc>
-  <rect x="1" y="1" width="358" height="332" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 418" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Las leyes de flight controls</title>
+  <desc id="d">Normal law: pitch pide g con trim automático, roll pide roll rate, turn coordination, todas las protecciones y alpha floor. Alternate law: pitch pide g con protecciones reducidas, roll directo, solo yaw damper, sin alpha floor, 320 kt y direct law con el tren abajo. Direct law: el sidestick mueve las superficies, sin protecciones y con trim manual; yaw con los pedales. Mechanical backup: pitch con el pitch trim wheel y control lateral con los pedales; MAN PITCH TRIM ONLY en rojo.</desc>
+  <rect x="1" y="1" width="358" height="416" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
   <defs><marker id="a5B6B78" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5B6B78"/></marker></defs>
-  <rect x="18" y="16" width="290" height="66" rx="10" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.8"/>
-  <text x="30" y="34" font-size="11.5" font-weight="800" fill="#2E9D5B">NORMAL LAW</text>
-  <text x="30" y="50" font-size="9.8" fill="#33424D">Pitch: pide g, trim automático</text>
-  <text x="30" y="63" font-size="9.8" fill="#33424D">Roll: pide roll rate · Yaw: turn coordination</text>
-  <text x="30" y="76" font-size="9.8" fill="#33424D">Todas las protecciones y alpha floor</text>
-  <line x1="321" y1="46" x2="339" y2="46" stroke="#2E9D5B" stroke-width="2.6"/>
-  <line x1="321" y1="52" x2="339" y2="52" stroke="#2E9D5B" stroke-width="2.6"/>
-  <line x1="160" y1="83" x2="160" y2="94" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
-  <rect x="18" y="96" width="290" height="66" rx="10" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.8"/>
-  <text x="30" y="114" font-size="11.5" font-weight="800" fill="#8A5300">ALTERNATE LAW</text>
-  <text x="30" y="130" font-size="9.8" fill="#33424D">Pitch: pide g, protecciones reducidas</text>
-  <text x="30" y="143" font-size="9.8" fill="#33424D">Roll directo · Yaw: solo yaw damper</text>
-  <text x="30" y="156" font-size="9.8" fill="#33424D">Sin alpha floor · máx. 320 kt · tren abajo: direct</text>
-  <line x1="323" y1="122" x2="337" y2="136" stroke="#D98A00" stroke-width="2.6"/>
-  <line x1="323" y1="136" x2="337" y2="122" stroke="#D98A00" stroke-width="2.6"/>
-  <line x1="160" y1="163" x2="160" y2="174" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
-  <rect x="18" y="176" width="290" height="66" rx="10" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.8"/>
-  <text x="30" y="194" font-size="11.5" font-weight="800" fill="#8A5300">DIRECT LAW</text>
-  <text x="30" y="210" font-size="9.8" fill="#33424D">El sidestick mueve las superficies</text>
-  <text x="30" y="223" font-size="9.8" fill="#33424D">Sin protecciones · USE MAN PITCH TRIM</text>
-  <text x="30" y="236" font-size="9.8" fill="#33424D">Yaw con los pedales</text>
-  <line x1="323" y1="202" x2="337" y2="216" stroke="#D98A00" stroke-width="2.6"/>
-  <line x1="323" y1="216" x2="337" y2="202" stroke="#D98A00" stroke-width="2.6"/>
-  <line x1="160" y1="243" x2="160" y2="254" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
-  <rect x="18" y="256" width="290" height="66" rx="10" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.8"/>
-  <text x="30" y="274" font-size="11.5" font-weight="800" fill="#C0392B">MECHANICAL BACKUP</text>
-  <text x="30" y="290" font-size="9.8" fill="#33424D">Pitch: pitch trim wheel (THS)</text>
-  <text x="30" y="303" font-size="9.8" fill="#33424D">Lateral: pedales del rudder</text>
-  <text x="30" y="316" font-size="9.8" fill="#33424D">MAN PITCH TRIM ONLY en rojo</text>
-  <text x="330" y="12" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5B6B78">PFD</text>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Las leyes de flight controls</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Cada falla baja un escalón.</text>
+  <text x="328" y="62" text-anchor="middle" font-size="10" font-weight="800" fill="#5B6B78">PFD</text>
+  <rect x="18" y="70" width="290" height="74" rx="10" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.8"/>
+  <text x="30" y="89" font-size="11.5" font-weight="800" fill="#2E9D5B">NORMAL LAW</text>
+  <text x="30" y="106" font-size="10.5" fill="#33424D">Pitch: pide g, trim automático</text>
+  <text x="30" y="120" font-size="10.5" fill="#33424D">Roll: pide roll rate · Yaw: turn coordination</text>
+  <text x="30" y="134" font-size="10.5" fill="#33424D">Todas las protecciones y alpha floor</text>
+  <line x1="319" y1="103" x2="337" y2="103" stroke="#2E9D5B" stroke-width="2.6"/>
+  <line x1="319" y1="109" x2="337" y2="109" stroke="#2E9D5B" stroke-width="2.6"/>
+  <line x1="160" y1="145" x2="160" y2="154" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
+  <rect x="18" y="156" width="290" height="74" rx="10" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.8"/>
+  <text x="30" y="175" font-size="11.5" font-weight="800" fill="#8A5300">ALTERNATE LAW</text>
+  <text x="30" y="192" font-size="10.5" fill="#33424D">Pitch: pide g, protecciones reducidas</text>
+  <text x="30" y="206" font-size="10.5" fill="#33424D">Roll directo · Yaw: solo yaw damper</text>
+  <text x="30" y="220" font-size="10.5" fill="#33424D">Sin alpha floor · máx. 320 kt · tren abajo: direct</text>
+  <line x1="321" y1="185" x2="335" y2="199" stroke="#D98A00" stroke-width="2.6"/>
+  <line x1="321" y1="199" x2="335" y2="185" stroke="#D98A00" stroke-width="2.6"/>
+  <line x1="160" y1="231" x2="160" y2="240" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
+  <rect x="18" y="242" width="290" height="74" rx="10" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.8"/>
+  <text x="30" y="261" font-size="11.5" font-weight="800" fill="#8A5300">DIRECT LAW</text>
+  <text x="30" y="278" font-size="10.5" fill="#33424D">El sidestick mueve las superficies</text>
+  <text x="30" y="292" font-size="10.5" fill="#33424D">Sin protecciones · USE MAN PITCH TRIM</text>
+  <text x="30" y="306" font-size="10.5" fill="#33424D">Yaw con los pedales</text>
+  <line x1="321" y1="271" x2="335" y2="285" stroke="#D98A00" stroke-width="2.6"/>
+  <line x1="321" y1="285" x2="335" y2="271" stroke="#D98A00" stroke-width="2.6"/>
+  <line x1="160" y1="317" x2="160" y2="326" stroke="#5B6B78" stroke-width="1.4" marker-end="url(#a5B6B78)"/>
+  <rect x="18" y="328" width="290" height="74" rx="10" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.8"/>
+  <text x="30" y="347" font-size="11.5" font-weight="800" fill="#C0392B">MECHANICAL BACKUP</text>
+  <text x="30" y="364" font-size="10.5" fill="#33424D">Pitch: pitch trim wheel (THS)</text>
+  <text x="30" y="378" font-size="10.5" fill="#33424D">Lateral: pedales del rudder</text>
+  <text x="30" y="392" font-size="10.5" fill="#33424D">MAN PITCH TRIM ONLY en rojo</text>
 </svg>

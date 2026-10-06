@@ -1,72 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 232" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 310" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Roll y spoilers: hidráulico y computador de cada superficie</title>
-  <desc id="d">Spoilers 1 a 5 de cada ala: 1 Green con el SEC 3, 2 Yellow con el SEC 3, 3 Blue con el SEC 1, 4 Yellow con el SEC 1 y 5 Green con el SEC 2. Ailerons con dos actuadores, Blue y Green, mandados por el ELAC 1 y de respaldo el ELAC 2. Roll: spoilers 2 a 5 y aileron; speed brakes: 2, 3 y 4; ground spoilers: 1 a 5.</desc>
-  <rect x="1" y="1" width="358" height="230" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <polygon points="194,82 346,98 346,142 194,146" fill="#FFFFFF" stroke="#1E2A33" stroke-width="1.3" stroke-linejoin="round"/>
-  <polygon points="166,82 14,98 14,142 166,146" fill="#FFFFFF" stroke="#1E2A33" stroke-width="1.3" stroke-linejoin="round"/>
-  <rect x="168" y="70" width="24" height="90" rx="10" fill="#FFFFFF" stroke="#1E2A33" stroke-width="1.3"/>
-  <rect x="200" y="100" width="22" height="26" rx="4" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
-  <text x="211" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">1</text>
-  <text x="211" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="211" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 3</text>
-  <rect x="225" y="100" width="22" height="26" rx="4" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
-  <text x="236" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">2</text>
-  <text x="236" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#D99A00">Y</text>
-  <text x="236" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 3</text>
-  <rect x="250" y="100" width="22" height="26" rx="4" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.6"/>
-  <text x="261" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">3</text>
-  <text x="261" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2F6FD6">B</text>
-  <text x="261" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 1</text>
-  <rect x="275" y="100" width="22" height="26" rx="4" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
-  <text x="286" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">4</text>
-  <text x="286" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#D99A00">Y</text>
-  <text x="286" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 1</text>
-  <rect x="300" y="100" width="22" height="26" rx="4" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
-  <text x="311" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">5</text>
-  <text x="311" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="311" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 2</text>
-  <rect x="138" y="100" width="22" height="26" rx="4" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
-  <text x="149" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">1</text>
-  <text x="149" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="149" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 3</text>
-  <rect x="113" y="100" width="22" height="26" rx="4" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
-  <text x="124" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">2</text>
-  <text x="124" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#D99A00">Y</text>
-  <text x="124" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 3</text>
-  <rect x="88" y="100" width="22" height="26" rx="4" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.6"/>
-  <text x="99" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">3</text>
-  <text x="99" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2F6FD6">B</text>
-  <text x="99" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 1</text>
-  <rect x="63" y="100" width="22" height="26" rx="4" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
-  <text x="74" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">4</text>
-  <text x="74" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#D99A00">Y</text>
-  <text x="74" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 1</text>
-  <rect x="38" y="100" width="22" height="26" rx="4" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
-  <text x="49" y="111" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">5</text>
-  <text x="49" y="122" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="49" y="140" text-anchor="middle" font-size="8" fill="#5B6B78">SEC 2</text>
-  <rect x="326" y="96" width="16" height="34" rx="4" fill="#ECE6F8" stroke="#6D4BC2" stroke-width="1.6"/>
-  <text x="334" y="109" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="334" y="123" text-anchor="middle" font-size="9" font-weight="700" fill="#2F6FD6">B</text>
-  <rect x="18" y="96" width="16" height="34" rx="4" fill="#ECE6F8" stroke="#6D4BC2" stroke-width="1.6"/>
-  <text x="26" y="109" text-anchor="middle" font-size="9" font-weight="700" fill="#2F6FD6">B</text>
-  <text x="26" y="123" text-anchor="middle" font-size="9" font-weight="700" fill="#2E9D5B">G</text>
-  <path d="M200 78 V72 H322 V78" fill="none" stroke="#33424D" stroke-width="1.5"/>
-  <text x="261" y="68" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">Ground spoilers: 1 a 5</text>
-  <path d="M225 58 V52 H346 V58" fill="none" stroke="#6D4BC2" stroke-width="1.5"/>
-  <text x="285.5" y="48" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6D4BC2">Roll: 2 a 5 + aileron</text>
-  <path d="M225 38 V32 H297 V38" fill="none" stroke="#0E7C86" stroke-width="1.5"/>
-  <text x="261" y="28" text-anchor="middle" font-size="9.5" font-weight="700" fill="#0E7C86">Speed brakes: 2, 3 y 4</text>
-  <text x="18" y="178" font-size="10" fill="#33424D">Ailerons: ELAC 1 (de respaldo, ELAC 2). Sin ELAC, quedan en damping.</text>
-  <text x="18" y="194" font-size="10" fill="#33424D">Spoilers: un solo servojack y un solo SEC cada uno; si su SEC falla, se retraen.</text>
-  <rect x="18" y="208" width="13" height="13" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
-  <text x="24.5" y="218.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2E9D5B">G</text>
-  <text x="36" y="218" font-size="10" fill="#1E2A33">Green</text>
-  <rect x="80" y="208" width="13" height="13" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
-  <text x="86.5" y="218.3" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FD6">B</text>
-  <text x="98" y="218" font-size="10" fill="#1E2A33">Blue</text>
-  <rect x="136" y="208" width="13" height="13" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="142.5" y="218.3" text-anchor="middle" font-size="10" font-weight="700" fill="#D99A00">Y</text>
-  <text x="154" y="218" font-size="10" fill="#1E2A33">Yellow</text>
-  <text x="342" y="218" text-anchor="end" font-size="9" fill="#5B6B78">las dos alas son iguales</text>
+  <desc id="d">Ala derecha vista desde arriba; la izquierda es igual. Spoilers 1 a 5: 1 Green con el SEC 3, 2 Yellow con el SEC 3, 3 Blue con el SEC 1, 4 Yellow con el SEC 1 y 5 Green con el SEC 2. Por fuera, el aileron, con dos servojacks Green y Blue, mandado por el ELAC 1 y de respaldo el ELAC 2. Speed brakes: spoilers 2, 3 y 4; roll: spoilers 2 a 5 y el aileron; ground spoilers: 1 a 5. Si el SEC de un spoiler falla, ese spoiler se retrae.</desc>
+  <rect x="1" y="1" width="358" height="308" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Roll y spoilers</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Ala derecha vista desde arriba; la izquierda es igual.</text>
+  <rect x="14" y="110" width="22" height="116" rx="10" fill="#FFFFFF" stroke="#1E2A33" stroke-width="1.3"/>
+  <polygon points="36,116 346,130 346,210 36,218" fill="#FFFFFF" stroke="#1E2A33" stroke-width="1.3" stroke-linejoin="round"/>
+  <rect x="40" y="140" width="42" height="40" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="61" y="157" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1E2A33">1</text>
+  <text x="61" y="173" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="61" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">SEC 3</text>
+  <rect x="88" y="140" width="42" height="40" rx="5" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
+  <text x="109" y="157" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1E2A33">2</text>
+  <text x="109" y="173" text-anchor="middle" font-size="11" font-weight="800" fill="#D99A00">Y</text>
+  <text x="109" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">SEC 3</text>
+  <rect x="136" y="140" width="42" height="40" rx="5" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.6"/>
+  <text x="157" y="157" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1E2A33">3</text>
+  <text x="157" y="173" text-anchor="middle" font-size="11" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="157" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">SEC 1</text>
+  <rect x="184" y="140" width="42" height="40" rx="5" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.6"/>
+  <text x="205" y="157" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1E2A33">4</text>
+  <text x="205" y="173" text-anchor="middle" font-size="11" font-weight="800" fill="#D99A00">Y</text>
+  <text x="205" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">SEC 1</text>
+  <rect x="232" y="140" width="42" height="40" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="253" y="157" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1E2A33">5</text>
+  <text x="253" y="173" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="253" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">SEC 2</text>
+  <rect x="282" y="138" width="50" height="44" rx="5" fill="#ECE6F8" stroke="#6D4BC2" stroke-width="1.6"/>
+  <text x="307" y="152" text-anchor="middle" font-size="10.5" font-weight="800" fill="#6D4BC2">Aileron</text>
+  <rect x="289" y="159" width="16" height="16" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="297" y="171" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <rect x="309" y="159" width="16" height="16" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="317" y="171" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="307" y="196" text-anchor="middle" font-size="10.5" fill="#33424D">ELAC 1</text>
+  <path d="M88 74 V68 H226 V74" fill="none" stroke="#0E7C86" stroke-width="1.5"/>
+  <text x="157" y="64" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0E7C86">Speed brakes: 2, 3 y 4</text>
+  <path d="M88 94 V88 H332 V94" fill="none" stroke="#6D4BC2" stroke-width="1.5"/>
+  <text x="210" y="84" text-anchor="middle" font-size="10.5" font-weight="800" fill="#6D4BC2">Roll: 2 a 5 + aileron</text>
+  <path d="M40 114 V108 H274 V114" fill="none" stroke="#33424D" stroke-width="1.5"/>
+  <text x="157" y="104" text-anchor="middle" font-size="10.5" font-weight="800" fill="#33424D">Ground spoilers: 1 a 5</text>
+  <text x="18" y="240" font-size="10.5" fill="#33424D">Spoilers: un servojack y un SEC cada uno;</text>
+  <text x="18" y="255" font-size="10.5" fill="#33424D">si su SEC falla, se retraen.</text>
+  <text x="18" y="274" font-size="10.5" fill="#33424D">Aileron: dos servojacks; ELAC 1 y, de respaldo, ELAC 2.</text>
+  <rect x="18" y="286" width="14" height="14" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="25" y="297" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <text x="37" y="298" font-size="10.5" fill="#1E2A33">Green</text>
+  <rect x="84" y="286" width="14" height="14" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.5"/>
+  <text x="91" y="297" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2F6FD6">B</text>
+  <text x="103" y="298" font-size="10.5" fill="#1E2A33">Blue</text>
+  <rect x="144" y="286" width="14" height="14" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="151" y="297" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <text x="163" y="298" font-size="10.5" fill="#1E2A33">Yellow</text>
 </svg>

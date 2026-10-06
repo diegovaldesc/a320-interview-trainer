@@ -1861,9 +1861,9 @@
     ok(/GRAVITY EXTENSION\*\*\.\s+Ese procedimiento, si hay tiempo, permite hasta \*\*4 recycles\*\*/.test(r),"los 4 recycles son de la L/G GRAVITY EXTENSION, no del recycle del ECAM");
     ok(/tope mecánico/.test(rtCard("tren-9","Gravity extension").body),"la manivela: hasta el tope mecanico");
   });
-  T("15 RUTA-15 dibujos de Tren y Performance: los que mezclaban ideas se separaron (cada ficha tiene el suyo) y todos tienen descripcion",function(){
+  T("15 RUTA-15 dibujos: los que mezclaban ideas se separaron (Tren, Performance y el pitch y el yaw de Controles; cada ficha tiene el suyo) y todos tienen descripcion",function(){
     var S=RUTA.stations;
-    var want={"tren-1":["tren-mando.svg","tren-quien-frena.svg"],"tren-2":["tren-secuencia.svg","tren-velocidades.svg"],"tren-5":["tren-frenado.svg","tren-triple.svg"],"perf-11":["perf-drift-down.svg","perf-ruta-net.svg"],"perf-12":["perf-aterrizaje.svg","perf-aterrizaje-vuelo.svg"]};
+    var want={"tren-1":["tren-mando.svg","tren-quien-frena.svg"],"tren-2":["tren-secuencia.svg","tren-velocidades.svg"],"tren-5":["tren-frenado.svg","tren-triple.svg"],"perf-11":["perf-drift-down.svg","perf-ruta-net.svg"],"perf-12":["perf-aterrizaje.svg","perf-aterrizaje-vuelo.svg"],"ctl-2":["ctl-cabeceo.svg","ctl-alabeo.svg"],"ctl-7":["ctl-guinada.svg"]};
     Object.keys(want).forEach(function(k){
       var files=S[k].cards.filter(function(c){return c.diagram}).map(function(c){return c.diagram.src.split("/").pop()});
       want[k].forEach(function(f){ok(files.indexOf(f)>=0,k+" usa "+f)});
@@ -1871,7 +1871,7 @@
     var sinAlt=[],viejo=[];
     Object.keys(S).forEach(function(k){S[k].cards.forEach(function(c){
       if(!c.diagram)return;
-      if(/^(tren|perf)-/.test(k)&&!(c.diagram.alt&&c.diagram.alt.length>40))sinAlt.push(k);
+      if(!(c.diagram.alt&&c.diagram.alt.length>40))sinAlt.push(k);
       if(/tren-arquitectura/.test(c.diagram.src))viejo.push(k);
     })});
     eq(sinAlt.length,0,"dibujos sin descripcion: "+sinAlt.join(", "));

@@ -680,7 +680,13 @@ botón «Portada» para volver). Ningún módulo cambió.
   indicator, la falla en crucero y la planificación de la ruta, y la distancia
   de aterrizaje del despacho y la de vuelo. La prueba exige que cada ficha
   tenga el suyo y que todos tengan descripción. Prueba de mutación: con el
-  dibujo antiguo de vuelta, falló.
+  dibujo antiguo de vuelta, falló. Desde la 1.20.0 (2026-10-06) también exige
+  el pitch y el yaw de Controles por separado (`ctl-cabeceo` en la estación 2,
+  `ctl-guinada` en la 7) y la descripción de los dibujos de todas las materias.
+  Prueba de mutación: con la ficha del rudder apuntando al dibujo del pitch,
+  falló. La letra mínima de 10 px de los dibujos no se prueba aquí (la copia de
+  prueba no carga imágenes): la revisa `construir.js`, que no escribe nada si
+  un dibujo en uso tiene un texto más chico.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

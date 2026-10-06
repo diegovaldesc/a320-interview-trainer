@@ -638,16 +638,19 @@ botón «Portada» para volver). Ningún módulo cambió.
   progreso guardado sigue en la misma pregunta.
 - **RUTA-14** (2026-10-05, 1.18.0) — la materia Tren de aterrizaje y frenos
   tiene 12 estaciones con su repaso al final. La clase del nosewheel steering
-  enseña Yellow, que es lo de la mayor parte de la flota, y avisa que los A320
-  más antiguos usan Green. Ninguna estación usa las tres preguntas DGAC del
+  lo enseña por MSN (desde la 1.21.1, pedido de Diego): Green en los MSN más
+  antiguos y Yellow en los más nuevos, sin presentar a ninguno como «el»
+  sistema del steering. Ninguna estación usa las tres preguntas DGAC del
   steering que responden según los aviones antiguos. RUTA-02 espera ahora
   cinco materias. Prueba de mutación: con el steering de la clase cambiado a
   Green, falló.
 - **REG-08** (2026-10-05, 1.18.0) — esas tres preguntas DGAC conservan la
   respuesta del examen (solo el steering inoperativo después de una extensión
   por gravedad, no hay steering después de la gravedad, el steering usa Green),
-  pero su explicación ya no dice que toda la flota es así: aclara que la mayor
-  parte de la flota usa Yellow y conserva el steering.
+  pero su explicación ya no dice que todos los aviones son así: aclara que es
+  lo de los MSN más antiguos (Green) y que en los más nuevos la presión la da
+  Yellow y el steering sigue disponible (desde la 1.21.1, sin hablar de «la
+  mayor parte de la flota»).
 - **REG-09** (2026-10-05, 1.18.1) — ninguna pregunta del banco menciona los
   Tutorials en lo que se ve (enunciado, alternativas, explicación): se
   reescribieron 29 enunciados y 29 explicaciones del banco de operaciones, y
@@ -705,6 +708,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   «bota», «botan» y «botar». Pruebas de mutación: con «hacer un flare suave»
   de vuelta, con los wing tip brakes en «solo las superficies afectadas» y
   con «botan la sustentación», fallaron.
+- **REG-13** (2026-10-06, 1.21.1) — Diego: «No menciones que el sistema
+  hidráulico amarillo es el responsable del nose wheel steering; menciona
+  que en los MSN antiguos lo hace el verde y en los más nuevos el amarillo»,
+  y «usa la carpeta APP como única fuente». El manual solo da rangos de MSN,
+  así que ningún texto puede decir lo que tiene «la mayor parte de la
+  flota». La prueba revisa clases, dibujos (su descripción), explicaciones
+  del banco y orales: ninguna frase sobre la flota, ningún «el steering usa
+  Yellow» sin decir que es en los MSN más nuevos, y la ficha de después de la
+  gravedad dice que el steering se pierde en los MSN antiguos y sigue en los
+  nuevos. Pruebas de mutación: con la frase antigua del steering en la ficha
+  de la estación 1, y con «la mayoría de la flota» en la oral de ALL ENGINES
+  FAILURE, falló.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

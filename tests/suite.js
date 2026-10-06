@@ -1799,24 +1799,24 @@
     RUTA.showCover();
   });
 
-  T("14 RUTA-14 Tren de aterrizaje: 12 estaciones con el repaso al final; el steering se enseña con Yellow (y Green en los A320 antiguos) y ninguna estacion usa las 3 preguntas DGAC que responden segun los aviones antiguos",function(){
+  T("14 RUTA-14 Tren de aterrizaje: 12 estaciones con el repaso al final; el steering se enseña por MSN (Green en los mas antiguos, Yellow en los mas nuevos) y ninguna estacion usa las 3 preguntas DGAC que responden segun los aviones antiguos",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="tren"});
     eq(P.length,12,"estaciones de Tren de aterrizaje");eq(P[P.length-1].id,"tren-repaso","el repaso va al final");
     var nws=RUTA.stations["tren-4"];ok(nws,"existe la estacion del steering");
     var body=nws.cards.map(function(c){return c.body}).join(" ");
-    ok(/\*\*Yellow\*\*/.test(body)&&/antiguos, Green/.test(body),"el steering: Yellow en la mayor parte de la flota y Green en los antiguos");
+    ok(/\*\*Green\*\* en los MSN más antiguos/.test(body)&&/\*\*Yellow\*\* en los más nuevos/.test(body),"el steering por MSN: Green en los mas antiguos y Yellow en los mas nuevos");
     var viejas=SYSTEMS[DGAC_KEY].questions.filter(function(q){return /WHAT OTHER SYSTEMS WILL BE INOPERATIVE|WILL NOSE WHEEL STEERING BE AVAILABLE|SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/.test(q.q)});
     eq(viejas.length,3,"las 3 preguntas DGAC del steering");
     var ids=viejas.map(function(q){return qid(DGAC_KEY,q)});
     var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta DGAC del steering antiguo: "+usadas.join(", "));
   });
-  T("14 REG-08 las 3 preguntas DGAC del steering conservan la respuesta del examen y su explicacion aclara que la mayor parte de la flota usa Yellow",function(){
+  T("14 REG-08 las 3 preguntas DGAC del steering conservan la respuesta del examen y su explicacion aclara que es Green en los MSN mas antiguos y Yellow en los mas nuevos",function(){
     var Q=SYSTEMS[DGAC_KEY].questions;
     function one(re){var h=Q.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]}
     var a=one(/WHAT OTHER SYSTEMS WILL BE INOPERATIVE/),b=one(/WILL NOSE WHEEL STEERING BE AVAILABLE/),c=one(/SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/);
     eq(a.options[a.correct],"NOSE WHEEL STEERING ONLY.","clave de la 1");eq(b.options[b.correct],"NO.","clave de la 2");eq(c.options[c.correct],"GREEN.","clave de la 3");
-    [a,b,c].forEach(function(q){ok(/mayor parte de la flota/.test(q.expl)&&/Yellow/.test(q.expl)&&/antiguos/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
+    [a,b,c].forEach(function(q){ok(/MSN más antiguos/.test(q.expl)&&/MSN más nuevos/.test(q.expl)&&/Yellow/.test(q.expl)&&!/flota/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
   });
 
   T("14 REG-09 ninguna pregunta del banco menciona los Tutorials (enunciado, alternativas ni explicacion) y las estaciones muestran el enunciado del banco tal cual",function(){
@@ -1897,6 +1897,22 @@
     ok(/100 kt/.test(bq("hydraulic","¿Qué condición provoca el despliegue automático del RAT").expl),"RAT automatico: sobre 100 kt");
     ok(/en las dos alas/.test(bq(DGAC_KEY,"THE WING TIP BRAKES, ONCE ACTIVATED").expl),"wing tip brakes en el banco");
     ok(/2,5°/.test(bq(DGAC_KEY,"HORIZONTAL STABILIZER TRIM AUTOMATICALLY RESETS").expl),"reset del THS en el banco");
+  });
+  T("15 REG-13 el steering se enseña por MSN (Green en los mas antiguos, Yellow en los mas nuevos) y ningun texto afirma lo que tiene 'la mayor parte de la flota': el manual solo da MSN",function(){
+    var corpus=[];
+    Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];
+      corpus.push(k+": "+st.goal+" "+st.intro);
+      st.cards.forEach(function(c){corpus.push(c.id+": "+[c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" "))});
+      st.test.forEach(function(t){corpus.push(t.id+": "+[t.explanation||"",t.reference||""].join(" "))});
+    });
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q,i){corpus.push(k+"#"+i+": "+(q.expl||""))})});
+    ORAL_VOICE_BANK.forEach(function(q){corpus.push(q.id+": "+q.reference+" "+(q.short||""))});
+    var flota=corpus.filter(function(s){return /(mayor parte|mayoría|buena parte|parte) de la flota|flota actual|aviones de la flota|antiguos de la flota/i.test(s)});
+    eq(flota.length,0,"afirmaciones sobre la flota: "+flota.join(" | ").slice(0,220));
+    var nws=corpus.filter(function(s){return /steering/i.test(s)&&/(usa|da|alimenta)\W+(\w+\W+){0,3}\**Yellow/i.test(s)&&!/más nuevos/.test(s)});
+    eq(nws.length,0,"el steering con Yellow sin decir que es en los MSN mas nuevos: "+nws.join(" | ").slice(0,220));
+    var c=rtCard("tren-9","After a gravity extension");
+    ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
 
   /* ---------- Ejecucion ---------- */

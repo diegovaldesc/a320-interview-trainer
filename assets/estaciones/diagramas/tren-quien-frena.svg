@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Frenos y steering: quién hace qué</title>
-  <desc id="d">Tabla para la mayor parte de la flota. Frenado normal: fuerza de Green, mando del BSCU, con antiskid y autobrake. Alternate: Yellow o el accumulator, mando del ABCU, y el antiskid sigue en el BSCU. Parking brake: Yellow o el accumulator, con la manija PARK BRK y su propia válvula. Steering: Yellow, mando del BSCU con los tillers, los pedales y el autopilot. Alternate y parking brake usan la misma reserva. En los A320 más antiguos, el steering usa Green.</desc>
+  <desc id="d">Tabla de frenos y steering. Frenado normal: fuerza de Green, mando del BSCU, con antiskid y autobrake. Alternate: Yellow o el accumulator, mando del ABCU, y el antiskid sigue en el BSCU. Parking brake: Yellow o el accumulator, con la manija PARK BRK y su propia válvula. Steering: mando del BSCU con los tillers, los pedales y el autopilot; la presión la da Green en los MSN más antiguos y Yellow en los más nuevos. Alternate y parking brake usan la misma reserva.</desc>
   <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
   <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Frenos y steering: quién hace qué</text>
-  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Mayor parte de la flota.</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Frenos con ABCU; steering según el MSN.</text>
   <text x="18" y="68" font-size="10" font-weight="800" fill="#5B6B78">Función</text>
   <text x="128" y="68" font-size="10" font-weight="800" fill="#5B6B78">Fuerza</text>
   <text x="214" y="68" font-size="10" font-weight="800" fill="#5B6B78">Mando</text>
@@ -29,11 +29,13 @@
   <text x="214" y="193" font-size="10" fill="#33424D">su propia válvula</text>
   <line x1="18" y1="202" x2="342" y2="202" stroke="#C9D3DB" stroke-width="1"/>
   <text x="18" y="227" font-size="11" font-weight="800" fill="#1E2A33">Steering</text>
-  <rect x="128" y="215" width="16" height="16" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
-  <text x="136" y="227" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
+  <rect x="128" y="215" width="16" height="16" rx="3" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.5"/>
+  <text x="136" y="227" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2E9D5B">G</text>
+  <rect x="148" y="215" width="16" height="16" rx="3" fill="#FDF3DC" stroke="#D99A00" stroke-width="1.5"/>
+  <text x="156" y="227" text-anchor="middle" font-size="10.5" font-weight="800" fill="#D99A00">Y</text>
   <text x="214" y="221" font-size="11" font-weight="800" fill="#0E5E6F">BSCU</text>
   <text x="214" y="235" font-size="10" fill="#33424D">tillers, pedales, autopilot</text>
   <line x1="18" y1="244" x2="342" y2="244" stroke="#C9D3DB" stroke-width="1"/>
   <text x="18" y="262" font-size="10.5" fill="#33424D">Alternate y parking brake usan la misma reserva.</text>
-  <text x="18" y="278" font-size="10" fill="#5B6B78">En los A320 más antiguos, el steering usa Green.</text>
+  <text x="18" y="278" font-size="10" fill="#5B6B78">Steering: Green en los MSN antiguos; Yellow en los nuevos.</text>
 </svg>

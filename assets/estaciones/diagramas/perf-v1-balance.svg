@@ -1,22 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 254" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Distancia necesaria según la V1</title>
-  <desc id="d">Gráfico con la V1 en el eje horizontal: la ASD sube al aumentar la V1 y la TOD con un motor fallado baja. Se cruzan en la V1 balanceada, que da la menor distancia necesaria: el balanced field.</desc>
-  <rect x="1" y="1" width="358" height="252" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <desc id="d">Gráfico con la V1 en el eje horizontal: la ASD sube al aumentar la V1 y la TOD con un motor fallado baja. Se cruzan en la V1 balanceada, el balanced field. Si la pista da el mismo largo para frenar y para seguir, la balanceada pide menos pista. Las rectas son de ejemplo: muestran el sentido, no valores.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
   <defs><marker id="a8C99A3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8C99A3"/></marker><marker id="b8C99A3" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#8C99A3"/></marker></defs>
-  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Distancia necesaria según la V1</text>
-  <text x="18" y="42" font-size="10" fill="#5B6B78">ASD: abortar · TOD con un motor fallado: seguir.</text>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Distancia necesaria según la V1</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">ASD: abortar · TOD con un motor fallado: seguir.</text>
   <line x1="46" y1="206" x2="342" y2="206" stroke="#8C99A3" stroke-width="1.2" marker-end="url(#a8C99A3)"/>
   <line x1="46" y1="206" x2="46" y2="58" stroke="#8C99A3" stroke-width="1.2" marker-end="url(#a8C99A3)"/>
-  <text x="342" y="222" text-anchor="end" font-size="9.5" fill="#5B6B78">V1 →</text>
-  <text x="52" y="62" font-size="9.5" fill="#5B6B78">distancia necesaria</text>
+  <text x="342" y="222" text-anchor="end" font-size="10" fill="#5B6B78">V1 →</text>
+  <text x="52" y="62" font-size="10" fill="#5B6B78">distancia necesaria</text>
   <line x1="197.3" y1="135.4" x2="197.3" y2="206" stroke="#C77700" stroke-width="1.2" stroke-dasharray="4 3"/>
   <line x1="46" y1="135.4" x2="197.3" y2="135.4" stroke="#C77700" stroke-width="1.2" stroke-dasharray="4 3"/>
   <polyline points="66,192 326,80" fill="none" stroke="#C0392B" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
   <polyline points="66,92 326,178" fill="none" stroke="#2F6FB5" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-  <text x="326" y="72" text-anchor="end" font-size="10" font-weight="800" fill="#C0392B">ASD</text>
-  <text x="326" y="194" text-anchor="end" font-size="10" font-weight="800" fill="#2F6FB5">TOD</text>
+  <text x="326" y="72" text-anchor="end" font-size="11" font-weight="800" fill="#C0392B">ASD</text>
+  <text x="326" y="196" text-anchor="end" font-size="11" font-weight="800" fill="#2F6FB5">TOD</text>
   <circle cx="197.3" cy="135.4" r="4" fill="#C77700" stroke="#FFFFFF" stroke-width="1.5"/>
-  <text x="197.3" y="222" text-anchor="middle" font-size="10" font-weight="800" fill="#C77700">V1 balanceada</text>
-  <text x="52" y="129.4" font-size="10" font-weight="800" fill="#C77700">balanced field</text>
-  <text x="18" y="242" font-size="9.5" fill="#33424D">Subir la V1: la TOD baja y la ASD sube. La balanceada pide la menor pista.</text>
+  <text x="197.3" y="222" text-anchor="middle" font-size="10.5" font-weight="800" fill="#C77700">V1 balanceada</text>
+  <text x="52" y="128.4" font-size="10.5" font-weight="800" fill="#C77700">balanced field</text>
+  <text x="18" y="244" font-size="10.5" fill="#33424D">Subir la V1: la TOD baja y la ASD sube. Si la pista da el</text>
+  <text x="18" y="259" font-size="10.5" fill="#33424D">mismo largo para frenar y seguir, la balanceada pide menos.</text>
+  <text x="18" y="278" font-size="10" fill="#5B6B78">Rectas de ejemplo: muestran el sentido, no valores.</text>
 </svg>

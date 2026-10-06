@@ -1,28 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 342" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 487" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Giro de 180° en la pista</title>
-  <desc id="d">Pista de 30 m vista desde arriba con la trayectoria del giro: el avión rueda por el lado derecho entre 5 y 8 kt, abre 25° a la izquierda, cuando el capitán pasa sobre el borde gira a la derecha con todo el tiller, y termina alineado con el tiller en neutro. Prohibido el brake pivot.</desc>
-  <rect x="1" y="1" width="358" height="340" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker><marker id="b0E5E6F" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#0E5E6F"/></marker></defs>
-  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Giro de 180° en la pista</text>
-  <text x="18" y="42" font-size="10" fill="#5B6B78">Técnica de Airbus, con el capitán como PF.</text>
-  <rect x="100" y="74" width="136" height="240" rx="0" fill="#5A6670" stroke="#5A6670" stroke-width="1.4"/>
-  <line x1="100" y1="74" x2="100" y2="314" stroke="#FFFFFF" stroke-width="2"/>
-  <line x1="236" y1="74" x2="236" y2="314" stroke="#FFFFFF" stroke-width="2"/>
-  <line x1="168" y1="80" x2="168" y2="308" stroke="#FFFFFF" stroke-width="1.6" stroke-dasharray="12 10"/>
-  <line x1="102" y1="66" x2="234" y2="66" stroke="#0E5E6F" stroke-width="1" marker-end="url(#a0E5E6F)" marker-start="url(#b0E5E6F)"/>
-  <text x="168" y="61" text-anchor="middle" font-size="10" font-weight="800" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">30 m</text>
-  <path d="M 212 308 L 212 262 L 144 128 C 130 102 144 86 166 88 C 192 90 202 116 190 140 C 182 156 168 166 168 186 L 168 300" fill="none" stroke="#FFD166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#a0E5E6F)"/>
-  <line x1="212" y1="262" x2="212" y2="214" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="3 3"/>
-  <text x="206" y="236" text-anchor="end" font-size="10" font-weight="800" fill="#FFFFFF">25°</text>
-  <text x="244" y="290" font-size="9.4" font-weight="800" fill="#33424D">1 · lado derecho,</text>
-  <text x="244" y="302" font-size="9.4" font-weight="500" fill="#33424D">entre 5 y 8 kt</text>
-  <text x="244" y="214" font-size="9.4" font-weight="800" fill="#33424D">2 · abrir 25°</text>
-  <text x="244" y="226" font-size="9.4" font-weight="500" fill="#33424D">a la izquierda</text>
-  <text x="14" y="92" font-size="9.4" font-weight="800" fill="#33424D">3 · el capitán</text>
-  <text x="14" y="104" font-size="9.4" font-weight="500" fill="#33424D">sobre el borde:</text>
-  <text x="14" y="116" font-size="9.4" font-weight="500" fill="#33424D">todo el tiller</text>
-  <text x="14" y="128" font-size="9.4" font-weight="500" fill="#33424D">a la derecha</text>
-  <text x="14" y="262" font-size="9.4" font-weight="800" fill="#33424D">4 · alinear y</text>
-  <text x="14" y="274" font-size="9.4" font-weight="500" fill="#33424D">tiller en neutro</text>
-  <text x="180" y="330" text-anchor="middle" font-size="9" fill="#C0392B">Prohibido el brake pivot; si hace falta, empuje asimétrico o frenado diferencial.</text>
+  <desc id="d">Pista de 30 m vista desde arriba, a escala aproximada, con un A320 en el momento clave: abierto 25° a la izquierda del eje y con el asiento del capitán, marcado en rojo, sobre el borde izquierdo. En amarillo, el camino de la rueda de nariz y del tren principal al girar a la derecha con todo el tiller: los dos quedan dentro de la pista. Pasos: 1, rodar por el lado derecho entre 5 y 8 kt; 2, abrir 25° a la izquierda; 3, con el capitán sobre el borde, todo el tiller a la derecha; 4, alinear con el eje y dejar el tiller en neutro. Prohibido el brake pivot.</desc>
+  <rect x="1" y="1" width="358" height="485" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="aFFC94A" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FFC94A"/></marker><marker id="bFFC94A" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#FFC94A"/></marker><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker><marker id="aFFFFFF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FFFFFF"/></marker><marker id="bFFFFFF" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#FFFFFF"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Giro de 180° en la pista</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Técnica de Airbus, con el capitán como PF.</text>
+  <rect x="49.5" y="58" width="261" height="272.6" rx="0" fill="#E3EBDD" stroke="none" stroke-width="0"/>
+  <rect x="119.1" y="58" width="174" height="272.6" rx="0" fill="#5A6670" stroke="none" stroke-width="0"/>
+  <line x1="119.1" y1="58" x2="119.1" y2="330.6" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="293.1" y1="58" x2="293.1" y2="330.6" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="206.1" y1="62" x2="206.1" y2="326.6" stroke="#FFFFFF" stroke-width="1.6" stroke-dasharray="12 10"/>
+  <polygon points="156,138.3 253.7,141.4 261.9,145.9 262.9,148 257.7,149.8 192.6,157.7 170,168.3" fill="#FFFFFF" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="197.9,239.1 233.8,246 236.7,252.4 208.7,262.2" fill="#FFFFFF" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="136,147.6 75.5,224.5 73.7,233.6 74.7,235.7 79.5,232.9 127.4,188.1 150,177.6" fill="#FFFFFF" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="186.3,244.5 168.6,276.4 171.5,282.7 197.1,267.6" fill="#FFFFFF" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="115.6,77.8 120.5,78 124.6,80 129.2,84.3 133.4,89.9 137.1,96.6 191,212.2 198.4,231.2 203.1,248.2 206.6,262.6 208.6,272.5 208.8,274.8 206.7,275.8 205,274.2 198.7,266.2 189.9,254.3 180,239.8 170.2,221.9 116.2,106.3 113.5,99.3 111.8,92.3 111.5,86.1 112.7,81.7 115.6,77.8" fill="#FFFFFF" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="163.1,114.5 175.2,139 184.6,134.6 173.7,109.6" fill="#DDE3E8" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="113.2,137.8 124.2,162.7 114.7,167.2 102.7,142.7" fill="#DDE3E8" stroke="#33424D" stroke-width="1" stroke-linejoin="round"/>
+  <line x1="187.9" y1="232.9" x2="207" y2="273.9" stroke="#33424D" stroke-width="1.6"/>
+  <polygon points="124.2,102.4 127.2,108.7 131.9,106.5 128.9,100.2" fill="#1E2A33" stroke="#1E2A33" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="175.2,159.5 178.1,165.8 182.8,163.6 179.9,157.3" fill="#1E2A33" stroke="#1E2A33" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="135.2,178.1 138.2,184.5 142.9,182.2 139.9,175.9" fill="#1E2A33" stroke="#1E2A33" stroke-width="0.8" stroke-linejoin="round"/>
+  <polyline points="128,104.4 131.4,101.3 135,98.3 138.8,95.5 142.7,93 146.7,90.7 150.9,88.7 155.2,86.9 159.6,85.4 164,84.1 168.6,83.1 173.2,82.4 177.8,82 182.4,81.8 187.1,81.9 191.7,82.3 196.3,83 200.9,83.9 205.3,85.1 209.7,86.6 214.1,88.3 218.3,90.3 222.3,92.5 226.3,95 230.1,97.7 233.7,100.6 237.1,103.7 240.3,107 243.4,110.6 246.2,114.2 248.8,118.1 251.2,122.1 253.3,126.2 255.2,130.5 256.8,134.8 258.1,139.3 259.2,143.8 260,148.4 260.6,153 260.8,157.6 260.8,162.3 260.5,166.9 260,171.5 259.1,176.1 258,180.6 256.6,185 255,189.4 253.1,193.6 251,197.7 248.6,201.7 246,205.6 243.1,209.2 240.1,212.7 236.8,216 233.3,219.2 229.7,222.1 225.9,224.7 222,227.2 217.9,229.4 213.7,231.3 209.3,233" fill="none" stroke="#3A4650" stroke-width="4.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="128,104.4 131.4,101.3 135,98.3 138.8,95.5 142.7,93 146.7,90.7 150.9,88.7 155.2,86.9 159.6,85.4 164,84.1 168.6,83.1 173.2,82.4 177.8,82 182.4,81.8 187.1,81.9 191.7,82.3 196.3,83 200.9,83.9 205.3,85.1 209.7,86.6 214.1,88.3 218.3,90.3 222.3,92.5 226.3,95 230.1,97.7 233.7,100.6 237.1,103.7 240.3,107 243.4,110.6 246.2,114.2 248.8,118.1 251.2,122.1 253.3,126.2 255.2,130.5 256.8,134.8 258.1,139.3 259.2,143.8 260,148.4 260.6,153 260.8,157.6 260.8,162.3 260.5,166.9 260,171.5 259.1,176.1 258,180.6 256.6,185 255,189.4 253.1,193.6 251,197.7 248.6,201.7 246,205.6 243.1,209.2 240.1,212.7 236.8,216 233.3,219.2 229.7,222.1 225.9,224.7 222,227.2 217.9,229.4 213.7,231.3 209.3,233" fill="none" stroke="#FFC94A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#aFFC94A)"/>
+  <polyline points="139.1,180.2 137.9,177.5 136.9,174.8 136.1,172.1 135.5,169.2 135,166.4 134.7,163.5 134.5,160.6 134.6,157.8 134.8,154.9 135.1,152 135.7,149.2 136.4,146.4 137.3,143.6 138.3,140.9 139.5,138.3 140.9,135.8 142.4,133.3 144,130.9 145.8,128.6 147.7,126.5 149.8,124.5 151.9,122.5 154.2,120.8 156.6,119.1 159,117.6 161.6,116.3 164.2,115.1 166.9,114 169.7,113.2 172.5,112.4 175.3,111.9 178.2,111.5 181,111.3 183.9,111.3 186.8,111.5 189.7,111.8 192.5,112.3 195.3,112.9 198.1,113.7 200.8,114.7 203.5,115.9 206.1,117.2 208.6,118.6 211,120.2 213.3,122 215.5,123.8 217.5,125.8 219.5,128 221.3,130.2 223,132.5 224.6,135 226,137.5 227.2,140.1 228.3,142.8 229.2,145.5 230,148.3 230.6,151.1 231,154 231.3,156.8 231.4,159.7" fill="none" stroke="#3A4650" stroke-width="4.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="139.1,180.2 137.9,177.5 136.9,174.8 136.1,172.1 135.5,169.2 135,166.4 134.7,163.5 134.5,160.6 134.6,157.8 134.8,154.9 135.1,152 135.7,149.2 136.4,146.4 137.3,143.6 138.3,140.9 139.5,138.3 140.9,135.8 142.4,133.3 144,130.9 145.8,128.6 147.7,126.5 149.8,124.5 151.9,122.5 154.2,120.8 156.6,119.1 159,117.6 161.6,116.3 164.2,115.1 166.9,114 169.7,113.2 172.5,112.4 175.3,111.9 178.2,111.5 181,111.3 183.9,111.3 186.8,111.5 189.7,111.8 192.5,112.3 195.3,112.9 198.1,113.7 200.8,114.7 203.5,115.9 206.1,117.2 208.6,118.6 211,120.2 213.3,122 215.5,123.8 217.5,125.8 219.5,128 221.3,130.2 223,132.5 224.6,135 226,137.5 227.2,140.1 228.3,142.8 229.2,145.5 230,148.3 230.6,151.1 231,154 231.3,156.8 231.4,159.7" fill="none" stroke="#FFC94A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#aFFC94A)"/>
+  <line x1="207.7" y1="275.3" x2="224.9" y2="312.1" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="207.7" y1="275.3" x2="207.7" y2="315.9" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <path d="M 207.7 305.4 A 30.2 30.2 0 0 0 220.5 302.6" fill="none" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text x="232.6" y="313.6" font-size="10.5" font-weight="800" fill="#FFFFFF">25°</text>
+  <circle cx="119.1" cy="92.8" r="3.6" fill="#C0392B" stroke="#FFFFFF" stroke-width="1.2"/>
+  <line x1="264.1" y1="324.8" x2="264.1" y2="278.4" stroke="#FFFFFF" stroke-width="2" marker-end="url(#aFFFFFF)"/>
+  <circle cx="279.8" cy="304.5" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="279.8" y="308.3" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <circle cx="192" cy="307.8" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="192" y="311.6" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <circle cx="84.3" cy="81.2" r="8.5" fill="#C0392B" stroke="none" stroke-width="1"/>
+  <text x="84.3" y="85" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <circle cx="225.3" cy="237" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="225.3" y="240.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">4</text>
+  <line x1="92.3" y1="83.2" x2="115.1" y2="92.8" stroke="#C0392B" stroke-width="1.2"/>
+  <line x1="121.1" y1="342.6" x2="291.1" y2="342.6" stroke="#0E5E6F" stroke-width="1.1" marker-end="url(#a33424D)" marker-start="url(#b33424D)"/>
+  <text x="206.1" y="357.6" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0E5E6F">pista de 30 m</text>
+  <circle cx="26" cy="374.6" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="26" y="378.4" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="42" y="378.6" font-size="10.5" fill="#33424D">Rodar por el lado derecho, entre 5 y 8 kt.</text>
+  <circle cx="26" cy="393.6" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="26" y="397.4" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="42" y="397.6" font-size="10.5" fill="#33424D">Abrir 25° a la izquierda del eje.</text>
+  <circle cx="26" cy="412.6" r="8.5" fill="#C0392B" stroke="none" stroke-width="1"/>
+  <text x="26" y="416.4" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <text x="42" y="416.6" font-size="10.5" fill="#33424D">Capitán sobre el borde: todo el tiller a la derecha.</text>
+  <circle cx="26" cy="431.6" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="26" y="435.4" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">4</text>
+  <text x="42" y="435.6" font-size="10.5" fill="#33424D">Alinear con el eje y dejar el tiller en neutro.</text>
+  <text x="18" y="456.6" font-size="10" fill="#5B6B78">Amarillo: el camino de la rueda de nariz y del tren principal.</text>
+  <text x="18" y="471.6" font-size="10.5" font-weight="800" fill="#C0392B">Prohibido el brake pivot.</text>
 </svg>

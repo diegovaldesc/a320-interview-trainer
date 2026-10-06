@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 266" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Quién mueve el tren</title>
+  <desc id="d">La palanca, UP o DOWN, manda una orden eléctrica a los dos LGCIU, que se turnan un ciclo cada uno, y ellos ordenan las patas y las doors; la fuerza viene del sistema Green. Los LGCIU también avisan a otros sistemas si el avión está en el aire o en tierra. De respaldo, la manivela baja el tren por gravedad. Leyenda: línea continua, hidráulico; discontinua, orden eléctrica; punteada, mecánico.</desc>
+  <rect x="1" y="1" width="358" height="264" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker><marker id="a2E9D5B" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2E9D5B"/></marker><marker id="b2E9D5B" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#2E9D5B"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Quién mueve el tren</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Lo comandan los LGCIU; lo mueve Green.</text>
+  <rect x="18" y="62" width="76" height="44" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="56" y="81.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Palanca</text>
+  <text x="56" y="94.5" text-anchor="middle" font-size="10" fill="#33424D">UP · DOWN</text>
+  <rect x="114" y="62" width="108" height="44" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="168" y="81.5" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">LGCIU 1 · 2</text>
+  <text x="168" y="94.5" text-anchor="middle" font-size="10" fill="#33424D">uno por ciclo</text>
+  <rect x="242" y="62" width="100" height="44" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="292" y="81.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Patas y doors</text>
+  <text x="292" y="94.5" text-anchor="middle" font-size="10" fill="#33424D">se mueven y traban</text>
+  <line x1="94" y1="84" x2="110" y2="84" stroke="#33424D" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#a33424D)"/>
+  <line x1="222" y1="84" x2="238" y2="84" stroke="#33424D" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#a33424D)"/>
+  <rect x="262" y="134" width="60" height="26" rx="6" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="292" y="151" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">Green</text>
+  <line x1="292" y1="134" x2="292" y2="110" stroke="#2E9D5B" stroke-width="2.4" marker-end="url(#a2E9D5B)"/>
+  <line x1="168" y1="106" x2="168" y2="126" stroke="#33424D" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#a33424D)"/>
+  <rect x="114" y="130" width="108" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="168" y="147.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Aire o tierra</text>
+  <text x="168" y="160.5" text-anchor="middle" font-size="10" fill="#33424D">para otros sistemas</text>
+  <rect x="18" y="190" width="110" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <text x="73" y="207.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Manivela</text>
+  <text x="73" y="220.5" text-anchor="middle" font-size="10" fill="#33424D">respaldo: gravedad</text>
+  <polyline points="128,210 234,210 234,100 238,100" fill="none" stroke="#33424D" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1.5 3" marker-end="url(#a33424D)"/>
+  <line x1="18" y1="252.5" x2="38" y2="252.5" stroke="#2E9D5B" stroke-width="2.4"/>
+  <text x="43" y="256" font-size="10" fill="#33424D">hidráulico</text>
+  <line x1="107" y1="252.5" x2="127" y2="252.5" stroke="#33424D" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="132" y="256" font-size="10" fill="#33424D">orden eléctrica</text>
+  <line x1="218" y1="252.5" x2="238" y2="252.5" stroke="#33424D" stroke-width="1.6" stroke-dasharray="1.5 3"/>
+  <text x="243" y="256" font-size="10" fill="#33424D">mecánico</text>
+</svg>

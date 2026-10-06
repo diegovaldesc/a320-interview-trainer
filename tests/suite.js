@@ -1835,6 +1835,49 @@
     eq(mal.length,0,"estaciones con un enunciado de operaciones distinto del banco: "+mal.join(", "));
   });
 
+  function rtCard(st,title){var s=RUTA.stations[st];ok(s,"existe la estacion "+st);var c=s.cards.find(function(x){return x.title===title});ok(c,"ficha "+st+" · "+title);return c}
+  T("15 REG-10 frenos: el triple indicator separa la aguja del accumulator de las de los frenos, el parking brake no es una reserva aparte y todo lo que dice que el autobrake no aplica una presion fija aclara que MAX frena a fondo",function(){
+    var S=RUTA.stations;
+    var tri=rtCard("tren-5","The triple indicator").body;
+    ok(/ACCU/.test(tri)&&/accumulator/.test(tri)&&/BRAKES L y R/.test(tri)&&/solo marcan presión cuando \*\*Yellow\*\*/.test(tri),"el triple indicator: la aguja ACCU por un lado y los frenos, que solo marcan presion con Yellow");
+    var txt=[];Object.keys(S).forEach(function(k){S[k].cards.forEach(function(c){txt.push(k+": "+[c.body,c.keyIdea,c.more||""].join(" "))})});
+    var esc=txt.filter(function(s){return /→\s*parking brake/i.test(s)});
+    eq(esc.length,0,"el parking brake como un escalon mas despues del accumulator: "+esc.join(" | ").slice(0,160));
+    ok(/misma reserva/.test(rtCard("tren-5","Accumulator and parking brake").body),"el parking brake usa la misma reserva que el alternate");
+    var corpus=txt.slice();
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q,i){corpus.push(k+"#"+i+": "+(q.expl||""))})});
+    ORAL_VOICE_BANK.forEach(function(q){corpus.push(q.id+": "+q.reference)});
+    var sin=corpus.filter(function(s){return /presi[oó]n fija/i.test(s)&&!/MAX/.test(s)});
+    eq(sin.length,0,"autobrake sin la salvedad de MAX: "+sin.join(" | ").slice(0,200));
+    ok(!/más antiguos/.test(rtCard("tren-7","The three modes").more||""),"el LO de 1,7 m/s² no es solo de los aviones mas antiguos");
+  });
+  T("15 REG-11 tren: el giro de 180° da los 24 m del A320 junto a la pista de 30 m, y el tren que no se traba separa el recycle del ECAM de la L/G GRAVITY EXTENSION (los 4 recycles y la manivela hasta el tope)",function(){
+    var g=rtCard("tren-8","The 180° turn on a runway").body;
+    ok(/\*\*30 m\*\*/.test(g)&&/24 m/.test(g),"la clase: pista de 30 m y unos 24 m de giro");
+    var q=SYSTEMS.operations_airbus.questions.find(function(x){return x.q.indexOf("Para un giro de 180° en pista")===0});
+    ok(q&&q.options[q.correct]==="30 m"&&/24 m/.test(q.expl),"la pregunta del giro: clave 30 m y explicacion con los 24 m");
+    var r=rtCard("tren-9","Recycle").body;
+    ok(/procedimiento del ECAM pide primero un \*\*recycle\*\*/.test(r),"primero, el recycle del procedimiento del ECAM");
+    ok(/GRAVITY EXTENSION\*\*\.\s+Ese procedimiento, si hay tiempo, permite hasta \*\*4 recycles\*\*/.test(r),"los 4 recycles son de la L/G GRAVITY EXTENSION, no del recycle del ECAM");
+    ok(/tope mecánico/.test(rtCard("tren-9","Gravity extension").body),"la manivela: hasta el tope mecanico");
+  });
+  T("15 RUTA-15 dibujos de Tren y Performance: los que mezclaban ideas se separaron (cada ficha tiene el suyo) y todos tienen descripcion",function(){
+    var S=RUTA.stations;
+    var want={"tren-1":["tren-mando.svg","tren-quien-frena.svg"],"tren-2":["tren-secuencia.svg","tren-velocidades.svg"],"tren-5":["tren-frenado.svg","tren-triple.svg"],"perf-11":["perf-drift-down.svg","perf-ruta-net.svg"],"perf-12":["perf-aterrizaje.svg","perf-aterrizaje-vuelo.svg"]};
+    Object.keys(want).forEach(function(k){
+      var files=S[k].cards.filter(function(c){return c.diagram}).map(function(c){return c.diagram.src.split("/").pop()});
+      want[k].forEach(function(f){ok(files.indexOf(f)>=0,k+" usa "+f)});
+    });
+    var sinAlt=[],viejo=[];
+    Object.keys(S).forEach(function(k){S[k].cards.forEach(function(c){
+      if(!c.diagram)return;
+      if(/^(tren|perf)-/.test(k)&&!(c.diagram.alt&&c.diagram.alt.length>40))sinAlt.push(k);
+      if(/tren-arquitectura/.test(c.diagram.src))viejo.push(k);
+    })});
+    eq(sinAlt.length,0,"dibujos sin descripcion: "+sinAlt.join(", "));
+    eq(viejo.length,0,"todavia se usa el dibujo que mezclaba tren y frenos: "+viejo.join(", "));
+  });
+
   /* ---------- Ejecucion ---------- */
   async function run(){
     var res={total:tests.length,passed:0,failed:0,failures:[],errs:(window.__errs||[]).slice()};

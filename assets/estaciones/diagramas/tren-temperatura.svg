@@ -1,34 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 236" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 294" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Temperatura de los frenos</title>
-  <desc id="d">Escala de temperatura: sobre 100 °C, arco verde en la rueda más caliente; 150 °C, máximo indicado para despegar con fans; 290 °C, se apaga el BRAKES HOT; 300 °C, aviso BRAKES HOT y máximo para despegar sin fans.</desc>
-  <rect x="1" y="1" width="358" height="234" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Temperatura de los frenos</text>
-  <text x="18" y="42" font-size="10" fill="#5B6B78">Los umbrales de la página WHEEL y del despegue.</text>
-  <rect x="24" y="111" width="89.1" height="18" rx="4" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1"/>
-  <rect x="113.1" y="111" width="178.3" height="18" rx="0" fill="#FCEBD3" stroke="#C77700" stroke-width="1"/>
-  <rect x="291.4" y="111" width="44.6" height="18" rx="4" fill="#F8E1DE" stroke="#C0392B" stroke-width="1"/>
-  <line x1="24" y1="108" x2="24" y2="132" stroke="#1E2A33" stroke-width="1.4"/>
-  <line x1="113.1" y1="108" x2="113.1" y2="132" stroke="#1E2A33" stroke-width="1.4"/>
-  <line x1="157.7" y1="108" x2="157.7" y2="132" stroke="#1E2A33" stroke-width="1.4"/>
-  <line x1="282.5" y1="108" x2="282.5" y2="132" stroke="#1E2A33" stroke-width="1.4"/>
-  <line x1="291.4" y1="108" x2="291.4" y2="132" stroke="#1E2A33" stroke-width="1.4"/>
-  <text x="24" y="146" text-anchor="middle" font-size="9" fill="#5B6B78">0</text>
-  <line x1="113.1" y1="108" x2="113.1" y2="84" stroke="#5B6B78" stroke-width="0.9"/>
-  <text x="113.1" y="66" text-anchor="middle" font-size="9.6" font-weight="800" fill="#2E9D5B">arco verde en la rueda</text>
-  <text x="113.1" y="79" text-anchor="middle" font-size="9" fill="#33424D">más caliente</text>
-  <line x1="291.4" y1="108" x2="291.4" y2="84" stroke="#5B6B78" stroke-width="0.9"/>
-  <text x="295.4" y="66" text-anchor="end" font-size="9.6" font-weight="800" fill="#C0392B">BRAKES HOT</text>
-  <text x="295.4" y="79" text-anchor="end" font-size="9" fill="#33424D">máx. despegue sin fans</text>
-  <line x1="157.7" y1="132" x2="157.7" y2="156" stroke="#5B6B78" stroke-width="0.9"/>
-  <text x="157.7" y="168" text-anchor="middle" font-size="9.6" font-weight="800" fill="#C77700">máx. despegue</text>
-  <text x="157.7" y="181" text-anchor="middle" font-size="9" fill="#33424D">con fans (indicada)</text>
-  <line x1="282.5" y1="132" x2="282.5" y2="156" stroke="#5B6B78" stroke-width="0.9"/>
-  <text x="286.5" y="168" text-anchor="end" font-size="9.6" font-weight="800" fill="#33424D">290: se apaga</text>
-  <text x="286.5" y="181" text-anchor="end" font-size="9" fill="#33424D">BRAKES HOT</text>
-  <text x="113.1" y="124" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1E2A33" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">100</text>
-  <text x="157.7" y="124" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1E2A33" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">150</text>
-  <text x="291.4" y="124" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1E2A33" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">300</text>
-  <text x="336" y="146" text-anchor="end" font-size="9" fill="#5B6B78">°C</text>
-  <text x="18" y="208" font-size="9.3" fill="#33424D">Con fans la indicación es menor que la real: por eso 150 °C con fans.</text>
-  <text x="18" y="222" font-size="9.3" fill="#33424D">En tierra con BRAKES HOT: chocks en vez de parking brake.</text>
+  <desc id="d">Tres filas sobre la misma escala de temperatura. Página WHEEL: sobre 100 °C aparece un arco verde en la rueda más caliente, que solo la identifica, y sobre 300 °C el arco pasa a ámbar. Alerta: BRAKES HOT sobre 300 °C, que se apaga bajo 290 °C. Despegue: hasta 150 °C indicados con los fans funcionando y hasta 300 °C con los fans apagados. Con fans, la indicación es menor que la real. Con BRAKES HOT en tierra, preferir chocks y soltar el parking brake solo con los chocks puestos.</desc>
+  <rect x="1" y="1" width="358" height="292" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Temperatura de los frenos</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Indicación, alerta y despegue: tres cosas distintas.</text>
+  <line x1="112" y1="70" x2="332" y2="70" stroke="#8C99A3" stroke-width="1.4"/>
+  <line x1="112" y1="66" x2="112" y2="74" stroke="#33424D" stroke-width="1.2"/>
+  <line x1="174.9" y1="66" x2="174.9" y2="74" stroke="#33424D" stroke-width="1.2"/>
+  <line x1="206.3" y1="66" x2="206.3" y2="74" stroke="#33424D" stroke-width="1.2"/>
+  <line x1="294.3" y1="66" x2="294.3" y2="74" stroke="#33424D" stroke-width="1.2"/>
+  <line x1="300.6" y1="66" x2="300.6" y2="74" stroke="#33424D" stroke-width="1.2"/>
+  <text x="112" y="61" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">0</text>
+  <text x="174.9" y="61" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">100</text>
+  <text x="206.3" y="61" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">150</text>
+  <text x="298.6" y="61" text-anchor="start" font-size="10" font-weight="700" fill="#33424D">300 °C</text>
+  <line x1="18" y1="76" x2="342" y2="76" stroke="#E4EAEF" stroke-width="1"/>
+  <text x="18" y="102" font-size="11" font-weight="800" fill="#1E2A33">Página WHEEL</text>
+  <line x1="18" y1="128" x2="342" y2="128" stroke="#E4EAEF" stroke-width="1"/>
+  <text x="18" y="154" font-size="11" font-weight="800" fill="#1E2A33">Alerta</text>
+  <line x1="18" y1="180" x2="342" y2="180" stroke="#E4EAEF" stroke-width="1"/>
+  <text x="18" y="206" font-size="11" font-weight="800" fill="#1E2A33">Despegue</text>
+  <line x1="174.9" y1="76" x2="174.9" y2="226" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="206.3" y1="76" x2="206.3" y2="226" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="300.6" y1="76" x2="300.6" y2="226" stroke="#C9D3DB" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="174.9" y="92" width="125.7" height="10" rx="5" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.2"/>
+  <rect x="300.6" y="92" width="31.4" height="10" rx="5" fill="#FCEBD3" stroke="#C77700" stroke-width="1.2"/>
+  <text x="174.9" y="118" font-size="10" fill="#33424D">Sobre 100: arco verde en el más caliente</text>
+  <text x="296.6" y="132" text-anchor="end" font-size="10" fill="#33424D">sobre 300: ámbar</text>
+  <rect x="300.6" y="144" width="31.4" height="10" rx="5" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.2"/>
+  <text x="294.6" y="154" text-anchor="end" font-size="10.5" font-weight="800" fill="#C0392B">BRAKES HOT sobre 300;</text>
+  <text x="294.6" y="168" text-anchor="end" font-size="10" fill="#33424D">se apaga bajo 290</text>
+  <rect x="112" y="196" width="94.3" height="10" rx="5" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.2"/>
+  <rect x="206.3" y="196" width="94.3" height="10" rx="5" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="202.3" y="220" text-anchor="end" font-size="10" fill="#33424D">fans ON: hasta 150</text>
+  <text x="300.6" y="220" text-anchor="end" font-size="10" fill="#33424D">fans OFF: hasta 300</text>
+  <text x="18" y="250" font-size="10.5" fill="#33424D">Con fans, la indicación es menor que la real.</text>
+  <text x="18" y="266" font-size="10.5" fill="#33424D">BRAKES HOT en tierra: preferir chocks; soltar el parking</text>
+  <text x="18" y="281" font-size="10.5" fill="#33424D">brake solo con los chocks puestos.</text>
 </svg>

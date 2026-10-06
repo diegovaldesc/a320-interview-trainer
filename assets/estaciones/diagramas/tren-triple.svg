@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 276" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Triple indicator</title>
+  <desc id="d">El indicador BRAKES and ACCU PRESS del panel central. Arriba, la aguja ACCU, con la presión del accumulator de Yellow. Abajo, las agujas BRAKES L y R, con la presión de Yellow en los frenos izquierdos y derechos; solo marcan presión cuando Yellow controla los frenos, en alternate o con el parking brake. En el dibujo, con frenado normal de Green, los frenos marcan cero.</desc>
+  <rect x="1" y="1" width="358" height="274" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Triple indicator</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">BRAKES and ACCU PRESS, en el panel central.</text>
+  <rect x="18" y="56" width="140" height="150" rx="12" fill="#2A343C" stroke="#2A343C" stroke-width="1.4"/>
+  <path d="M 58 104 A 30 30 0 0 1 118 104" fill="none" stroke="#C9D3DB" stroke-width="1.6"/>
+  <line x1="63" y1="104" x2="58" y2="104" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="70.3" y1="86.3" x2="66.8" y2="82.8" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="88" y1="79" x2="88" y2="74" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="105.7" y1="86.3" x2="109.2" y2="82.8" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="113" y1="104" x2="118" y2="104" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="88" y1="104" x2="105" y2="87" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="88" cy="104" r="3" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <text x="88" y="119" text-anchor="middle" font-size="10" font-weight="700" fill="#C9D3DB">ACCU</text>
+  <path d="M 36 172 A 22 22 0 0 1 80 172" fill="none" stroke="#C9D3DB" stroke-width="1.6"/>
+  <line x1="41" y1="172" x2="36" y2="172" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="49.5" y1="157.3" x2="47" y2="152.9" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="66.5" y1="157.3" x2="69" y2="152.9" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="75" y1="172" x2="80" y2="172" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="58" y1="172" x2="42" y2="172" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="58" cy="172" r="3" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <text x="58" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#C9D3DB">L</text>
+  <path d="M 96 172 A 22 22 0 0 1 140 172" fill="none" stroke="#C9D3DB" stroke-width="1.6"/>
+  <line x1="101" y1="172" x2="96" y2="172" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="109.5" y1="157.3" x2="107" y2="152.9" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="126.5" y1="157.3" x2="129" y2="152.9" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="135" y1="172" x2="140" y2="172" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="118" y1="172" x2="102" y2="172" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="118" cy="172" r="3" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <text x="118" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#C9D3DB">R</text>
+  <text x="88" y="146" text-anchor="middle" font-size="10" font-weight="700" fill="#C9D3DB">BRAKES</text>
+  <line x1="120" y1="92" x2="170" y2="80" stroke="#33424D" stroke-width="1"/>
+  <text x="174" y="78" font-size="11" font-weight="800" fill="#1E2A33">Arriba: ACCU</text>
+  <text x="174" y="93" font-size="10.5" fill="#33424D">presión del accumulator</text>
+  <text x="174" y="107" font-size="10.5" fill="#33424D">de Yellow</text>
+  <line x1="142" y1="168" x2="170" y2="150" stroke="#33424D" stroke-width="1"/>
+  <text x="174" y="148" font-size="11" font-weight="800" fill="#1E2A33">Abajo: BRAKES L y R</text>
+  <text x="174" y="163" font-size="10.5" fill="#33424D">presión de Yellow en los</text>
+  <text x="174" y="177" font-size="10.5" fill="#33424D">frenos izq. y der.</text>
+  <text x="18" y="228" font-size="10.5" fill="#33424D">Los frenos solo marcan presión cuando Yellow los</text>
+  <text x="18" y="243" font-size="10.5" fill="#33424D">controla: en alternate o con el parking brake.</text>
+  <text x="18" y="262" font-size="10" fill="#5B6B78">Ejemplo del dibujo: frenado normal (Green), frenos en 0.</text>
+</svg>

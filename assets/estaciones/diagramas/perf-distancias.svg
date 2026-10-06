@@ -1,28 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 238" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Distancias declaradas</title>
-  <desc id="d">Pista con una stopway y una clearway al final. La TORA cubre la pista, la ASDA suma la stopway y la TODA suma la clearway. Stopway: soporta el peso del avión para frenar. Clearway: libre de obstáculos, pendiente de hasta 1,25 %, al menos 152 m de ancho y como máximo la mitad de la TORA.</desc>
-  <rect x="1" y="1" width="358" height="236" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Distancias declaradas</text>
-  <text x="18" y="42" font-size="10" fill="#5B6B78">Lo que el aeropuerto publica para cada pista.</text>
-  <rect x="248" y="56" width="94" height="42" rx="4" fill="#E6EFFA" stroke="#2F6FB5" stroke-width="1.3" stroke-dasharray="4 3"/>
-  <rect x="18" y="64" width="230" height="26" rx="2" fill="#4A5560" stroke="#4A5560" stroke-width="1"/>
-  <line x1="28" y1="77" x2="240" y2="77" stroke="#FFFFFF" stroke-width="1.4" stroke-dasharray="10 8"/>
-  <rect x="248" y="64" width="36" height="26" rx="2" fill="#B9C2CA" stroke="#8C99A3" stroke-width="1"/>
-  <polyline points="261,70 255,77 261,84" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-  <polyline points="271,70 265,77 271,84" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-  <polyline points="281,70 275,77 281,84" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-  <text x="133" y="58" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">Pista</text>
-  <text x="266" y="110" text-anchor="middle" font-size="9.5" font-weight="700" fill="#33424D">Stopway</text>
-  <text x="339" y="52" text-anchor="end" font-size="9.5" font-weight="700" fill="#2F6FB5">Clearway</text>
-  <rect x="18" y="126" width="230" height="16" rx="4" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.3"/>
-  <text x="26" y="138" font-size="10.5" font-weight="800" fill="#0E5E6F">TORA</text>
-  <text x="68" y="138" font-size="10" fill="#33424D">= la pista</text>
-  <rect x="18" y="150" width="266" height="16" rx="4" fill="#FCEBD3" stroke="#C77700" stroke-width="1.3"/>
-  <text x="26" y="162" font-size="10.5" font-weight="800" fill="#C77700">ASDA</text>
-  <text x="68" y="162" font-size="10" fill="#33424D">= TORA + stopway</text>
-  <rect x="18" y="174" width="324" height="16" rx="4" fill="#E6EFFA" stroke="#2F6FB5" stroke-width="1.3"/>
-  <text x="26" y="186" font-size="10.5" font-weight="800" fill="#2F6FB5">TODA</text>
-  <text x="68" y="186" font-size="10" fill="#33424D">= TORA + clearway</text>
-  <text x="18" y="210" font-size="9.5" fill="#33424D">Stopway: soporta el peso del avión, para frenar.</text>
-  <text x="18" y="226" font-size="9.2" fill="#33424D">Clearway: libre de obstáculos; pendiente ≤ 1,25 %, ancho ≥ 152 m, largo ≤ ½ TORA.</text>
+  <desc id="d">Pista vista desde arriba con una stopway y una clearway al final; la clearway, más ancha que la pista, cubre también la stopway. Debajo, tres barras desde el mismo inicio: la TORA es la carrera declarada, la ASDA suma la stopway y la TODA suma la clearway. La TORA es lo declarado para la carrera; desde una intersección es menos que la pista. Stopway: soporta el avión, para frenar. Clearway: libre de obstáculos, para el tramo en el aire.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker><marker id="b33424D" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Distancias declaradas</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Lo que el aeropuerto publica, desde el inicio de la carrera.</text>
+  <rect x="238" y="58" width="100" height="48" rx="4" fill="#E6EFFA" stroke="#2F6FB5" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <rect x="30" y="68" width="208" height="28" rx="2" fill="#4A5560" stroke="#4A5560" stroke-width="1"/>
+  <line x1="44" y1="82" x2="230" y2="82" stroke="#FFFFFF" stroke-width="1.4" stroke-dasharray="10 8"/>
+  <rect x="34" y="71.5" width="7" height="3" rx="0.5" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+  <rect x="34" y="77" width="7" height="3" rx="0.5" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+  <rect x="34" y="82.5" width="7" height="3" rx="0.5" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+  <rect x="34" y="88" width="7" height="3" rx="0.5" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+  <rect x="238" y="68" width="40" height="28" rx="2" fill="#B9C2CA" stroke="#8C99A3" stroke-width="1"/>
+  <polyline points="252,75 246,82 252,89" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="262,75 256,82 262,89" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="272,75 266,82 272,89" fill="none" stroke="#E8B923" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="30" y1="104" x2="30" y2="60" stroke="#33424D" stroke-width="1.2"/>
+  <text x="34" y="116" font-size="10" fill="#33424D">inicio</text>
+  <text x="258" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">stopway</text>
+  <text x="334" y="53" text-anchor="end" font-size="10" font-weight="700" fill="#2F6FB5">clearway</text>
+  <rect x="30" y="136" width="208" height="18" rx="4" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.3"/>
+  <text x="38" y="149" font-size="11" font-weight="800" fill="#0E5E6F">TORA</text>
+  <text x="82" y="149" font-size="10.5" fill="#33424D">= la carrera</text>
+  <rect x="30" y="162" width="248" height="18" rx="4" fill="#FCEBD3" stroke="#C77700" stroke-width="1.3"/>
+  <text x="38" y="175" font-size="11" font-weight="800" fill="#C77700">ASDA</text>
+  <text x="82" y="175" font-size="10.5" fill="#33424D">= TORA + stopway</text>
+  <rect x="30" y="188" width="308" height="18" rx="4" fill="#E6EFFA" stroke="#2F6FB5" stroke-width="1.3"/>
+  <text x="38" y="201" font-size="11" font-weight="800" fill="#2F6FB5">TODA</text>
+  <text x="82" y="201" font-size="10.5" fill="#33424D">= TORA + clearway</text>
+  <text x="18" y="232" font-size="10.5" fill="#33424D">TORA: lo declarado para la carrera; desde una intersección</text>
+  <text x="18" y="247" font-size="10.5" fill="#33424D">es menos que la pista.</text>
+  <text x="18" y="262" font-size="10.5" fill="#33424D">Stopway: soporta el avión, para frenar. Clearway: libre de</text>
+  <text x="18" y="277" font-size="10.5" fill="#33424D">obstáculos, para el tramo en el aire. Pueden superponerse.</text>
 </svg>

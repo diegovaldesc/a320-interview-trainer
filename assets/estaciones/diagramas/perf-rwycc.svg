@@ -1,43 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 350" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Runway condition codes (RWYCC)</title>
-  <desc id="d">Códigos de 6 a 0 con el viento cruzado máximo para aterrizar: 6 seca, 38 kt; 5 buena, mojada o hasta 3 mm de agua, slush o nieve, 38 kt; 4 buena a media, nieve compactada a −15 °C o menos, 29 kt; 3 media, nieve seca o húmeda de más de 3 mm, 25 kt; 2 media a pobre, standing water o slush de más de 3 mm, 20 kt; 1 pobre, hielo, 15 kt; 0 menos que pobre, wet ice.</desc>
-  <rect x="1" y="1" width="358" height="298" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
-  <text x="18" y="26" font-size="12.5" font-weight="800" fill="#0E5E6F">Runway condition codes (RWYCC)</text>
-  <text x="18" y="42" font-size="10" fill="#5B6B78">Del reporte del aeropuerto a un nivel de frenado.</text>
-  <text x="342" y="58" text-anchor="end" font-size="9" font-weight="700" fill="#5B6B78">viento cruzado máx.</text>
-  <rect x="18" y="66" width="34" height="25" rx="5" fill="#E3F2E8" stroke="#2E8B57" stroke-width="1.5"/>
-  <text x="35" y="84" text-anchor="middle" font-size="14" font-weight="800" fill="#2E8B57">6</text>
-  <text x="62" y="82" font-size="10.5" font-weight="800" fill="#2E8B57">Seca</text>
-  <text x="342" y="83" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">38 kt</text>
-  <rect x="18" y="97" width="34" height="25" rx="5" fill="#EAF5E3" stroke="#4F9A2E" stroke-width="1.5"/>
-  <text x="35" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#4F9A2E">5</text>
-  <text x="62" y="108" font-size="10.5" font-weight="800" fill="#4F9A2E">Buena</text>
-  <text x="62" y="120" font-size="9.2" fill="#33424D">Mojada, o hasta 3 mm de agua, slush o nieve</text>
-  <text x="342" y="114" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">38 kt</text>
-  <rect x="18" y="128" width="34" height="25" rx="5" fill="#F2F3DA" stroke="#8A8A12" stroke-width="1.5"/>
-  <text x="35" y="146" text-anchor="middle" font-size="14" font-weight="800" fill="#8A8A12">4</text>
-  <text x="62" y="139" font-size="10.5" font-weight="800" fill="#8A8A12">Buena a media</text>
-  <text x="62" y="151" font-size="9.2" fill="#33424D">Nieve compactada a −15 °C o menos</text>
-  <text x="342" y="145" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">29 kt</text>
-  <rect x="18" y="159" width="34" height="25" rx="5" fill="#FBF0D6" stroke="#B9831E" stroke-width="1.5"/>
-  <text x="35" y="177" text-anchor="middle" font-size="14" font-weight="800" fill="#B9831E">3</text>
-  <text x="62" y="170" font-size="10.5" font-weight="800" fill="#B9831E">Media</text>
-  <text x="62" y="182" font-size="9.2" fill="#33424D">Nieve seca o húmeda de más de 3 mm</text>
-  <text x="342" y="176" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">25 kt</text>
-  <rect x="18" y="190" width="34" height="25" rx="5" fill="#FCE6D2" stroke="#C96A1B" stroke-width="1.5"/>
-  <text x="35" y="208" text-anchor="middle" font-size="14" font-weight="800" fill="#C96A1B">2</text>
-  <text x="62" y="201" font-size="10.5" font-weight="800" fill="#C96A1B">Media a pobre</text>
-  <text x="62" y="213" font-size="9.2" fill="#33424D">Standing water o slush de más de 3 mm</text>
-  <text x="342" y="207" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">20 kt</text>
-  <rect x="18" y="221" width="34" height="25" rx="5" fill="#F8DCD6" stroke="#B83226" stroke-width="1.5"/>
-  <text x="35" y="239" text-anchor="middle" font-size="14" font-weight="800" fill="#B83226">1</text>
-  <text x="62" y="232" font-size="10.5" font-weight="800" fill="#B83226">Pobre</text>
-  <text x="62" y="244" font-size="9.2" fill="#33424D">Hielo</text>
-  <text x="342" y="238" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">15 kt</text>
-  <rect x="18" y="252" width="34" height="25" rx="5" fill="#F1D6E0" stroke="#8E2350" stroke-width="1.5"/>
-  <text x="35" y="270" text-anchor="middle" font-size="14" font-weight="800" fill="#8E2350">0</text>
-  <text x="62" y="263" font-size="10.5" font-weight="800" fill="#8E2350">Menos que pobre</text>
-  <text x="62" y="275" font-size="9.2" fill="#33424D">Wet ice</text>
-  <text x="342" y="269" text-anchor="end" font-size="10.5" font-weight="800" fill="#33424D">—</text>
-  <text x="18" y="290" font-size="9" fill="#5B6B78">Viento cruzado máximo para aterrizar, con ráfagas incluidas.</text>
+  <desc id="d">Códigos de 6 a 0 con ejemplos y el viento cruzado máximo del A320 para aterrizar: 6 seca, 38 kt; 5 buena, mojada o hasta 3 mm de agua, slush o nieve, 38 kt; 4 buena a media, nieve compactada a −15 °C o menos, 29 kt; 3 media, más de 3 mm de nieve o slippery wet, 25 kt; 2 media a pobre, más de 3 mm de standing water o slush, 20 kt; 1 pobre, hielo frío y seco, 15 kt; 0 menos que pobre, wet ice o nieve o agua sobre hielo, sin nivel ni viento publicado. La matriz completa tiene más estados y espesores máximos.</desc>
+  <rect x="1" y="1" width="358" height="348" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Runway condition codes (RWYCC)</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Del reporte del aeropuerto a un nivel de frenado.</text>
+  <text x="342" y="60" text-anchor="end" font-size="10" font-weight="700" fill="#5B6B78">viento cruzado máx.</text>
+  <text x="342" y="73" text-anchor="end" font-size="10" fill="#5B6B78">A320 · aterrizaje</text>
+  <rect x="18" y="82" width="34" height="27" rx="5" fill="#E3F2E8" stroke="#2E8B57" stroke-width="1.5"/>
+  <text x="35" y="101" text-anchor="middle" font-size="14" font-weight="800" fill="#2E8B57">6</text>
+  <text x="62" y="100" font-size="11" font-weight="800" fill="#2E8B57">Seca</text>
+  <text x="342" y="100" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">38 kt</text>
+  <rect x="18" y="115" width="34" height="27" rx="5" fill="#EAF5E3" stroke="#4F9A2E" stroke-width="1.5"/>
+  <text x="35" y="134" text-anchor="middle" font-size="14" font-weight="800" fill="#4F9A2E">5</text>
+  <text x="62" y="126" font-size="11" font-weight="800" fill="#4F9A2E">Buena</text>
+  <text x="62" y="139" font-size="10" fill="#33424D">Mojada o hasta 3 mm de agua, slush o nieve</text>
+  <text x="342" y="133" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">38 kt</text>
+  <rect x="18" y="148" width="34" height="27" rx="5" fill="#F2F3DA" stroke="#8A8A12" stroke-width="1.5"/>
+  <text x="35" y="167" text-anchor="middle" font-size="14" font-weight="800" fill="#8A8A12">4</text>
+  <text x="62" y="159" font-size="11" font-weight="800" fill="#8A8A12">Buena a media</text>
+  <text x="62" y="172" font-size="10" fill="#33424D">Nieve compactada a −15 °C o menos</text>
+  <text x="342" y="166" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">29 kt</text>
+  <rect x="18" y="181" width="34" height="27" rx="5" fill="#FBF0D6" stroke="#B9831E" stroke-width="1.5"/>
+  <text x="35" y="200" text-anchor="middle" font-size="14" font-weight="800" fill="#B9831E">3</text>
+  <text x="62" y="192" font-size="11" font-weight="800" fill="#B9831E">Media</text>
+  <text x="62" y="205" font-size="10" fill="#33424D">Más de 3 mm de nieve; slippery wet…</text>
+  <text x="342" y="199" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">25 kt</text>
+  <rect x="18" y="214" width="34" height="27" rx="5" fill="#FCE6D2" stroke="#C96A1B" stroke-width="1.5"/>
+  <text x="35" y="233" text-anchor="middle" font-size="14" font-weight="800" fill="#C96A1B">2</text>
+  <text x="62" y="225" font-size="11" font-weight="800" fill="#C96A1B">Media a pobre</text>
+  <text x="62" y="238" font-size="10" fill="#33424D">Más de 3 mm de standing water o slush</text>
+  <text x="342" y="232" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">20 kt</text>
+  <rect x="18" y="247" width="34" height="27" rx="5" fill="#F8DCD6" stroke="#B83226" stroke-width="1.5"/>
+  <text x="35" y="266" text-anchor="middle" font-size="14" font-weight="800" fill="#B83226">1</text>
+  <text x="62" y="258" font-size="11" font-weight="800" fill="#B83226">Pobre</text>
+  <text x="62" y="271" font-size="10" fill="#33424D">Hielo (frío y seco)</text>
+  <text x="342" y="265" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">15 kt</text>
+  <rect x="18" y="280" width="34" height="27" rx="5" fill="#F1D6E0" stroke="#8E2350" stroke-width="1.5"/>
+  <text x="35" y="299" text-anchor="middle" font-size="14" font-weight="800" fill="#8E2350">0</text>
+  <text x="62" y="291" font-size="11" font-weight="800" fill="#8E2350">Menos que pobre</text>
+  <text x="62" y="304" font-size="10" fill="#33424D">Wet ice; nieve o agua sobre hielo…</text>
+  <text x="342" y="298" text-anchor="end" font-size="11" font-weight="800" fill="#33424D">—</text>
+  <text x="18" y="324" font-size="10" fill="#5B6B78">Ejemplos de cada código: la matriz tiene más estados</text>
+  <text x="18" y="338" font-size="10" fill="#5B6B78">y espesores máximos. 0: sin nivel ni viento publicado.</text>
 </svg>

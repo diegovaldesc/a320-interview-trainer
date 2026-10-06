@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File tests\run.ps1
 al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
 sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
 instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~18 s con `OK 109/109 casos...` (código
+funciones y a su estado real. Termina en ~10 s con `OK 112/112 casos...` (código
 0) o con la lista de casos que fallan y su mensaje (código 1). La app
 publicada no se modifica.
 
@@ -657,6 +657,30 @@ botón «Portada» para volver). Ningún módulo cambió.
   tal cual (ya no necesitan reescribirlo) y que el flow después de un RTO
   incluya avisar al ATC (la explicación anterior decía lo contrario). Prueba
   de mutación: con «Según el Tutorial» en una explicación, falló.
+- **REG-10** (2026-10-06, 1.19.0) — una revisión externa de los dibujos de
+  Tren y Performance encontró simplificaciones que también estaban en el
+  texto: el triple indicator «muestra presión solo cuando frena Yellow» (la
+  aguja ACCU muestra el accumulator; solo las de los frenos dependen de que
+  Yellow controle el frenado), el parking brake como un escalón más después del accumulator
+  (usa la misma reserva) y «el autobrake no aplica una presión fija» sin decir
+  que MAX frena a fondo. La prueba revisa las fichas, las explicaciones del
+  banco y las respuestas orales. Prueba de mutación: sin la frase de MAX en la
+  oral del autobrake, falló.
+- **REG-11** (2026-10-06, 1.19.0) — el giro de 180° enseñaba solo «30 m»: el
+  A320 gira en una pista de 30 m, pero el giro ocupa unos 24 m en pista seca,
+  sin margen (30 m es lo que ocupa el A321). La clase y la explicación de la
+  pregunta lo dicen ahora; la clave sigue siendo 30 m. El tren que no se
+  traba mezclaba dos procedimientos: el recycle del ECAM (y la gravedad si no
+  resulta en 120 s) y los hasta 4 recycles, que son de la L/G GRAVITY
+  EXTENSION. Pruebas de mutación: con los 4 recycles como parte del recycle
+  del ECAM, o sin los 24 m, falló.
+- **RUTA-15** (2026-10-06, 1.19.0) — los dibujos que mezclaban varias ideas se
+  separaron: el mando del tren y la tabla de frenos (antes un solo dibujo), la
+  secuencia y las velocidades del tren, los modos de frenado y el triple
+  indicator, la falla en crucero y la planificación de la ruta, y la distancia
+  de aterrizaje del despacho y la de vuelo. La prueba exige que cada ficha
+  tenga el suyo y que todos tengan descripción. Prueba de mutación: con el
+  dibujo antiguo de vuelta, falló.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

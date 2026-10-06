@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Velocidades del tren</title>
+  <desc id="d">Tabla de límites: VLO extension, para bajar el tren, 250 kt o M 0,60; VLO retraction, para subirlo, 220 kt o M 0,54; VLE, para volar con el tren abajo, 280 kt o M 0,67. Safety valve: sobre 264 kt corta el Green al tren, y bajo 260 kt sigue cortado mientras la palanca esté arriba.</desc>
+  <rect x="1" y="1" width="358" height="278" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Velocidades del tren</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Cada límite se da en IAS y en Mach.</text>
+  <rect x="18" y="58" width="324" height="26" rx="5" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="28" y="75" font-size="11" font-weight="800" fill="#0E5E6F">VLO extension</text>
+  <text x="124" y="75" font-size="10.5" fill="#33424D">para bajarlo</text>
+  <text x="282" y="75" text-anchor="end" font-size="11" font-weight="800" fill="#1E2A33">250 kt</text>
+  <text x="334" y="75" text-anchor="end" font-size="11" font-weight="700" fill="#33424D">M 0,60</text>
+  <rect x="18" y="90" width="324" height="26" rx="5" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="28" y="107" font-size="11" font-weight="800" fill="#0E5E6F">VLO retraction</text>
+  <text x="124" y="107" font-size="10.5" fill="#33424D">para subirlo</text>
+  <text x="282" y="107" text-anchor="end" font-size="11" font-weight="800" fill="#1E2A33">220 kt</text>
+  <text x="334" y="107" text-anchor="end" font-size="11" font-weight="700" fill="#33424D">M 0,54</text>
+  <rect x="18" y="122" width="324" height="26" rx="5" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="28" y="139" font-size="11" font-weight="800" fill="#0E5E6F">VLE</text>
+  <text x="124" y="139" font-size="10.5" fill="#33424D">volar con el tren abajo</text>
+  <text x="282" y="139" text-anchor="end" font-size="11" font-weight="800" fill="#1E2A33">280 kt</text>
+  <text x="334" y="139" text-anchor="end" font-size="11" font-weight="700" fill="#33424D">M 0,67</text>
+  <rect x="18" y="166" width="324" height="80" rx="8" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="30" y="185" font-size="11" font-weight="800" fill="#C77700">Safety valve</text>
+  <text x="30" y="203" font-size="10.5" fill="#1E2A33">Sobre 264 kt corta el Green al tren.</text>
+  <text x="30" y="219" font-size="10.5" fill="#1E2A33">Bajo 260 kt sigue cortado mientras la palanca</text>
+  <text x="30" y="234" font-size="10.5" fill="#1E2A33">esté arriba.</text>
+  <text x="18" y="266" font-size="10" fill="#5B6B78">Así, una selección o una falla no mueve el tren a alta velocidad.</text>
+</svg>

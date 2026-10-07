@@ -14,19 +14,23 @@ o a la integridad del banco.
 powershell -ExecutionPolicy Bypass -File tests\run.ps1
 ```
 
-`tests/run.ps1` arma una copia temporal de `index.html` con `tests/suite.js`
-al final, le copia al lado los archivos que carga (`css/`, `data/`, `js/`; ver
-sección 13) y la abre en Chrome o Edge sin ventana (no necesita Node ni
-instalar nada). Los casos corren dentro de la propia app, con acceso a sus
-funciones y a su estado real. Termina en ~10 s con `OK 112/112 casos...` (código
-0) o con la lista de casos que fallan y su mensaje (código 1). La app
-publicada no se modifica.
+`tests/run.ps1` primero revisa la integridad de los datos con
+`node tests/data-integrity.js` (si el equipo no tiene Node, avisa y sigue; ver
+sección 17). Después arma una copia temporal de `index.html` con la batería al
+final (las secciones de `tests/suite/`, unidas en orden de nombre), le copia
+al lado los archivos que carga (`css/`, `data/`, `js/`, íconos; ver sección 13)
+y la abre en Chrome o Edge sin ventana. Los casos corren dentro de la propia
+app, con acceso a sus funciones y a su estado real. Termina en ~10 s con
+`OK 114/114 casos...` (código 0) o con la lista de casos que fallan y su
+mensaje (código 1). La app publicada no se modifica.
 
 Está comprobado que detecta regresiones: rompiendo a propósito siete de los
 arreglos de abajo, falló en los casos correspondientes. Ejecútala **antes de
 cada commit** que toque la app (`index.html`, `css/`, `data/` o `js/`), y
-agrega un caso a `tests/suite.js` por cada bug nuevo (con el ID del hallazgo
-en el nombre).
+agrega un caso por cada bug nuevo en la sección que corresponda de
+`tests/suite/` (con el ID del hallazgo en el nombre). `00-arnes.js` abre la
+batería con los ayudantes (`T`, `ok`, `eq`, `reset`…) y `99-ejecucion.js` la
+cierra: los demás archivos son fragmentos de esa misma función.
 
 Lo que esta batería **no** cubre: aspecto visual, tamaños en pantalla y
 comportamiento real del micrófono/voz en un teléfono; eso se verifica a ojo
@@ -357,7 +361,7 @@ de la página. Esa comprobación necesita esos manuales en `Desktop\APP` y por
 eso no forma parte de `run.ps1`; si se edita el texto de una fuente interna,
 hay que repetirla con
 `node C:\Users\yodie\Desktop\APP\MD\_herramientas\verificar_citas_ingles.js`
-(lee `data/ingles.js`; en la última corrida: 77 tramos
+(lee `data/english/`; en la última corrida: 77 tramos
 de cita comprobados, 0 problemas). Lo que **no** viene de un manual (los turnos
 de ATC de los role-plays y el formato de los ATIS) es composición de práctica y
 así se indica en pantalla.
@@ -440,42 +444,53 @@ go-around», la batería falló en el caso correspondiente cada vez.
   - La batería comprueba que la pregunta esté, con TRUE, con la explicación de
     los master levers y sin citar manuales.
 
-## 13. Archivos de la app (2026-10-01)
+## 13. Archivos de la app (2026-10-01; en módulos desde 2026-10-07)
 
-La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
+La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible. Desde
+la 1.22.0 los datos y la lógica están además en módulos pequeños (sección 17).
+El mapa completo para personas e IA está en `AI_PROJECT_MAP.md`.
 
 | Archivo | Qué tiene |
 |---|---|
-| `index.html` | La página: encabezado, íconos y el HTML de las pantallas. |
+| `index.html` | La página: encabezado y el HTML de las pantallas. El manifiesto y los íconos están en `manifest.webmanifest` y `assets/icons/`. |
 | `css/app.css` | Los estilos. |
-| `data/banco.js` | Banco de alternativas (sistemas, Operación Airbus, Entrevista técnica y DGAC), en JSON. |
-| `data/ingles.js` | Banco de Inglés OACI, en JSON. |
-| `data/oral.js` | Banco de Entrevista oral (`ORAL_VOICE_BANK`), que también usa Need to know. |
-| `js/app.js` | Toda la lógica del banco de preguntas. |
+| `data/questions/` | Banco de alternativas: un archivo por categoría (`hydraulic.js`, `fuel.js`…), el DGAC en `dgac/` (uno por sección) y `index.js`, que los reúne. |
+| `data/english/` | Banco de Inglés OACI: un archivo por tipo de ejercicio e `index.js`. |
+| `data/oral/` | Banco de Entrevista oral (`ORAL_VOICE_BANK`, también lo usa Need to know): tres grupos e `index.js`. |
+| `data/manifest.json` | Solo metadatos: archivo y cantidad de cada parte (lo escribe `tools/manifest.js`). |
+| `js/app.js` | Núcleo: bancos, progreso guardado, pruebas de alternativas, inicio, integridad y respaldo. |
+| `js/oral.js`, `js/needtoknow.js`, `js/ingles.js` | Entrevista oral, Need to know e Inglés OACI. |
+| `js/inicio.js` | Arranque: recupera el progreso, revisa la integridad y pinta el inicio. |
 | `css/ruta.css`, `js/ruta.js` | La Ruta de entrenamiento: portada, mapa y estaciones (sección 14). Todo lleva el prefijo `rt-`. |
-| `data/estaciones.js` | Las materias, estaciones y la ruta del mapa. Lo genera `Escritorio\APP\Estaciones\_herramientas\exportar_app.js`: no se edita a mano. |
+| `data/stations/` | Las materias (una por archivo), las estaciones y la ruta del mapa. Lo genera `Escritorio\APP\Estaciones\_herramientas\exportar_app.js`: no se edita a mano. |
 | `assets/estaciones/` | Los diagramas, imágenes y fondos del mapa que usan las estaciones (los copia el mismo exportador). |
 | `assets/portada/` | La textura de las nubes de la portada (sección 14). El exportador no toca esta carpeta. |
 
-- **Orden de carga** — `index.html` carga los tres bancos antes que
-  `js/app.js`, porque la lógica los usa al arrancar. La lógica sigue en un solo
-  archivo: al cargar el estado se usan funciones escritas más abajo, y
-  repartirlas en varios archivos rompería el arranque.
-- **Texto exacto del banco** — `data/banco.js` guarda el JSON como texto entre
-  comillas invertidas (`String.raw`), porque `BANK_FINGERPRINT` se calcula
-  sobre ese texto: así una sesión «Continuar» guardada antes de dividir sigue
-  valiendo. Por eso el JSON no puede tener comillas invertidas ni un `$`
-  seguido de una llave (`data/ingles.js` sigue la misma regla). Las
-  herramientas leen el JSON entre esa marca y la última comilla invertida.
+- **Orden de carga** — `index.html` carga los datos antes que `js/app.js`,
+  porque la lógica los usa al arrancar. Al cargar el estado se usan funciones
+  de Need to know e Inglés: por eso, desde la 1.22.0, esa carga
+  (`appState=loadState()`) está en `js/inicio.js`, que corre después de todas
+  las partes de la lógica y antes de `js/ruta.js` (sección 17).
+- **Texto exacto del banco** — `BANK_FINGERPRINT` se calcula sobre el texto
+  JSON del banco. Desde la 1.22.0 ese texto lo arma `data/questions/index.js`
+  con `JSON.stringify` y sale idéntico byte a byte al de antes (huella
+  `-me5xnl`), así que una sesión «Continuar» guardada sigue valiendo. Las
+  herramientas leen los datos con `tools/cargar_datos.js`, que los carga igual
+  que el navegador.
 - **Versión en las rutas** — cada archivo se pide con `?v=` + `APP_VERSION`
   para que un teléfono no mezcle una parte nueva con otra vieja guardada en su
   memoria. **Cada versión nueva cambia `APP_VERSION` y los `?v=` de
-  `index.html`.**
-- **ESTRUCTURA-01** — `index.html` carga las 8 partes (desde la 1.12.0, con
-  `css/ruta.css`, `data/estaciones.js` y `js/ruta.js`), cada una una sola vez,
-  en orden y con `?v=APP_VERSION`; no queda `<style>` ni banco dentro de
-  `index.html`; la huella sale del texto exacto de `data/banco.js`; y el banco
-  de inglés está cargado.
+  `index.html`**: desde la 1.22.0 lo hace `node tools/version.js X.Y.Z`.
+- **ESTRUCTURA-01** — cada archivo local que carga `index.html` va una sola vez
+  y con `?v=APP_VERSION`; las piezas principales van en orden (estilos, los
+  `index.js` de `data/questions/`, `data/english/`, `data/oral/` y
+  `data/stations/`, y después `js/app.js`, `js/oral.js`, `js/needtoknow.js`,
+  `js/ingles.js`, `js/inicio.js` y `js/ruta.js`); cada parte de datos se carga
+  antes del `index.js` de su carpeta; los archivos antiguos (`data/banco.js`,
+  `data/ingles.js`, `data/oral.js`, `data/estaciones.js`) ya no se cargan; no
+  queda `<style>` ni banco dentro de `index.html`; la huella sale del texto
+  exacto del banco; ninguna parte queda suelta en `window`; y el banco de
+  inglés está cargado.
 - **Errores con detalle** — `run.ps1` abre la copia con
   `--allow-file-access-from-files`: sin eso, un error en `js/` o `data/` llega
   solo como «Script error.». Además lee la salida del navegador con
@@ -507,7 +522,7 @@ La app dejó de ser un solo archivo de 1,5 MB, sin ningún cambio visible:
   cambiar algo de verdad.
 
 Comprobado que detecta regresiones: un `?v=` atrasado en `js/app.js` falla en
-ESTRUCTURA-01, y cargar `data/oral.js` después de `js/app.js` falla en 15
+ESTRUCTURA-01, y cargar `data/oral.js` (hoy `data/oral/`) después de `js/app.js` falla en 15
 casos (`ORAL_VOICE_BANK is not defined`).
 
 ## 14. Ruta de entrenamiento: portada, mapa y estaciones (2026-10-01, 1.12.0; carta en ruta 1.13.0)
@@ -520,7 +535,7 @@ botón «Portada» para volver). Ningún módulo cambió.
 - **Mapa** — los 7 fondos apilados, de la pista de salida a la pista de
   llegada; las estaciones de las materias (desde la 1.14.0, 29: Hidráulico,
   Eléctrico y Controles de vuelo) mezcladas por nivel
-  (`data/estaciones.js`); la estación actual destacada, las demás con candado
+  (`data/stations/`); la estación actual destacada, las demás con candado
   hasta ganar una estrella en la anterior, y el avión (la imagen
   `mapa-avion.webp`, fuera de escala) que espera antes de la estación que toca
   y vuela a la siguiente al terminar una, dejando una estela dorada.
@@ -766,6 +781,72 @@ escribió la DGAC:
 
 **DGAC-02** comprueba la respuesta de los SFCC y que las tres explicaciones
 calcen con su respuesta.
+
+## 17. Datos y lógica en módulos, para trabajar con menos contexto (2026-10-07, 1.22.0)
+
+Cambio solo de organización: mismo contenido, mismas pantallas. Una persona o
+una IA abre solo la parte que necesita (instrucciones para agentes en
+`AGENTS.md`, mapa en `AI_PROJECT_MAP.md`).
+
+- **Datos** — los bancos se dividieron por su clasificación real: alternativas
+  por categoría (`data/questions/<clave>.js`, la misma clave que usa la app) y
+  DGAC por `bank_section` (`data/questions/dgac/`); inglés por tipo de
+  ejercicio; orales en tres grupos seguidos, sin cambiar su orden; estaciones
+  por materia (lo escribe `exportar_app.js`). Cada archivo trae un elemento
+  por línea. El `index.js` de cada carpeta reúne las partes en la misma
+  variable de siempre (`SYSTEMS_DATA_JSON`, `ENGLISH_DATA_JSON`,
+  `ORAL_VOICE_BANK`, `ESTACIONES_DATA`), así que la lógica no cambió. No hay
+  copias: cada pregunta existe en un solo archivo.
+- **Lógica** — `js/app.js` se dividió por sus límites ya marcados: Entrevista
+  oral, Need to know, Inglés OACI y el arranque (`js/inicio.js`). Cada línea
+  original quedó exactamente una vez, en el mismo orden de ejecución. La única
+  línea que se movió es `appState=loadState();`, que ahora corre en
+  `js/inicio.js` después de todas las partes y antes de `js/ruta.js`.
+  Entre su lugar original y ese punto no corre nada que use el estado.
+- **index.html** — el manifiesto y los íconos, que iban incrustados en base64
+  (123 KB), pasaron a `manifest.webmanifest` y `assets/icons/`, con los
+  mismos íconos byte a byte. `index.html` bajó de 145 KB a 28 KB.
+- **Batería** — `tests/suite.js` se dividió por sus secciones en
+  `tests/suite/`. Unidas en orden, las partes reproducen exactamente el
+  archivo anterior (más una línea de comentario en cada una).
+- **Integridad de datos** (`tests/data-integrity.js`, Node) — `index.html`
+  carga cada archivo de `data/` una vez y antes del `index.js` de su carpeta,
+  y no carga ninguno que no exista. Cada archivo registra solo lo que dice su
+  nombre (una pregunta DGAC en la sección equivocada falla). Además revisa:
+  - la forma de cada pregunta: enunciado, alternativas no repetidas, respuesta
+    dentro del rango, y explicación y cita fuera del DGAC;
+  - que los ids sean únicos, en las alternativas, las orales, el inglés y las
+    estaciones;
+  - las rúbricas orales;
+  - que las pruebas de inglés y la ruta nombren solo elementos que existen;
+  - que `data/manifest.json` esté al día.
+- **Comprobación de la migración (una vez)** — contra una copia del commit
+  anterior:
+  - el texto del banco quedó idéntico byte a byte (1.123 preguntas, mismos ids,
+    mismas respuestas correctas, huella `-me5xnl`);
+  - las 53 orales, los 60 ejercicios y 4 pruebas de inglés, y las 54
+    estaciones quedaron iguales al compararlas en JSON estricto;
+  - `construir.js` y los dos verificadores de citas dieron la misma salida;
+  - el recorrido de 14 pantallas (`tests/pantallas.js`) dio el mismo HTML,
+    estilos y distribución.
+
+  En el recorrido hubo que dejar fuera dos cosas que no dependen del código: la
+  fuente web, que en el navegador sin ventana a veces alcanza a cargar y a veces
+  no, y la posición de las nubes, que se mueven con el tiempo.
+- **Mutaciones comprobadas** — cada una de estas fallas se detecta:
+  - una respuesta fuera de rango, una pregunta duplicada, un archivo que
+    `index.html` deja de cargar, una pregunta DGAC en otra sección o un
+    manifiesto atrasado fallan en la integridad de datos;
+  - una parte cargada después de su `index.js` falla en la integridad de datos
+    y en el navegador;
+  - un `?v=` atrasado, una parte que queda suelta en `window` o
+    `js/inicio.js` cargado antes que `js/ingles.js` fallan en ESTRUCTURA-01.
+- **Herramientas** — `tools/buscar.js` encuentra por texto o id una pregunta,
+  una oral, un ejercicio de inglés o una estación y da `archivo:línea`.
+  `tools/manifest.js` reescribe el manifiesto. `tools/version.js` cambia la
+  versión en todas partes. `tools/cargar_datos.js` carga los datos en Node
+  igual que el navegador; también lo usan `construir.js` y los verificadores
+  de citas de `Escritorio\APP`.
 
 ## Límite explícito de esta batería
 

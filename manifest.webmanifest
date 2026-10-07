@@ -1,0 +1,30 @@
+{
+  "name": "A320 Interview Trainer",
+  "short_name": "A320 Trainer",
+  "description": "Banco de preguntas y entrevista técnica A320 para pilotos",
+  "start_url": "https://diegovaldesc.github.io/a320-interview-trainer/",
+  "scope": "https://diegovaldesc.github.io/a320-interview-trainer/",
+  "id": "https://diegovaldesc.github.io/a320-interview-trainer/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E8ECEE",
+  "theme_color": "#1B2329",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

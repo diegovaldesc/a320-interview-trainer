@@ -86,20 +86,30 @@
     eq(roundTrip(both).stats[n].a,9,"si ya hay datos en el id nuevo, se conservan");
     ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b|\b[Ll]a PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||"")+" "+(q.cite||""))}),"ningun texto dice el PTU ni la PTU (se dice PTU, sin articulo)");
   });
-  T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden y con la version actual",function(){
-    var want=["css/app.css","css/ruta.css","data/banco.js","data/ingles.js","data/oral.js","data/estaciones.js","js/app.js","js/ruta.js"];
-    var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")});
+  T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden, una vez y con la version actual",function(){
+    var want=["css/app.css","css/ruta.css","data/questions/index.js","data/english/index.js","data/oral/index.js","data/estaciones.js","js/app.js","js/ruta.js"];
+    var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")}).filter(function(r){return !/^(https?:)?\/\//.test(r)});
     var paths=refs.map(function(r){return r.split("?")[0]});
-    want.forEach(function(p,k){
+    paths.forEach(function(p,k){
       eq(paths.filter(function(x){return x===p}).length,1,"veces que index.html carga "+p);
-      eq(refs[paths.indexOf(p)],p+"?v="+APP_VERSION,"version en la ruta de "+p+" (debe ser APP_VERSION para que el navegador no use una copia vieja)");
+      eq(refs[k],p+"?v="+APP_VERSION,"version en la ruta de "+p+" (debe ser APP_VERSION para que el navegador no use una copia vieja)");
+    });
+    want.forEach(function(p,k){
+      ok(paths.indexOf(p)>=0,"index.html debe cargar "+p);
       if(k>0)ok(paths.indexOf(p)>paths.indexOf(want[k-1]),p+" debe cargarse despues de "+want[k-1]);
     });
+    ["data/questions/","data/english/","data/oral/"].forEach(function(dir){
+      var idx=paths.indexOf(dir+"index.js"),parts=paths.filter(function(p){return p.indexOf(dir)===0&&p!==dir+"index.js"});
+      ok(parts.length>0,dir+" no carga ninguna parte");
+      parts.forEach(function(p){ok(paths.indexOf(p)<idx,p+" debe cargarse antes de "+dir+"index.js, que lo reune")});
+    });
+    ["data/banco.js","data/ingles.js","data/oral.js"].forEach(function(p){ok(paths.indexOf(p)<0,p+" ya no existe (se dividio en modulos): no debe cargarse")});
     ok(!document.querySelector("style"),"no debe quedar un bloque <style> dentro de index.html");
     ok(!document.getElementById("systems-data")&&!document.getElementById("english-data"),"los bancos ya no van dentro de index.html");
-    eq(typeof SYSTEMS_DATA_JSON,"string","texto de data/banco.js");
-    eq(BANK_FINGERPRINT,cheapHash(SYSTEMS_DATA_JSON),"la huella sale del texto exacto de data/banco.js");
-    ok(ENGLISH.pruebas.length===4&&ENGLISH.mcq.length===32,"banco de ingles cargado desde data/ingles.js");
+    eq(typeof SYSTEMS_DATA_JSON,"string","texto del banco (lo arma data/questions/index.js)");
+    eq(BANK_FINGERPRINT,cheapHash(SYSTEMS_DATA_JSON),"la huella sale del texto exacto del banco");
+    ["BANK_PARTS","DGAC_SECTIONS","DGAC_SECTION_ORDER","ENGLISH_PARTS","ORAL_PARTS","STATION_PARTS","STATION_ROUTE"].forEach(function(g){ok(!(g in window),"la parte suelta "+g+" debe reunirse y borrarse")});
+    ok(ENGLISH.pruebas.length===4&&ENGLISH.mcq.length===32,"banco de ingles cargado desde data/english/");
   });
   T("0 A08 el encabezado ya no promete OFFLINE",function(){
     ok(!/OFFLINE/i.test(document.querySelector(".topbar").textContent),"el encabezado dice OFFLINE");

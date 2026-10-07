@@ -1,5 +1,7 @@
-# Corre la bateria de regresion (tests/suite.js) dentro de la propia app,
-# en un Chrome o Edge sin ventana. No necesita Node ni instalar nada.
+# Corre la bateria de regresion (tests/suite/*.js, unidos en orden de nombre)
+# dentro de la propia app, en un Chrome o Edge sin ventana. Antes, si hay Node,
+# revisa la integridad de los datos (tests/data-integrity.js); sin Node, avisa
+# y sigue solo con la bateria.
 #
 #   powershell -ExecutionPolicy Bypass -File tests\run.ps1
 #
@@ -15,7 +17,17 @@ $ErrorActionPreference = "Stop"
 
 $root  = Split-Path -Parent $PSScriptRoot
 $index = Join-Path $root "index.html"
-$suite = if ($Script) { (Resolve-Path $Script).Path } else { Join-Path $PSScriptRoot "suite.js" }
+$suiteDir = Join-Path $PSScriptRoot "suite"
+
+if (-not $Script) {
+  $node = Get-Command node -ErrorAction SilentlyContinue
+  if ($node) {
+    & $node.Source (Join-Path $PSScriptRoot "data-integrity.js")
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+  } else {
+    Write-Host "AVISO  sin Node: no se reviso la integridad de los datos (node tests/data-integrity.js)"
+  }
+}
 
 $candidates = @(
   $Browser,
@@ -31,8 +43,16 @@ $work = Join-Path ([IO.Path]::GetTempPath()) ("a320-tests-" + [guid]::NewGuid().
 New-Item -ItemType Directory -Path $work | Out-Null
 try {
   $html      = [IO.File]::ReadAllText($index, [Text.Encoding]::UTF8)
-  $suiteText = [IO.File]::ReadAllText($suite, [Text.Encoding]::UTF8)
-  if ($suiteText.Contains("</script")) { throw "suite.js no puede contener la secuencia </script" }
+  if ($Script) {
+    $suiteText = [IO.File]::ReadAllText((Resolve-Path $Script).Path, [Text.Encoding]::UTF8)
+  } else {
+    # La bateria esta dividida por secciones: 00-arnes.js abre la funcion con los ayudantes y
+    # 99-ejecucion.js la cierra; se unen en orden de nombre.
+    $parts = @(Get-ChildItem -LiteralPath $suiteDir -Filter "*.js" | Sort-Object Name)
+    if (-not $parts.Count) { throw "no hay archivos en tests/suite/" }
+    $suiteText = ($parts | ForEach-Object { [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8) }) -join "`n"
+  }
+  if ($suiteText.Contains("</script")) { throw "la bateria no puede contener la secuencia </script" }
 
   # Se arma una copia temporal de la app con la bateria al final. La app
   # publicada no se toca.
@@ -87,7 +107,7 @@ try {
   if ($null -eq $dom) { Write-Host "No se pudo leer la salida del navegador."; exit 2 }
   $mm = [regex]::Match($dom, '<pre id="__test_results">(.*?)</pre>', 'Singleline')
   if (-not $mm.Success -or [string]::IsNullOrWhiteSpace($mm.Groups[1].Value)) {
-    Write-Host "La bateria no entrego resultados. Revisa errores de script en la app (index.html, js/, data/) o en tests/suite.js."
+    Write-Host "La bateria no entrego resultados. Revisa errores de script en la app (index.html, js/, data/) o en tests/suite/."
     exit 2
   }
   $decoded = [Net.WebUtility]::HtmlDecode($mm.Groups[1].Value)

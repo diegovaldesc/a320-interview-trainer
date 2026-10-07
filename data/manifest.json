@@ -1,0 +1,433 @@
+{
+ "about": "Solo metadatos de data/ (archivo y cantidad de cada parte). Lo escribe tools/manifest.js: no se edita a mano.",
+ "questions": {
+  "aggregator": "data/questions/index.js",
+  "global": "window.SYSTEMS_DATA_JSON",
+  "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
+  "total": 1123,
+  "categories": {
+   "procedures": {
+    "name": "Procedures and emergencies",
+    "file": "data/questions/procedures.js",
+    "count": 53,
+    "idPrefix": "procedures:"
+   },
+   "hydraulic": {
+    "name": "Hydraulic",
+    "file": "data/questions/hydraulic.js",
+    "count": 30,
+    "idPrefix": "hydraulic:"
+   },
+   "fire": {
+    "name": "Fire protection",
+    "file": "data/questions/fire.js",
+    "count": 30,
+    "idPrefix": "fire:"
+   },
+   "ice_rain": {
+    "name": "Ice and rain protection",
+    "file": "data/questions/ice_rain.js",
+    "count": 30,
+    "idPrefix": "ice_rain:"
+   },
+   "comms_oxygen": {
+    "name": "Communications and oxygen",
+    "file": "data/questions/comms_oxygen.js",
+    "count": 30,
+    "idPrefix": "comms_oxygen:"
+   },
+   "indicating": {
+    "name": "Indicating and recording",
+    "file": "data/questions/indicating.js",
+    "count": 31,
+    "idPrefix": "indicating:"
+   },
+   "dgac_bank": {
+    "name": "DGAC A320 systems question bank",
+    "file": "data/questions/dgac_bank.js",
+    "count": 573,
+    "idPrefix": "dgac_bank:",
+    "sections": {
+     "Air conditioning and pneumatic": {
+      "file": "data/questions/dgac/air_conditioning_and_pneumatic.js",
+      "count": 85
+     },
+     "Autoflight and FMS": {
+      "file": "data/questions/dgac/autoflight_and_fms.js",
+      "count": 78
+     },
+     "Communications and oxygen": {
+      "file": "data/questions/dgac/communications_and_oxygen.js",
+      "count": 51
+     },
+     "Electrical": {
+      "file": "data/questions/dgac/electrical.js",
+      "count": 63
+     },
+     "Fire protection": {
+      "file": "data/questions/dgac/fire_protection.js",
+      "count": 33
+     },
+     "Fuel and hydraulic": {
+      "file": "data/questions/dgac/fuel_and_hydraulic.js",
+      "count": 43
+     },
+     "Indicating and recording": {
+      "file": "data/questions/dgac/indicating_and_recording.js",
+      "count": 14
+     },
+     "APU and powerplant": {
+      "file": "data/questions/dgac/apu_and_powerplant.js",
+      "count": 43
+     },
+     "Flight controls": {
+      "file": "data/questions/dgac/flight_controls.js",
+      "count": 64
+     },
+     "Ice and rain protection": {
+      "file": "data/questions/dgac/ice_and_rain_protection.js",
+      "count": 27
+     },
+     "Landing gear, lights and doors": {
+      "file": "data/questions/dgac/landing_gear_lights_and_doors.js",
+      "count": 72
+     }
+    }
+   },
+   "air_cond": {
+    "name": "Air conditioning, pneumatic and pressurization",
+    "file": "data/questions/air_cond.js",
+    "count": 30,
+    "idPrefix": "air_cond:"
+   },
+   "electrical": {
+    "name": "Electrical",
+    "file": "data/questions/electrical.js",
+    "count": 30,
+    "idPrefix": "electrical:"
+   },
+   "flight_control": {
+    "name": "Flight controls",
+    "file": "data/questions/flight_control.js",
+    "count": 30,
+    "idPrefix": "flight_control:"
+   },
+   "landing_gear": {
+    "name": "Landing gear and brakes",
+    "file": "data/questions/landing_gear.js",
+    "count": 30,
+    "idPrefix": "landing_gear:"
+   },
+   "autoflight": {
+    "name": "Autoflight and FMGS",
+    "file": "data/questions/autoflight.js",
+    "count": 30,
+    "idPrefix": "autoflight:"
+   },
+   "apu_powerplant": {
+    "name": "APU and powerplant",
+    "file": "data/questions/apu_powerplant.js",
+    "count": 30,
+    "idPrefix": "apu_powerplant:"
+   },
+   "fuel": {
+    "name": "Fuel",
+    "file": "data/questions/fuel.js",
+    "count": 31,
+    "idPrefix": "fuel:"
+   },
+   "operations_airbus": {
+    "name": "A320 Airbus operations",
+    "file": "data/questions/operations_airbus.js",
+    "count": 42,
+    "idPrefix": "operations_airbus:"
+   },
+   "interview_technical": {
+    "name": "Technical interview",
+    "file": "data/questions/interview_technical.js",
+    "count": 93,
+    "idPrefix": "interview_technical:"
+   }
+  }
+ },
+ "oral": {
+  "aggregator": "data/oral/index.js",
+  "global": "ORAL_VOICE_BANK",
+  "total": 53,
+  "groups": {
+   "core": {
+    "file": "data/oral/core.js",
+    "count": 23,
+    "ids": [
+     "ov_microburst",
+     "ov_windshear",
+     "ov_crm_windshear",
+     "ov_balanced_field",
+     "ov_stab_appr",
+     "ov_pax_sick",
+     "ov_sterile",
+     "ov_fbw",
+     "ov_tcas",
+     "ov_etops",
+     "ov_hydroplane",
+     "ov_autobrake",
+     "ov_engfire",
+     "ov_allengfail",
+     "ov_decompression",
+     "ov_smoke",
+     "ov_stall",
+     "ov_elec_emer",
+     "ov_hyd_arch",
+     "ov_elec_arch",
+     "ov_v1_reject",
+     "ov_v1_continue",
+     "ov_pan_mayday"
+    ]
+   },
+   "performance": {
+    "file": "data/oral/performance.js",
+    "count": 21,
+    "ids": [
+     "ov_mac_envelope",
+     "ov_weights",
+     "ov_cost_index",
+     "ov_fuel_dan121",
+     "ov_contaminated_rwy",
+     "ov_flex_derate_contam",
+     "ov_appr_ldg_climb",
+     "ov_improve_takeoff",
+     "ov_eng_fail_cruise",
+     "ov_cg_effects",
+     "ov_flex_derate_def",
+     "ov_balanced_unbalanced",
+     "ov_improved_climb",
+     "ov_takeoff_segments",
+     "ov_tailwind_takeoff",
+     "ov_vmc_cg_weight",
+     "ov_limit_speeds",
+     "ov_green_dot",
+     "ov_srs",
+     "ov_gs_mini",
+     "ov_coffin_corner"
+    ]
+   },
+   "automation_procedures": {
+    "file": "data/oral/automation_procedures.js",
+    "count": 9,
+    "ids": [
+     "ov_fmgs_functions",
+     "ov_fc_laws",
+     "ov_dual_ra_direct",
+     "ov_rvsm_equipment",
+     "ov_ecam_priorities",
+     "ov_ecam_handling",
+     "ov_ecam_after",
+     "ov_emergency_atc",
+     "ov_golden_rules"
+    ]
+   }
+  }
+ },
+ "english": {
+  "aggregator": "data/english/index.js",
+  "global": "window.ENGLISH_DATA_JSON",
+  "version": "2026.09.24-v3",
+  "parts": {
+   "mcq": {
+    "file": "data/english/mcq.js",
+    "count": 32,
+    "ids": [
+     "en_q_01",
+     "en_q_08",
+     "en_q_18",
+     "en_q_25",
+     "en_q_39",
+     "en_q_51",
+     "en_q_62",
+     "en_q_45",
+     "en_q_06",
+     "en_q_11",
+     "en_q_20",
+     "en_q_29",
+     "en_q_38",
+     "en_q_55",
+     "en_q_66",
+     "en_q_72",
+     "en_q_05",
+     "en_q_12",
+     "en_q_22",
+     "en_q_30",
+     "en_q_44",
+     "en_q_56",
+     "en_q_67",
+     "en_q_48",
+     "en_q_02",
+     "en_q_10",
+     "en_q_21",
+     "en_q_33",
+     "en_q_41",
+     "en_q_53",
+     "en_q_65",
+     "en_q_73"
+    ]
+   },
+   "images": {
+    "file": "data/english/images.js",
+    "count": 8,
+    "ids": [
+     "en_img_01",
+     "en_img_02",
+     "en_img_03",
+     "en_img_04",
+     "en_img_05",
+     "en_img_06",
+     "en_img_07",
+     "en_img_08"
+    ]
+   },
+   "listening": {
+    "file": "data/english/listening.js",
+    "count": 16,
+    "ids": [
+     "en_lis_01",
+     "en_lis_02",
+     "en_lis_03",
+     "en_lis_04",
+     "en_lis_05",
+     "en_lis_06",
+     "en_lis_07",
+     "en_lis_08",
+     "en_lis_09",
+     "en_lis_10",
+     "en_lis_11",
+     "en_lis_12",
+     "en_lis_13",
+     "en_lis_14",
+     "en_lis_15",
+     "en_lis_16"
+    ]
+   },
+   "roleplays": {
+    "file": "data/english/roleplays.js",
+    "count": 4,
+    "ids": [
+     "en_rp_01",
+     "en_rp_02",
+     "en_rp_03",
+     "en_rp_04"
+    ]
+   },
+   "pruebas": {
+    "file": "data/english/pruebas.js",
+    "count": 4,
+    "ids": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  }
+ },
+ "stations": {
+  "aggregator": "data/stations/index.js",
+  "global": "window.ESTACIONES_DATA",
+  "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
+  "total": 54,
+  "subjects": {
+   "controles": {
+    "title": "Flight controls",
+    "file": "data/stations/controles.js",
+    "count": 11,
+    "stations": [
+     "ctl-1 · Fly-by-wire",
+     "ctl-2 · The seven computers",
+     "ctl-3 · Sidesticks and priority",
+     "ctl-4 · Normal law: pitch",
+     "ctl-5 · Normal law: roll",
+     "ctl-6 · Protections",
+     "ctl-7 · Rudder and FACs",
+     "ctl-8 · Alternate and direct law",
+     "ctl-9 · Flaps and slats",
+     "ctl-10 · Spoilers, speed brakes and ground spoilers",
+     "ctl-repaso · Flight controls review"
+    ]
+   },
+   "electrico": {
+    "title": "Electrical",
+    "file": "data/stations/electrico.js",
+    "count": 11,
+    "stations": [
+     "ele-1 · Power sources",
+     "ele-2 · Who powers what",
+     "ele-3 · Bus tie and generator failure",
+     "ele-4 · External power, APU GEN and galleys",
+     "ele-5 · IDG and generator loss",
+     "ele-6 · Batteries",
+     "ele-7 · When the batteries connect",
+     "ele-8 · Partial failures: TR, AC BUS 1 and smoke",
+     "ele-9 · Emergency: RAT and EMER GEN",
+     "ele-10 · Batteries only: static inverter",
+     "ele-repaso · Electrical review"
+    ]
+   },
+   "hidraulico": {
+    "title": "Hydraulic",
+    "file": "data/stations/hidraulico.js",
+    "count": 7,
+    "stations": [
+     "hid-1 · Three independent systems",
+     "hid-2 · PTU",
+     "hid-3 · Blue system and RAT",
+     "hid-4 · Yellow on ground and cargo doors",
+     "hid-5 · Reservoirs, accumulators and priority valves",
+     "hid-6 · Valves, filters and FAULT light",
+     "hid-repaso · Hydraulic review"
+    ]
+   },
+   "performance": {
+    "title": "Performance",
+    "file": "data/stations/performance.js",
+    "count": 13,
+    "stations": [
+     "perf-1 · Performance at a glance",
+     "perf-2 · Takeoff speeds",
+     "perf-3 · Runway distances",
+     "perf-4 · Balanced field and V1",
+     "perf-5 · Reject or continue",
+     "perf-6 · Takeoff segments",
+     "perf-7 · FLEX and derated takeoff",
+     "perf-8 · Wet and contaminated runways",
+     "perf-9 · Weights and CG",
+     "perf-10 · Climb, cruise and cost index",
+     "perf-11 · Engine failure in cruise",
+     "perf-12 · Landing performance",
+     "perf-repaso · Performance review"
+    ]
+   },
+   "tren": {
+    "title": "Landing gear and brakes",
+    "file": "data/stations/tren.js",
+    "count": 12,
+    "stations": [
+     "tren-1 · Landing gear at a glance",
+     "tren-2 · Gear extension and retraction",
+     "tren-3 · LGCIUs and gear indications",
+     "tren-4 · Nose wheel steering",
+     "tren-5 · Braking modes",
+     "tren-6 · Antiskid",
+     "tren-7 · Autobrake",
+     "tren-8 · Taxi technique",
+     "tren-9 · Gear not down",
+     "tren-10 · Brake temperature",
+     "tren-11 · Brake failures",
+     "tren-repaso · Landing gear and brakes review"
+    ]
+   }
+  },
+  "route": {
+   "file": "data/stations/route.js",
+   "stations": 54
+  }
+ }
+}

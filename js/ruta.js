@@ -1,12 +1,12 @@
 /* Ruta de entrenamiento: portada (inicio de la app), mapa de estaciones y estación (clase, prueba y estrellas).
-   El contenido viene de data/estaciones.js (lo exporta la carpeta Estaciones). El avance se guarda en
+   El contenido viene de data/stations/ (lo exporta la carpeta Estaciones). El avance se guarda en
    appState.ruta y viaja en la copia de seguridad. Las preguntas de alternativas cuentan en las
    estadísticas de la app (menos las del banco DGAC, como en el resto de la app) y las orales se
    evalúan con el mismo motor de Entrevista oral. Se carga después de js/app.js. */
 (function(){
   var D = window.ESTACIONES_DATA;
   var $ = function(id){ return document.getElementById(id); };
-  if (!D || !Array.isArray(D.subjects) || !D.route){ console.error('Could not load data/estaciones.js'); return; }
+  if (!D || !Array.isArray(D.subjects) || !D.route){ console.error('Could not load data/stations/'); return; }
   var SUBJ = {}, ST = {}, CARDS = {};
   D.subjects.forEach(function(s){ SUBJ[s.id] = s; s.stations.forEach(function(st){ ST[st.id] = st; st.cards.forEach(function(c){ CARDS[c.id] = c; }); }); });
   var M = D.route.missions.filter(function(m){ return ST[m.id]; });

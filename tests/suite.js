@@ -87,7 +87,7 @@
     ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b|\b[Ll]a PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||"")+" "+(q.cite||""))}),"ningun texto dice el PTU ni la PTU (se dice PTU, sin articulo)");
   });
   T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden, una vez y con la version actual",function(){
-    var want=["css/app.css","css/ruta.css","data/questions/index.js","data/english/index.js","data/oral/index.js","data/estaciones.js","js/app.js","js/ruta.js"];
+    var want=["css/app.css","css/ruta.css","data/questions/index.js","data/english/index.js","data/oral/index.js","data/stations/index.js","js/app.js","js/ruta.js"];
     var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")}).filter(function(r){return !/^(https?:)?\/\//.test(r)});
     var paths=refs.map(function(r){return r.split("?")[0]});
     paths.forEach(function(p,k){
@@ -98,12 +98,12 @@
       ok(paths.indexOf(p)>=0,"index.html debe cargar "+p);
       if(k>0)ok(paths.indexOf(p)>paths.indexOf(want[k-1]),p+" debe cargarse despues de "+want[k-1]);
     });
-    ["data/questions/","data/english/","data/oral/"].forEach(function(dir){
+    ["data/questions/","data/english/","data/oral/","data/stations/"].forEach(function(dir){
       var idx=paths.indexOf(dir+"index.js"),parts=paths.filter(function(p){return p.indexOf(dir)===0&&p!==dir+"index.js"});
       ok(parts.length>0,dir+" no carga ninguna parte");
       parts.forEach(function(p){ok(paths.indexOf(p)<idx,p+" debe cargarse antes de "+dir+"index.js, que lo reune")});
     });
-    ["data/banco.js","data/ingles.js","data/oral.js"].forEach(function(p){ok(paths.indexOf(p)<0,p+" ya no existe (se dividio en modulos): no debe cargarse")});
+    ["data/banco.js","data/ingles.js","data/oral.js","data/estaciones.js"].forEach(function(p){ok(paths.indexOf(p)<0,p+" ya no existe (se dividio en modulos): no debe cargarse")});
     ok(!document.querySelector("style"),"no debe quedar un bloque <style> dentro de index.html");
     ok(!document.getElementById("systems-data")&&!document.getElementById("english-data"),"los bancos ya no van dentro de index.html");
     eq(typeof SYSTEMS_DATA_JSON,"string","texto del banco (lo arma data/questions/index.js)");

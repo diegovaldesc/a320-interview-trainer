@@ -87,7 +87,7 @@
     ok(!rawPool(null).concat(rawPool(DGAC_KEY)).some(function(q){return /\b(el|del|al) PTU\b|\b[Ll]a PTU\b/.test(q.q+" "+q.options.join(" ")+" "+(q.expl||"")+" "+(q.cite||""))}),"ningun texto dice el PTU ni la PTU (se dice PTU, sin articulo)");
   });
   T("0 ESTRUCTURA-01 index.html carga sus partes (css/, data/, js/) en orden, una vez y con la version actual",function(){
-    var want=["css/app.css","css/ruta.css","data/questions/index.js","data/english/index.js","data/oral/index.js","data/stations/index.js","js/app.js","js/ruta.js"];
+    var want=["css/app.css","css/ruta.css","data/questions/index.js","data/english/index.js","data/oral/index.js","data/stations/index.js","js/app.js","js/oral.js","js/needtoknow.js","js/ingles.js","js/inicio.js","js/ruta.js"];
     var refs=[].map.call(document.querySelectorAll('link[rel="stylesheet"][href],script[src]'),function(el){return el.getAttribute(el.tagName==="LINK"?"href":"src")}).filter(function(r){return !/^(https?:)?\/\//.test(r)});
     var paths=refs.map(function(r){return r.split("?")[0]});
     paths.forEach(function(p,k){

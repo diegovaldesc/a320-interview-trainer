@@ -8,7 +8,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.22.1";
+const APP_VERSION="1.22.2";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -703,8 +703,11 @@ function oralBankIntegrity(){
     if(!String(q.question||"").trim()||!String(q.reference||"").trim()){issues++;return}
     const rubric=Array.isArray(q.steps)&&q.steps.length?q.steps:q.concepts;
     if(!Array.isArray(rubric)||!rubric.length){issues++;return}
+    const linkOk=link=>{const r=Array.isArray(link)&&q.relations&&q.relations[link[0]];return !!(r&&r.subjects&&r.subjects[link[1]]&&r.values&&r.values[link[2]])};
+    (q.criticalErrors||[]).forEach(item=>{if(item&&item.link&&!linkOk(item.link))issues++});
     rubric.forEach(item=>{
       if(!item||typeof item!=="object"){issues++;return}
+      if(item.link){if(!linkOk(item.link))issues++;return}
       const accepted=Array.isArray(item.accepted)?item.accepted:null;
       if(!accepted||!accepted.length||!accepted.every(term=>typeof term==="string"&&term.trim()))issues++;
       if(item.weight!==undefined&&(!Number.isFinite(item.weight)||item.weight<=0))issues++;

@@ -102,6 +102,33 @@
     ok(evaluateLocally(q,"Las baterías solo se conectan si fallan los generadores.").errors.length===1,"el error de verdad debe seguir penalizado");
     ok(!/compartir la alimentaci/.test(q.reference),"la referencia no debe sugerir generadores en paralelo");
   });
+  T("6 REG-15 ov_hyd_arch revisa que motor va con cada color y la presion normal (lote 003): invertir los motores o decir 2500 PSI normal se penaliza; las formas correctas dichas de otra manera no",function(){
+    var q=oral("ov_hyd_arch"),ref=q.reference;
+    function ev(t){return evaluateLocally(q,t)}
+    var r=ev(ref);eq(r.score,10,"referencia");eq(r.errors.length,0,"referencia sin errores");
+    var sw=ref.replace("del motor 1. El amarillo lo presuriza una bomba del motor 2","del motor 2. El amarillo lo presuriza una bomba del motor 1");
+    ok(sw!==ref,"el reemplazo de motores aplica");
+    r=ev(sw);eq(r.errors.length,2,"motores invertidos: dos errores");ok(r.score<6,"motores invertidos no aprueba ("+r.score+")");
+    var p=ref.replace("La presión normal es 3000 PSI","La presión normal es 2500 PSI");ok(p!==ref,"el reemplazo de presion aplica");
+    r=ev(p);eq(r.errors.length,1,"presion normal 2500: un error");ok(r.missing.indexOf("Presión normal 3000 PSI")!==-1,"presion normal 2500: sin el punto de 3000");
+    eq(ev("Hay tres sistemas independientes, sin transferencia de fluido, a 2500 PSI normalmente (2500 PSI si lo alimenta el RAT).").errors.length,1,"«2500 PSI normalmente» se penaliza");
+    eq(ev("La presión normal es 2500 psi").errors.length,1,"«La presion normal es 2500 psi» se penaliza");
+    r=ev("verde azul amarillo");ok(r.score<1&&r.detected.length===0,"solo los colores no cumple ningun criterio ("+r.score+")");
+    eq(ev("comparten el mismo fluido").errors.length,1,"el error de transferencia de fluido se mantiene");
+    [["valor primero","Son tres sistemas sin transferencia de fluido. El motor 1 presuriza el verde y el motor 2 el amarillo, que también tiene una bomba eléctrica. El azul tiene una bomba eléctrica y el RAT. Presión normal 3000 PSI.",6.5],
+     ["compacta","tres sistemas sin transferencia de fluido: verde motor 1, amarillo motor 2 y bomba eléctrica, azul bomba eléctrica y RAT; PTU entre verde y amarillo, acumuladores, fire shutoff, normal 3000 PSI; Blue con RAT 2500 PSI",9],
+     ["en ingles","three systems, no se transfiere fluido. Green engine 1, yellow engine 2 and electric pump, blue electric pump and RAT, normal 3000 psi",6],
+     ["3000 normal y 2500 con RAT","tres sistemas sin transferencia, 3000 PSI normalmente y 2500 con el RAT. Verde motor 1, amarillo motor 2.",0],
+     ["normal 3000 y 2500 con RAT","tres sistemas sin transferencia. La presión normal es 3000 PSI y 2500 PSI con el RAT. Verde motor 1, amarillo motor 2.",0],
+     ["negacion","Son tres sistemas sin transferencia de fluido. El verde no lo mueve el motor 2, lo mueve el motor 1. El amarillo lo mueve el motor 2.",0]
+    ].forEach(function(c){var x=ev(c[1]);eq(x.errors.length,0,c[0]+": se penalizo una respuesta correcta: "+JSON.stringify(x.errors));ok(x.score>=c[2],c[0]+": puntaje "+x.score+", faltan "+JSON.stringify(x.missing))});
+    ok(ev("Son tres sistemas sin transferencia de fluido. El motor 2 presuriza el verde y el motor 1 el amarillo.").errors.length===2,"motores invertidos dichos al reves tambien se penalizan");
+    ok(/100 kt/.test(ref)&&/RAT MAN ON/.test(ref)&&/azul trabaja a 2500 PSI cuando lo alimenta el RAT/.test(ref),"referencia: el RAT automatico sobre 100 kt, el manual con RAT MAN ON y los 2500 PSI son del azul");
+    var st=RUTA.stations["hid-repaso"].test.filter(function(t){return t.source&&t.source.id==="ov_hyd_arch"});
+    eq(st.length,1,"la estacion de repaso usa ov_hyd_arch");ok(st[0].relations&&st[0].reference===ref,"la copia de la estacion trae las relaciones y la referencia nueva");
+    loadQuestionFromA320Bank(q);ok(oralState.question.relations===q.relations,"la entrevista oral conserva las relaciones al cargar la pregunta");
+    stopEverythingOral();
+  });
   T("6 REG-06 ninguna pregunta oral cita un manual en lo que se ve (pregunta, referencia, resumen, conceptos y avisos)",function(){
     var CITA=/(fuera del|que da el|seg[uú]n el|explica el|dice el|lo dice el|que el) (FCOM|FCTM|manual)|\bFCTM\b|Getting to Grips|Tutorial|\bAFM\b|\bPDF\b|§|en prosa/i;
     var bad=[];

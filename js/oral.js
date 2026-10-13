@@ -327,7 +327,9 @@ function fuzzyWordMatch(w1,w2){
    se exigen. Se preservan aqui para que el termino realmente
    requiera que la negacion este presente. */
 const ORAL_NEGATION_MARKERS=new Set(["no","nunca","jamas","tampoco","ni"]);
-function significantWords(termNormalized){return termNormalized.split(" ").filter(w=>w.length>=3||ORAL_NEGATION_MARKERS.has(w))}
+/* Los numeros tambien se exigen: sin ellos "motor 1" quedaba como "motor"
+   y se cumplia con "motor 2" (REG-15). */
+function significantWords(termNormalized){return termNormalized.split(" ").filter(w=>w.length>=3||/^\d+$/.test(w)||ORAL_NEGATION_MARKERS.has(w))}
 function phraseFuzzyMatch(transcriptTokens,transcriptStr,term){
   const termNorm=normalizeAeroText(term);
   if(!termNorm)return false;
@@ -486,11 +488,90 @@ function criticalItemDetected(transcriptTokens,item){
     });
   });
 }
-function detectCriticalErrors(transcriptTokens,transcriptStr,question){
+/* Relaciones (REG-15). Una lista de palabras no comprueba QUE va con QUE:
+   "el verde lo presuriza el motor 2" contiene "verde" y "motor", y el
+   concepto «Verde: bomba del motor 1» quedaba cumplido. Una relacion de la
+   pregunta declara sujetos (verde, amarillo...) y valores (motor 1,
+   motor 2...); cada mencion de un valor se asigna al sujeto mas cercano
+   dentro de `window` palabras, todos hacia atras («el verde lo presuriza el
+   motor 1») o todos hacia adelante («el motor 1 presuriza el verde»). Se usa
+   el sentido que asigna mas valores; si empatan, hacia atras, el orden
+   habitual en espanol. Sujetos y valores se buscan como palabras exactas.
+   Una negacion entre los dos anula esa asignacion. Un concepto o error critico con
+   `link:[relacion,sujeto,valor]` se cumple si esa asignacion existe. */
+function exactSpans(tokens,terms){
+  const spans=[];
+  (terms||[]).forEach(term=>{
+    const w=normalizeAeroText(term).split(" ").filter(Boolean);
+    if(!w.length)return;
+    for(let s=0;s+w.length<=tokens.length;s++){
+      let same=true;
+      for(let k=0;k<w.length;k++){if(tokens[s+k]!==w[k]){same=false;break}}
+      if(same)spans.push([s,s+w.length-1]);
+    }
+  });
+  spans.sort((a,b)=>a[0]-b[0]||b[1]-a[1]);
+  return spans.filter((sp,i)=>!spans.slice(0,i).some(o=>o[0]<=sp[1]&&sp[0]<=o[1]));
+}
+function relationAssignments(tokens,rel,direction){
+  const W=Number(rel.window)||10,subjects=[],values=[],links=[];
+  Object.keys(rel.subjects||{}).forEach(key=>exactSpans(tokens,rel.subjects[key]).forEach(sp=>subjects.push({key,sp})));
+  Object.keys(rel.values||{}).forEach(key=>exactSpans(tokens,rel.values[key]).forEach(sp=>values.push({key,sp})));
+  const nearest=v=>{
+    let best=null,bestDist=Infinity;
+    subjects.forEach(s=>{
+      const d=direction<0?v.sp[0]-s.sp[1]:s.sp[0]-v.sp[1];
+      if(d>0&&d<=W&&d<bestDist){bestDist=d;best=s}
+    });
+    return best;
+  };
+  // Tramo entre el sujeto y el valor, sin incluirlos.
+  const gap=(s,v)=>direction<0?[s.sp[1]+1,v.sp[0]-1]:[v.sp[1]+1,s.sp[0]-1];
+  const valueIn=(a,b,except)=>values.some(o=>o!==except&&o.sp[0]>=a&&o.sp[1]<=b);
+  /* Una negacion entre los dos anula la asignacion si ningun otro valor la
+     separa del valor: en «el verde no lo mueve el motor 2, lo mueve el
+     motor 1» niega el motor 2, no el motor 1. */
+  const negated=(s,v)=>{
+    const [a,b]=gap(s,v);
+    for(let i=a;i<=b;i++){
+      if(!ORAL_NEGATION_MARKERS.has(tokens[i]))continue;
+      if(direction<0?!valueIn(i+1,v.sp[0]-1,v):!valueIn(v.sp[1]+1,i-1,v))return true;
+    }
+    return false;
+  };
+  values.forEach(v=>{
+    const s=nearest(v);
+    if(!s||negated(s,v))return;
+    /* Con `single`, cada sujeto tiene un solo valor: el que queda junto a
+       el. En «normal 3000 PSI y 2500 PSI con el RAT», el 2500 no es del
+       normal, porque el 3000 esta entre ambos (salvo que este negado). */
+    if(rel.single){
+      const [a,b]=gap(s,v);
+      if(values.some(o=>o!==v&&o.sp[0]>=a&&o.sp[1]<=b&&!negated(s,o)))return;
+    }
+    links.push(s.key+"|"+v.key);
+  });
+  return links;
+}
+function resolveRelations(tokens,question){
+  const out={};
+  const rels=question&&question.relations;
+  if(!rels||typeof rels!=="object")return out;
+  Object.keys(rels).forEach(id=>{
+    const back=relationAssignments(tokens,rels[id],-1),fwd=relationAssignments(tokens,rels[id],1);
+    out[id]=new Set(fwd.length>back.length?fwd:back);
+  });
+  return out;
+}
+function linkHeld(relations,link){
+  return Array.isArray(link)&&!!relations[link[0]]&&relations[link[0]].has(link[1]+"|"+link[2]);
+}
+function detectCriticalErrors(transcriptTokens,transcriptStr,question,relations){
   const errors=[];let penaltyTotal=0;
   if(Array.isArray(question.criticalErrors)){
+    if(!relations)relations=resolveRelations(transcriptTokens,question);
     question.criticalErrors.forEach(item=>{
-      if(criticalItemDetected(transcriptTokens,item)){
+      if(item&&item.link?linkHeld(relations,item.link):criticalItemDetected(transcriptTokens,item)){
         errors.push(item.feedback||"A conceptual error was detected.");
         penaltyTotal+=Number(item.penalty)||1.5;
       }
@@ -505,14 +586,15 @@ function evaluateLocally(question,transcript){
   const concepts=Array.isArray(question.concepts)?question.concepts:[];
   let totalWeight=0,achievedWeight=0,missingRequired=false;
   const detected=[],missing=[];
+  const relations=resolveRelations(transcriptTokens,question);
   concepts.forEach(concept=>{
     const weight=Number(concept.weight)||1;totalWeight+=weight;
-    if(itemDetected(transcriptTokens,transcriptStr,concept)){achievedWeight+=weight;detected.push(concept.label)}
+    if(concept.link?linkHeld(relations,concept.link):itemDetected(transcriptTokens,transcriptStr,concept)){achievedWeight+=weight;detected.push(concept.label)}
     else{missing.push(concept.label);if(concept.required)missingRequired=true}
   });
   const conceptScore=totalWeight>0?achievedWeight/totalWeight:0;
   const similarity=question.reference?textSimilarity(transcript,question.reference):0;
-  const {errors,penaltyTotal}=detectCriticalErrors(transcriptTokens,transcriptStr,question);
+  const {errors,penaltyTotal}=detectCriticalErrors(transcriptTokens,transcriptStr,question,relations);
   let rawScore=totalWeight>0?(conceptScore*0.85+similarity*0.15)*10:similarity*10;
   rawScore-=Math.min(penaltyTotal,6);
   if(missingRequired)rawScore=Math.min(rawScore,4);
@@ -660,6 +742,6 @@ function stopEverythingOral(){
 }
 function loadQuestionFromA320Bank(q){
   if(!q)return;
-  const oralQuestion={id:q.id||q._id||"",question:q.oralQuestion||q.question||q.q||"",reference:q.oralReference||q.reference||q.expl||"",short:q.short||"",concepts:q.oralConcepts||q.concepts||[],criticalErrors:q.oralCriticalErrors||q.criticalErrors||[],steps:q.oralSteps||q.steps||[],image:q.image||"",imageAlt:q.imageAlt||""};
+  const oralQuestion={id:q.id||q._id||"",question:q.oralQuestion||q.question||q.q||"",reference:q.oralReference||q.reference||q.expl||"",short:q.short||"",concepts:q.oralConcepts||q.concepts||[],criticalErrors:q.oralCriticalErrors||q.criticalErrors||[],relations:q.relations||null,steps:q.oralSteps||q.steps||[],image:q.image||"",imageAlt:q.imageAlt||""};
   setOralQuestion(oralQuestion);
 }

@@ -113,7 +113,10 @@ check('oral', () => {
     if (!str(q.question) || !str(q.reference)) fail(at + ': falta pregunta o respuesta de referencia');
     const rubric = Array.isArray(q.steps) && q.steps.length ? q.steps : q.concepts;
     if (!Array.isArray(rubric) || !rubric.length) return fail(at + ': sin rúbrica');
+    const linkOk = l => { const r = Array.isArray(l) && q.relations && q.relations[l[0]]; return !!(r && r.subjects && r.subjects[l[1]] && r.values && r.values[l[2]]); };
+    (q.criticalErrors || []).forEach((it, j) => { if (it && it.link && !linkOk(it.link)) fail(at + ' error crítico ' + (j + 1) + ': link a una relación inexistente'); });
     rubric.forEach((it, j) => {
+      if (it && it.link) { if (!linkOk(it.link)) fail(at + ' rúbrica ' + (j + 1) + ': link a una relación inexistente'); return; }
       if (!it || !Array.isArray(it.accepted) || !it.accepted.length || !it.accepted.every(str)) fail(at + ' rúbrica ' + (j + 1) + ': accepted inválido');
       if (it && it.weight !== undefined && !(Number.isFinite(it.weight) && it.weight > 0)) fail(at + ' rúbrica ' + (j + 1) + ': weight inválido');
     });

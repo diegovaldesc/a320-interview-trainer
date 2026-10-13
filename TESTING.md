@@ -166,6 +166,32 @@ resolver primero, antes de seguir auditando.
   conectan si fallan los generadores" sigue penalizado. La referencia ya no
   dice que el BUS TIE "comparte" la alimentación (sugería generadores en
   paralelo). Prueba de mutación: con el término devuelto, REG-05 falla.
+- **REG-15 — `ov_hyd_arch` revisa qué va con qué** (2026-10-13, 1.22.2; lote
+  003 de una auditoría externa, verificado contra el FCOM). Con la lista de
+  palabras, la respuesta modelo con los motores de Green y Yellow invertidos
+  sacaba 10/10, y «verde azul amarillo» cumplía los cuatro criterios
+  obligatorios. Dos cambios en el evaluador: (1) los números cuentan como
+  palabras (`significantWords`): antes «motor 1» se cumplía con «motor 2» y
+  «75 pies» con «mil pies»; (2) una pregunta puede declarar `relations`
+  (sujetos y valores; cada valor va al sujeto más cercano, todos hacia atrás
+  o todos hacia adelante; con `single`, un valor por sujeto; una negación
+  anula solo el valor que la sigue), y un concepto o error crítico con
+  `link:[relación, sujeto, valor]` se cumple si esa asignación existe. En
+  `ov_hyd_arch`: verde–motor 1, amarillo–motor 2 y su bomba eléctrica,
+  azul–bomba eléctrica y RAT; verde–motor 2, amarillo–motor 1 y presión
+  normal–2500 son errores (−3 cada uno). La referencia dice que los 2500 PSI
+  son del azul con RAT, y que el RAT se despliega solo al perder AC BUS 1 y
+  AC BUS 2 sobre 100 kt, o a mano con RAT MAN ON. La prueba revisa los seis
+  casos del informe y seis respuestas correctas dichas de otra forma (valor
+  antes del color, compacta, en inglés, «3000 normal y 2500 con el RAT»,
+  una negación), que la estación de repaso trae la copia nueva y que la
+  entrevista oral conserva las relaciones. Por el cambio (1), en
+  `ov_takeoff_segments` se aceptó «segmento final» (la respuesta de prueba
+  nombra los cuatro segmentos) y el mínimo de la respuesta de prueba de
+  `ov_rvsm_equipment` bajó de 8,5 a 8 (no menciona el procedimiento; antes
+  lo ganaba con «mil pies»). Pruebas de mutación: sin `single`, sin la
+  negación, sin copiar `relations` al cargar la pregunta y con la rúbrica
+  anterior, REG-15 falla.
 - **REG-06 — ninguna oral cita un manual en lo que se ve** (2026-10-05,
   1.17.0): al armar Performance aparecieron dos referencias antiguas que lo
   hacían («fuera del FCOM…» en ETOPS, «la razón que da el FCTM» en sterile

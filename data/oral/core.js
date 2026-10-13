@@ -21,7 +21,7 @@ window.ORAL_PARTS["core"]=[
   {label:"Cambio brusco de viento",weight:2,required:true,accepted:["cambio brusco","cambio repentino","cambio subito","variacion rapida","cambia de direccion","cambia de velocidad","cambio abrupto","cambio inesperado","de un momento a otro"]},
   {label:"En distancia/tiempo corto",weight:1,accepted:["distancia corta","poco tiempo","en poco espacio","rapidamente","en segundos","de golpe"]},
   {label:"Afecta sustentación/trayectoria",weight:2,accepted:["sustentacion","performance","trayectoria","velocidad indicada","energia","se pierde sustentacion","se descontrola"]},
-  {label:"Peligroso en fases críticas de poco margen",weight:2,accepted:["despegue","aterrizaje","aproximacion","baja altura","poco margen","fase critica"]}
+  {label:"Peligroso en fases críticas de poco margen",weight:2,accepted:["baja altura","poca altura","poco margen","fase critica","fases criticas","cerca del suelo","cerca del terreno","margen de altura","poca energia"]}
  ],
  criticalErrors:[{accepted:["viento constante","viento estable y sostenido"],penalty:3,feedback:"El windshear se define por el cambio brusco, no por un viento sostenido y estable."}]},
 
@@ -47,6 +47,8 @@ window.ORAL_PARTS["core"]=[
 {id:"ov_stab_appr",question:"¿Qué elementos definen una aproximación estabilizada?",
  short:"Trayectoria correcta, configuración de aterrizaje, empuje sobre ralentí, velocidad entre VAPP y VAPP + 20 kt, razón de descenso de máximo 1 000 ft/min y checklist completado, a más tardar a 1 000 ft en IMC o 500 ft en VMC. Si no, go-around.",
  reference:"Para que la aproximación esté estabilizada, a más tardar a 1 000 ft sobre la pista en IMC, o a 500 ft en VMC, tiene que cumplirse todo esto:\n- Trayectoria lateral y vertical correcta.\n- Configuración de aterrizaje, la del briefing.\n- Empuje bien ajustado, normalmente sobre ralentí, para mantener la velocidad.\n- Velocidad entre VAPP y VAPP + 20 kt.\n- Razón de descenso no mayor a 1 000 ft/min.\n- Checklist de aterrizaje completado.\n- Sin desviaciones excesivas de parámetros.\n\nSi a esa altura no está estabilizada (salvo correcciones pequeñas por perturbaciones externas), o si se desestabiliza más abajo, se hace go-around.",
+ relations:{alt:{window:6,single:true,otherNumbers:true,subjects:{imc:["imc"],vmc:["vmc"]},values:{a1000:["1000 ft","1 000 ft","1000 pies","1 000 pies","mil pies","1000"],a500:["500 ft","500 pies","quinientos pies","500"]},correct:{imc:["a1000"],vmc:["a500"]}}},
+ criticalErrors:[{relation:"alt",wrong:true,penalty:3,feedback:"La altura de estabilización es 1 000 ft en IMC y 500 ft en VMC."}],
  concepts:[
   {label:"Trayectoria correcta",weight:1,accepted:["trayectoria","senda","alineado con la pista"]},
   {label:"Velocidad dentro del criterio",weight:2,accepted:["velocidad","vapp","dentro del rango"]},
@@ -101,7 +103,7 @@ window.ORAL_PARTS["core"]=[
 {id:"ov_etops",question:"¿Qué es ETOPS, cuándo se exige históricamente, y por qué es tan relevante para una ruta bimotor de largo alcance?",
  reference:"Son las siglas de extended-range twin-engine operations; el glosario del avión lo abrevia Extended Twin Operations, y en la norma OACI se llama EDTO. Se aplica a rutas que se alejan de un aeródromo adecuado más allá de cierto tiempo de vuelo con un motor inoperativo a velocidad de crucero; 60 minutos es un valor de referencia típico en las tablas de distancia de desvío. Es relevante porque en una ruta bimotor lejos de tierra una falla de motor obliga a desviarse y volar un tiempo prolongado con un solo motor, así que en la práctica la operación exige demostrar la fiabilidad del motor y la autonomía de sistemas necesarias para completar ese desvío con seguridad.",
  concepts:[
-  {label:"Extended twin-engine operations",weight:2,accepted:["extended range","dos motores","bimotor","extended twin"]},
+  {label:"Extended twin-engine operations",weight:2,accepted:["extended range","extended twin","twin engine","twin engines"]},
   {label:"Tiempo de vuelo con un motor inoperativo",weight:2,required:true,accepted:["un motor inoperativo","motor parado","oei","motor fallado","falla de motor","motor que falla","un motor no funciona","con un motor menos"]},
   {label:"Distancia a aeródromo adecuado (~60 min)",weight:2,accepted:["aerodromo adecuado","alterno","60 minutos","aeropuerto adecuado"]},
   {label:"Por qué importa: volar prolongado con un motor lejos de tierra",weight:2,accepted:["volar con un solo motor","lejos de tierra","desviarse","fiabilidad del motor","autonomia de sistemas","completar el desvio con seguridad"]}
@@ -117,6 +119,8 @@ window.ORAL_PARTS["core"]=[
 
 {id:"ov_autobrake",question:"¿Cuál es el principio de funcionamiento del autobrake?",
  reference:"En el aterrizaje (LO y MED) comanda automáticamente la presión de frenado para alcanzar y mantener una desaceleración objetivo según el modo seleccionado, ajustándose a las condiciones reales de la pista, en lugar de aplicar una presión fija. En un despegue abortado, MAX manda la presión máxima apenas se genera la orden de los ground spoilers.",
+ relations:{modo:{window:15,subjects:{lomed:["lo y med","low y med","low y medium","lo med","low","med","medium","modo lo"],max:["max","modo max"]},values:{decel:["desaceleracion objetivo","desaceleracion","deceleracion","desaceleracion constante"],presion:["presion maxima","maxima presion","frenado maximo","maximo frenado","maxima frenada"]},correct:{lomed:["decel"],max:["presion"]}}},
+ criticalErrors:[{relation:"modo",wrong:true,penalty:3,feedback:"Está al revés: LO y MED buscan una desaceleración objetivo; MAX, en un despegue abortado, manda la presión máxima."}],
  concepts:[
   {label:"LO y MED: objetivo de desaceleración, no presión fija",weight:2,required:true,accepted:["desaceleracion objetivo","no presion fija","se ajusta","desaceleracion constante","desaceleracion determinada","no aplica siempre la misma presion","varia la presion"]},
   {label:"Automático según modo seleccionado",weight:2,accepted:["modo seleccionado","low","med","max","automatico","automaticamente","bajo","medio","maximo"]},
@@ -216,26 +220,28 @@ window.ORAL_PARTS["core"]=[
  image:"assets/electrical-architecture.png",
  imageAlt:"Diagrama esquemático de la arquitectura eléctrica del A320: barras DC y AC, baterías, transformadores rectificadores y generadores.",
  reference:"En operación normal, GEN 1 y GEN 2, accionados por los motores, alimentan AC BUS 1 y AC BUS 2 a través de sus contactores de línea; el APU GEN o el EXT PWR pueden reemplazar a cualquiera de los generadores de motor, y los BUS TIE CONT permiten que una sola fuente alimente ambas barras AC, sin conectar nunca dos generadores en paralelo. Del lado DC, TR 1 y TR 2 convierten AC a DC para alimentar DC BUS 1 y DC BUS 2. Las baterías, BAT 1 y BAT 2, quedan permanentemente conectadas a su HOT BUS incluso con todo apagado, y se conectan a la DC BAT BUS a través de su BAT CONT para cargarse o para respaldar la red esencial. Si se pierden ambos generadores de motor, el EMER GEN, accionado por el circuito hidráulico azul, alimenta la AC ESS BUS, que a su vez energiza el ESS TR para mantener la DC ESS BUS; y si tampoco hay EMER GEN disponible, un inversor estático (STAT INV) puede transformar DC de las baterías en AC para seguir alimentando la red esencial.",
+ relations:{emer:{window:10,subjects:{emergen:["emer gen","generador de emergencia","emergency generator"]},values:{azul:["azul","blue","circuito azul","hidraulico azul"],verde:["verde","green"],amarillo:["amarillo","yellow"]},correct:{emergen:["azul"]}},conv:{window:8,subjects:{tr:["tr","tr 1","tr 2","trs","transformador rectificador","transformadores rectificadores","ess tr"],inv:["stat inv","inversor estatico","static inverter","inversor"]},values:{acdc:["ac a dc","de ac a dc","ac en dc"],dcac:["dc a ac","de dc a ac","dc en ac"]},correct:{tr:["acdc"],inv:["dcac"]}}},
  concepts:[
-  {label:"GEN 1 y GEN 2 (motor) alimentan AC BUS 1/2 normalmente",weight:2,required:true,accepted:["gen 1","gen 2","generadores de motor","dos generadores","cada motor","gen line cont"]},
+  {label:"GEN 1 y GEN 2 (motor) alimentan AC BUS 1/2 normalmente",weight:2,required:true,accepted:["gen 1","gen 2","cada motor","gen line cont","generador de cada motor","generadores de los motores"]},
   {label:"APU GEN o EXT PWR pueden reemplazar a los generadores de motor",weight:2,accepted:["apu gen","poder externo","external power","ext pwr","reemplazar","generador de la apu"]},
   {label:"BUS TIE conecta AC BUS 1 y AC BUS 2",weight:1,accepted:["bus tie","conecta las dos barras","comparten alimentacion","interconecta ac bus"]},
   {label:"TR 1 y TR 2 convierten AC a DC para DC BUS 1/2",weight:2,required:true,accepted:["tr 1","tr 2","transformador rectificador","convierten","convierte ac a dc","rectifica"]},
-  {label:"Baterías conectadas permanentemente a HOT BUS",weight:2,required:true,accepted:["hot bus","barra caliente","conectadas permanentemente","siempre conectadas","con todo apagado"]},
-  {label:"Pérdida de ambos generadores de motor: EMER GEN (circuito azul) alimenta la red esencial",weight:2,required:true,accepted:["emer gen","generador de emergencia","circuito azul","hidraulico azul","ambos generadores","red esencial","ac ess"]},
-  {label:"STAT INV: respaldo final (batería a AC) si tampoco hay EMER GEN",weight:1,accepted:["stat inv","inversor estatico","static inverter","bateria a ac","invierte dc a ac"]}
+  {label:"Baterías conectadas permanentemente a HOT BUS",weight:2,required:true,accepted:["hot bus","barra caliente","con todo apagado"]},
+  {label:"Pérdida de ambos generadores de motor: EMER GEN (circuito azul) alimenta la red esencial",weight:2,required:true,accepted:["emer gen","generador de emergencia","circuito azul","hidraulico azul","red esencial","ac ess"]},
+  {label:"STAT INV: respaldo final (batería a AC) si tampoco hay EMER GEN",weight:1,accepted:["stat inv","inversor estatico","static inverter","invierte dc a ac","dc a ac"]}
  ],
- criticalErrors:[{accepted:["las baterias solo se conectan si fallan los generadores","las baterias no hacen nada mientras haya generadores"],penalty:3,feedback:"Las baterías quedan conectadas permanentemente a su HOT BUS incluso con todo apagado; no es algo que se active solo cuando fallan los generadores."}]},
+ criticalErrors:[{relation:"emer",wrong:true,penalty:3,feedback:"El EMER GEN lo mueve el circuito hidráulico azul (con el RAT)."},{relation:"conv",wrong:true,penalty:2,feedback:"Los TR convierten AC en DC; el STAT INV convierte DC de las baterías en AC."},{accepted:["las baterias solo se conectan si fallan los generadores","las baterias no hacen nada mientras haya generadores"],penalty:3,feedback:"Las baterías quedan conectadas permanentemente a su HOT BUS incluso con todo apagado; no es algo que se active solo cuando fallan los generadores."}]},
 
 {id:"ov_v1_reject",question:"Durante el despegue, antes de V1, se presenta una falla o anomalía. ¿Qué consideras para decidir si rechazas el despegue?",
  reference:"Depende de la velocidad. Por debajo de 100 kt la decisión queda a criterio del comandante, y conviene considerar seriamente rechazar ante cualquier alerta ECAM. Entre 100 kt y V1 hay que estar go-minded: muy pocas condiciones justifican rechazar — básicamente fuego o daño severo, pérdida súbita de empuje de un motor, una indicación inequívoca de que el avión no volará de forma segura, o cualquier alerta ECAM. El llamado de V1 tiene precedencia sobre cualquier otro llamado, y la decisión de rechazar debe tomarse antes de V1: el comandante mantiene la mano en las palancas de empuje hasta V1, sea o no el piloto que está volando.",
+ relations:{fase:{window:12,subjects:{bajo:["por debajo de 100","debajo de 100","bajo 100","menos de 100","antes de 100","por debajo de los 100"],sobre:["entre 100","sobre 100","encima de 100","mas de 100","despues de 100","pasado 100","pasando 100"]},values:{criterio:["criterio del comandante","a discrecion","discrecion del comandante","a criterio"],go:["go minded","muy pocas","pocas razones","pocas condiciones"]},correct:{bajo:["criterio"],sobre:["go"]}}},
  concepts:[
-  {label:"Por debajo de 100 kt: criterio del comandante, considerar rechazar ante cualquier ECAM",weight:2,accepted:["100 kt","criterio del comandante","a discrecion","cualquier alerta ecam","por debajo de 100"]},
+  {label:"Por debajo de 100 kt: criterio del comandante, considerar rechazar ante cualquier ECAM",weight:2,link:["fase","bajo","criterio"]},
   {label:"Entre 100 kt y V1: go-minded, muy pocas razones válidas (fuego/daño severo, pérdida súbita de empuje, indicación inequívoca de que no volará seguro, o alerta ECAM)",weight:2,required:true,accepted:["go minded","fuego","dano severo","perdida subita de empuje","no volara de forma segura","no va a volar seguro","alerta ecam","pocas razones","muy pocas condiciones"]},
   {label:"Sobre V1: el llamado de V1 tiene precedencia sobre cualquier otro",weight:2,required:true,accepted:["v1 tiene precedencia","precedencia sobre cualquier otro llamado","por sobre cualquier otro llamado","tiene prioridad","va primero","antes que cualquier otro llamado","primero que cualquier otro"]},
-  {label:"La decisión debe tomarse antes de V1; el comandante mantiene la mano en las palancas hasta V1",weight:1,accepted:["mano en las palancas","antes de v1","hasta v1","antes de llegar a v1"]}
+  {label:"La decisión debe tomarse antes de V1; el comandante mantiene la mano en las palancas hasta V1",weight:1,accepted:["mano en las palancas","mano en los thrust levers","mano en las thrust levers","hasta v1","antes de llegar a v1"]}
  ],
- criticalErrors:[{accepted:["se puede rechazar despues de v1","rechazar despues de v1 es seguro","despues de v1 igual se puede parar"],penalty:3,feedback:"Después de V1 el despegue debe continuarse; la decisión de rechazar solo puede tomarse antes de V1."}]},
+ criticalErrors:[{relation:"fase",wrong:true,penalty:3,feedback:"Está al revés: por debajo de 100 kt la decisión es a criterio del comandante; entre 100 kt y V1 hay que estar go-minded."},{accepted:["se puede rechazar despues de v1","rechazar despues de v1 es seguro","despues de v1 igual se puede parar"],penalty:3,feedback:"Después de V1 el despegue debe continuarse; la decisión de rechazar solo puede tomarse antes de V1."}]},
 
 {id:"ov_v1_continue",question:"Si un motor falla justo después de V1, ¿qué harías y por qué es tan importante continuar el despegue en ese momento?",
  reference:"Continuaría el despegue: sobre V1 no es seguro intentar detenerse porque puede no alcanzar la pista restante. En VR roto con una razón continua de unos 3° por segundo hacia 12,5° de pitch y sigo las órdenes de SRS, que apuntan a la velocidad a la que ocurrió la falla, entre V2 y V2 + 15 kt. Si hace falta más margen, con FLEX puedo poner TOGA (no es obligatorio); con derated, nunca bajo la velocidad F. La tarea esencial y prioritaria es volar el avión — estabilizar actitud y velocidad y establecer la trayectoria correcta — antes de empezar cualquier procedimiento ECAM.",
@@ -249,14 +255,15 @@ window.ORAL_PARTS["core"]=[
 
 {id:"ov_pan_mayday",question:"¿Cuál es la diferencia entre declarar un PAN PAN y un MAYDAY, y qué información hay que entregar en un llamado de MAYDAY?",
  reference:"PAN PAN se usa para una urgencia: una condición que afecta la seguridad de la aeronave o de alguien a bordo, pero sin peligro grave e inminente. MAYDAY se reserva para una situación de socorro, con peligro grave e inminente que requiere asistencia inmediata, y se dice tres veces: MAYDAY, MAYDAY, MAYDAY. El mensaje incluye la estación a la que se llama, el callsign, la naturaleza de la emergencia, las intenciones de la tripulación, la posición, el nivel y el rumbo, y si el tiempo lo permite, almas a bordo y combustible remanente.",
+ relations:{tipo:{window:10,negations:["no","nunca","jamas","sin"],subjects:{pan:["pan pan"],mayday:["mayday"]},values:{urgencia:["urgencia","urgency"],socorro:["socorro","distress","peligro grave","peligro inminente","grave e inminente","asistencia inmediata"]},correct:{pan:["urgencia"],mayday:["socorro"]}}},
  concepts:[
-  {label:"PAN PAN: urgencia, sin peligro grave e inminente",weight:2,required:true,accepted:["urgencia","sin peligro inminente","no es peligro grave","afecta la seguridad pero no es grave"]},
-  {label:"MAYDAY: socorro/distress, peligro grave e inminente, requiere asistencia inmediata",weight:2,required:true,accepted:["socorro","distress","peligro grave","peligro inminente","asistencia inmediata"]},
+  {label:"PAN PAN: urgencia, sin peligro grave e inminente",weight:2,required:true,link:["tipo","pan","urgencia"]},
+  {label:"MAYDAY: socorro/distress, peligro grave e inminente, requiere asistencia inmediata",weight:2,required:true,link:["tipo","mayday","socorro"]},
   {label:"Triple llamado: MAYDAY MAYDAY MAYDAY",weight:1,accepted:["mayday mayday mayday","tres veces","llamado triple","se dice tres veces"]},
   {label:"Naturaleza de la emergencia",weight:2,required:true,accepted:["naturaleza de la emergencia","que esta pasando","tipo de emergencia","cual es el problema"]},
   {label:"Intenciones de la tripulación",weight:1,accepted:["intenciones","que van a hacer","plan de accion"]},
   {label:"Posición, nivel y rumbo",weight:1,accepted:["posicion","nivel","rumbo","altitud","donde estan"]},
   {label:"Almas a bordo y combustible remanente",weight:1,accepted:["almas a bordo","personas a bordo","combustible remanente","fuel remanente","cuanta gente"]}
  ],
- criticalErrors:[{accepted:["mayday es menos grave que pan pan","pan pan es mas grave que mayday","son lo mismo pan pan y mayday"],penalty:3,feedback:"Es al revés: MAYDAY es el llamado más grave (socorro/peligro inminente); PAN PAN es para una urgencia sin peligro inminente."}]}
+ criticalErrors:[{relation:"tipo",wrong:true,penalty:3,feedback:"PAN PAN es una urgencia; MAYDAY es socorro, con peligro grave e inminente."},{accepted:["mayday es menos grave que pan pan","pan pan es mas grave que mayday","son lo mismo pan pan y mayday"],penalty:3,feedback:"Es al revés: MAYDAY es el llamado más grave (socorro/peligro inminente); PAN PAN es para una urgencia sin peligro inminente."}]}
 ];

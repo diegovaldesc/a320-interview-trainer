@@ -113,10 +113,14 @@ check('oral', () => {
     if (!str(q.question) || !str(q.reference)) fail(at + ': falta pregunta o respuesta de referencia');
     const rubric = Array.isArray(q.steps) && q.steps.length ? q.steps : q.concepts;
     if (!Array.isArray(rubric) || !rubric.length) return fail(at + ': sin rúbrica');
-    const linkOk = l => { const r = Array.isArray(l) && q.relations && q.relations[l[0]]; return !!(r && r.subjects && r.subjects[l[1]] && r.values && r.values[l[2]]); };
-    (q.criticalErrors || []).forEach((it, j) => { if (it && it.link && !linkOk(it.link)) fail(at + ' error crítico ' + (j + 1) + ': link a una relación inexistente'); });
+    const linkOk = l => { if (Array.isArray(l) && Array.isArray(l[0])) return l.length > 0 && l.every(linkOk); const r = Array.isArray(l) && q.relations && q.relations[l[0]]; return !!(r && r.subjects && r.subjects[l[1]] && r.values && r.values[l[2]]); };
+    (q.criticalErrors || []).forEach((it, j) => {
+      if (it && it.link && !linkOk(it.link)) fail(at + ' error crítico ' + (j + 1) + ': link a una relación inexistente');
+      if (it && it.wrong && !(q.relations && q.relations[it.relation] && q.relations[it.relation].correct)) fail(at + ' error crítico ' + (j + 1) + ': relación sin correct');
+    });
+    Object.keys(q.relations || {}).forEach(id => { const r = q.relations[id]; Object.keys(r.correct || {}).forEach(s => { if (!r.subjects[s] || !r.correct[s].every(v => r.values[v])) fail(at + ' relación ' + id + ': correct apunta a un sujeto o valor inexistente (' + s + ')'); }); });
     rubric.forEach((it, j) => {
-      if (it && it.link) { if (!linkOk(it.link)) fail(at + ' rúbrica ' + (j + 1) + ': link a una relación inexistente'); return; }
+      if (it && it.link) { if (!linkOk(it.link)) fail(at + ' rúbrica ' + (j + 1) + ': link a una relación inexistente'); if (it.accepted === undefined) return; }
       if (!it || !Array.isArray(it.accepted) || !it.accepted.length || !it.accepted.every(str)) fail(at + ' rúbrica ' + (j + 1) + ': accepted inválido');
       if (it && it.weight !== undefined && !(Number.isFinite(it.weight) && it.weight > 0)) fail(at + ' rúbrica ' + (j + 1) + ': weight inválido');
     });

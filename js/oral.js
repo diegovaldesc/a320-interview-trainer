@@ -497,8 +497,13 @@ function criticalItemDetected(transcriptTokens,item){
    motor 1») o todos hacia adelante («el motor 1 presuriza el verde»). Se usa
    el sentido que asigna mas valores; si empatan, hacia atras, el orden
    habitual en espanol. Sujetos y valores se buscan como palabras exactas.
-   Una negacion entre los dos anula esa asignacion. Un concepto o error critico con
-   `link:[relacion,sujeto,valor]` se cumple si esa asignacion existe. */
+   Una negacion entre los dos anula esa asignacion (`negations` reemplaza la
+   lista de negaciones de esa relacion). Si dos frases se pisan («menos
+   estable» y «estable»), cuenta la mas larga. Un concepto o error critico con
+   `link:[relacion,sujeto,valor]` se cumple si esa asignacion existe; un
+   concepto acepta tambien una lista de links (basta uno). Con `correct`
+   ({sujeto:[valores]}), el error critico {relation, wrong:true} se cumple si
+   algun sujeto quedo con un valor que no es el suyo. */
 function exactSpans(tokens,terms){
   const spans=[];
   (terms||[]).forEach(term=>{
@@ -515,15 +520,38 @@ function exactSpans(tokens,terms){
 }
 function relationAssignments(tokens,rel,direction){
   const W=Number(rel.window)||10,subjects=[],values=[],links=[];
+  const longest=list=>list.filter(a=>!list.some(b=>b!==a&&b.sp[0]<=a.sp[1]&&a.sp[0]<=b.sp[1]&&(b.sp[1]-b.sp[0]>a.sp[1]-a.sp[0]||(b.sp[1]-b.sp[0]===a.sp[1]-a.sp[0]&&list.indexOf(b)<list.indexOf(a)))));
   Object.keys(rel.subjects||{}).forEach(key=>exactSpans(tokens,rel.subjects[key]).forEach(sp=>subjects.push({key,sp})));
   Object.keys(rel.values||{}).forEach(key=>exactSpans(tokens,rel.values[key]).forEach(sp=>values.push({key,sp})));
+  // Un sujeto dentro de un valor («el DOW mas la carga paga») es parte del valor.
+  const vals=longest(values),subj=longest(subjects).filter(s=>!vals.some(v=>v.sp[0]<=s.sp[1]&&s.sp[0]<=v.sp[1]));
+  subjects.length=0;subjects.push(...subj);values.length=0;values.push(...vals);
+  /* Con `otherNumbers`, un numero que no es ninguno de los valores
+     conocidos y queda pegado a un sujeto (a lo sumo `otherWindow` palabras,
+     2 si no se indica) es un valor «_otro»: «VLE 421 kt» queda como error. */
+  if(rel.otherNumbers){
+    tokens.forEach((t,i)=>{
+      if(!/^\d+$/.test(t))return;
+      if(values.some(v=>v.sp[0]<=i&&i<=v.sp[1])||subjects.some(x=>x.sp[0]<=i&&i<=x.sp[1]))return;
+      values.push({key:"_otro",sp:[i,i],other:true});
+    });
+    values.sort((a,b)=>a.sp[0]-b.sp[0]);
+  }
+  const NEG=Array.isArray(rel.negations)?new Set(rel.negations.map(n=>normalizeAeroText(n))):ORAL_NEGATION_MARKERS;
+  /* Hacia atras una asignacion no cruza «porque» (en «PAN PAN es menos grave
+     que MAYDAY porque es urgencia» la urgencia es del PAN PAN). Hacia
+     adelante tampoco cruza «pero», «aunque» ni «y» («...es urgencia y MAYDAY
+     es socorro»). */
+  const BARRIER=direction<0?RELATION_BARRIERS_BACK:RELATION_BARRIERS_FWD;
   const nearest=v=>{
     let best=null,bestDist=Infinity;
+    const lim=v.other?Math.min(W,Number(rel.otherWindow)||2):W;
     subjects.forEach(s=>{
       const d=direction<0?v.sp[0]-s.sp[1]:s.sp[0]-v.sp[1];
-      if(d>0&&d<=W&&d<bestDist){bestDist=d;best=s}
+      if(d>0&&d<=lim&&d<bestDist){bestDist=d;best=s}
     });
-    return best;
+    if(best){const [a,b]=direction<0?[best.sp[1]+1,v.sp[0]-1]:[v.sp[1]+1,best.sp[0]-1];for(let i=a;i<=b;i++){if(BARRIER.has(tokens[i]))return null}}
+    return best?{s:best,d:bestDist}:null;
   };
   // Tramo entre el sujeto y el valor, sin incluirlos.
   const gap=(s,v)=>direction<0?[s.sp[1]+1,v.sp[0]-1]:[v.sp[1]+1,s.sp[0]-1];
@@ -534,14 +562,16 @@ function relationAssignments(tokens,rel,direction){
   const negated=(s,v)=>{
     const [a,b]=gap(s,v);
     for(let i=a;i<=b;i++){
-      if(!ORAL_NEGATION_MARKERS.has(tokens[i]))continue;
+      if(!NEG.has(tokens[i]))continue;
       if(direction<0?!valueIn(i+1,v.sp[0]-1,v):!valueIn(v.sp[1]+1,i-1,v))return true;
     }
     return false;
   };
-  values.forEach(v=>{
-    const s=nearest(v);
-    if(!s||negated(s,v))return;
+  values.forEach((v,vi)=>{
+    const near=nearest(v);
+    if(!near)return;
+    const s=near.s;
+    if(negated(s,v))return;
     /* Con `single`, cada sujeto tiene un solo valor: el que queda junto a
        el. En «normal 3000 PSI y 2500 PSI con el RAT», el 2500 no es del
        normal, porque el 3000 esta entre ambos (salvo que este negado). */
@@ -549,29 +579,43 @@ function relationAssignments(tokens,rel,direction){
       const [a,b]=gap(s,v);
       if(values.some(o=>o!==v&&o.sp[0]>=a&&o.sp[1]<=b&&!negated(s,o)))return;
     }
-    links.push(s.key+"|"+v.key);
+    links.push({pair:s.key+"|"+v.key,vi,d:near.d});
   });
   return links;
 }
+const RELATION_BARRIERS_BACK=new Set(["porque"]);
+const RELATION_BARRIERS_FWD=new Set(["porque","pero","aunque","y"]);
 function resolveRelations(tokens,question){
   const out={};
   const rels=question&&question.relations;
   if(!rels||typeof rels!=="object")return out;
   Object.keys(rels).forEach(id=>{
     const back=relationAssignments(tokens,rels[id],-1),fwd=relationAssignments(tokens,rels[id],1);
-    out[id]=new Set(fwd.length>back.length?fwd:back);
+    const useFwd=fwd.length>back.length,chosen=useFwd?fwd:back;
+    out[id]={pairs:new Set(chosen.map(e=>e.pair)),chosen,other:useFwd?back:fwd};
   });
   return out;
 }
 function linkHeld(relations,link){
-  return Array.isArray(link)&&!!relations[link[0]]&&relations[link[0]].has(link[1]+"|"+link[2]);
+  if(Array.isArray(link)&&Array.isArray(link[0]))return link.some(l=>linkHeld(relations,l));
+  return Array.isArray(link)&&!!relations[link[0]]&&relations[link[0]].pairs.has(link[1]+"|"+link[2]);
+}
+/* Con `excuse` (listas como «230 en CONF 1 y 177 en FULL», donde se mezcla
+   el orden), un valor mal asignado no cuenta como error si leido hacia el
+   otro lado queda con un sujeto correcto igual o mas cerca. */
+function wrongLinkHeld(relations,question,id){
+  const rel=question.relations&&question.relations[id],got=relations[id];
+  if(!rel||!rel.correct||!got)return false;
+  const bad=pair=>{const [s,v]=pair.split("|");return Array.isArray(rel.correct[s])&&!rel.correct[s].includes(v)};
+  return got.chosen.some(e=>bad(e.pair)&&!(rel.excuse&&got.other.some(o=>o.vi===e.vi&&o.d<=e.d&&!bad(o.pair))));
 }
 function detectCriticalErrors(transcriptTokens,transcriptStr,question,relations){
   const errors=[];let penaltyTotal=0;
   if(Array.isArray(question.criticalErrors)){
     if(!relations)relations=resolveRelations(transcriptTokens,question);
     question.criticalErrors.forEach(item=>{
-      if(item&&item.link?linkHeld(relations,item.link):criticalItemDetected(transcriptTokens,item)){
+      const hit=item&&item.wrong?wrongLinkHeld(relations,question,item.relation):item&&item.link?linkHeld(relations,item.link):criticalItemDetected(transcriptTokens,item);
+      if(hit){
         errors.push(item.feedback||"A conceptual error was detected.");
         penaltyTotal+=Number(item.penalty)||1.5;
       }
@@ -589,7 +633,9 @@ function evaluateLocally(question,transcript){
   const relations=resolveRelations(transcriptTokens,question);
   concepts.forEach(concept=>{
     const weight=Number(concept.weight)||1;totalWeight+=weight;
-    if(concept.link?linkHeld(relations,concept.link):itemDetected(transcriptTokens,transcriptStr,concept)){achievedWeight+=weight;detected.push(concept.label)}
+    /* Con link y accepted, basta cualquiera de los dos. */
+    const hit=(concept.link&&linkHeld(relations,concept.link))||((!concept.link||concept.accepted)&&itemDetected(transcriptTokens,transcriptStr,concept));
+    if(hit){achievedWeight+=weight;detected.push(concept.label)}
     else{missing.push(concept.label);if(concept.required)missingRequired=true}
   });
   const conceptScore=totalWeight>0?achievedWeight/totalWeight:0;

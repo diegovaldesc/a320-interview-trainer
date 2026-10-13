@@ -193,6 +193,37 @@ resolver primero, antes de seguir auditando.
   lo ganaba con «mil pies»). Pruebas de mutación: sin `single`, sin la
   negación, sin copiar `relations` al cargar la pregunta y con la rúbrica
   anterior, REG-15 falla.
+- **REG-16 — revisión de todas las orales** (2026-10-13, 1.23.0). Un sondeo
+  automático cambió en cada respuesta modelo los números, los opuestos
+  (más/menos, adelantado/atrasado, PAN PAN/MAYDAY…) y los valores entre ítems,
+  y probó repetir la pregunta como respuesta. En casi todas las orales el
+  cambio no bajaba la nota: los criterios se cumplían con nombrar el tema.
+  Se corrigieron 24 orales donde el dato es lo central: PAN PAN y MAYDAY,
+  efectos del CG, velocidades límite, combustible DAN 121, altura de
+  estabilización, approach y landing climb, segmentos del despegue, cost
+  index, FLEX y derated en pista contaminada, arquitectura eléctrica (EMER GEN
+  con el azul, TR de AC a DC), leyes de vuelo, coffin corner, VMC con CG y
+  peso, equipos RVSM, SRS, pesos operativos, RTO bajo 100 kt y hasta V1,
+  autobrake, estrategias de descenso con un motor (green dot y crucero) y
+  funciones del FMGS; además windshear, ETOPS y pista balanceada ya no dan
+  puntos por palabras que trae la pregunta. Lo nuevo del evaluador
+  (`js/oral.js`): si dos frases se pisan cuenta la más larga; un sujeto dentro
+  de un valor es parte del valor; `negations` por relación; hacia atrás no se
+  cruza «porque» y hacia adelante tampoco «pero», «aunque» ni «y»; `correct`
+  más el error {relation, wrong:true} para «valor que no es el suyo»;
+  `excuse` (listas con el orden mezclado: «230 en CONF 1 y 177 en FULL»);
+  `otherNumbers`/`otherWindow` (un número inventado pegado al ítem es error:
+  «VLE 421 kt»); un concepto acepta una lista de links o link y accepted. En
+  `ov_flex_derate_contam` la relación reemplazó al error por frases (lo
+  contaba dos veces). La prueba revisa 28 respuestas equivocadas (todas con
+  error), 7 respuestas correctas cortas (sin error y con nota), que repetir
+  la pregunta saque menos de 4 en todas las orales (salvo
+  `ov_ecam_priorities`, cuya pregunta ya trae el orden) y que cada
+  referencia saque al menos 9,5 sin errores. Pruebas de mutación: con las
+  rúbricas anteriores, sin `otherNumbers` y sin la frase más larga, falla.
+  Lo que queda: un número inventado en un detalle secundario (por ejemplo los
+  50% N1 del viento de cola) no se penaliza, y nombrar el tema sigue dando el
+  punto en los criterios de cobertura.
 - **REG-06 — ninguna oral cita un manual en lo que se ve** (2026-10-05,
   1.17.0): al armar Performance aparecieron dos referencias antiguas que lo
   hacían («fuera del FCOM…» en ETOPS, «la razón que da el FCTM» en sterile

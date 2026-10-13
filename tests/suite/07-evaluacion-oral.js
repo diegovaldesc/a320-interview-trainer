@@ -129,6 +129,56 @@
     loadQuestionFromA320Bank(q);ok(oralState.question.relations===q.relations,"la entrevista oral conserva las relaciones al cargar la pregunta");
     stopEverythingOral();
   });
+  T("6 REG-16 revision de todas las orales: decir lo opuesto, cruzar valores o inventar un numero se penaliza; las respuestas correctas cortas no; repetir la pregunta no da puntos",function(){
+    function sw(a,b){return function(r){var ph="\u0001";return r.split(a).join(ph).split(b).join(a).split(ph).join(b)}}
+    function rp(a,b){return function(r){return r.split(a).join(b)}}
+    var MAL=[
+      ["ov_pan_mayday","PAN socorro, MAYDAY urgencia",function(r){return r.replace("PAN PAN se usa para una urgencia","PAN PAN se usa para una situación de socorro").replace("MAYDAY se reserva para una situación de socorro","MAYDAY se reserva para una urgencia")}],
+      ["ov_cg_effects","efectos del CG cruzados",sw("CG adelantado","CG atrasado")],
+      ["ov_cg_effects","efectos del CG cruzados (corta)","Con CG adelantado el avión es menos estable y puede rotar solo. Con CG atrasado es más estable y cuesta rotar."],
+      ["ov_limit_speeds","VLE y VLO cruzadas",function(r){return r.replace("VLE: la máxima con el tren abajo, 280 kt","VLE: la máxima con el tren abajo, 250 kt").replace("250 kt / M 0,60 para extenderlo","280 kt / M 0,60 para extenderlo")}],
+      ["ov_limit_speeds","VLE inventada",rp("VLE: la máxima con el tren abajo, 280 kt","VLE: la máxima con el tren abajo, 421 kt")],
+      ["ov_fuel_dan121","reserva final y sin alternativo cruzados",function(r){return r.replace("Reserva final (avión a turbina): 30 minutos","Reserva final (avión a turbina): 15 minutos").replace("Si no se requiere alternativo, 15 minutos","Si no se requiere alternativo, 30 minutos")}],
+      ["ov_fuel_dan121","reserva final inventada",rp("Reserva final (avión a turbina): 30 minutos","Reserva final (avión a turbina): 45 minutos")],
+      ["ov_stab_appr","IMC y VMC cruzados",rp("a 1 000 ft sobre la pista en IMC, o a 500 ft en VMC","a 500 ft sobre la pista en IMC, o a 1 000 ft en VMC")],
+      ["ov_stab_appr","altura IMC inventada",rp("a 1 000 ft sobre la pista en IMC","a 2 000 ft sobre la pista en IMC")],
+      ["ov_appr_ldg_climb","approach y landing cruzados",sw("Approach climb","Landing climb")],
+      ["ov_takeoff_segments","gradientes cruzados",function(r){return r.replace("Gradiente mínimo: 2,4% en bimotor","Gradiente mínimo: 1,2% en bimotor").replace("Gradiente mínimo: 1,2% en bimotor (1,5%","Gradiente mínimo: 2,4% en bimotor (1,5%")}],
+      ["ov_takeoff_segments","second segment inventado","El primer segmento es positivo. El second segment 3 por ciento, hasta 400 pies. El final segment 1,2 por ciento hasta 1500 pies."],
+      ["ov_cost_index","CI 0 y 999 cruzados",function(r){return r.replace("- CI 0: mínimo consumo, es decir, máximo alcance.","- CI 0: mínimo tiempo, es decir, máxima velocidad.").replace("- CI 999: mínimo tiempo, es decir, máxima velocidad.","- CI 999: mínimo consumo, es decir, máximo alcance.")}],
+      ["ov_flex_derate_contam","FLEX y derated cruzados",rp("el FLEX está prohibido y el derated está permitido","el FLEX está permitido y el derated está prohibido")],
+      ["ov_elec_arch","EMER GEN con el verde",rp("accionado por el circuito hidráulico azul","accionado por el circuito hidráulico verde")],
+      ["ov_elec_arch","TR de DC a AC",rp("TR 1 y TR 2 convierten AC a DC","TR 1 y TR 2 convierten DC a AC")],
+      ["ov_fc_laws","normal y direct cruzadas",function(r){return r.replace("Tiene todas las protecciones","No tiene protecciones").replace("sin protecciones, sin alpha floor","con todas las protecciones, sin alpha floor")}],
+      ["ov_coffin_corner","el Mach critico como limite","El límite de arriba es el Mach crítico. El MMO es 0,82. Se juntan el low speed buffet y el high speed buffet."],
+      ["ov_vmc_cg_weight","peor caso al reves",function(r){return r.replace("el CG atrasado es el peor caso","el CG adelantado es el peor caso").replace("el caso más desfavorable es CG atrasado y peso liviano","el caso más desfavorable es CG adelantado y avión pesado")}],
+      ["ov_rvsm_equipment","cantidades cruzadas","1 ADR y 1 DMC, 2 transponder, 1 autopilot, 1 canal de la FCU, 2 PFD y 1 FWC. RVSM es 1000 pies entre FL290 y FL410."],
+      ["ov_rvsm_equipment","cantidad inventada","3 ADR y 2 DMC, 1 transponder, 1 autopilot, 1 canal de la FCU, 2 PFD y 1 FWC."],
+      ["ov_srs","V2 + 10 y V2 + 15 cruzados",function(r){return r.replace("ya en el aire, V2 + 10 kt","ya en el aire, V2 + 15 kt").replace("limitada entre V2 y V2 + 15 kt","limitada entre V2 y V2 + 10 kt")}],
+      ["ov_weights","MEW y DOW cruzados",function(r){return r.replace("(MEW): estructura, motores, sistemas y equipos fijos","(MEW): el avión listo para ese vuelo, sin combustible utilizable ni carga paga").replace("(DOW, peso operativo en seco): el avión listo para ese vuelo, sin combustible utilizable ni carga paga","(DOW, peso operativo en seco): estructura, motores, sistemas y equipos fijos")}],
+      ["ov_v1_reject","fases del RTO cruzadas","Por debajo de 100 kt hay que estar go minded y entre 100 kt y V1 es a criterio del comandante. El llamado de V1 tiene precedencia."],
+      ["ov_autobrake","modos cruzados","En LO y MED el autobrake manda la presión máxima; en MAX busca una desaceleración objetivo."],
+      ["ov_green_dot","drift down a M 0,78",rp("se desciende a green dot, con la menor razón","se desciende a M 0,78 / 300 kt, con la menor razón")],
+      ["ov_eng_fail_cruise","estrategias cruzadas",function(r){return r.replace("- Standard: M 0,78 / 300 kt","- Standard: green dot").replace("- Obstacle: sobre terreno se vuela a green dot","- Obstacle: sobre terreno se vuela a M 0,78 / 300 kt")}],
+      ["ov_fmgs_functions","FM y FG cruzados",function(r){return r.replace("- Flight management: navegación","- Flight guidance: navegación").replace("- Flight guidance: el AP","- Flight management: el AP")}]
+    ];
+    MAL.forEach(function(c){var q=oral(c[0]);var t=typeof c[2]==="function"?c[2](q.reference):c[2];
+      ok(t!==q.reference,c[0]+" · "+c[1]+": el reemplazo no aplico");
+      var r=evaluateLocally(q,t);ok(r.errors.length>0,c[0]+" · "+c[1]+": no se penalizo ("+r.score+")")});
+    var BIEN=[
+      ["ov_pan_mayday","PAN PAN es urgencia, sin peligro grave e inminente. MAYDAY es socorro, peligro grave e inminente, se dice tres veces. Naturaleza de la emergencia, intenciones, posición, nivel, almas a bordo y combustible.",9],
+      ["ov_cg_effects","Con CG adelantado el avión es más estable, cuesta rotar y penaliza la performance. Con CG atrasado es menos estable, puede rotar solo antes de VR y hay riesgo de tail strike; hay que corregir sin sobrerreaccionar.",8.5],
+      ["ov_limit_speeds","VMO 350 nudos, MMO 0,82. VFE: conf 1 230, 1+F 215, conf 2 200, conf 3 185 y full 177. VLE 280. VLO 250 para extender y 220 para retraer. VA de maniobra. VMCG y VMCA mínimas de control. Neumáticos 195.",8.5],
+      ["ov_fuel_dan121","Rodaje, trip, contingencia del 5 por ciento con mínimo 5 minutos, alternativa, reserva final de 30 minutos, adicional y discrecional. Sin alternativo 15 minutos y aeródromo aislado 2 horas. En vuelo combustible mínimo y MAYDAY combustible.",8.5],
+      ["ov_stab_appr","Estabilizada a 1000 pies en IMC y 500 en VMC: trayectoria correcta, configuración de aterrizaje, empuje sobre ralentí, velocidad entre VAPP y VAPP más 20, razón de descenso hasta 1000 pies por minuto, checklist de aterrizaje completado; si no, go around.",8.5],
+      ["ov_flex_derate_contam","En pista contaminada no se puede usar flex; el derated sí se puede usar. Con derated baja la VMCG, la V1 es menor y mejora la ASD; no se puede poner TOGA antes de la velocidad F. El FLEX parte de toda la potencia nominal y usa la flex temperature.",7],
+      ["ov_weights","El MEW es la estructura, motores y sistemas. El OEW es el MEW más los ítems del operador. El DOW es el avión listo para el vuelo, sin combustible utilizable ni carga paga. El ZFW es el DOW más la carga paga. Con el combustible se llega al TOW; cada uno tiene su máximo, MZFW, MTOW, MLW, y el MZFW es por la flexión en la raíz del ala.",9]
+    ];
+    BIEN.forEach(function(c){var r=evaluateLocally(oral(c[0]),c[1]);eq(r.errors.length,0,c[0]+": se penalizo una respuesta correcta: "+JSON.stringify(r.errors));ok(r.score>=c[2],c[0]+": puntaje "+r.score+", faltan "+JSON.stringify(r.missing))});
+    var altos=ORAL_VOICE_BANK.filter(function(q){return q.id!=="ov_ecam_priorities"}).map(function(q){return [q.id,evaluateLocally(q,q.question).score]}).filter(function(x){return x[1]>=4});
+    eq(altos.length,0,"repetir la pregunta da 4 o mas: "+JSON.stringify(altos));
+    ORAL_VOICE_BANK.forEach(function(q){var r=evaluateLocally(q,q.reference);ok(r.score>=9.5&&r.errors.length===0,q.id+": la referencia saca "+r.score+(r.errors.length?" con errores "+JSON.stringify(r.errors):""))});
+  });
   T("6 REG-06 ninguna pregunta oral cita un manual en lo que se ve (pregunta, referencia, resumen, conceptos y avisos)",function(){
     var CITA=/(fuera del|que da el|seg[uú]n el|explica el|dice el|lo dice el|que el) (FCOM|FCTM|manual)|\bFCTM\b|Getting to Grips|Tutorial|\bAFM\b|\bPDF\b|§|en prosa/i;
     var bad=[];

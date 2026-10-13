@@ -59,6 +59,8 @@ The order matters. Function declarations are only visible to scripts that run la
 - **Oral question:** `id` such as `ov_fc_laws`. Its rubric items use `accepted` (a list of phrases)
   or, when it matters WHICH value goes with WHICH system (Green–engine 1), `link:[relation, subject,
   value]` against the question's `relations` (see `resolveRelations` in `js/oral.js`, TESTING.md REG-15).
+  A relation's `correct` map plus a critical error `{relation, wrong:true}` penalizes a value given to the
+  wrong item; `otherNumbers` also catches invented numbers next to an item (TESTING.md REG-16).
 - **English item:** `en_q_NN`, `en_img_NN`, `en_lis_NN`, `en_rp_NN`; English tests are `n` 1–4.
 - **Station:** such as `tren-6` or `ctl-repaso`; each card has its own `id`.
 

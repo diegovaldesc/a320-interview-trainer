@@ -179,7 +179,8 @@ resolver primero, antes de seguir auditando.
   `link:[relación, sujeto, valor]` se cumple si esa asignación existe. En
   `ov_hyd_arch`: verde–motor 1, amarillo–motor 2 y su bomba eléctrica,
   azul–bomba eléctrica y RAT; verde–motor 2, amarillo–motor 1 y presión
-  normal–2500 son errores (−3 cada uno). La referencia dice que los 2500 PSI
+  normal–2500 son errores (−3 los de motor, −4 el de presión: con todo lo
+  demás correcto, la presión normal equivocada no aprueba). La referencia dice que los 2500 PSI
   son del azul con RAT, y que el RAT se despliega solo al perder AC BUS 1 y
   AC BUS 2 sobre 100 kt, o a mano con RAT MAN ON. La prueba revisa los seis
   casos del informe y seis respuestas correctas dichas de otra forma (valor

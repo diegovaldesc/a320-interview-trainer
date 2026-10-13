@@ -210,7 +210,7 @@ window.ORAL_PARTS["core"]=[
  criticalErrors:[{accepted:["se puede transferir fluido entre sistemas","comparten el mismo fluido","estan interconectados directamente","es un solo sistema hidraulico"],penalty:3,feedback:"Los tres sistemas son independientes: el fluido nunca se transfiere entre ellos (PTU transfiere potencia hidráulica de un sistema a otro, no fluido)."},
   {link:["bombas","verde","motor2"],penalty:3,feedback:"El verde lo presuriza la bomba del motor 1, no la del motor 2."},
   {link:["bombas","amarillo","motor1"],penalty:3,feedback:"El amarillo lo presuriza la bomba del motor 2 (y su bomba eléctrica), no la del motor 1."},
-  {link:["presion","normal","p2500"],penalty:3,feedback:"La presión normal es 3000 PSI; 2500 PSI es la del azul cuando lo alimenta el RAT."}]},
+  {link:["presion","normal","p2500"],penalty:4,feedback:"La presión normal es 3000 PSI; 2500 PSI es la del azul cuando lo alimenta el RAT."}]},
 
 {id:"ov_elec_arch",question:"Observa el diagrama de arquitectura eléctrica y explica: qué alimenta normalmente las barras AC y DC, qué queda conectado permanentemente a las baterías, y qué respalda al sistema si se pierden ambos generadores de motor.",
  image:"assets/electrical-architecture.png",

@@ -110,7 +110,7 @@
     ok(sw!==ref,"el reemplazo de motores aplica");
     r=ev(sw);eq(r.errors.length,2,"motores invertidos: dos errores");ok(r.score<6,"motores invertidos no aprueba ("+r.score+")");
     var p=ref.replace("La presión normal es 3000 PSI","La presión normal es 2500 PSI");ok(p!==ref,"el reemplazo de presion aplica");
-    r=ev(p);eq(r.errors.length,1,"presion normal 2500: un error");ok(r.missing.indexOf("Presión normal 3000 PSI")!==-1,"presion normal 2500: sin el punto de 3000");
+    r=ev(p);eq(r.errors.length,1,"presion normal 2500: un error");ok(r.score<6,"presion normal 2500 no aprueba ("+r.score+")");ok(r.missing.indexOf("Presión normal 3000 PSI")!==-1,"presion normal 2500: sin el punto de 3000");
     eq(ev("Hay tres sistemas independientes, sin transferencia de fluido, a 2500 PSI normalmente (2500 PSI si lo alimenta el RAT).").errors.length,1,"«2500 PSI normalmente» se penaliza");
     eq(ev("La presión normal es 2500 psi").errors.length,1,"«La presion normal es 2500 psi» se penaliza");
     r=ev("verde azul amarillo");ok(r.score<1&&r.detected.length===0,"solo los colores no cumple ningun criterio ("+r.score+")");

@@ -175,7 +175,7 @@
       ["ov_weights","El MEW es la estructura, motores y sistemas. El OEW es el MEW más los ítems del operador. El DOW es el avión listo para el vuelo, sin combustible utilizable ni carga paga. El ZFW es el DOW más la carga paga. Con el combustible se llega al TOW; cada uno tiene su máximo, MZFW, MTOW, MLW, y el MZFW es por la flexión en la raíz del ala.",9]
     ];
     BIEN.forEach(function(c){var r=evaluateLocally(oral(c[0]),c[1]);eq(r.errors.length,0,c[0]+": se penalizo una respuesta correcta: "+JSON.stringify(r.errors));ok(r.score>=c[2],c[0]+": puntaje "+r.score+", faltan "+JSON.stringify(r.missing))});
-    var altos=ORAL_VOICE_BANK.filter(function(q){return q.id!=="ov_ecam_priorities"}).map(function(q){return [q.id,evaluateLocally(q,q.question).score]}).filter(function(x){return x[1]>=4});
+    var altos=ORAL_VOICE_BANK.map(function(q){return [q.id,evaluateLocally(q,q.question).score]}).filter(function(x){return x[1]>=4});
     eq(altos.length,0,"repetir la pregunta da 4 o mas: "+JSON.stringify(altos));
     ORAL_VOICE_BANK.forEach(function(q){var r=evaluateLocally(q,q.reference);ok(r.score>=9.5&&r.errors.length===0,q.id+": la referencia saca "+r.score+(r.errors.length?" con errores "+JSON.stringify(r.errors):""))});
   });

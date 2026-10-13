@@ -217,8 +217,9 @@ resolver primero, antes de seguir auditando.
   `ov_flex_derate_contam` la relación reemplazó al error por frases (lo
   contaba dos veces). La prueba revisa 28 respuestas equivocadas (todas con
   error), 7 respuestas correctas cortas (sin error y con nota), que repetir
-  la pregunta saque menos de 4 en todas las orales (salvo
-  `ov_ecam_priorities`, cuya pregunta ya trae el orden) y que cada
+  la pregunta saque menos de 4 en todas las orales (en 1.23.1 se reescribió la
+  de prioridades ECAM, que traía el orden «memory items, OEB, ECAM, QRH» y
+  daba 6,2 al repetirla) y que cada
   referencia saque al menos 9,5 sin errores. Pruebas de mutación: con las
   rúbricas anteriores, sin `otherNumbers` y sin la frase más larga, falla.
   Lo que queda: un número inventado en un detalle secundario (por ejemplo los

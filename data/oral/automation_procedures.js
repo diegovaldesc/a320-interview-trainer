@@ -105,7 +105,7 @@ window.ORAL_PARTS["automation_procedures"]=[
   {src:"DAN 121 ED3 ENM7 · RVSM (PDF 88)",cite:"vertical mínima reducida (RVSM) de 1000 pies (300 metros) entre FL290 y"}
  ]},
 
-{id:"ov_ecam_priorities",question:"Ante una falla, ¿en qué orden se aplican los procedimientos (memory items, OEB, ECAM, QRH) y qué se hace después?",
+{id:"ov_ecam_priorities",question:"Ante una falla en vuelo, ¿qué procedimientos usa la tripulación, en qué orden los aplica y qué hace al terminarlos?",
  short:"Primero volar. Después: memory items u OEB immediate actions, luego el OEB, luego el ECAM y después el QRH (las QRH summaries en ELEC EMER CONFIG o doble falla hidráulica). Al terminar, si hay tiempo, el FCOM.",
  reference:"Primero volar: mantener una trayectoria segura antes de leer nada. En el despegue o en un go-around, las acciones READ & DO empiezan desde 400 ft AGL; antes, solo si la trayectoria es segura.\n\nEl orden básico es:\n1. MEMORY ITEMS u OEB immediate actions, de memoria.\n2. OEB.\n3. ECAM: el procedimiento, las páginas de sistema y el STATUS.\n4. QRH. Las QRH summaries se usan después de “ECAM ACTIONS COMPLETE”, en ELEC EMER CONFIG o en una doble falla hidráulica.\n\nSe aplica un procedimiento a la vez: se termina, salvo que pida otro o aparezca algo que obligue a reevaluar, como humo en cabina. Al terminar, se vuelve al reparto normal de tareas y, si hay tiempo, se revisa el FCOM, sin alargar el vuelo para eso.\n\nEs la secuencia básica: la tripulación usa su criterio y la adapta a la situación real.",
  steps:[

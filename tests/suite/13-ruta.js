@@ -380,6 +380,16 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
+  T("15 REG-17 cierre de la auditoria de Hidraulico: PTU actua cuando la diferencia supera 500 PSI, y ningun texto da una causa sin fuente para los 2500 PSI del RAT",function(){
+    function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    var p=bq("hydraulic","¿A partir de qué diferencial de presión");
+    ok(/supera 500 PSI/.test(p.expl)&&/(PTU pb en AUTO)/.test(p.expl)&&!/500 PSI menos/.test(p.expl),"PTU: supera 500 PSI, con el pb en AUTO");
+    var corpus=[];
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q){corpus.push(k+": "+q.q+" "+(q.expl||""))})});
+    Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];st.cards.forEach(function(c){corpus.push(c.id+": "+[c.body,c.example||"",c.more||"",c.keyIdea].join(" "))});st.test.forEach(function(t){corpus.push(t.id+": "+[t.explanation||"",t.reference||""].join(" "))})});
+    var causa=corpus.filter(function(s){return /2500|2 500/.test(s)&&/menor capacidad|menos potencia|menor potencia|turbina e[oó]lica/i.test(s)});
+    eq(causa.length,0,"textos con una causa sin fuente: "+causa.join(" | ").slice(0,240));
+  });
   T("15 REG-14 lote 001 de Hidraulico: la pregunta de presion pide las dos condiciones con una sola correcta, el oral no da los 3000 PSI por decir 2500 y los case drain filters si filtran",function(){
     function bq(pre){var h=SYSTEMS.hydraulic.questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
     var p=bq("¿Qué combinación indica correctamente la presión normal");

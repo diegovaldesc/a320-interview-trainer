@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-17** (2026-10-13, 1.23.2) — cierre de la auditoría externa de
+  Hidráulico. La explicación de la pregunta del diferencial de PTU decía «tiene
+  500 PSI menos»; el FCOM dice que actúa cuando la diferencia supera 500 PSI,
+  con el PTU pb en AUTO. Y tres textos daban una causa para los 2500 PSI del
+  RAT («menor capacidad», «menos potencia») que ningún documento de la
+  carpeta APP respalda: la ficha de los 3000 PSI, la explicación de la
+  pregunta de presión y la de la pregunta DGAC (que se ve en el repaso). Se
+  dejó solo el dato. La prueba revisa la explicación de PTU y que ninguna
+  ficha, pregunta ni explicación junte los 2500 PSI con esa causa. Prueba de
+  mutación: con la causa devuelta a la explicación DGAC, falla.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de

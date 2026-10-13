@@ -380,4 +380,21 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
+  T("15 REG-14 lote 001 de Hidraulico: la pregunta de presion pide las dos condiciones con una sola correcta, el oral no da los 3000 PSI por decir 2500 y los case drain filters si filtran",function(){
+    function bq(pre){var h=SYSTEMS.hydraulic.questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    var p=bq("¿Qué combinación indica correctamente la presión normal");
+    ok(/RAT/.test(p.q),"el enunciado pide la presion con RAT");
+    eq(correctText(p),"3000 PSI; Blue con RAT: 2500 PSI","respuesta correcta");
+    eq(p.options.filter(function(o){return /^3000 PSI/.test(o)&&/2500 PSI/.test(o)}).length,1,"una sola alternativa da 3000 normal y 2500 con RAT");
+    ok(p.options.every(function(o){return /RAT/.test(o)}),"todas las alternativas responden las dos condiciones");
+    var rt=RUTA.stations["hid-1"].test.filter(function(t){return t.question===p.q});eq(rt.length,1,"la estacion hid-1 usa la pregunta corregida");
+    var o=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_hyd_arch"})[0];
+    var it=o.concepts.filter(function(c){return c.label==="Presión normal 3000 PSI"})[0];
+    function det(txt){var n=normalizeAeroText(txt);return itemDetected(n.split(" ").filter(Boolean),n,it)}
+    ok(!det("2500 psi")&&!det("La presión normal es 2500 psi"),"2500 PSI no cumple el criterio de presion normal");
+    ok(det("3000 psi")&&det("normal 3000 PSI; Blue con RAT 2500 PSI"),"3000 PSI si lo cumple");
+    ok(!det("No recuerdo la presión"),"sin presion no hay credito");
+    var f=bq("¿Para qué sirven los case drain filters");
+    ok(/filtran el fluido/.test(f.expl)&&!/no cumplen una función|sino de diagnóstico/.test(f.expl),"case drain filters: filtran y ademas sirven para el diagnostico");
+  });
 

@@ -735,6 +735,19 @@ botón «Portada» para volver). Ningún módulo cambió.
   nuevos. Pruebas de mutación: con la frase antigua del steering en la ficha
   de la estación 1, y con «la mayoría de la flota» en la oral de ALL ENGINES
   FAILURE, falló.
+- **REG-14** (2026-10-13, 1.22.1) — lote 001 de una auditoría externa de
+  Hidráulico, verificado contra el FCOM. (1) La pregunta «¿Cuál es la presión
+  normal de operación…?» rechazaba «3000 PSI en los tres sistemas por igual»,
+  que también es la presión normal: ahora pide las dos condiciones (normal y
+  Blue con RAT), todas las alternativas responden ambas y solo una es
+  correcta. Su id viejo → nuevo está en `QID_RENAMES` (QID-01 espera 43).
+  (2) En la oral `ov_hyd_arch`, el criterio «Presión normal 3000 PSI» aceptaba
+  «2500 psi»; ya no. (3) La explicación de los case drain filters decía que no
+  filtran, solo sirven de diagnóstico; ahora dice que filtran y además
+  permiten vigilar el desgaste. La prueba revisa la pregunta (en el banco y en
+  la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
+  2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
+  recuerdo la presión», y la explicación.
 
 Comprobado que detecta regresiones: contando las preguntas DGAC y el segundo
 intento en las estadísticas, fallaron RUTA-05 y RUTA-06. Con un avance de
@@ -758,7 +771,8 @@ es el pushbutton.
   nuevo el 2026-10-05; el id de una pregunta sale de su enunciado. `QID_RENAMES` traslada al id nuevo lo que el usuario tenía en el
   id antiguo: estadísticas, guardadas, autoevaluación y Need to know (si ya
   hay datos en el id nuevo, se conservan). El mapa tiene 11 ids antiguos:
-  los de las dos versiones anteriores apuntan directo al id actual.
+  los de las dos versiones anteriores apuntan directo al id actual. Con los
+  31 de operaciones (REG-09) y el de la presión hidráulica (REG-14) son 43.
 - **QID-01** comprueba el traslado de los cuatro registros, que los ids
   nuevos existan y los antiguos no, y que ningún texto del banco diga «el
   PTU» ni «la PTU» (desde 1.15.0 también revisa las referencias).

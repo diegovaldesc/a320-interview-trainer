@@ -198,7 +198,7 @@ window.ORAL_PARTS["core"]=[
   {label:"PTU conecta verde y amarillo (~500 PSI)",weight:2,accepted:["ptu","power transfer unit","500 psi","transferencia de potencia","conecta verde y amarillo"]},
   {label:"Acumuladores cubren demandas transitorias",weight:1,accepted:["acumulador","acumuladores","demandas transitorias","mantener la presion"]},
   {label:"Fire shutoff valves en las bombas de motor",weight:1,accepted:["fire shutoff","valvula de corte de fuego","eng fire","corte de fuego"]},
-  {label:"Presión normal 3000 PSI",weight:1,accepted:["3000 psi","2500 psi"]}
+  {label:"Presión normal 3000 PSI",weight:1,accepted:["3000 psi"]}
  ],
  criticalErrors:[{accepted:["se puede transferir fluido entre sistemas","comparten el mismo fluido","estan interconectados directamente","es un solo sistema hidraulico"],penalty:3,feedback:"Los tres sistemas son independientes: el fluido nunca se transfiere entre ellos (PTU transfiere potencia hidráulica de un sistema a otro, no fluido)."}]},
 

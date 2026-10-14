@@ -3,7 +3,7 @@
    la fuente está en Escritorio\APP\Estaciones\ruta.json. */
 window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"assets/estaciones/imagenes/mapa-1-aeropuerto-salida.webp"},{"id":"nubes","title":"Clouds","bg":"assets/estaciones/imagenes/mapa-2-nubes.webp"},{"id":"crucero","title":"Cruise","bg":"assets/estaciones/imagenes/mapa-3-crucero.webp"},{"id":"mal-tiempo","title":"Bad weather","bg":"assets/estaciones/imagenes/mapa-4-mal-tiempo.webp"},{"id":"tormenta","title":"Thunderstorms","bg":"assets/estaciones/imagenes/mapa-5-tormentas.webp"},{"id":"descenso","title":"Descent","bg":"assets/estaciones/imagenes/mapa-6-atardecer.webp"},{"id":"llegada","title":"Arrival runway","bg":"assets/estaciones/imagenes/mapa-7-aeropuerto-llegada.webp"}],"missions":[
 {"n":1,"id":"hid-1","subject":"hidraulico","title":"Three independent systems","kind":"lesson","level":1,"minutes":6,"zone":"pista","unlockAfter":null},
-{"n":2,"id":"ele-1","subject":"electrico","title":"Power sources","kind":"lesson","level":1,"minutes":8,"zone":"pista","unlockAfter":"hid-1"},
+{"n":2,"id":"ele-1","subject":"electrico","title":"Power sources","kind":"lesson","level":1,"minutes":9,"zone":"pista","unlockAfter":"hid-1"},
 {"n":3,"id":"ctl-1","subject":"controles","title":"Fly-by-wire","kind":"lesson","level":1,"minutes":8,"zone":"pista","unlockAfter":"ele-1"},
 {"n":4,"id":"perf-1","subject":"performance","title":"Performance at a glance","kind":"lesson","level":1,"minutes":8,"zone":"nubes","unlockAfter":"ctl-1"},
 {"n":5,"id":"tren-1","subject":"tren","title":"Landing gear at a glance","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"perf-1"},

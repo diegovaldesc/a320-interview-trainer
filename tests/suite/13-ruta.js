@@ -380,6 +380,36 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
+  T("15 REG-18 auditoria de Electrico: los 30 min del BCL son para conectar la bateria en vuelo; fuentes sin contradiccion; orales electricas penalizan lo falso; explicaciones sin causas inventadas",function(){
+    function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    var c2=rtCard("ele-7","When charging starts"),c3=rtCard("ele-7","When charging ends");
+    ok(/en vuelo, \*\*después de 30 min\*\*/.test(c2.body)&&/de inmediato/.test(c2.body),"la carga empieza: en tierra de inmediato, en vuelo despues de 30 min");
+    ok(/4 A/.test(c3.body)&&!/30 min/.test(c3.body),"la carga termina con 4 A, sin demora de 30 min");
+    var p=bq("electrical","Cuando el voltaje de una batería baja de 26.5 V");eq(correctText(p),"En tierra, de inmediato; en vuelo, después de 30 min","pregunta del BCL");
+    var corpus=[];
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q){corpus.push(k+": "+q.q+" "+q.options.join(" ")+" "+(q.expl||""))})});
+    Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];st.cards.forEach(function(c){corpus.push(c.id+": "+[c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" "))});st.test.forEach(function(t){corpus.push(t.id+": "+[t.question||"",t.explanation||"",t.reference||""].join(" "))})});
+    function nada(re,msg){var h=corpus.filter(function(s){return re.test(s)});eq(h.length,0,msg+": "+h.join(" | ").slice(0,200))}
+    nada(/(desconecta|desconectarla)[^.]{0,40}30 min|30 min (después|antes de desconectar)/i,"30 min aplicados a la desconexion");
+    nada(/se shed /,"«se shed» mezcla idiomas");
+    nada(/Así se evita mantener|Esto evita usar innecesariamente|energía aerodinámica suficiente|participa en la generación AC/,"causas sin fuente o «generacion» de la BAT 1");
+    var c=rtCard("ele-1","The sources and what they can power");
+    ok(/La única excepción es el \*\*DC BUS Ent\*\*/.test(c.body)&&!/Si queda un solo engine generator, alimenta todo menos/.test(c.body),"fuentes: una sola regla con su excepcion");
+    var r=bq("interview_technical","¿Qué puede provocar que el RAT");ok(/125 kt/.test(correctText(r))&&!/^Volar por debajo de aproximadamente 140 kt/.test(correctText(r)),"RAT: 140 kt es el minimo, alimenta hasta unos 125 kt");
+    ok(/C\/B TRIPPED/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl),"C/B: la explicacion cita la regla del procedimiento");
+    var A=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_elec_arch"})[0],E=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_elec_emer"})[0];
+    ok(/todos los generadores principales/.test(A.question)&&/100 kt/.test(A.reference)&&/BAT 1 alimenta el AC ESS BUS/.test(A.reference)&&!/\bla (AC ESS|DC BAT|DC ESS) BUS/.test(A.reference),"oral de arquitectura: generadores principales, 100 kt, BAT 1 y «el … BUS»");
+    ok(/140 kt/.test(E.reference)&&/VHF 1, HF 1 y ATC 1/.test(E.reference)&&!/dos riesgos distintos/.test(E.reference),"oral de ELEC EMER CONFIG: 140 kt y equipos concretos");
+    [[A,A.reference],[E,E.reference]].forEach(function(x){var v=evaluateLocally(x[0],x[1]);ok(v.score>=9.5&&!v.errors.length,x[0].id+": la referencia saca "+v.score)});
+    [[A,A.reference.replace("sin conectar nunca dos generadores en paralelo","conectando los dos generadores en paralelo"),"generadores en paralelo"],
+     [A,A.reference.replace("el EMER GEN alimenta el AC ESS BUS","el EMER GEN alimenta el AC BUS 1 y el AC BUS 2"),"EMER GEN a las barras principales"],
+     [A,A.reference.replace("El APU GEN o el EXT PWR pueden reemplazar a cualquiera de los generadores de motor","El APU GEN no puede reemplazar a los generadores de motor"),"APU GEN no reemplaza"],
+     [E,"El RAT alimenta la red esencial por el emergency generator, con radio y navegación limitadas. Hay gravity feed, evitar G negativas, y la velocidad mínima es 100 kt.","minimo 100 kt"],
+     [E,"El RAT alimenta la red esencial por el emergency generator, con radio y navegación limitadas. Hay gravity feed, hay que evitar G positivas, y no bajar de 140 kt.","G positivas"],
+     [E,"El APU alimenta el emergency generator y la red esencial, con radio y navegación limitadas. Gravity feed, evitar G negativas, mínimo 140 kt.","EMER GEN por el APU"],
+     [E,"Tengo el RAT y el emergency generator, todos los equipos de radio y navegación siguen disponibles. Gravity feed, evitar G negativas, mínimo 140 kt.","todos los equipos"]
+    ].forEach(function(x){ok(x[1]!==x[0].reference,x[2]+": el reemplazo no aplico");ok(evaluateLocally(x[0],x[1]).errors.length>0,x[2]+": no se penalizo")});
+  });
   T("15 REG-17 cierre de la auditoria de Hidraulico: PTU actua cuando la diferencia supera 500 PSI, y ningun texto da una causa sin fuente para los 2500 PSI del RAT",function(){
     function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
     var p=bq("hydraulic","¿A partir de qué diferencial de presión");

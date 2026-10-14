@@ -799,7 +799,7 @@ botón «Portada» para volver). Ningún módulo cambió.
   normal de operación…?» rechazaba «3000 PSI en los tres sistemas por igual»,
   que también es la presión normal: ahora pide las dos condiciones (normal y
   Blue con RAT), todas las alternativas responden ambas y solo una es
-  correcta. Su id viejo → nuevo está en `QID_RENAMES` (QID-01 espera 43).
+  correcta. Su id viejo → nuevo está en `QID_RENAMES` (QID-01 espera 45 desde REG-18).
   (2) En la oral `ov_hyd_arch`, el criterio «Presión normal 3000 PSI» aceptaba
   «2500 psi»; ya no. (3) La explicación de los case drain filters decía que no
   filtran, solo sirven de diagnóstico; ahora dice que filtran y además
@@ -807,6 +807,26 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-18** (2026-10-13, 1.24.0) — auditoría propia de Eléctrico, elemento por
+  elemento (informe en Desktop\APP\Estaciones\auditorias). Lo principal: la
+  demora de 30 min del BCL es para **conectar** la batería en vuelo cuando baja
+  de 26.5 V (FCOM PDF 2924, la lista «The batteries are connected… in the
+  following cases»), no para desconectarla al terminar la carga; se
+  corrigieron dos fichas, dos explicaciones, una pregunta (enunciado nuevo, id
+  en `QID_RENAMES`, igual que «se shed» → «se corta (shed)») y el diagrama. Además: la ficha de fuentes ya no se
+  contradice (DC BUS Ent), la oral de arquitectura habla de «todos los
+  generadores principales» (no «ambos de motor»), con 100 kt y BAT 1, y
+  penaliza generadores en paralelo, EMER GEN en las barras principales y «el
+  APU GEN no puede reemplazar»; la de ELEC EMER CONFIG pide 140 kt y penaliza
+  otra velocidad, G positivas, EMER GEN por el APU y «todos los equipos»; la
+  alternativa del RAT dice que 140 kt es el mínimo y que alimenta hasta unos
+  125 kt; la explicación DGAC de los C/B cita la regla del procedimiento; se
+  quitaron causas sin fuente, «se shed», «participa en la generación» y el
+  «Para saber más» de 400 Hz (conocimiento general). Diagramas: panel ELEC con
+  leyendas apagadas, lógica del RAT en texto (sin compuertas), roles y carga.
+  La prueba revisa los textos, la pregunta del BCL, las referencias de las
+  dos orales y siete respuestas falsas. Mutación: con la desconexión a los 30
+  min de vuelta en la ficha, y sin el error de G positivas, falla.
 - **REG-17** (2026-10-13, 1.23.2) — cierre de la auditoría externa de
   Hidráulico. La explicación de la pregunta del diferencial de PTU decía «tiene
   500 PSI menos»; el FCOM dice que actúa cuando la diferencia supera 500 PSI,

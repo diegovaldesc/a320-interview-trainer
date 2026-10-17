@@ -32,7 +32,7 @@
   <circle cx="34" cy="292" r="11" fill="#A9B4BD"/>
   <text x="34" y="296.5" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">5</text>
   <text x="54" y="291" font-size="11.5" font-weight="700" fill="#1E2A33">Baterías: la última fuente</text>
-  <text x="54" y="307" font-size="10.5" font-weight="600" fill="#1E2A33">BAT 1 → static inverter → AC ESS BUS</text>
+  <text x="54" y="307" font-size="10.5" font-weight="600" fill="#1E2A33">BAT 1 → STAT INV → AC ESS BUS (sobre 50 kt)</text>
   <text x="54" y="321" font-size="10.5" font-weight="600" fill="#1E2A33">BAT 2 → DC ESS BUS</text>
   <text x="54" y="335" font-size="10.5" font-weight="400" fill="#33424D">mientras el RAT se despliega (8 s) o si se detiene</text>
 </svg>

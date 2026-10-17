@@ -380,17 +380,35 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
-  T("15 REG-18 auditoria de Electrico: los 30 min del BCL son para conectar la bateria en vuelo; fuentes sin contradiccion; orales electricas penalizan lo falso; explicaciones sin causas inventadas",function(){
+  T("15 REG-19 lotes 005-007 de Codex (Electrico): static inverter monofasico, contexto de las preguntas DGAC, windmilling, DC BUS Ent, AC ESS FEED en los dos sentidos, 50 kt y chequeo de baterias",function(){
+    function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    var c1=rtCard("ele-1","AC and DC");
+    ok(/static inverter entrega una AC distinta: monofásica, de \*\*115 V\*\*/.test(c1.body)&&/generadores y el external power es trifásica/.test(c1.body),"AC: trifasica de los generadores, monofasica del static inverter");
+    ok(/monofásica, de 115 V/.test(c1.diagram.alt)&&!/la entregan los generadores, el external power y el static inverter/.test(c1.diagram.alt),"dibujo AC/DC: el inverter no aparece con 115/200 V");
+    ok(/supone que el external power está alimentando/.test(bq(DGAC_KEY,"HAVING STARTING THE APU").expl),"H008: la explicacion dice de que situacion parte la pregunta");
+    ok(/windmilling/.test(bq(DGAC_KEY,"ARE THERE ANY LIMITATIONS ASSOCIATED WITH DISCONNECTING AN IDG").expl),"H009: windmilling");
+    var h10=bq(DGAC_KEY,"IF BOTH ENGINE GENERATORS ARE POWERING THE SYSTEM");ok(/DC BUS Ent/.test(h10.expl),"H010: excepcion del DC BUS Ent en el banco");
+    var st=RUTA.stations["ele-5"].test.filter(function(t){return t.question.indexOf("IF BOTH ENGINE GENERATORS")===0})[0];ok(st&&/DC BUS Ent/.test(st.explanation),"H010: y en la estacion");
+    var h11=bq(DGAC_KEY,"AN AC ESS FEED SWITCH").expl;ok(!/no al revés/.test(h11)&&/vuelve|de nuevo energía del AC BUS 1/.test(h11),"H011: al volver a normal, de nuevo el AC BUS 1");
+    ok(/C\/B TRIPPED/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl)&&/En tierra/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl),"H012: vuelo y tierra separados");
+    ok(/sobre 50 kt/.test(rtCard("ele-1","Loss of all main generators").diagram.alt)&&/sobre 50 kt/.test(rtCard("ele-1","Generate, distribute, convert").diagram.alt),"BAT 1 al AC ESS BUS: sobre 50 kt");
+    ok(/BAT pb en OFF, voltaje sobre 25\.5 V, y de nuevo en AUTO/.test(rtCard("ele-6","Low battery charge").body),"el segundo chequeo tambien con BAT en OFF");
+    ok(/N2 bajo 14 %/.test(rtCard("ele-5","IDG FAULT light").body),"FAULT del IDG: N2 bajo 14 %");
+    ok(/No quiere decir que la batería quede cargada al 100 %/.test(bq(DGAC_KEY,"BOTH BATTERIES ARE CHARGED BY THE EXTERNAL").expl),"20 min: ciclo de carga, no carga completa");
+    ok(/El contactor de BAT 1, que maneja su BCL/.test(rtCard("ele-6","Two batteries and their hot buses").diagram.alt),"dibujo de baterias: el contactor lo maneja el BCL");
+  });
+  T("15 REG-18 auditoria de Electrico: los 30 min del BCL se enseñan sin elegir si son al conectar o al desconectar (REG-19); fuentes sin contradiccion; orales electricas penalizan lo falso; explicaciones sin causas inventadas",function(){
     function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
     var c2=rtCard("ele-7","When charging starts"),c3=rtCard("ele-7","When charging ends");
-    ok(/en vuelo, \*\*después de 30 min\*\*/.test(c2.body)&&/de inmediato/.test(c2.body),"la carga empieza: en tierra de inmediato, en vuelo despues de 30 min");
-    ok(/4 A/.test(c3.body)&&!/30 min/.test(c3.body),"la carga termina con 4 A, sin demora de 30 min");
-    var p=bq("electrical","Cuando el voltaje de una batería baja de 26.5 V");eq(correctText(p),"En tierra, de inmediato; en vuelo, después de 30 min","pregunta del BCL");
+    ok(/26\.5 V/.test(c2.body)&&!/30 min/.test(c2.body),"la carga empieza bajo 26.5 V");
+    ok(/4 A/.test(c3.body)&&/en tierra, el BCL actúa \*\*de inmediato\*\*; en vuelo, con una \*\*demora de 30 min\*\*/.test(c3.body),"tierra inmediato, vuelo con una demora de 30 min, sin decir si es al conectar o al desconectar");
+    var p=bq("electrical","En la carga de las baterías por el BCL");eq(correctText(p),"En tierra es inmediato; en vuelo hay una demora de 30 min","pregunta del BCL");
     var corpus=[];
     Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q){corpus.push(k+": "+q.q+" "+q.options.join(" ")+" "+(q.expl||""))})});
     Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];st.cards.forEach(function(c){corpus.push(c.id+": "+[c.body,c.example||"",c.more||"",c.keyIdea,c.diagram?c.diagram.alt:""].join(" "))});st.test.forEach(function(t){corpus.push(t.id+": "+[t.question||"",t.explanation||"",t.reference||""].join(" "))})});
     function nada(re,msg){var h=corpus.filter(function(s){return re.test(s)});eq(h.length,0,msg+": "+h.join(" | ").slice(0,200))}
     nada(/(desconecta|desconectarla)[^.]{0,40}30 min|30 min (después|antes de desconectar)/i,"30 min aplicados a la desconexion");
+    nada(/(conecta|conectarla)[^.]{0,30}(después de|tras) 30 min|espera media hora|en vuelo, después de 30 min/i,"30 min aplicados a la conexion");
     nada(/se shed /,"«se shed» mezcla idiomas");
     nada(/Así se evita mantener|Esto evita usar innecesariamente|energía aerodinámica suficiente|participa en la generación AC/,"causas sin fuente o «generacion» de la BAT 1");
     var c=rtCard("ele-1","The sources and what they can power");

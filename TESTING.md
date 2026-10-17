@@ -799,7 +799,7 @@ botón «Portada» para volver). Ningún módulo cambió.
   normal de operación…?» rechazaba «3000 PSI en los tres sistemas por igual»,
   que también es la presión normal: ahora pide las dos condiciones (normal y
   Blue con RAT), todas las alternativas responden ambas y solo una es
-  correcta. Su id viejo → nuevo está en `QID_RENAMES` (QID-01 espera 45 desde REG-18).
+  correcta. Su id viejo → nuevo está en `QID_RENAMES` (QID-01 espera 46 desde REG-19).
   (2) En la oral `ov_hyd_arch`, el criterio «Presión normal 3000 PSI» aceptaba
   «2500 psi»; ya no. (3) La explicación de los case drain filters decía que no
   filtran, solo sirven de diagnóstico; ahora dice que filtran y además
@@ -807,6 +807,20 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-19** (2026-10-16, 1.24.1) — lotes 005 a 007 de la auditoría de Codex
+  (Eléctrico, estaciones 1 a 8). Codex lee los 30 min del BCL al revés que
+  REG-18 (la demora iría al final de la carga): la página PDF 2924 admite las
+  dos lecturas, así que la ficha, la pregunta y el diagrama dicen solo «para
+  esta carga, en tierra es inmediato; en vuelo, con una demora de 30 min» (la
+  pregunta cambió de nuevo: los dos ids anteriores apuntan al nuevo). Además:
+  el static inverter entrega AC monofásica de 115 V (H007, ficha y dibujo);
+  las explicaciones DGAC dicen de qué situación parte la pregunta del APU GEN
+  (H008), incluyen el windmilling (H009), el DC BUS Ent (H010, también en la
+  estación) y que el AC ESS FEED vuelve al AC BUS 1 (H011); «sobre 50 kt» en
+  los dos dibujos de respaldo; el segundo chequeo de baterías con BAT en OFF;
+  N2 bajo 14 %; los 20 min son un ciclo, no carga completa; dibujos del IDG
+  (energía y control de la GCU separados) y de las baterías (el contactor lo
+  maneja el BCL). Mutación: sin la frase del static inverter, falla.
 - **REG-18** (2026-10-13, 1.24.0) — auditoría propia de Eléctrico, elemento por
   elemento (informe en Desktop\APP\Estaciones\auditorias). Lo principal: la
   demora de 30 min del BCL es para **conectar** la batería en vuelo cuando baja

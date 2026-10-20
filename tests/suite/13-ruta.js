@@ -380,6 +380,15 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
+  T("15 REG-21 lote 009 de Codex: en la oral de arquitectura electrica, nombrar las piezas sin relacionarlas no cumple los criterios obligatorios",function(){
+    var A=ORAL_VOICE_BANK.filter(function(x){return x.id==="ov_elec_arch"})[0];
+    var r=evaluateLocally(A,"gen 1 tr 1 hot bus emer gen");ok(r.detected.length===0&&r.score<2,"solo palabras: "+r.score+", cumple "+JSON.stringify(r.detected));
+    var ok1=evaluateLocally(A,"GEN 1 y GEN 2 alimentan el AC BUS 1 y el AC BUS 2; el APU GEN o el external power pueden reemplazarlos y el BUS TIE une las barras. Los TR convierten AC a DC para las barras DC. Las baterías están siempre conectadas a su HOT BUS. Sin generadores principales y sobre 100 kt, el RAT presuriza el azul, que mueve el EMER GEN, y este alimenta el AC ESS BUS; si tampoco hay EMER GEN, el static inverter convierte DC en AC desde la BAT 1.");
+    ok(ok1.score>=9&&!ok1.errors.length,"respuesta correcta corta: "+ok1.score+" "+JSON.stringify(ok1.missing));
+    var ok2=evaluateLocally(A,"Cada motor tiene su generador: los generadores de los motores alimentan las barras AC. Los transformadores rectificadores pasan la AC a DC. El HOT BUS siempre está unido a las baterías. Si se pierde todo, el RAT mueve el EMER GEN, que alimenta lo esencial, y luego el inversor estático.");
+    ok(ok2.score>=6.5&&!ok2.errors.length,"respuesta correcta con otro orden: "+ok2.score+" "+JSON.stringify(ok2.missing));
+    var st=RUTA.stations["ele-repaso"].test.filter(function(t){return t.source&&t.source.id==="ov_elec_arch"})[0];ok(JSON.stringify(st.relations)===JSON.stringify(A.relations)&&st.concepts.length===A.concepts.length,"la estacion de repaso trae la rubrica nueva");
+  });
   T("15 REG-20 lote 008 de Codex (Electrico): 140 kt es la minima del procedimiento, no el umbral de stall; la luz FAULT no se da por transitoria; HF 1 opcional",function(){
     function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
     var corpus=[];

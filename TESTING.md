@@ -807,6 +807,14 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-21** (2026-10-20, 1.24.3) — lote 009 de Codex (repaso de Eléctrico).
+  Casi todo ya estaba corregido en 1.24.0 (H015 y lo principal de H016). Lo
+  que quedaba: en la oral de arquitectura, «gen 1 tr 1 hot bus emer gen»
+  cumplía los cuatro criterios obligatorios. Ahora piden la relación: los dos
+  generadores de motor; los TR que convierten AC en DC (o «transformador
+  rectificador»); las baterías unidas a su HOT BUS (relación `bat`); el EMER
+  GEN con el Blue o el RAT. Las respuestas correctas dichas de otra forma
+  siguen sacando nota. Mutación: con la rúbrica anterior, falla.
 - **REG-20** (2026-10-20, 1.24.2) — lote 008 de Codex (Eléctrico, estaciones 9
   y 10). Los 140 kt son la mínima del procedimiento ELEC EMER CONFIG; el RAT
   puede alimentar el EMER GEN hasta unos 125 kt (PDF 6801): ya ningún texto

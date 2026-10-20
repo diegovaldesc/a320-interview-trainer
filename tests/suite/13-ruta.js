@@ -380,6 +380,20 @@
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
   });
+  T("15 REG-20 lote 008 de Codex (Electrico): 140 kt es la minima del procedimiento, no el umbral de stall; la luz FAULT no se da por transitoria; HF 1 opcional",function(){
+    function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
+    var corpus=[];
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q){corpus.push(k+": "+q.options.join(" ")+" "+(q.expl||""))})});
+    Object.keys(RUTA.stations).forEach(function(k){var st=RUTA.stations[k];st.cards.forEach(function(c){corpus.push(c.id+": "+[c.body,c.keyIdea,c.diagram?c.diagram.alt:""].join(" "))});st.test.forEach(function(t){corpus.push(t.id+": "+[t.explanation||"",t.reference||""].join(" "))})});
+    ORAL_VOICE_BANK.forEach(function(q){corpus.push(q.id+": "+q.reference)});
+    function nada(re,msg){var h=corpus.filter(function(s){return re.test(s)});eq(h.length,0,msg+": "+h.join(" | ").slice(0,220))}
+    nada(/por eso[^.]{0,40}140 kt|140 kt[^.]{0,60}para que no se detenga|por debajo de aproximadamente 140 kt/i,"140 kt presentado como umbral de stall");
+    nada(/(EMER GEN|emergency generator) (todavía|aún) no (alimenta|está suministrando)|condición transitoria/i,"la luz FAULT dada por transitoria");
+    nada(/VHF 1, HF 1 y ATC 1/,"HF 1 sin decir que depende del avion");
+    ok(/125 kt/.test(correctText(bq("interview_technical","¿Qué puede provocar que el RAT")))&&/mínima/.test(correctText(bq("interview_technical","¿Qué puede provocar que el RAT"))),"alternativa del RAT: minima de 140 y 125 kt");
+    ok(/la luz sola no dice la causa/.test(bq(DGAC_KEY,"IN CRUISE, YOU HAVE SUDDENLY A MASTER WARNING").expl),"H014 en la explicacion DGAC");
+    var E=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_elec_emer"})[0];var v=evaluateLocally(E,E.reference);ok(v.score>=9.5&&!v.errors.length,"oral de ELEC EMER CONFIG: la referencia saca "+v.score);
+  });
   T("15 REG-19 lotes 005-007 de Codex (Electrico): static inverter monofasico, contexto de las preguntas DGAC, windmilling, DC BUS Ent, AC ESS FEED en los dos sentidos, 50 kt y chequeo de baterias",function(){
     function bq(sys,pre){var h=SYSTEMS[sys].questions.filter(function(q){return q.q.indexOf(pre)===0});eq(h.length,1,"pregunta "+pre);return h[0]}
     var c1=rtCard("ele-1","AC and DC");
@@ -417,7 +431,7 @@
     ok(/C\/B TRIPPED/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl),"C/B: la explicacion cita la regla del procedimiento");
     var A=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_elec_arch"})[0],E=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_elec_emer"})[0];
     ok(/todos los generadores principales/.test(A.question)&&/100 kt/.test(A.reference)&&/BAT 1 alimenta el AC ESS BUS/.test(A.reference)&&!/\bla (AC ESS|DC BAT|DC ESS) BUS/.test(A.reference),"oral de arquitectura: generadores principales, 100 kt, BAT 1 y «el … BUS»");
-    ok(/140 kt/.test(E.reference)&&/VHF 1, HF 1 y ATC 1/.test(E.reference)&&!/dos riesgos distintos/.test(E.reference),"oral de ELEC EMER CONFIG: 140 kt y equipos concretos");
+    ok(/140 kt/.test(E.reference)&&/VHF 1, HF 1 \(en los aviones que lo tienen\) y ATC 1/.test(E.reference)&&!/dos riesgos distintos/.test(E.reference),"oral de ELEC EMER CONFIG: 140 kt y equipos concretos");
     [[A,A.reference],[E,E.reference]].forEach(function(x){var v=evaluateLocally(x[0],x[1]);ok(v.score>=9.5&&!v.errors.length,x[0].id+": la referencia saca "+v.score)});
     [[A,A.reference.replace("sin conectar nunca dos generadores en paralelo","conectando los dos generadores en paralelo"),"generadores en paralelo"],
      [A,A.reference.replace("el EMER GEN alimenta el AC ESS BUS","el EMER GEN alimenta el AC BUS 1 y el AC BUS 2"),"EMER GEN a las barras principales"],

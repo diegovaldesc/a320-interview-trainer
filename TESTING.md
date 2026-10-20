@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-20** (2026-10-20, 1.24.2) — lote 008 de Codex (Eléctrico, estaciones 9
+  y 10). Los 140 kt son la mínima del procedimiento ELEC EMER CONFIG; el RAT
+  puede alimentar el EMER GEN hasta unos 125 kt (PDF 6801): ya ningún texto
+  dice «por eso… 140 kt» ni «para que no se detenga» (H013: alternativa,
+  explicación, ficha y oral). La luz roja FAULT dice que el EMER GEN no
+  alimenta; es normal durante el despliegue, pero si sigue encendida no dice
+  la causa (H014: ficha, idea clave, dibujo y explicación DGAC). HF 1 se
+  marca como opcional; el dibujo del RAT dice «contactor (GCU)» y el de solo
+  baterías «en esta config.: sin energía». Mutación: con «condición
+  transitoria» de vuelta en la explicación DGAC, falla.
 - **REG-19** (2026-10-16, 1.24.1) — lotes 005 a 007 de la auditoría de Codex
   (Eléctrico, estaciones 1 a 8). Codex lee los 30 min del BCL al revés que
   REG-18 (la demora iría al final de la carga): la página PDF 2924 admite las

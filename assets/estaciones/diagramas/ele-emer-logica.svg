@@ -29,7 +29,7 @@
   <text x="271" y="222" text-anchor="middle" font-size="10.5" fill="#5B6B78">5 KVA · lo mueve el Blue</text>
   <path d="M216 172 L76 172 L76 188" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <rect x="145.5" y="167.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
-  <text x="150" y="162" text-anchor="middle" font-size="10.5" fill="#5B6B78">GCU</text>
+  <text x="150" y="162" text-anchor="middle" font-size="10.5" fill="#5B6B78">contactor (GCU)</text>
   <rect x="20" y="188" width="112" height="18" rx="5" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.6"/>
   <text x="76" y="200.96" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">AC ESS BUS</text>
   <path d="M76 206 L76 224" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -42,5 +42,5 @@
   <text x="150" y="262" font-size="10.5" fill="#1E2A33">parámetros son normales.</text>
   <rect x="14" y="292" width="332" height="40" rx="8" fill="#F3F5F7" stroke="#DDE3E8"/>
   <text x="24" y="308" font-size="10.5" fill="#1E2A33">Mientras se despliega (8 s), alimentan las baterías.</text>
-  <text x="24" y="323" font-size="10.5" fill="#A53A30">Luz roja FAULT: el EMER GEN aún no alimenta.</text>
+  <text x="24" y="323" font-size="10.5" fill="#A53A30">Luz roja FAULT: el EMER GEN no alimenta.</text>
 </svg>

@@ -42,8 +42,8 @@
   <text x="290" y="236" text-anchor="middle" font-size="10.5" fill="#8A5300">cortada (SHED)</text>
   <rect x="140" y="92" width="80" height="18" rx="5" fill="#FCEBD3" stroke="#D98A00" stroke-width="1.6"/>
   <text x="180" y="104.78" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8A5300">DC BAT BUS</text>
-  <text x="180" y="124" text-anchor="middle" font-size="10.5" fill="#8A5300">en vuelo: sin</text>
-  <text x="180" y="136" text-anchor="middle" font-size="10.5" fill="#8A5300">energía</text>
+  <text x="180" y="124" text-anchor="middle" font-size="10.5" fill="#8A5300">en esta config.:</text>
+  <text x="180" y="136" text-anchor="middle" font-size="10.5" fill="#8A5300">sin energía</text>
   <rect x="14" y="252" width="106" height="66" rx="8" fill="#E9F5EE" stroke="#2E9D5B" stroke-width="1.2"/>
   <text x="22" y="269" font-size="10.5" font-weight="700" fill="#1F6E41">Sobre 50 kt</text>
   <text x="22" y="286" font-size="10" fill="#1E2A33">BAT 1 → AC ESS</text>

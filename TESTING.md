@@ -807,6 +807,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-24** (2026-10-21, 1.27.1) — correcciones del banco de APU y powerplant
+  (solo explicaciones; claves iguales). La del EPR dice que es el modo normal de
+  los IAE V2500, y que los CFM56 y PW1100G usan N1 (antes decía «todos los
+  CEO»); la de la ignición continua, que la lista es de los IAE. Las preguntas
+  DGAC dudosas aclaran lo que dice el manual: los tres techos del APU bleed, que
+  el cierre a 23 000 ft no está descrito, y que las pack valves las cierra el
+  ENG MODE. Ninguna explicación del banco de APU nombra el FCOM ni agrega
+  razones sin respaldo («choque térmico», «tren de nariz», «certificado»). Un
+  enunciado que decía «¿qué exige el FCOM…?» se reescribió con su id viejo en
+  `QID_RENAMES` (QID-01 espera ahora 54). Mutación: con «todos los CEO» de
+  vuelta en la explicación del EPR, falla.
 - **RUTA-18** (2026-10-21, 1.27.0) — la materia APU y powerplant: 10 estaciones
   con el repaso al final (APU: panorama, arranque, apagado, apagado automático y
   límites; motores: motores y FADEC, thrust levers, arranque automático, y

@@ -552,3 +552,14 @@
     Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta DGAC no respaldada: "+usadas.join(", "));
   });
+  T("15 REG-24 banco de APU y powerplant: el EPR y la ignicion continua se explican por motor, las preguntas DGAC dudosas aclaran lo que dice el manual, y ninguna explicacion nombra el FCOM ni agrega razones sin respaldo",function(){
+    var G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="APU and powerplant"}),A=SYSTEMS.apu_powerplant.questions;
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    var e=one(G,/^THE NORMAL MODE TO SET THRUST IS/);eq(e.options[e.correct],"EPR.","clave del EPR sin cambio");ok(/IAE/.test(e.expl)&&/N1/.test(e.expl)&&!/CEO/.test(e.expl),"EPR: solo los IAE");
+    ok(/IAE/.test(one(G,/^CONTINUOUS IGNITION IS AUTOMATICALLY PROVIDED/).expl),"ignicion continua: lista de los IAE");
+    var b=one(G,/^MAXIMUM ALTITUDE FOR APU BLEED OPERATION/).expl;ok(/22 500/.test(b)&&/15 000/.test(b),"APU bleed: los tres techos");
+    ok(/no describe/.test(one(G,/^THE APU BLEED VALVE IS AUTOMATICALLY CLOSED ABOVE/).expl),"23 000 ft: el manual no lo describe");
+    ok(/ENG MODE/.test(one(G,/^DURING AN AUTOMATIC START SEQUENCE, SELECTING THE ENG MASTER/).expl),"ENG MASTER: las pack valves las cierra el ENG MODE");
+    var mal=G.concat(A).filter(function(q){return /FCOM|choque térmico|tren de nariz|certificado|pérdida eléctrica total|estrés térmico/.test(q.q+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
+    eq(mal.length,0,"textos con el FCOM o razones sin respaldo: "+mal.join(" | "));
+  });

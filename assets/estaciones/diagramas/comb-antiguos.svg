@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 284" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">A320 más antiguos: seis bombas</title>
+  <desc id="d">MSN hasta el 06183: dos bombas en cada inner tank, cada una con su sequence valve, y dos bombas en el center tank, una hacia cada motor. Con todas encendidas, entregan primero las del center tank. Arriba, las LP valves y la crossfeed valve.</desc>
+  <rect x="1" y="1" width="358" height="282" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">A320 más antiguos: seis bombas</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">MSN hasta el 06183. Las del center tank entregan primero.</text>
+  <rect x="40" y="56" width="64" height="28" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="72" y="74" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">ENG 1</text>
+  <rect x="256" y="56" width="64" height="28" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="288" y="74" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">ENG 2</text>
+  <line x1="72" y1="84" x2="72" y2="130" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="288" y1="84" x2="288" y2="130" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="46" y1="130" x2="314" y2="130" stroke="#2E9D5B" stroke-width="2.4"/>
+  <circle cx="72" cy="104" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="72" y1="97" x2="72" y2="111" stroke="#33424D" stroke-width="1.8"/>
+  <circle cx="288" cy="104" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="288" y1="97" x2="288" y2="111" stroke="#33424D" stroke-width="1.8"/>
+  <circle cx="180" cy="130" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="180" y1="123" x2="180" y2="137" stroke="#33424D" stroke-width="1.8"/>
+  <line x1="46" y1="130" x2="46" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="90" y1="130" x2="90" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="158" y1="130" x2="158" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="202" y1="130" x2="202" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="270" y1="130" x2="270" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="314" y1="130" x2="314" y2="196" stroke="#2E9D5B" stroke-width="2.4"/>
+  <polygon points="46,153 51,158 46,163 41,158" fill="#FFFFFF" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="90,153 95,158 90,163 85,158" fill="#FFFFFF" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="270,153 275,158 270,163 265,158" fill="#FFFFFF" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="314,153 319,158 314,163 309,158" fill="#FFFFFF" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <rect x="16" y="172" width="104" height="56" rx="4" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <rect x="128" y="172" width="104" height="56" rx="4" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <rect x="240" y="172" width="104" height="56" rx="4" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <circle cx="46" cy="204" r="8" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="41" y1="202" x2="51" y2="206" stroke="#33424D" stroke-width="1.4"/>
+  <line x1="44" y1="209" x2="48" y2="199" stroke="#33424D" stroke-width="1.4"/>
+  <circle cx="90" cy="204" r="8" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="85" y1="202" x2="95" y2="206" stroke="#33424D" stroke-width="1.4"/>
+  <line x1="88" y1="209" x2="92" y2="199" stroke="#33424D" stroke-width="1.4"/>
+  <circle cx="270" cy="204" r="8" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="265" y1="202" x2="275" y2="206" stroke="#33424D" stroke-width="1.4"/>
+  <line x1="268" y1="209" x2="272" y2="199" stroke="#33424D" stroke-width="1.4"/>
+  <circle cx="314" cy="204" r="8" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="309" y1="202" x2="319" y2="206" stroke="#33424D" stroke-width="1.4"/>
+  <line x1="312" y1="209" x2="316" y2="199" stroke="#33424D" stroke-width="1.4"/>
+  <circle cx="158" cy="204" r="8" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.5"/>
+  <line x1="153" y1="202" x2="163" y2="206" stroke="#0E5E6F" stroke-width="1.4"/>
+  <line x1="156" y1="209" x2="160" y2="199" stroke="#0E5E6F" stroke-width="1.4"/>
+  <circle cx="202" cy="204" r="8" fill="#FFFFFF" stroke="#0E5E6F" stroke-width="1.5"/>
+  <line x1="197" y1="202" x2="207" y2="206" stroke="#0E5E6F" stroke-width="1.4"/>
+  <line x1="200" y1="209" x2="204" y2="199" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="68" y="224" text-anchor="middle" font-size="10" fill="#33424D">Inner tank</text>
+  <text x="180" y="224" text-anchor="middle" font-size="10" font-weight="700" fill="#0E5E6F">Center tank</text>
+  <text x="292" y="224" text-anchor="middle" font-size="10" fill="#33424D">Inner tank</text>
+  <text x="180" y="248" text-anchor="middle" font-size="10.5" fill="#1E2A33">Una bomba del center tank por motor</text>
+  <line x1="60" y1="268.5" x2="80" y2="268.5" stroke="#2E9D5B" stroke-width="2.4"/>
+  <text x="85" y="272" font-size="10" fill="#33424D">Combustible</text>
+  <polygon points="165,263.5 170,268.5 165,273.5 160,268.5" fill="#FFFFFF" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <text x="180" y="272" font-size="10" fill="#33424D">Sequence valve</text>
+</svg>

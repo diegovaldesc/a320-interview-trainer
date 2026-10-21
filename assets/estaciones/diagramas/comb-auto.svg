@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 252" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Bombas del center tank en AUTO</title>
+  <desc id="d">Línea de tiempo en los A320 más antiguos: al arranque funcionan 2 minutos; con los slats extendidos se detienen; con los slats retraídos en vuelo funcionan; se detienen 5 minutos después del nivel bajo del center tank. Con el inner tank lleno, la bomba de ese lado se apaga hasta que se gastan unos 500 kg. En MAN funcionan con los botones en ON y hay que apagarlas con el center tank vacío.</desc>
+  <rect x="1" y="1" width="358" height="250" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Bombas del center tank en AUTO</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">A320 más antiguos, con combustible en el center tank.</text>
+  <rect x="16" y="106" width="66" height="32" rx="3" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="49" y="127" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">ON</text>
+  <text x="49" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Arranque</text>
+  <text x="49" y="94" text-anchor="middle" font-size="10" fill="#33424D">2 min</text>
+  <rect x="82" y="106" width="96" height="32" rx="3" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="130" y="127" text-anchor="middle" font-size="11" font-weight="800" fill="#5B6B78">OFF</text>
+  <text x="130" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Slats</text>
+  <text x="130" y="94" text-anchor="middle" font-size="10" fill="#33424D">extendidos</text>
+  <rect x="178" y="106" width="106" height="32" rx="3" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="231" y="127" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">ON</text>
+  <text x="231" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Slats retraídos</text>
+  <text x="231" y="94" text-anchor="middle" font-size="10" fill="#33424D">en vuelo</text>
+  <rect x="284" y="106" width="60" height="32" rx="3" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="314" y="127" text-anchor="middle" font-size="11" font-weight="800" fill="#5B6B78">OFF</text>
+  <text x="314" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Nivel bajo</text>
+  <text x="314" y="94" text-anchor="middle" font-size="10" fill="#33424D">+ 5 min</text>
+  <text x="16" y="160" font-size="10" fill="#5B6B78">Tiempo →</text>
+  <text x="16" y="184" font-size="10.5" fill="#1E2A33">Inner tank lleno: la bomba de ese lado se apaga</text>
+  <text x="16" y="199" font-size="10.5" fill="#1E2A33">hasta gastar unos 500 kg.</text>
+  <text x="16" y="222" font-size="10.5" fill="#1E2A33">En MAN: funcionan con los botones en ON;</text>
+  <text x="16" y="237" font-size="10.5" fill="#1E2A33">hay que apagarlas con el center tank vacío.</text>
+</svg>

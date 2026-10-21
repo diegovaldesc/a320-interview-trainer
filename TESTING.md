@@ -807,6 +807,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-16** (2026-10-20, 1.25.0) — la materia Combustible: 10 estaciones con
+  el repaso al final. El center tank se enseña por MSN, como el steering en
+  Tren: en los MSN más antiguos (hasta el 06183) tiene dos bombas; en los más
+  nuevos (desde el 06286) no tiene bombas y pasa su combustible por transfer
+  valves y jet pumps. La explicación de la pregunta DGAC del fuel used dice
+  que vuelve a cero al arrancar el motor en tierra (la del banco decía «al
+  energizar», contra su propia clave). Ninguna estación usa las 5 preguntas
+  DGAC de combustible que el FCOM no respalda tal como están («2 pumps in each
+  tank», la razón de «feeding segregation», «electrically held closed», «only
+  on the ground» y «five minutes after the center tank is empty»). RUTA-02
+  espera ahora seis materias. Mutaciones: con «al energizar eléctricamente» en
+  la explicación, o con una estación que usa «2 pumps in each tank», falla.
 - **REG-21** (2026-10-20, 1.24.3) — lote 009 de Codex (repaso de Eléctrico).
   Casi todo ya estaba corregido en 1.24.0 (H015 y lo principal de H016). Lo
   que quedaba: en la oral de arquitectura, «gen 1 tr 1 hot bus emer gen»

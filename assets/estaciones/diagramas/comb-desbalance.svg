@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 296" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Desbalance máximo entre inner tanks</title>
+  <desc id="d">Gráfico del desbalance máximo entre los inner tanks, con los outer balanceados, según el combustible del tanque más pesado. Despegue: 1 450 kg con 1 450 kg, 1 050 kg con 3 000 kg y 500 kg con el tanque lleno. En vuelo y aterrizaje: 2 250 kg con 2 250 kg, 1 600 kg con 4 300 kg y 1 500 kg con el tanque lleno; bajo 2 250 kg no hay límite. Entre los puntos, la variación es lineal.</desc>
+  <rect x="1" y="1" width="358" height="294" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Desbalance máximo entre inner tanks</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Con los outer balanceados. Lleno: unos 5 400 a 5 600 kg.</text>
+  <rect x="60" y="70" width="108.5" height="160" rx="0" fill="#DCEEF1" stroke="none" stroke-width="0"/>
+  <text x="114.2" y="102" text-anchor="middle" font-size="10" font-weight="700" fill="#0E5E6F">En vuelo:</text>
+  <text x="114.2" y="115" text-anchor="middle" font-size="10" font-weight="700" fill="#0E5E6F">sin límite</text>
+  <line x1="56" y1="230" x2="330" y2="230" stroke="#33424D" stroke-width="1.3"/>
+  <text x="52" y="233.5" text-anchor="end" font-size="10" fill="#33424D">0</text>
+  <line x1="56" y1="198" x2="330" y2="198" stroke="#E7ECF0" stroke-width="1"/>
+  <text x="52" y="201.5" text-anchor="end" font-size="10" fill="#33424D">500</text>
+  <line x1="56" y1="166" x2="330" y2="166" stroke="#E7ECF0" stroke-width="1"/>
+  <text x="52" y="169.5" text-anchor="end" font-size="10" fill="#33424D">1 000</text>
+  <line x1="56" y1="134" x2="330" y2="134" stroke="#E7ECF0" stroke-width="1"/>
+  <text x="52" y="137.5" text-anchor="end" font-size="10" fill="#33424D">1 500</text>
+  <line x1="56" y1="102" x2="330" y2="102" stroke="#E7ECF0" stroke-width="1"/>
+  <text x="52" y="105.5" text-anchor="end" font-size="10" fill="#33424D">2 000</text>
+  <line x1="56" y1="70" x2="330" y2="70" stroke="#E7ECF0" stroke-width="1"/>
+  <text x="52" y="73.5" text-anchor="end" font-size="10" fill="#33424D">2 500</text>
+  <line x1="60" y1="70" x2="60" y2="230" stroke="#33424D" stroke-width="1.3"/>
+  <polyline points="129.9,137.2 204.6,162.8 325.2,198" fill="none" stroke="#C77700" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="168.5,86 267.3,127.6 325.2,134" fill="none" stroke="#0E5E6F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="129.9" cy="137.2" r="3.2" fill="#C77700" stroke="none" stroke-width="1"/>
+  <circle cx="204.6" cy="162.8" r="3.2" fill="#C77700" stroke="none" stroke-width="1"/>
+  <circle cx="325.2" cy="198" r="3.2" fill="#C77700" stroke="none" stroke-width="1"/>
+  <circle cx="168.5" cy="86" r="3.2" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <circle cx="267.3" cy="127.6" r="3.2" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <circle cx="325.2" cy="134" r="3.2" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="129.9" y="153.2" text-anchor="middle" font-size="10" font-weight="700" fill="#C77700" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">1 450</text>
+  <text x="204.6" y="178.8" text-anchor="middle" font-size="10" font-weight="700" fill="#C77700" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">1 050</text>
+  <text x="321.2" y="214" text-anchor="end" font-size="10" font-weight="700" fill="#C77700" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">500</text>
+  <text x="175.5" y="82" font-size="10" font-weight="700" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">2 250</text>
+  <text x="267.3" y="118.6" text-anchor="middle" font-size="10" font-weight="700" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">1 600</text>
+  <text x="321.2" y="125" text-anchor="end" font-size="10" font-weight="700" fill="#0E5E6F" stroke="#FFFFFF" stroke-width="3" paint-order="stroke">1 500</text>
+  <line x1="129.9" y1="230" x2="129.9" y2="234" stroke="#33424D" stroke-width="1.2"/>
+  <text x="129.9" y="246" text-anchor="middle" font-size="10" fill="#33424D">1 450</text>
+  <line x1="168.5" y1="230" x2="168.5" y2="234" stroke="#33424D" stroke-width="1.2"/>
+  <text x="168.5" y="246" text-anchor="middle" font-size="10" fill="#33424D">2 250</text>
+  <line x1="204.6" y1="230" x2="204.6" y2="234" stroke="#33424D" stroke-width="1.2"/>
+  <text x="204.6" y="246" text-anchor="middle" font-size="10" fill="#33424D">3 000</text>
+  <line x1="267.3" y1="230" x2="267.3" y2="234" stroke="#33424D" stroke-width="1.2"/>
+  <text x="267.3" y="246" text-anchor="middle" font-size="10" fill="#33424D">4 300</text>
+  <line x1="325.2" y1="230" x2="325.2" y2="234" stroke="#33424D" stroke-width="1.2"/>
+  <text x="325.2" y="246" text-anchor="middle" font-size="10" fill="#33424D">Lleno</text>
+  <text x="195" y="262" text-anchor="middle" font-size="10" fill="#33424D">Combustible en el inner tank más pesado (kg)</text>
+  <line x1="40" y1="280.5" x2="60" y2="280.5" stroke="#C77700" stroke-width="2.4"/>
+  <text x="65" y="284" font-size="10" fill="#33424D">Despegue</text>
+  <line x1="123" y1="280.5" x2="143" y2="280.5" stroke="#0E5E6F" stroke-width="2.4"/>
+  <text x="148" y="284" font-size="10" fill="#33424D">En vuelo y aterrizaje</text>
+  <text x="64" y="64" font-size="10" fill="#5B6B78">kg de desbalance</text>
+</svg>

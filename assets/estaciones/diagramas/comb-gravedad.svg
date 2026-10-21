@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 270" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Gravity feed</title>
+  <desc id="d">Un inner tank con sus dos bombas falladas: la suction valve se abre sola y el combustible llega al motor por gravedad. El center tank no alimenta por gravedad. Al lado: IGN, evitar G negativas y volar bajo el gravity feed ceiling.</desc>
+  <rect x="1" y="1" width="358" height="268" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a2E9D5B" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2E9D5B"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Gravity feed</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Fallaron las bombas del inner tank: el motor toma por gravedad.</text>
+  <rect x="40" y="56" width="64" height="28" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="72" y="74" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">ENG</text>
+  <rect x="16" y="140" width="190" height="80" rx="4" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <rect x="216" y="140" width="128" height="80" rx="4" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="72" y1="84" x2="72" y2="110" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="72" y1="110" x2="130" y2="110" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="130" y1="110" x2="130" y2="184" stroke="#2E9D5B" stroke-width="2.4"/>
+  <line x1="50" y1="110" x2="72" y2="110" stroke="#9AA6AF" stroke-width="1.6"/>
+  <line x1="50" y1="110" x2="50" y2="184" stroke="#9AA6AF" stroke-width="1.6"/>
+  <line x1="90" y1="110" x2="90" y2="184" stroke="#9AA6AF" stroke-width="1.6"/>
+  <line x1="130" y1="150" x2="130" y2="120" stroke="#2E9D5B" stroke-width="2.4" marker-end="url(#a2E9D5B)"/>
+  <text x="70" y="236" text-anchor="middle" font-size="10" font-weight="700" fill="#C0392B">Bombas falladas</text>
+  <circle cx="50" cy="192" r="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+  <line x1="45" y1="190" x2="55" y2="194" stroke="#C0392B" stroke-width="1.4"/>
+  <line x1="48" y1="197" x2="52" y2="187" stroke="#C0392B" stroke-width="1.4"/>
+  <line x1="40" y1="182" x2="60" y2="202" stroke="#C0392B" stroke-width="2"/>
+  <line x1="40" y1="202" x2="60" y2="182" stroke="#C0392B" stroke-width="2"/>
+  <circle cx="90" cy="192" r="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+  <line x1="85" y1="190" x2="95" y2="194" stroke="#C0392B" stroke-width="1.4"/>
+  <line x1="88" y1="197" x2="92" y2="187" stroke="#C0392B" stroke-width="1.4"/>
+  <line x1="80" y1="182" x2="100" y2="202" stroke="#C0392B" stroke-width="2"/>
+  <line x1="80" y1="202" x2="100" y2="182" stroke="#C0392B" stroke-width="2"/>
+  <circle cx="130" cy="192" r="7" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.5"/>
+  <line x1="130" y1="185" x2="130" y2="199" stroke="#2E9D5B" stroke-width="1.8"/>
+  <text x="24" y="212" font-size="10" font-weight="700" fill="#33424D">Inner tank</text>
+  <text x="280" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">Center tank</text>
+  <text x="280" y="188" text-anchor="middle" font-size="10" fill="#C0392B">no alimenta</text>
+  <text x="280" y="201" text-anchor="middle" font-size="10" fill="#C0392B">por gravedad</text>
+  <text x="124" y="236" font-size="10" font-weight="700" fill="#2E9D5B">Suction valve: se abre sola</text>
+  <text x="180" y="258" text-anchor="middle" font-size="10.5" fill="#1E2A33">IGN · evitar G negativas · bajo el gravity feed ceiling</text>
+</svg>

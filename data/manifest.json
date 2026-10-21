@@ -333,8 +333,25 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 54,
+  "total": 64,
   "subjects": {
+   "combustible": {
+    "title": "Fuel",
+    "file": "data/stations/combustible.js",
+    "count": 10,
+    "stations": [
+     "ful-1 · Fuel system at a glance",
+     "ful-2 · Outer to inner transfer",
+     "ful-3 · Center tank: older A320s",
+     "ful-4 · Center tank: newer A320s",
+     "ful-5 · Without tank pumps",
+     "ful-6 · Measuring fuel: FQI and FLSCU",
+     "ful-7 · Refueling",
+     "ful-8 · Fuel on the ECAM",
+     "ful-9 · Imbalance, leaks and limits",
+     "ful-repaso · Fuel review"
+    ]
+   },
    "controles": {
     "title": "Flight controls",
     "file": "data/stations/controles.js",
@@ -427,7 +444,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 54
+   "stations": 64
   }
  }
 }

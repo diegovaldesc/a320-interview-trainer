@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance y Tren de aterrizaje, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=54,"al menos las 54 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance y Tren de aterrizaje");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"controles,electrico,hidraulico,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje y Combustible, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=64,"al menos las 64 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje y Combustible");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"combustible,controles,electrico,hidraulico,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -478,4 +478,17 @@
     var f=bq("¿Para qué sirven los case drain filters");
     ok(/filtran el fluido/.test(f.expl)&&!/no cumplen una función|sino de diagnóstico/.test(f.expl),"case drain filters: filtran y ademas sirven para el diagnostico");
   });
-
+  T("15 RUTA-16 Combustible: 10 estaciones con el repaso al final; el center tank se enseña por MSN (bombas en los mas antiguos, jet pumps y transfer valves sin bombas en los mas nuevos), el fuel used vuelve a cero al arrancar el motor en tierra y ninguna estacion usa las preguntas DGAC que el FCOM no respalda tal como estan",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="combustible"});
+    eq(P.length,10,"estaciones de Combustible");eq(P[P.length-1].id,"ful-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var uno=body("ful-1");ok(/MSN más antiguos \(hasta el 06183\):\*\* el center tank tiene \*\*dos bombas\*\*/.test(uno)&&/MSN más nuevos \(desde el 06286\):\*\* el center tank \*\*no tiene bombas\*\*/.test(uno),"panorama: el center tank por MSN");
+    ok(/hasta el 06183/.test(body("ful-3"))&&/desde el 06286/.test(body("ful-4"))&&/jet pump/.test(body("ful-4")),"una clase para cada version del center tank");
+    var fu=RUTA.stations["ful-8"].test.find(function(t){return /FUEL USED INDICATION/.test(t.question)});
+    ok(fu&&/al arrancar el motor en tierra/.test(fu.explanation)&&!/al energizar eléctricamente/.test(fu.explanation),"fuel used: vuelve a cero al arrancar el motor en tierra");
+    var malas=SYSTEMS[DGAC_KEY].questions.filter(function(q){return /FUEL PUMPS IN EACH A-320 FUEL TANK|WHY DO THE CENTER TANK PUPS STOP|THE WING FUEL TRANSFER VALVES ARE:|FUEL CAN BE TRANSFERRED FROM TANK TO TANK|WITH THE CENTER TANK PUMP MODE SEL SWITCH IN AUTO/.test(q.q)});
+    eq(malas.length,5,"las 5 preguntas DGAC de combustible que no se usan");
+    var ids=malas.map(function(q){return qid(DGAC_KEY,q)}),usadas=[];
+    Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC de combustible no respaldada: "+usadas.join(", "));
+  });

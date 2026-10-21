@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 274" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Presurización manual</title>
+  <desc id="d">Tabla de la presurización manual: altitud de cabina objetivo de 8 000 ft a FL 390, 7 000 ft a FL 350, 5 500 ft a FL 300, 3 000 ft a FL 250 y 0 ft bajo FL 200. V/S de cabina: 500 ft/min al subir y 300 ft/min al bajar. En la aproximación final, V/S CTL todo arriba, y ΔP en cero antes de abrir las puertas.</desc>
+  <rect x="1" y="1" width="358" height="272" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Presurización manual</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Objetivos del procedimiento.</text>
+  <text x="40" y="70" font-size="10.5" font-weight="700" fill="#0E5E6F">Nivel del avión</text>
+  <text x="200" y="70" font-size="10.5" font-weight="700" fill="#0E5E6F">Altitud de cabina</text>
+  <rect x="28" y="78" width="304" height="24" rx="3" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="40" y="94" font-size="11" fill="#1E2A33">FL 390</text>
+  <text x="200" y="94" font-size="11" font-weight="700" fill="#1E2A33">8 000 ft</text>
+  <rect x="28" y="104" width="304" height="24" rx="3" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="40" y="120" font-size="11" fill="#1E2A33">FL 350</text>
+  <text x="200" y="120" font-size="11" font-weight="700" fill="#1E2A33">7 000 ft</text>
+  <rect x="28" y="130" width="304" height="24" rx="3" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="40" y="146" font-size="11" fill="#1E2A33">FL 300</text>
+  <text x="200" y="146" font-size="11" font-weight="700" fill="#1E2A33">5 500 ft</text>
+  <rect x="28" y="156" width="304" height="24" rx="3" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="40" y="172" font-size="11" fill="#1E2A33">FL 250</text>
+  <text x="200" y="172" font-size="11" font-weight="700" fill="#1E2A33">3 000 ft</text>
+  <rect x="28" y="182" width="304" height="24" rx="3" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="40" y="198" font-size="11" fill="#1E2A33">Bajo FL 200</text>
+  <text x="200" y="198" font-size="11" font-weight="700" fill="#1E2A33">0 ft</text>
+  <text x="28" y="228" font-size="10.5" fill="#1E2A33">V/S de cabina: 500 ft/min al subir, 300 ft/min al bajar.</text>
+  <text x="28" y="246" font-size="10.5" fill="#1E2A33">Aproximación final: V/S CTL todo arriba; ΔP en cero</text>
+  <text x="28" y="260" font-size="10.5" fill="#1E2A33">antes de abrir las puertas.</text>
+</svg>

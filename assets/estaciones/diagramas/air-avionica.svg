@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 270" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Ventilación de aviónica</title>
+  <desc id="d">Dos configuraciones. Abierto, en tierra con calor: el aire de afuera entra por la skin air inlet valve, pasa por la aviónica y sale caliente por la skin air outlet valve. Cerrado, en vuelo: esas válvulas cerradas y el aire gira por el skin heat exchanger. Con el revestimiento muy caliente en vuelo, la configuración es intermedia.</desc>
+  <rect x="1" y="1" width="358" height="268" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker><marker id="a2F6FD6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2F6FD6"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Ventilación de aviónica</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Esquema simplificado.</text>
+  <rect x="16" y="58" width="162" height="176" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="97" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">Abierto</text>
+  <text x="97" y="90" text-anchor="middle" font-size="10" fill="#33424D">en tierra, con calor</text>
+  <rect x="62" y="132" width="70" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="97" y="151" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Aviónica</text>
+  <line x1="24" y1="147" x2="60" y2="147" stroke="#2F6FD6" stroke-width="2" marker-end="url(#a2F6FD6)"/>
+  <line x1="134" y1="147" x2="170" y2="147" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <text x="26" y="124" font-size="10" fill="#33424D">Inlet</text>
+  <text x="168" y="124" text-anchor="end" font-size="10" fill="#33424D">Outlet</text>
+  <text x="97" y="192" text-anchor="middle" font-size="10" fill="#1E2A33">Entra aire de afuera</text>
+  <text x="97" y="206" text-anchor="middle" font-size="10" fill="#1E2A33">y el caliente sale.</text>
+  <rect x="182" y="58" width="162" height="176" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="263" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">Cerrado</text>
+  <text x="263" y="90" text-anchor="middle" font-size="10" fill="#33424D">en vuelo</text>
+  <rect x="228" y="132" width="70" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="263" y="151" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Aviónica</text>
+  <polyline points="298,147 322,147 322,110 204,110 204,147 226,147" fill="none" stroke="#2F6FD6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#a2F6FD6)"/>
+  <rect x="238" y="102" width="50" height="16" rx="3" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.4"/>
+  <text x="263" y="192" text-anchor="middle" font-size="10" fill="#1E2A33">Gira por el skin heat</text>
+  <text x="263" y="206" text-anchor="middle" font-size="10" fill="#1E2A33">exchanger (rectángulo).</text>
+  <text x="263" y="222" text-anchor="middle" font-size="10" fill="#33424D">Skin valves cerradas.</text>
+  <text x="180" y="256" text-anchor="middle" font-size="10" fill="#5B6B78">Con el revestimiento muy caliente en vuelo: intermedio.</text>
+</svg>

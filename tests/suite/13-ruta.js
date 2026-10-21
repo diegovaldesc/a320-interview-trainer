@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje y Combustible, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=64,"al menos las 64 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje y Combustible");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"combustible,controles,electrico,hidraulico,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible y Aire acondicionado, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=78,"al menos las 78 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible y Aire acondicionado");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,combustible,controles,electrico,hidraulico,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -507,4 +507,19 @@
     ok(/nivel bajo/.test(au.expl)&&/06183/.test(au.expl),"logica AUTO: 5 minutos despues del nivel bajo");
     var act=SYSTEMS.fuel.questions.find(function(q){return q.q.indexOf("En una configuración de combustible equipada con ACT")===0});
     ok(act&&/06183/.test(act.expl)&&/06286/.test(act.expl),"tanques que alimentan a los motores, por MSN");
+  });
+  T("15 RUTA-17 Aire acondicionado y neumatico: 14 estaciones con el repaso al final; el control de temperatura se enseña por MSN (zone controller hasta el 02321, ACSC desde el 02572), el bleed separa los A320neo, y ninguna estacion usa las preguntas DGAC de los MSN antiguos o no respaldadas ni las del ECON FLOW (A321)",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="aire"});
+    eq(P.length,14,"estaciones de Aire acondicionado");eq(P[P.length-1].id,"air-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var t=body("air-6");ok(/hasta el 02321\):\*\* un \*\*zone controller\*\*/.test(t)&&/desde el 02572\):\*\* dos \*\*ACSC\*\*/.test(t),"temperatura: zone controller hasta el 02321 y ACSC desde el 02572");
+    ok(/\*\*45 PSI\*\*/.test(body("air-2"))&&/A320neo/.test(body("air-2")),"bleed: 45 PSI y el caso de los A320neo");
+    var G=SYSTEMS[DGAC_KEY].questions;
+    var malas=G.filter(function(q){return /^ENGINE FLOW DEMAND, WHEN THE HEATING|^WHEN DOES NORMAL DEPRESSURIZATION OCCUR|^UNDER WHAT CONDITIONS SHOULD THE PACK FLOW CONTROLLER BE SET TO LOW|^PRESSURIZATION IS NORMALLY AUTOMATIC. CAN YOU INTERFERE|^TEMPERATURE REGULATION FOR THE A-320 IS CONTROLLED BY|^PACK CONTROLLER, |^WHAT HAPPENS WHEN A TEMPERATURE SELECTOR ROTARY KNOB/.test(q.q)});
+    eq(malas.length,9,"las 9 preguntas DGAC de aire que no se usan");
+    var ac=SYSTEMS.air_cond.questions.filter(function(q){return /ECON FLOW/.test(q.q)});
+    eq(ac.length,4,"las 4 preguntas del banco sobre ECON FLOW");
+    var ids=malas.map(function(q){return qid(DGAC_KEY,q)}).concat(ac.map(function(q){return qid("air_cond",q)})),usadas=[];
+    Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta de aire no respaldada o de otro avion: "+usadas.join(", "));
   });

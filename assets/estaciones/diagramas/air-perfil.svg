@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 304" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Presurización en un vuelo</title>
+  <desc id="d">Altitud de cabina a lo largo del vuelo, no a escala: en tierra la outflow valve abierta; en el despegue la cabina se prepresuriza; en el ascenso sube según una ley fija; en crucero se mantiene, con un máximo de unos 8 000 ft; en el descenso baja a 750 ft/min como máximo, hasta la presión del aeropuerto más 0,1 PSI; en tierra, 55 segundos después de aterrizar, la outflow valve abre del todo.</desc>
+  <rect x="1" y="1" width="358" height="302" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Presurización en un vuelo</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Altitud de cabina; no a escala.</text>
+  <line x1="20" y1="200" x2="340" y2="200" stroke="#33424D" stroke-width="1.2"/>
+  <polyline points="20,200 62,200 80,196 140,120 230,120 300,196 318,200 340,200" fill="none" stroke="#2F6FD6" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="140" y1="112" x2="230" y2="112" stroke="#C0392B" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="185" y="106" text-anchor="middle" font-size="10" font-weight="700" fill="#C0392B">máximo ~8 000 ft</text>
+  <line x1="30" y1="202" x2="30" y2="216" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="30" y="226" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Tierra</text>
+  <text x="30" y="239" text-anchor="middle" font-size="10" fill="#33424D">abierta</text>
+  <line x1="80" y1="202" x2="80" y2="242" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="80" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Despegue</text>
+  <text x="80" y="265" text-anchor="middle" font-size="10" fill="#33424D">prepresuriza</text>
+  <line x1="120" y1="202" x2="120" y2="216" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="120" y="226" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Ascenso</text>
+  <text x="120" y="239" text-anchor="middle" font-size="10" fill="#33424D">ley fija</text>
+  <line x1="185" y1="202" x2="185" y2="242" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="185" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Crucero</text>
+  <line x1="265" y1="202" x2="265" y2="216" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="265" y="226" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Descenso</text>
+  <text x="265" y="239" text-anchor="middle" font-size="10" fill="#33424D">≤ 750 ft/min</text>
+  <line x1="330" y1="202" x2="330" y2="242" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="330" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="#1E2A33">Tierra</text>
+  <text x="330" y="265" text-anchor="middle" font-size="10" fill="#33424D">55 s: abre</text>
+  <text x="20" y="292" font-size="10.5" fill="#1E2A33">Antes de aterrizar: presión del aeropuerto + 0,1 PSI.</text>
+</svg>

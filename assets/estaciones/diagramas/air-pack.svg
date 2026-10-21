@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cómo enfría un pack</title>
+  <desc id="d">El bleed caliente entra por la pack flow control valve y pasa por el primary heat exchanger, el compresor, que sube la presión, el main heat exchanger y la turbina, donde se expande y sale muy frío hacia la mixing unit. El ram air enfría los dos heat exchangers, y la turbina mueve el compresor y el ventilador.</desc>
+  <rect x="1" y="1" width="358" height="278" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a8C99A3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8C99A3"/></marker></defs>
+  <defs><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker><marker id="a2F6FD6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2F6FD6"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Cómo enfría un pack</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Esquema simplificado de la air cycle machine.</text>
+  <rect x="120" y="58" width="120" height="30" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="180" y="70.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Pack flow</text>
+  <text x="180" y="83.5" text-anchor="middle" font-size="10" fill="#33424D">control valve</text>
+  <line x1="180" y1="88" x2="180" y2="98" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <rect x="120" y="98" width="120" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="180" y="110.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Primary</text>
+  <text x="180" y="123.5" text-anchor="middle" font-size="10" fill="#33424D">heat exchanger</text>
+  <line x1="180" y1="128" x2="180" y2="138" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <rect x="120" y="138" width="120" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="180" y="150.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Compresor</text>
+  <text x="180" y="163.5" text-anchor="middle" font-size="10" fill="#33424D">sube presión</text>
+  <line x1="180" y1="168" x2="180" y2="178" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <rect x="120" y="178" width="120" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="180" y="190.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Main</text>
+  <text x="180" y="203.5" text-anchor="middle" font-size="10" fill="#33424D">heat exchanger</text>
+  <line x1="180" y1="208" x2="180" y2="218" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <rect x="120" y="218" width="120" height="30" rx="7" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.4"/>
+  <text x="180" y="230.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Turbina</text>
+  <text x="180" y="243.5" text-anchor="middle" font-size="10" fill="#33424D">se expande</text>
+  <text x="108" y="66" text-anchor="end" font-size="10" font-weight="700" fill="#C77700">Bleed caliente</text>
+  <line x1="60" y1="73" x2="118" y2="73" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <line x1="180" y1="248" x2="180" y2="268" stroke="#2F6FD6" stroke-width="2.4" marker-end="url(#a2F6FD6)"/>
+  <text x="190" y="266" font-size="10" font-weight="700" fill="#2F6FD6">Aire muy frío, a la mixing unit</text>
+  <text x="250" y="142" font-size="10" font-weight="700" fill="#33424D">Ram air</text>
+  <text x="250" y="155" font-size="10" fill="#33424D">enfría los dos</text>
+  <text x="250" y="168" font-size="10" fill="#33424D">heat exchangers</text>
+  <polyline points="300,176 300,193 242,193" fill="none" stroke="#8C99A3" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#a8C99A3)"/>
+  <polyline points="300,130 300,113 242,113" fill="none" stroke="#8C99A3" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#a8C99A3)"/>
+  <text x="20" y="150" font-size="10" fill="#33424D">La turbina mueve</text>
+  <text x="20" y="163" font-size="10" fill="#33424D">el compresor y</text>
+  <text x="20" y="176" font-size="10" fill="#33424D">el ventilador.</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Bleed de un motor</title>
+  <desc id="d">De abajo hacia arriba: del compresor del motor salen la etapa IP, con su check valve, y la etapa HP, con su HP valve; se unen antes de la bleed valve, que corta y regula la presión a unos 45 PSI; después, la overpressure valve, que cierra a unos 75 u 80 PSI, y el precooler, que enfría el aire con aire del fan a unos 200 °C.</desc>
+  <rect x="1" y="1" width="358" height="278" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Bleed de un motor</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Esquema simplificado, de abajo hacia arriba.</text>
+  <rect x="14" y="236" width="126" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="77" y="255" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Compresor del motor</text>
+  <line x1="48" y1="236" x2="48" y2="196" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="104" y1="236" x2="104" y2="196" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="48" y1="196" x2="104" y2="196" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="76" y1="196" x2="76" y2="66" stroke="#C77700" stroke-width="2.4" marker-end="url(#aC77700)"/>
+  <text x="40" y="226" text-anchor="end" font-size="10.5" font-weight="700" fill="#C77700">IP</text>
+  <text x="112" y="226" font-size="10.5" font-weight="700" fill="#C77700">HP</text>
+  <polygon points="44,214 52,214 48,207" fill="#33424D" stroke="#33424D" stroke-width="1.3" stroke-linejoin="round"/>
+  <circle cx="104" cy="214" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="97" y1="214" x2="111" y2="214" stroke="#33424D" stroke-width="1.8"/>
+  <circle cx="76" cy="168" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="76" y1="161" x2="76" y2="175" stroke="#33424D" stroke-width="1.8"/>
+  <circle cx="76" cy="132" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="76" y1="125" x2="76" y2="139" stroke="#33424D" stroke-width="1.8"/>
+  <rect x="56" y="84" width="40" height="22" rx="3" fill="#FFFFFF" stroke="#2F6FD6" stroke-width="1.4"/>
+  <line x1="88" y1="214" x2="150" y2="214" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="156" y="218" font-size="10.5" font-weight="700" fill="#1E2A33">Check valve (IP) · HP valve</text>
+  <text x="156" y="231" font-size="10" fill="#33424D">IP en lo normal; HP a baja potencia</text>
+  <line x1="88" y1="168" x2="150" y2="168" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="156" y="172" font-size="10.5" font-weight="700" fill="#1E2A33">Bleed valve</text>
+  <text x="156" y="185" font-size="10" fill="#33424D">corta y regula: unos 45 PSI</text>
+  <line x1="88" y1="132" x2="150" y2="132" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="156" y="136" font-size="10.5" font-weight="700" fill="#1E2A33">Overpressure valve</text>
+  <text x="156" y="149" font-size="10" fill="#33424D">cierra a unos 75 u 80 PSI</text>
+  <line x1="88" y1="95" x2="150" y2="95" stroke="#8C99A3" stroke-width="1.2"/>
+  <text x="156" y="99" font-size="10.5" font-weight="700" fill="#1E2A33">Precooler</text>
+  <text x="156" y="112" font-size="10" fill="#33424D">enfría con aire del fan: ~200 °C</text>
+  <text x="86" y="72" font-size="10" fill="#33424D">A los usuarios</text>
+</svg>

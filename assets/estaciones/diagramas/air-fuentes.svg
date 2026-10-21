@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 284" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Fuentes de aire</title>
+  <desc id="d">Esquema del sistema neumático: el bleed del motor 1 y del motor 2, cada uno con su bleed valve, unidos por el crossbleed duct con su crossbleed valve. La conexión de tierra HP y el APU, con su APU bleed valve, entran por el lado izquierdo. Arriba, los usuarios: el pack 1 y el wing anti-ice de un lado, el pack 2 y el wing anti-ice del otro.</desc>
+  <rect x="1" y="1" width="358" height="282" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Fuentes de aire</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Esquema simplificado del sistema neumático.</text>
+  <rect x="20" y="60" width="74" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="57" y="79" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Pack 1 · WAI</text>
+  <rect x="266" y="60" width="74" height="30" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="303" y="79" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Pack 2 · WAI</text>
+  <line x1="57" y1="90" x2="57" y2="130" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="303" y1="90" x2="303" y2="130" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="36" y1="130" x2="324" y2="130" stroke="#C77700" stroke-width="2.4"/>
+  <circle cx="214" cy="130" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="207" y1="130" x2="221" y2="130" stroke="#33424D" stroke-width="1.8"/>
+  <text x="214" y="118" text-anchor="middle" font-size="10" fill="#33424D">Crossbleed valve</text>
+  <line x1="36" y1="130" x2="36" y2="206" stroke="#C77700" stroke-width="2.4"/>
+  <line x1="324" y1="130" x2="324" y2="206" stroke="#C77700" stroke-width="2.4"/>
+  <circle cx="36" cy="176" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="36" y1="169" x2="36" y2="183" stroke="#33424D" stroke-width="1.8"/>
+  <circle cx="324" cy="176" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="324" y1="169" x2="324" y2="183" stroke="#33424D" stroke-width="1.8"/>
+  <text x="48" y="180" font-size="10" fill="#33424D">Bleed valve</text>
+  <text x="312" y="180" text-anchor="end" font-size="10" fill="#33424D">Bleed valve</text>
+  <rect x="12" y="206" width="60" height="26" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="42" y="223" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">ENG 1</text>
+  <rect x="288" y="206" width="60" height="26" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="318" y="223" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">ENG 2</text>
+  <line x1="110" y1="130" x2="110" y2="206" stroke="#C77700" stroke-width="2.4"/>
+  <rect x="84" y="206" width="52" height="26" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="110" y="223" text-anchor="middle" font-size="10" font-weight="800" fill="#1E2A33">Tierra HP</text>
+  <line x1="170" y1="130" x2="170" y2="200" stroke="#C77700" stroke-width="2.4"/>
+  <circle cx="170" cy="170" r="7" fill="#FFFFFF" stroke="#33424D" stroke-width="1.5"/>
+  <line x1="170" y1="163" x2="170" y2="177" stroke="#33424D" stroke-width="1.8"/>
+  <rect x="146" y="200" width="48" height="26" rx="7" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="170" y="217" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">APU</text>
+  <text x="180" y="174" font-size="10" fill="#33424D">APU bleed</text>
+  <text x="180" y="254" text-anchor="middle" font-size="10" fill="#5B6B78">APU y tierra HP entran por el lado izquierdo del crossbleed.</text>
+  <line x1="110" y1="268.5" x2="130" y2="268.5" stroke="#C77700" stroke-width="2.4"/>
+  <text x="135" y="272" font-size="10" fill="#33424D">Aire a presión (bleed)</text>
+</svg>

@@ -807,6 +807,15 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-17** (2026-10-21, 1.26.0) — la materia Aire acondicionado y neumático:
+  14 estaciones con el repaso al final. El control de temperatura se enseña por
+  MSN: un zone controller y dos pack controllers hasta el 02321, dos ACSC desde
+  el 02572. El bleed dice 45 PSI y separa a los A320neo. Ninguna estación usa
+  las 9 preguntas DGAC de los MSN antiguos (pack controller, zone controller) o
+  que el FCOM no respalda tal como están, ni las 4 del banco sobre el ECON FLOW
+  (un botón de los A321). RUTA-02 espera ahora siete materias. Mutaciones: con
+  el zone controller para «todos los A320», o con una estación que usa una
+  pregunta del ECON FLOW, falla.
 - **REG-22** (2026-10-20, 1.25.1) — explicaciones de combustible corregidas
   (las claves no cambian): el fuel used vuelve a cero al arrancar el motor en
   tierra, no al energizar el avión; un inner tank lleno sí detiene la bomba

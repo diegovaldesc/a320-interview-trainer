@@ -333,8 +333,29 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 64,
+  "total": 78,
   "subjects": {
+   "aire": {
+    "title": "Air conditioning and pneumatic",
+    "file": "data/stations/aire.js",
+    "count": 14,
+    "stations": [
+     "air-1 · Air systems at a glance",
+     "air-2 · Engine bleed",
+     "air-3 · APU bleed and crossbleed",
+     "air-4 · Packs",
+     "air-5 · Pack flow",
+     "air-6 · Temperature control",
+     "air-7 · Hot air and failures",
+     "air-8 · Emergency ram air",
+     "air-9 · Pressurization system",
+     "air-10 · Pressurization schedule",
+     "air-11 · Avionics ventilation",
+     "air-12 · Manual pressurization",
+     "air-13 · Excess cabin altitude",
+     "air-repaso · Air conditioning and pneumatic review"
+    ]
+   },
    "combustible": {
     "title": "Fuel",
     "file": "data/stations/combustible.js",
@@ -444,7 +465,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 64
+   "stations": 78
   }
  }
 }

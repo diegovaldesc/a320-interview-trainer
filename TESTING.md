@@ -807,6 +807,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-23** (2026-10-21, 1.26.1) — correcciones del banco de aire acondicionado.
+  Tres claves DGAC pasan a la respuesta del avión real: la minimum idle sube
+  sola (no «flight idle is sufficient»), la despresurización ocurre al tocar
+  tierra (no «tres minutos después»: 500 ft/min y outflow valve abierta a los
+  55 s) y se puede intervenir de las dos formas (manual y LDG ELEV). Las 4
+  preguntas del ECON FLOW (botón de los A321) ahora preguntan por el selector
+  PACK FLOW del A320; tres enunciados dejaron de nombrar el FCOM o la
+  «effectivity auditada». Los 7 enunciados nuevos tienen su id viejo en
+  `QID_RENAMES` (QID-01 espera ahora 53). Las explicaciones de los pack
+  controllers y del zone controller dicen que son de los MSN hasta el 02321.
+  RUTA-17 ya no excluye las tres preguntas corregidas. Mutación: con la clave
+  de «tres minutos» de vuelta, falla.
 - **RUTA-17** (2026-10-21, 1.26.0) — la materia Aire acondicionado y neumático:
   14 estaciones con el repaso al final. El control de temperatura se enseña por
   MSN: un zone controller y dos pack controllers hasta el 02321, dos ACSC desde

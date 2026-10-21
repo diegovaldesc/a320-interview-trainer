@@ -60,7 +60,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":56,"id":"perf-9","subject":"performance","title":"Weights and CG","kind":"lesson","level":3,"minutes":11,"zone":"tormenta","unlockAfter":"ctl-8"},
 {"n":57,"id":"tren-9","subject":"tren","title":"Gear not down","kind":"lesson","level":3,"minutes":8,"zone":"tormenta","unlockAfter":"perf-9"},
 {"n":58,"id":"ful-8","subject":"combustible","title":"Fuel on the ECAM","kind":"lesson","level":3,"minutes":6,"zone":"tormenta","unlockAfter":"tren-9"},
-{"n":59,"id":"air-12","subject":"aire","title":"Manual pressurization","kind":"lesson","level":3,"minutes":4,"zone":"tormenta","unlockAfter":"ful-8"},
+{"n":59,"id":"air-12","subject":"aire","title":"Manual pressurization","kind":"lesson","level":3,"minutes":5,"zone":"tormenta","unlockAfter":"ful-8"},
 {"n":60,"id":"ele-8","subject":"electrico","title":"Partial failures: TR, AC BUS 1 and smoke","kind":"lesson","level":3,"minutes":6,"zone":"tormenta","unlockAfter":"air-12"},
 {"n":61,"id":"ctl-9","subject":"controles","title":"Flaps and slats","kind":"lesson","level":3,"minutes":7,"zone":"tormenta","unlockAfter":"ele-8"},
 {"n":62,"id":"perf-10","subject":"performance","title":"Climb, cruise and cost index","kind":"lesson","level":3,"minutes":9,"zone":"tormenta","unlockAfter":"ctl-9"},

@@ -508,18 +508,31 @@
     var act=SYSTEMS.fuel.questions.find(function(q){return q.q.indexOf("En una configuración de combustible equipada con ACT")===0});
     ok(act&&/06183/.test(act.expl)&&/06286/.test(act.expl),"tanques que alimentan a los motores, por MSN");
   });
-  T("15 RUTA-17 Aire acondicionado y neumatico: 14 estaciones con el repaso al final; el control de temperatura se enseña por MSN (zone controller hasta el 02321, ACSC desde el 02572), el bleed separa los A320neo, y ninguna estacion usa las preguntas DGAC de los MSN antiguos o no respaldadas ni las del ECON FLOW (A321)",function(){
+  T("15 RUTA-17 Aire acondicionado y neumatico: 14 estaciones con el repaso al final; el control de temperatura se enseña por MSN (zone controller hasta el 02321, ACSC desde el 02572), el bleed separa los A320neo, y ninguna estacion usa las preguntas DGAC de los MSN antiguos o no respaldadas; el banco ya no pregunta por el ECON FLOW (A321)",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="aire"});
     eq(P.length,14,"estaciones de Aire acondicionado");eq(P[P.length-1].id,"air-repaso","el repaso va al final");
     function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
     var t=body("air-6");ok(/hasta el 02321\):\*\* un \*\*zone controller\*\*/.test(t)&&/desde el 02572\):\*\* dos \*\*ACSC\*\*/.test(t),"temperatura: zone controller hasta el 02321 y ACSC desde el 02572");
     ok(/\*\*45 PSI\*\*/.test(body("air-2"))&&/A320neo/.test(body("air-2")),"bleed: 45 PSI y el caso de los A320neo");
     var G=SYSTEMS[DGAC_KEY].questions;
-    var malas=G.filter(function(q){return /^ENGINE FLOW DEMAND, WHEN THE HEATING|^WHEN DOES NORMAL DEPRESSURIZATION OCCUR|^UNDER WHAT CONDITIONS SHOULD THE PACK FLOW CONTROLLER BE SET TO LOW|^PRESSURIZATION IS NORMALLY AUTOMATIC. CAN YOU INTERFERE|^TEMPERATURE REGULATION FOR THE A-320 IS CONTROLLED BY|^PACK CONTROLLER, |^WHAT HAPPENS WHEN A TEMPERATURE SELECTOR ROTARY KNOB/.test(q.q)});
-    eq(malas.length,9,"las 9 preguntas DGAC de aire que no se usan");
+    var malas=G.filter(function(q){return /^UNDER WHAT CONDITIONS SHOULD THE PACK FLOW CONTROLLER BE SET TO LOW|^TEMPERATURE REGULATION FOR THE A-320 IS CONTROLLED BY|^PACK CONTROLLER, |^WHAT HAPPENS WHEN A TEMPERATURE SELECTOR ROTARY KNOB/.test(q.q)});
+    eq(malas.length,6,"las 6 preguntas DGAC de aire que no se usan");
     var ac=SYSTEMS.air_cond.questions.filter(function(q){return /ECON FLOW/.test(q.q)});
-    eq(ac.length,4,"las 4 preguntas del banco sobre ECON FLOW");
-    var ids=malas.map(function(q){return qid(DGAC_KEY,q)}).concat(ac.map(function(q){return qid("air_cond",q)})),usadas=[];
+    eq(ac.length,0,"ninguna pregunta del banco de aire habla del ECON FLOW, que es de los A321");
+    var ids=malas.map(function(q){return qid(DGAC_KEY,q)}),usadas=[];
     Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta de aire no respaldada o de otro avion: "+usadas.join(", "));
+  });
+  T("15 REG-23 banco de aire acondicionado: claves DGAC del avion real (minimum idle automatica, despresurizacion al tocar tierra, las dos formas de intervenir), PACK FLOW en vez de ECON FLOW, enunciados sin el FCOM y explicaciones por MSN",function(){
+    var G=SYSTEMS[DGAC_KEY].questions,A=SYSTEMS.air_cond.questions;
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    var e=one(G,/^ENGINE FLOW DEMAND, WHEN THE HEATING/);eq(e.options[e.correct],"THE MINIMUM IDLE IS INCREASED AUTOMATICALLY.","engine flow demand: la minimum idle sube sola");
+    var d=one(G,/^WHEN DOES NORMAL DEPRESSURIZATION OCCUR/);eq(d.options[d.correct],"ON LANDING TOUCHDOWN.","despresurizacion: al tocar tierra");ok(/55 segundos/.test(d.expl)&&/500 ft\/min/.test(d.expl),"despresurizacion: 500 ft/min y 55 s");
+    var i=one(G,/^PRESSURIZATION IS NORMALLY AUTOMATIC. CAN YOU INTERFERE/);eq(i.options[i.correct],"BOTH ARE CORRECT.","intervenir: las dos formas");
+    ok(!/11,300|11 300/.test(one(G,/^AT WHAT CABIN ALTITUDE DO YOU GET AN ECAM WARNING/).expl),"9 550 ft: sin los 11 300 ft sin respaldo");
+    ok(!/preservar presión/.test(one(G,/^WHAT HAPPENS TO THE PACK FLOW CONTROL VALVES DURING ENGINE START/).expl),"arranque: sin una razon que el manual no da");
+    G.filter(function(q){return /^PACK CONTROLLER, |^TEMPERATURE REGULATION FOR THE A-320|^WHAT HAPPENS WHEN A TEMPERATURE SELECTOR/.test(q.q)}).forEach(function(q){ok(/02321/.test(q.expl)&&/02572/.test(q.expl),"explicacion por MSN: "+q.q.slice(0,40))});
+    eq(A.filter(function(q){return /ECON FLOW/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).length,0,"el banco de aire no habla del ECON FLOW");
+    eq(A.filter(function(q){return /PACK FLOW/.test(q.q)}).length,4,"las 4 preguntas del selector PACK FLOW");
+    eq(A.filter(function(q){return /FCOM|effectivity auditada/.test(q.q)}).length,0,"ningun enunciado de aire nombra el FCOM ni la effectivity");
   });

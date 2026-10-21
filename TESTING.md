@@ -807,6 +807,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-25** (2026-10-21, 1.28.1) — correcciones del banco de fuego. La clave
+  DGAC de «WILL AN APU FIRE TEST SHUT DOWN THE APU?» pasa a YES: en tierra, un
+  test de más de 3 s puede apagarlo. Las preguntas DGAC dudosas (APU arrancado
+  con baterías, test de motor con la página ENGINE, humo de bodega con MASTER
+  WARN y CRC) aclaran lo que dice el manual; la de la botella de carga va por
+  MSN. Ninguna explicación de fuego nombra el FCOM ni da razones sin respaldo.
+  Seis enunciados que nombraban el FCOM se reescribieron (uno del banco de
+  fuego y cinco de procedimientos de estas estaciones), con su id viejo en
+  `QID_RENAMES` (QID-01 espera ahora 60). La pregunta del test del APU entra a
+  la estación de tests y RUTA-19 ya no la excluye. Mutación: con la clave «NO»
+  de vuelta, falla.
 - **RUTA-19** (2026-10-21, 1.28.0) — la materia Protección contra fuego: 10
   estaciones con el repaso al final (panorama, detección de motores y APU, humo
   en aviónica y lavatorios, ENG FIRE pb y agentes, fuego del APU, tests, humo en

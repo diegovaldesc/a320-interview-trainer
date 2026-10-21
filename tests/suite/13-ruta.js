@@ -571,9 +571,21 @@
     var c=body("fir-7");ok(/\*\*hasta el 11597\*\*/.test(c)&&/\*\*desde el 11629\*\*/.test(c),"botellas de carga por MSN");
     ok(/\*\*AGENT 1\*\* después de \*\*10 segundos\*\*/.test(body("fir-8")),"ENG FIRE: AGENT 1 a los 10 s");
     var G=SYSTEMS[DGAC_KEY].questions;
-    var malas=G.filter(function(q){return /^WILL AN APU FIRE TEST SHUT|^WHEN THE AIRCRAFT IS ON THE GROUND AND THE APU IS STARTED ON BETTERY|^IN ADDITION TO THE CRC AND RED MASTER WARN LIGHT, A GOOD ENGINE FIRE TEST|^IN THE EVENT THAT THE AFT CARGO COMPARTMENT SMOKE DETECTOR, DETECTS SMOKE/.test(q.q)});
-    eq(malas.length,4,"las 4 preguntas DGAC de fuego que no se usan");
+    var malas=G.filter(function(q){return /^WHEN THE AIRCRAFT IS ON THE GROUND AND THE APU IS STARTED ON BETTERY|^IN ADDITION TO THE CRC AND RED MASTER WARN LIGHT, A GOOD ENGINE FIRE TEST|^IN THE EVENT THAT THE AFT CARGO COMPARTMENT SMOKE DETECTOR, DETECTS SMOKE/.test(q.q)});
+    eq(malas.length,3,"las 3 preguntas DGAC de fuego que no se usan");
     var ids=malas.map(function(q){return qid(DGAC_KEY,q)}),usadas=[];
     Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta DGAC no respaldada: "+usadas.join(", "));
+  });
+  T("15 REG-25 banco de fuego: el test del APU de mas de 3 s puede apagarlo (clave YES), las preguntas DGAC dudosas aclaran lo que dice el manual, las botellas de carga van por MSN, y ningun texto de fuego nombra el FCOM",function(){
+    var G=SYSTEMS[DGAC_KEY].questions,F=SYSTEMS.fire.questions,P=SYSTEMS.procedures.questions;
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    var t=one(G,/^WILL AN APU FIRE TEST SHUT/);eq(t.options[t.correct],"YES.","test del APU: puede apagarlo");ok(/3 segundos/.test(t.expl),"explicacion con los 3 s");
+    ok(/no lo explica/.test(one(G,/^WHEN THE AIRCRAFT IS ON THE GROUND AND THE APU IS STARTED ON BETTERY/).expl),"APU con baterias: lo que dice el manual");
+    ok(/No menciona la página ENGINE/.test(one(G,/^IN ADDITION TO THE CRC AND RED MASTER WARN LIGHT/).expl),"test de motor: sin la pagina ENGINE");
+    ok(/no detalla el MASTER WARN/.test(one(G,/^IN THE EVENT THAT THE AFT CARGO COMPARTMENT SMOKE DETECTOR, DETECTS/).expl),"humo de bodega: luz SMOKE y ECAM");
+    var b=one(G,/^WITH REFERENCE TO CARGO COMPARTMENT FIRE EXTINGUISHING/).expl;ok(/11597/.test(b)&&/11629/.test(b),"botellas de carga por MSN");
+    var fuego=F.concat(G.filter(function(q){return q.bank_section==="Fire protection"})).concat([4,5,6,7,8,15,16,17,18].map(function(i){return P[i]}));
+    var mal=fuego.filter(function(q){return /FCOM|DSC-\d|circuito esencial|sistemas alimentados por AC/.test(q.q+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
+    eq(mal.length,0,"textos de fuego que nombran el FCOM o dan razones sin respaldo: "+mal.join(" | "));
   });

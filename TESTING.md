@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-26** (2026-10-21, 1.28.2) — lote 011 de Codex (Controles, ctl-4). H021:
+  el flare a 100 ft es de un grupo de MSN que son A321 (11524…); el A320 entra a
+  50 ft, memoriza la actitud ahí y desde 30 ft baja la nariz hacia 2° en unos 8 s,
+  así que la clase ya no menciona los 100 ft. H022: en high speed o high Mach el
+  trim no siempre se congela; en algunos MSN antiguos (01143–01628 y otros) el
+  THS queda limitado entre su posición al entrar y 11° nose up. Precisiones: la
+  ley de g es la del flight mode, el avión «tiende a seguir» su trayectoria, el
+  rotation mode (A320neo) va desde 70 kt hasta 10 s después del despegue con
+  pitch sobre 8° y su protección de tail strike se puede superar, y el reset del
+  trim necesita Green o Yellow. Mutación: con el flare a 100 ft de vuelta, falla.
 - **REG-25** (2026-10-21, 1.28.1) — correcciones del banco de fuego. La clave
   DGAC de «WILL AN APU FIRE TEST SHUT DOWN THE APU?» pasa a YES: en tierra, un
   test de más de 3 s puede apagarlo. Las preguntas DGAC dudosas (APU arrancado

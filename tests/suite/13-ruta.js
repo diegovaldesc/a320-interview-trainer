@@ -589,3 +589,13 @@
     var mal=fuego.filter(function(q){return /FCOM|DSC-\d|circuito esencial|sistemas alimentados por AC/.test(q.q+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de fuego que nombran el FCOM o dan razones sin respaldo: "+mal.join(" | "));
   });
+  T("15 REG-26 lote 011 de Codex (ctl-4): el flare del A320 es a 50 ft (los 100 ft son de otro grupo, A321), en high speed el THS no siempre se congela, y el rotation mode tiene sus condiciones",function(){
+    var st=RUTA.stations["ctl-4"];ok(st,"existe ctl-4");if(!st)return;
+    var c3=st.cards[2].body,c4=st.cards[3],todo=st.cards.map(function(c){return [c.body,c.more||"",c.example||""].join(" ")}).join(" ");
+    ok(!/100 ft/.test(c4.body+" "+(c4.more||"")),"sin el flare a 100 ft en la clase del A320");
+    ok(/memoriza la actitud de pitch a 50 ft/.test(c4.more||""),"memorizacion a 50 ft");
+    ok(/11° nose up/.test(c3)&&/MSN más antiguos/.test(c3),"high speed: en algunos MSN antiguos el THS queda limitado hasta 11° nose up");
+    ok(/10 segundos después del despegue/.test(c4.more||"")&&/8°/.test(c4.more||"")&&/puede superar/.test(c4.more||""),"rotation mode con sus condiciones");
+    ok(/Green o Yellow/.test(c4.body),"reset del trim: necesita Green o Yellow");
+    ok(/tiende a seguir/.test(todo)&&/flight mode, fuera de las protecciones/.test(todo),"ley de g: flight mode y tendencia");
+  });

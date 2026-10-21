@@ -32,7 +32,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":28,"id":"air-4","subject":"aire","title":"Packs","kind":"lesson","level":1,"minutes":5,"zone":"nubes","unlockAfter":"tren-4"},
 {"n":29,"id":"hid-3","subject":"hidraulico","title":"Blue system and RAT","kind":"lesson","level":2,"minutes":5,"zone":"crucero","unlockAfter":"air-4"},
 {"n":30,"id":"ele-4","subject":"electrico","title":"External power, APU GEN and galleys","kind":"lesson","level":2,"minutes":6,"zone":"crucero","unlockAfter":"hid-3"},
-{"n":31,"id":"ctl-4","subject":"controles","title":"Normal law: pitch","kind":"lesson","level":2,"minutes":7,"zone":"crucero","unlockAfter":"ele-4"},
+{"n":31,"id":"ctl-4","subject":"controles","title":"Normal law: pitch","kind":"lesson","level":2,"minutes":8,"zone":"crucero","unlockAfter":"ele-4"},
 {"n":32,"id":"perf-5","subject":"performance","title":"Reject or continue","kind":"lesson","level":2,"minutes":11,"zone":"crucero","unlockAfter":"ctl-4"},
 {"n":33,"id":"tren-5","subject":"tren","title":"Braking modes","kind":"lesson","level":2,"minutes":7,"zone":"crucero","unlockAfter":"perf-5"},
 {"n":34,"id":"ful-3","subject":"combustible","title":"Center tank: older A320s","kind":"lesson","level":2,"minutes":5,"zone":"crucero","unlockAfter":"tren-5"},

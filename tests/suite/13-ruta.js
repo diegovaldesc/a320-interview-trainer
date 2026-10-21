@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU y Fuego, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=98,"al menos las 98 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU y Fuego");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,apu,combustible,controles,electrico,fuego,hidraulico,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego y Antihielo, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=106,"al menos las 106 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego y Antihielo");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,controles,electrico,fuego,hidraulico,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -598,4 +598,21 @@
     ok(/10 segundos después del despegue/.test(c4.more||"")&&/8°/.test(c4.more||"")&&/puede superar/.test(c4.more||""),"rotation mode con sus condiciones");
     ok(/Green o Yellow/.test(c4.body),"reset del trim: necesita Green o Yellow");
     ok(/tiende a seguir/.test(todo)&&/flight mode, fuera de las protecciones/.test(todo),"ley de g: flight mode y tendencia");
+  });
+  T("15 RUTA-20 Antihielo y lluvia: 8 estaciones con el repaso al final; el engine anti-ice se enseña por motor (IAE o CFM, A320neo), el encendido continuo es de los IAE, y ninguna estacion usa las preguntas que solo valen para un grupo de aviones",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="antihielo"});
+    eq(P.length,8,"estaciones de Antihielo y lluvia");eq(P[P.length-1].id,"ice-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var e=body("ice-3");
+    ok((e.indexOf("**A320 con motores IAE o CFM:** las válvulas **abren solas**")>=0)&&(e.indexOf("**A320neo:** las dos PRSOV **siguen funcionando**")>=0),"ELEC EMER CONFIG por motor");
+    ok((e.indexOf("motores **IAE**, además")>=0),"encendido continuo: IAE");
+    ok((e.indexOf("**SAT bajo -40 °C**")>=0),"ENG ANTI ICE: excepcion con SAT bajo -40");
+    ok((body("ice-6").indexOf("**230 kt**")>=0),"wipers hasta 230 kt");
+    ok((body("ice-5").indexOf("**TAT no se calientan**")>=0),"TAT sin calefaccion en tierra");
+    var I=SYSTEMS.ice_rain.questions,G=SYSTEMS[DGAC_KEY].questions;
+    var malas=I.filter(function(q){return /^En ELEC EMER CONFIG, ¿se pierde|^¿Qué ocurre con la ignición cuando la válvula de engine anti-ice/.test(q.q)}).map(function(q){return qid("ice_rain",q)})
+      .concat(G.filter(function(q){return /^IN THE EVENT OF AN ELECTRICAL POWER LOSS:/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)}));
+    eq(malas.length,3,"las 3 preguntas de un solo grupo de aviones");
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&malas.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta que vale solo para un grupo: "+usadas.join(", "));
   });

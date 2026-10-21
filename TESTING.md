@@ -807,6 +807,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-20** (2026-10-21, 1.29.0) — la materia Antihielo y lluvia: 8 estaciones
+  con el repaso al final (panorama y condiciones de engelamiento, wing anti-ice,
+  engine anti-ice, ventanas, sondas, lluvia, y panel y alertas). El engine
+  anti-ice se enseña por motor: en los A320 con IAE o CFM la válvula abre sola en
+  la ELEC EMER CONFIG; en los A320neo las dos PRSOV siguen controlables. El
+  encendido continuo automático es de los IAE, el ENG ANTI ICE tiene su excepción
+  con SAT bajo -40 °C, los wipers van hasta 230 kt y las TAT no se calientan en
+  tierra. Ninguna estación usa 3 preguntas que valen solo para un grupo de aviones
+  (ice_rain «En ELEC EMER CONFIG, ¿se pierde…» y «¿Qué ocurre con la ignición…»,
+  DGAC «IN THE EVENT OF AN ELECTRICAL POWER LOSS»). RUTA-02 pasa a 10 materias y
+  106 estaciones. Mutación: con la pregunta de la ignición en una prueba de la materia,
+  o con «abren solas» cambiado en la ficha, RUTA-20 falla.
 - **REG-26** (2026-10-21, 1.28.2) — lote 011 de Codex (Controles, ctl-4). H021:
   el flare a 100 ft es de un grupo de MSN que son A321 (11524…); el A320 entra a
   50 ft, memoriza la actitud ahí y desde 30 ft baja la nariz hacia 2° en unos 8 s,

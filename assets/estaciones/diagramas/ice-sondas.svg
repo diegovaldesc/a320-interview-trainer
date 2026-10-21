@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 302" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Calefacción de sondas</title>
+  <desc id="d">Tres PHC: el del capitán y el del F/O controlan pitot, static, AOA y TAT; el STBY, pitot, static y AOA. Tabla: en tierra con un motor en marcha, el pitot se calienta a baja potencia y la TAT no se calienta; static y AOA se calientan. En vuelo, todo con calefacción, el pitot a potencia normal.</desc>
+  <rect x="1" y="1" width="358" height="300" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Calefacción de sondas</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Tres PHC, uno por grupo de sondas.</text>
+  <rect x="16" y="58" width="100" height="30" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="66" y="77" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">PHC CAPT</text>
+  <text x="66" y="106" text-anchor="middle" font-size="10.5" fill="#33424D">pitot</text>
+  <text x="66" y="120" text-anchor="middle" font-size="10.5" fill="#33424D">static</text>
+  <text x="66" y="134" text-anchor="middle" font-size="10.5" fill="#33424D">AOA</text>
+  <text x="66" y="148" text-anchor="middle" font-size="10.5" fill="#33424D">TAT</text>
+  <rect x="130" y="58" width="100" height="30" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="180" y="77" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">PHC F/O</text>
+  <text x="180" y="106" text-anchor="middle" font-size="10.5" fill="#33424D">pitot</text>
+  <text x="180" y="120" text-anchor="middle" font-size="10.5" fill="#33424D">static</text>
+  <text x="180" y="134" text-anchor="middle" font-size="10.5" fill="#33424D">AOA</text>
+  <text x="180" y="148" text-anchor="middle" font-size="10.5" fill="#33424D">TAT</text>
+  <rect x="244" y="58" width="100" height="30" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="294" y="77" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">PHC STBY</text>
+  <text x="294" y="106" text-anchor="middle" font-size="10.5" fill="#33424D">pitot</text>
+  <text x="294" y="120" text-anchor="middle" font-size="10.5" fill="#33424D">static</text>
+  <text x="294" y="134" text-anchor="middle" font-size="10.5" fill="#33424D">AOA</text>
+  <rect x="16" y="172" width="116" height="24" rx="0" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="24" y="188" font-size="10.5" font-weight="800" fill="#1E2A33">Sonda</text>
+  <rect x="132" y="172" width="112" height="24" rx="0" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="140" y="188" font-size="10.5" font-weight="800" fill="#1E2A33">En tierra*</text>
+  <rect x="244" y="172" width="100" height="24" rx="0" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="252" y="188" font-size="10.5" font-weight="800" fill="#1E2A33">En vuelo</text>
+  <rect x="16" y="196" width="116" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="24" y="212" font-size="10.5" font-weight="800" fill="#1E2A33">Pitot</text>
+  <rect x="132" y="196" width="112" height="24" rx="0" fill="#FCEBD3" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="140" y="212" font-size="10.5" font-weight="400" fill="#1E2A33">baja potencia</text>
+  <rect x="244" y="196" width="100" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="252" y="212" font-size="10.5" font-weight="400" fill="#1E2A33">normal</text>
+  <rect x="16" y="220" width="116" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="24" y="236" font-size="10.5" font-weight="800" fill="#1E2A33">TAT</text>
+  <rect x="132" y="220" width="112" height="24" rx="0" fill="#FCEBD3" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="140" y="236" font-size="10.5" font-weight="400" fill="#1E2A33">sin calefacción</text>
+  <rect x="244" y="220" width="100" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="252" y="236" font-size="10.5" font-weight="400" fill="#1E2A33">con calefacción</text>
+  <rect x="16" y="244" width="116" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="24" y="260" font-size="10.5" font-weight="800" fill="#1E2A33">Static y AOA</text>
+  <rect x="132" y="244" width="112" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="140" y="260" font-size="10.5" font-weight="400" fill="#1E2A33">con calefacción</text>
+  <rect x="244" y="244" width="100" height="24" rx="0" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="252" y="260" font-size="10.5" font-weight="400" fill="#1E2A33">con calefacción</text>
+  <text x="16" y="290" font-size="10" fill="#5B6B78">* Con al menos un motor en marcha, o con PROBE/WINDOW HEAT en ON.</text>
+</svg>

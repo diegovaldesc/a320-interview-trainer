@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 304" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Condiciones de engelamiento</title>
+  <desc id="d">Hay condiciones de engelamiento con las dos cosas: temperatura de 10 °C o menos (la OAT en tierra y después del despegue, la TAT en vuelo) y humedad visible (nubes, lluvia, nieve, aguanieve, cristales de hielo o niebla de 1 600 m o menos). En tierra, también con 10 °C o menos y nieve, agua o slush en la superficie. Hielo severo: unos 5 mm acumulados.</desc>
+  <rect x="1" y="1" width="358" height="302" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Condiciones de engelamiento</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Se necesitan las dos cosas.</text>
+  <rect x="16" y="58" width="148" height="92" rx="6" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="90" y="78" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">Temperatura</text>
+  <text x="90" y="98" text-anchor="middle" font-size="12" font-weight="800" fill="#1E2A33">10 °C o menos</text>
+  <text x="90" y="117" text-anchor="middle" font-size="10.5" fill="#33424D">OAT: en tierra y</text>
+  <text x="90" y="130" text-anchor="middle" font-size="10.5" fill="#33424D">después del despegue</text>
+  <text x="90" y="143" text-anchor="middle" font-size="10.5" fill="#33424D">TAT: en vuelo</text>
+  <text x="180" y="110" text-anchor="middle" font-size="14" font-weight="800" fill="#33424D">y</text>
+  <rect x="196" y="58" width="148" height="92" rx="6" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="270" y="78" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">Humedad visible</text>
+  <text x="270" y="98" text-anchor="middle" font-size="10.5" fill="#33424D">nubes, lluvia, nieve,</text>
+  <text x="270" y="112" text-anchor="middle" font-size="10.5" fill="#33424D">aguanieve, cristales</text>
+  <text x="270" y="126" text-anchor="middle" font-size="10.5" fill="#33424D">de hielo, o niebla</text>
+  <text x="270" y="140" text-anchor="middle" font-size="10.5" fill="#33424D">de 1 600 m o menos</text>
+  <defs><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker></defs>
+  <line x1="180" y1="152" x2="180" y2="170" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <rect x="60" y="174" width="240" height="34" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="180" y="195" text-anchor="middle" font-size="12" font-weight="800" fill="#C77700">Condiciones de engelamiento</text>
+  <rect x="16" y="222" width="328" height="44" rx="6" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="28" y="240" font-size="10.5" font-weight="800" fill="#1E2A33">En tierra, también:</text>
+  <text x="28" y="256" font-size="10.5" fill="#33424D">10 °C o menos con nieve, agua o slush en la superficie.</text>
+  <text x="16" y="290" font-size="11" font-weight="800" fill="#C0392B">Hielo severo: unos 5 mm acumulados.</text>
+</svg>

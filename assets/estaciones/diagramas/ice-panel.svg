@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Panel ANTI ICE</title>
+  <desc id="d">El panel ANTI ICE con los pushbuttons WING, ENG 1 y ENG 2, cada uno con FAULT y ON, y el pushbutton PROBE/WINDOW HEAT, suelto en AUTO o presionado en ON. WING FAULT: válvula fuera de la posición pedida o baja presión. ENG FAULT: válvula distinta de la selección. Las dos se encienden un momento mientras la válvula se mueve. Memos: WING A. ICE y ENG A. ICE. PROBE/WINDOW HEAT: AUTO o ON.</desc>
+  <rect x="1" y="1" width="358" height="328" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Panel ANTI ICE</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Pushbuttons y lo que dicen sus luces.</text>
+  <rect x="16" y="56" width="328" height="104" rx="8" fill="#3B4A55" stroke="#2A353D" stroke-width="1.4"/>
+  <text x="62" y="74" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">WING</text>
+  <rect x="34" y="96" width="56" height="50" rx="4" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="62" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="#F5A623">FAULT</text>
+  <rect x="44" y="124" width="36" height="16" rx="2" fill="none" stroke="#5AC8E6" stroke-width="1.2"/>
+  <text x="62" y="136" text-anchor="middle" font-size="10.5" font-weight="800" fill="#5AC8E6">ON</text>
+  <text x="142" y="74" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">ENG 1</text>
+  <rect x="114" y="96" width="56" height="50" rx="4" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="142" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="#F5A623">FAULT</text>
+  <rect x="124" y="124" width="36" height="16" rx="2" fill="none" stroke="#5AC8E6" stroke-width="1.2"/>
+  <text x="142" y="136" text-anchor="middle" font-size="10.5" font-weight="800" fill="#5AC8E6">ON</text>
+  <text x="212" y="74" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">ENG 2</text>
+  <rect x="184" y="96" width="56" height="50" rx="4" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="212" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="#F5A623">FAULT</text>
+  <rect x="194" y="124" width="36" height="16" rx="2" fill="none" stroke="#5AC8E6" stroke-width="1.2"/>
+  <text x="212" y="136" text-anchor="middle" font-size="10.5" font-weight="800" fill="#5AC8E6">ON</text>
+  <text x="294" y="74" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">PROBE/WINDOW</text>
+  <text x="294" y="86" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">HEAT</text>
+  <rect x="266" y="96" width="56" height="50" rx="4" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="294" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF"></text>
+  <rect x="276" y="124" width="36" height="16" rx="2" fill="none" stroke="#5AC8E6" stroke-width="1.2"/>
+  <text x="294" y="136" text-anchor="middle" font-size="10.5" font-weight="800" fill="#5AC8E6">ON</text>
+  <text x="16" y="184" font-size="10.5" font-weight="800" fill="#C77700">WING FAULT</text>
+  <text x="108" y="184" font-size="10.5" fill="#33424D">válvula fuera de la posición</text>
+  <text x="108" y="198" font-size="10.5" fill="#33424D">pedida, o baja presión</text>
+  <text x="16" y="220" font-size="10.5" font-weight="800" fill="#C77700">ENG FAULT</text>
+  <text x="108" y="220" font-size="10.5" fill="#33424D">válvula distinta de la</text>
+  <text x="108" y="234" font-size="10.5" fill="#33424D">selección del pushbutton</text>
+  <text x="16" y="256" font-size="10.5" font-weight="800" fill="#1E2A33">Las dos</text>
+  <text x="108" y="256" font-size="10.5" fill="#33424D">un momento mientras la</text>
+  <text x="108" y="270" font-size="10.5" fill="#33424D">válvula se mueve (normal)</text>
+  <text x="16" y="292" font-size="10.5" font-weight="800" fill="#2E9D5B">Memos</text>
+  <text x="108" y="292" font-size="10.5" fill="#33424D">WING A. ICE y ENG A. ICE</text>
+  <text x="16" y="314" font-size="10.5" font-weight="700" fill="#0E5E6F">PROBE/WINDOW HEAT: suelto = AUTO; ON (azul) = siempre.</text>
+</svg>

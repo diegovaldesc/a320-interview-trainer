@@ -333,7 +333,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 98,
+  "total": 106,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -354,6 +354,21 @@
      "air-12 · Manual pressurization",
      "air-13 · Excess cabin altitude",
      "air-repaso · Air conditioning and pneumatic review"
+    ]
+   },
+   "antihielo": {
+    "title": "Ice and rain protection",
+    "file": "data/stations/antihielo.js",
+    "count": 8,
+    "stations": [
+     "ice-1 · Ice and rain protection at a glance",
+     "ice-2 · Wing anti-ice",
+     "ice-3 · Engine anti-ice",
+     "ice-4 · Window heat",
+     "ice-5 · Probe heat",
+     "ice-6 · Rain removal",
+     "ice-7 · Anti-ice controls and alerts",
+     "ice-repaso · Ice and rain protection review"
     ]
    },
    "apu": {
@@ -499,7 +514,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 98
+   "stations": 106
   }
  }
 }

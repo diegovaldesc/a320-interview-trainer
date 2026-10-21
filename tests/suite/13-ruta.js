@@ -492,3 +492,19 @@
     Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta DGAC de combustible no respaldada: "+usadas.join(", "));
   });
+  T("15 REG-22 explicaciones de combustible: el fuel used vuelve a cero al arrancar el motor en tierra, el inner lleno si detiene la bomba del center tank, las bombas por tanque y la logica AUTO se explican por MSN, y el center tank de los A320 antiguos tambien alimenta directo",function(){
+    var G=SYSTEMS[DGAC_KEY].questions;
+    function one(re){var h=G.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{expl:"",options:[]}}
+    var fu=one(/THE FUEL USED INDICATION ON ECAM IS RESET/);
+    eq(fu.options[fu.correct],"AUTOMATICALLY AT ENGINE START ON THE GROUND.","clave del fuel used");
+    ok(/al arrancar el motor en tierra/.test(fu.expl)&&!/al energizar eléctricamente/.test(fu.expl),"fuel used: "+fu.expl.slice(0,70));
+    var st=one(/CAUSE THE CENTER TANK FUEL PUMPS TO STOP/);
+    ok(/500 kg/.test(st.expl)&&!/ni por una condición de sobrellenado/.test(st.expl),"inner lleno: detiene la bomba hasta gastar unos 500 kg");
+    var nb=one(/FUEL PUMPS IN EACH A-320 FUEL TANK/);
+    eq(nb.options[nb.correct],"2","clave de las bombas por tanque");
+    ok(/06183/.test(nb.expl)&&/06286/.test(nb.expl)&&/outer tanks no tienen bombas/.test(nb.expl),"bombas por tanque explicadas por MSN");
+    var au=one(/CENTER TANK PUMP MODE SEL SWITCH IN AUTO/);
+    ok(/nivel bajo/.test(au.expl)&&/06183/.test(au.expl),"logica AUTO: 5 minutos despues del nivel bajo");
+    var act=SYSTEMS.fuel.questions.find(function(q){return q.q.indexOf("En una configuración de combustible equipada con ACT")===0});
+    ok(act&&/06183/.test(act.expl)&&/06286/.test(act.expl),"tanques que alimentan a los motores, por MSN");
+  });

@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-22** (2026-10-20, 1.25.1) — explicaciones de combustible corregidas
+  (las claves no cambian): el fuel used vuelve a cero al arrancar el motor en
+  tierra, no al energizar el avión; un inner tank lleno sí detiene la bomba
+  del center tank de ese lado, hasta que se gastan unos 500 kg; «2 pumps in
+  each tank» vale para los tanques con bombas de los A320 más antiguos (los
+  outer no tienen y el center de los más nuevos tampoco); la lógica AUTO para
+  5 minutos después del nivel bajo del center tank, no después de vaciarse; y
+  en los A320 más antiguos el center tank también alimenta directo a los
+  motores. Las estaciones ful-3 y ful-8 usan ahora la explicación del banco.
+  Mutación: con la explicación anterior del fuel used, falla.
 - **RUTA-16** (2026-10-20, 1.25.0) — la materia Combustible: 10 estaciones con
   el repaso al final. El center tank se enseña por MSN, como el steering en
   Tren: en los MSN más antiguos (hasta el 06183) tiene dos bombas; en los más

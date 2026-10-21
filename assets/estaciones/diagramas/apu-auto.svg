@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 264" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Apagado automático del APU</title>
+  <desc id="d">Algunas causas de apagado automático del APU, sin enfriamiento. En tierra y en vuelo: EGT sobre el límite, baja presión de aceite, alta temperatura de aceite, underspeed, falta de aceleración, pérdida de DC y reverse flow. Solo en tierra con los motores detenidos: fuego del APU, falla del ECB, overspeed sobre 107 % y falta de velocidad. La luz FAULT del MASTER SW acompaña el apagado.</desc>
+  <rect x="1" y="1" width="358" height="262" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Apagado automático del APU</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Algunas causas; el ECB apaga sin enfriamiento.</text>
+  <rect x="16" y="58" width="160" height="168" rx="8" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <rect x="184" y="58" width="160" height="168" rx="8" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="28" y="78" font-size="11" font-weight="800" fill="#C77700">En tierra y en vuelo</text>
+  <text x="196" y="78" font-size="11" font-weight="800" fill="#33424D">Solo en tierra,</text>
+  <text x="196" y="92" font-size="11" font-weight="800" fill="#33424D">motores detenidos</text>
+  <text x="28" y="102" font-size="10.5" fill="#1E2A33">• EGT sobre el límite</text>
+  <text x="28" y="119" font-size="10.5" fill="#1E2A33">• Baja presión de aceite</text>
+  <text x="28" y="136" font-size="10.5" fill="#1E2A33">• Alta temp. de aceite</text>
+  <text x="28" y="153" font-size="10.5" fill="#1E2A33">• Underspeed</text>
+  <text x="28" y="170" font-size="10.5" fill="#1E2A33">• Sin aceleración</text>
+  <text x="28" y="187" font-size="10.5" fill="#1E2A33">• Pérdida de DC</text>
+  <text x="28" y="204" font-size="10.5" fill="#1E2A33">• Reverse flow</text>
+  <text x="196" y="116" font-size="10.5" fill="#1E2A33">• Fuego del APU</text>
+  <text x="196" y="133" font-size="10.5" fill="#1E2A33">• Falla del ECB</text>
+  <text x="196" y="150" font-size="10.5" fill="#1E2A33">• Overspeed (N &gt; 107 %)</text>
+  <text x="196" y="167" font-size="10.5" fill="#1E2A33">• Sin velocidad</text>
+  <text x="180" y="248" text-anchor="middle" font-size="10.5" fill="#1E2A33">La luz FAULT del MASTER SW acompaña el apagado.</text>
+</svg>

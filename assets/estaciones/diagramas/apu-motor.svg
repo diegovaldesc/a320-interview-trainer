@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 292" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Un turbofan</title>
+  <desc id="d">Corte simplificado de un turbofan: el fan; la mayor parte del aire pasa por afuera del núcleo y da el empuje; en el núcleo, el compresor de alta (HP), la cámara de combustión y las turbinas HP y LP. N1 es la velocidad del fan y N2 la del rotor HP. La caja de accesorios, movida por el eje HP, mueve las bombas de aceite, combustible e hidráulicas, el generador, el alternador del FADEC y el starter.</desc>
+  <rect x="1" y="1" width="358" height="290" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Un turbofan</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Corte simplificado; no a escala.</text>
+  <rect x="20" y="70" width="320" height="120" rx="30" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <rect x="110" y="104" width="200" height="52" rx="10" fill="#FFFFFF" stroke="#33424D" stroke-width="1.4"/>
+  <rect x="40" y="80" width="30" height="100" rx="4" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="55" y="200" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0E5E6F">Fan</text>
+  <rect x="120" y="112" width="46" height="36" rx="3" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="143" y="134" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0E5E6F">HP</text>
+  <rect x="172" y="112" width="50" height="36" rx="3" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="197" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#C77700">Cámara</text>
+  <rect x="228" y="112" width="34" height="36" rx="3" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="245" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#C0392B">HP</text>
+  <rect x="266" y="112" width="34" height="36" rx="3" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="283" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#C0392B">LP</text>
+  <line x1="76" y1="88" x2="330" y2="88" stroke="#C77700" stroke-width="2" marker-end="url(#aC77700)"/>
+  <text x="200" y="84" text-anchor="middle" font-size="10" fill="#33424D">la mayor parte del aire: por afuera (empuje)</text>
+  <text x="143" y="172" text-anchor="middle" font-size="10" fill="#33424D">compresor</text>
+  <text x="264" y="172" text-anchor="middle" font-size="10" fill="#33424D">turbinas</text>
+  <text x="20" y="226" font-size="10.5" font-weight="700" fill="#1E2A33">N1: velocidad del fan.  N2: velocidad del rotor HP.</text>
+  <text x="20" y="246" font-size="10.5" fill="#1E2A33">Caja de accesorios (movida por el eje HP): aceite,</text>
+  <text x="20" y="262" font-size="10.5" fill="#1E2A33">combustible, bombas hidráulicas, generador,</text>
+  <text x="20" y="278" font-size="10.5" fill="#1E2A33">alternador del FADEC y starter.</text>
+</svg>

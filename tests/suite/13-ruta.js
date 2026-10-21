@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible y Aire acondicionado, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=78,"al menos las 78 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible y Aire acondicionado");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,combustible,controles,electrico,hidraulico,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado y APU, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=88,"al menos las 88 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado y APU");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,apu,combustible,controles,electrico,hidraulico,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -535,4 +535,20 @@
     eq(A.filter(function(q){return /ECON FLOW/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).length,0,"el banco de aire no habla del ECON FLOW");
     eq(A.filter(function(q){return /PACK FLOW/.test(q.q)}).length,4,"las 4 preguntas del selector PACK FLOW");
     eq(A.filter(function(q){return /FCOM|effectivity auditada/.test(q.q)}).length,0,"ningun enunciado de aire nombra el FCOM ni la effectivity");
+  });
+  T("15 RUTA-18 APU y powerplant: 10 estaciones con el repaso al final; el EPR se enseña como parametro de los IAE (CFM y PW usan N1), los motores y el APU AVAIL van por version, y ninguna estacion usa las preguntas DGAC que el manual no respalda tal como estan",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="apu"});
+    eq(P.length,10,"estaciones de APU y powerplant");eq(P[P.length-1].id,"apu-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var e=body("apu-3");ok(/\*\*IAE V2500:\*\* el \*\*EPR\*\*/.test(e)&&/\*\*CFM56 y PW1100G:\*\* el \*\*N1\*\*/.test(e),"parametro de empuje: EPR en los IAE, N1 en los CFM y PW");
+    ok(/IAE V2500-A5/.test(e)&&/CFM56-5B/.test(e)&&/PW1100G-JM/.test(e),"los tres motores");
+    var ep=RUTA.stations["apu-3"].test.find(function(t){return /THE NORMAL MODE TO SET THRUST/.test(t.question)});
+    ok(ep&&/IAE/.test(ep.explanation)&&/N1/.test(ep.explanation)&&!/CEO/.test(ep.explanation),"explicacion del EPR por motor");
+    ok(/sobre 95 %/.test(body("apu-2"))&&/99,5 %/.test(body("apu-2")),"APU AVAIL segun el avion");
+    var G=SYSTEMS[DGAC_KEY].questions;
+    var malas=G.filter(function(q){return /^MAXIMUM ALTITUDE FOR APU BLEED OPERATION|^THE APU BLEED VALVE IS AUTOMATICALLY CLOSED ABOVE|^FIRE ON GROUND OR IN FLIGHT WILL CAUSE THE APU MASTER|^DURING AN AUTOMATIC START SEQUENCE, SELECTING THE ENG MASTER/.test(q.q)});
+    eq(malas.length,4,"las 4 preguntas DGAC de APU y motores que no se usan");
+    var ids=malas.map(function(q){return qid(DGAC_KEY,q)}),usadas=[];
+    Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&ids.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC no respaldada: "+usadas.join(", "));
   });

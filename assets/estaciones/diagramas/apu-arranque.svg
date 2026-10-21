@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Arranque del APU</title>
+  <desc id="d">Dos pasos. Uno, MASTER SW en ON: power-up test del ECB, se abren la air intake flap y la fuel isolation valve, y aparece la página APU. Dos, START en ON: con la flap abierta, el starter; la ignición 1,5 segundos después; el starter y la ignición se apagan a 55 o 60 % de N; AVAIL sobre 95 % (o 99,5 % según el avión). Esperar al menos 3 segundos entre MASTER SW y START.</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Arranque del APU</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Dos botones, en orden.</text>
+  <rect x="16" y="58" width="160" height="196" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <rect x="184" y="58" width="160" height="196" rx="8" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <circle cx="32" cy="78" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="32" y="81.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="46" y="82" font-size="11" font-weight="800" fill="#0E5E6F">MASTER SW ON</text>
+  <circle cx="200" cy="78" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="200" y="81.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="214" y="82" font-size="11" font-weight="800" fill="#0E5E6F">START ON</text>
+  <text x="28" y="108" font-size="10.5" fill="#1E2A33">• Power-up test del ECB</text>
+  <text x="28" y="128" font-size="10.5" fill="#1E2A33">• Se abre la air intake</text>
+  <text x="28" y="148" font-size="10.5" fill="#1E2A33">  flap</text>
+  <text x="28" y="168" font-size="10.5" fill="#1E2A33">• Se abre la fuel</text>
+  <text x="28" y="188" font-size="10.5" fill="#1E2A33">  isolation valve</text>
+  <text x="28" y="208" font-size="10.5" fill="#1E2A33">• Página APU en el ECAM</text>
+  <text x="196" y="108" font-size="10.5" fill="#1E2A33">• Con la flap abierta:</text>
+  <text x="196" y="128" font-size="10.5" fill="#1E2A33">  starter</text>
+  <text x="196" y="148" font-size="10.5" fill="#1E2A33">• Ignición 1,5 s después</text>
+  <text x="196" y="168" font-size="10.5" fill="#1E2A33">• Starter e ignición se</text>
+  <text x="196" y="188" font-size="10.5" fill="#1E2A33">  apagan a 55 o 60 % de N</text>
+  <text x="196" y="208" font-size="10.5" font-weight="700" fill="#2E9D5B">• AVAIL: sobre 95 %</text>
+  <text x="196" y="228" font-size="10.5" fill="#2E9D5B">  (o 99,5 % según el avión)</text>
+  <text x="180" y="276" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1E2A33">Esperar al menos 3 s entre MASTER SW y START.</text>
+</svg>

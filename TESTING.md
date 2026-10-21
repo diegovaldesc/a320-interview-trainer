@@ -807,6 +807,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-18** (2026-10-21, 1.27.0) — la materia APU y powerplant: 10 estaciones
+  con el repaso al final (APU: panorama, arranque, apagado, apagado automático y
+  límites; motores: motores y FADEC, thrust levers, arranque automático, y
+  arranque manual e ignición). Los motores se enseñan por tipo (IAE V2500,
+  CFM56-5B, PW1100G en los neo): el EPR es el parámetro de empuje de los IAE, y
+  los CFM y PW usan N1; la explicación de la pregunta DGAC del EPR lo dice. El
+  APU AVAIL se enseña con sus dos valores según el avión. Ninguna estación usa 4
+  preguntas DGAC que el manual no respalda tal como están (altitud del APU bleed
+  «20 000 ft», cierre «above 23 000 ft», FAULT con fuego «on ground or in
+  flight», ENG MASTER que «closes the pack valves»). RUTA-02 espera ahora ocho
+  materias. Mutación: con la explicación del EPR para «todos los CEO», falla.
 - **REG-23** (2026-10-21, 1.26.1) — correcciones del banco de aire acondicionado.
   Tres claves DGAC pasan a la respuesta del avión real: la minimum idle sube
   sola (no «flight idle is sufficient»), la despresurización ocurre al tocar

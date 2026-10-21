@@ -333,7 +333,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 78,
+  "total": 88,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -354,6 +354,23 @@
      "air-12 · Manual pressurization",
      "air-13 · Excess cabin altitude",
      "air-repaso · Air conditioning and pneumatic review"
+    ]
+   },
+   "apu": {
+    "title": "APU and powerplant",
+    "file": "data/stations/apu.js",
+    "count": 10,
+    "stations": [
+     "apu-1 · APU at a glance",
+     "apu-2 · APU start",
+     "apu-3 · Engines and FADEC",
+     "apu-4 · APU shutdown",
+     "apu-5 · APU automatic shutdown",
+     "apu-6 · APU limits",
+     "apu-7 · Thrust levers",
+     "apu-8 · Automatic engine start",
+     "apu-9 · Manual start and ignition",
+     "apu-repaso · APU and powerplant review"
     ]
    },
    "combustible": {
@@ -465,7 +482,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 78
+   "stations": 88
   }
  }
 }

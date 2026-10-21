@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Humo en una bodega</title>
+  <desc id="d">Humo en una bodega, paso a paso: los detectores (los dos de la cavidad, o uno con el otro fallado); la luz roja SMOKE con alerta del ECAM; el sistema cierra solo las isolation valves y para el extraction fan; la tripulación presiona el DISCH pb de esa bodega; la botella descarga en unos 60 segundos y se enciende la luz DISCH (o BTL).</desc>
+  <rect x="1" y="1" width="358" height="288" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Humo en una bodega</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Qué hace el sistema y qué hace la tripulación.</text>
+  <rect x="16" y="58" width="328" height="36" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="81" font-size="11" font-weight="800" fill="#1E2A33">Detectores</text>
+  <text x="118" y="81" font-size="10.5" fill="#33424D">los dos de la cavidad, o uno con el otro fallado</text>
+  <line x1="60" y1="94" x2="60" y2="104" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <rect x="16" y="104" width="328" height="36" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="127" font-size="11" font-weight="800" fill="#1E2A33">Luz SMOKE</text>
+  <text x="118" y="127" font-size="10.5" fill="#33424D">roja, con alerta del ECAM</text>
+  <line x1="60" y1="140" x2="60" y2="150" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <rect x="16" y="150" width="328" height="36" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="173" font-size="11" font-weight="800" fill="#1E2A33">Automático</text>
+  <text x="118" y="173" font-size="10.5" fill="#33424D">cierra las isolation valves y para el fan</text>
+  <line x1="60" y1="186" x2="60" y2="196" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <rect x="16" y="196" width="328" height="36" rx="6" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="28" y="219" font-size="11" font-weight="800" fill="#0E5E6F">Tripulación</text>
+  <text x="118" y="219" font-size="10.5" fill="#33424D">presiona el DISCH pb de esa bodega</text>
+  <line x1="60" y1="232" x2="60" y2="242" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <rect x="16" y="242" width="328" height="36" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="265" font-size="11" font-weight="800" fill="#1E2A33">Botella</text>
+  <text x="118" y="265" font-size="10.5" fill="#33424D">descarga en unos 60 s; luz DISCH (o BTL)</text>
+</svg>

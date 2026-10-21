@@ -807,6 +807,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-19** (2026-10-21, 1.28.0) — la materia Protección contra fuego: 10
+  estaciones con el repaso al final (panorama, detección de motores y APU, humo
+  en aviónica y lavatorios, ENG FIRE pb y agentes, fuego del APU, tests, humo en
+  bodega, procedimiento ENG FIRE y humo y vapores, con las orales ov_engfire y
+  ov_smoke). El test del APU de más de 3 s en tierra puede apagarlo (como dice el
+  manual), y las botellas de carga van por MSN (una hasta el 11597, dos desde el
+  11629). Ninguna estación usa 4 preguntas DGAC que el manual no respalda tal
+  como están («WILL AN APU FIRE TEST SHUT DOWN THE APU? NO», la protección con el
+  APU arrancado con baterías, el test de motor con la «lower ECAM engine page» y
+  el humo de bodega con MASTER WARN y CRC). RUTA-02 espera ahora nueve materias.
+  Mutación: sin la advertencia de los 3 s en la clase de tests, falla.
 - **REG-24** (2026-10-21, 1.27.1) — correcciones del banco de APU y powerplant
   (solo explicaciones; claves iguales). La del EPR dice que es el modo normal de
   los IAE V2500, y que los CFM56 y PW1100G usan N1 (antes decía «todos los

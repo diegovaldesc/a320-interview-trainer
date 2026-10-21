@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 296" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Tests de fuego</title>
+  <desc id="d">Con energía: CRC y MASTER WARNING, alerta ENG FIRE o APU FIRE en el ECAM, el FIRE pb en rojo, SQUIB blanca y DISCH ámbar, y en el motor también la luz FIRE del ENG MASTER. Test del APU con solo baterías: SQUIB y DISCH sí, sin alertas en el ECAM y el APU FIRE pb encendido a medias. En tierra, un test del APU de más de 3 segundos puede apagarlo.</desc>
+  <rect x="1" y="1" width="358" height="294" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Tests de fuego</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Lo que se ve.</text>
+  <rect x="16" y="58" width="328" height="98" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="78" font-size="11" font-weight="800" fill="#1E2A33">Con energía</text>
+  <text x="140" y="76" font-size="10.5" fill="#33424D">CRC y MASTER WARNING</text>
+  <text x="140" y="91" font-size="10.5" fill="#33424D">Alerta ENG FIRE o APU FIRE en el ECAM</text>
+  <text x="140" y="106" font-size="10.5" fill="#33424D">FIRE pb rojo, SQUIB y DISCH</text>
+  <text x="140" y="121" font-size="10.5" fill="#33424D">Motor: también FIRE del ENG MASTER</text>
+  <rect x="16" y="162" width="328" height="98" rx="6" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="28" y="182" font-size="11" font-weight="800" fill="#1E2A33">APU, solo baterías</text>
+  <text x="140" y="180" font-size="10.5" fill="#33424D">SQUIB y DISCH: sí</text>
+  <text x="140" y="195" font-size="10.5" fill="#33424D">Sin alertas en el ECAM</text>
+  <text x="140" y="210" font-size="10.5" fill="#33424D">APU FIRE pb encendido a medias</text>
+  <text x="16" y="282" font-size="10.5" font-weight="700" fill="#C0392B">En tierra, un test del APU de más de 3 s puede apagarlo.</text>
+</svg>

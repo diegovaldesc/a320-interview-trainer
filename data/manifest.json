@@ -333,7 +333,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 88,
+  "total": 98,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -426,6 +426,23 @@
      "ele-repaso · Electrical review"
     ]
    },
+   "fuego": {
+    "title": "Fire protection",
+    "file": "data/stations/fuego.js",
+    "count": 10,
+    "stations": [
+     "fir-1 · Fire protection at a glance",
+     "fir-2 · Engine and APU fire detection",
+     "fir-3 · Smoke detection: avionics and lavatories",
+     "fir-4 · ENG FIRE pushbutton and agents",
+     "fir-5 · APU fire",
+     "fir-6 · Fire tests",
+     "fir-7 · Cargo smoke",
+     "fir-8 · Engine fire procedure",
+     "fir-9 · Smoke and fumes",
+     "fir-repaso · Fire protection review"
+    ]
+   },
    "hidraulico": {
     "title": "Hydraulic",
     "file": "data/stations/hidraulico.js",
@@ -482,7 +499,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 88
+   "stations": 98
   }
  }
 }

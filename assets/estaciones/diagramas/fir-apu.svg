@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 262" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Fuego del APU</title>
+  <desc id="d">Fuego del APU, con una sola botella. En tierra: el APU se apaga solo, la botella se descarga sola 3 segundos después del warning, y afuera se enciende la luz APU FIRE y suena una bocina. En vuelo: la tripulación suelta el APU FIRE pb y descarga el AGENT.</desc>
+  <rect x="1" y="1" width="358" height="260" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Fuego del APU</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Una sola botella.</text>
+  <rect x="16" y="58" width="328" height="92" rx="6" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="28" y="78" font-size="11" font-weight="800" fill="#C0392B">En tierra</text>
+  <text x="112" y="76" font-size="10.5" fill="#33424D">El APU se apaga solo.</text>
+  <text x="112" y="91" font-size="10.5" fill="#33424D">La botella se descarga sola</text>
+  <text x="112" y="106" font-size="10.5" fill="#33424D">3 s después del warning.</text>
+  <text x="112" y="121" font-size="10.5" fill="#33424D">Afuera: luz APU FIRE y bocina.</text>
+  <rect x="16" y="156" width="328" height="92" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="176" font-size="11" font-weight="800" fill="#1E2A33">En vuelo</text>
+  <text x="112" y="174" font-size="10.5" fill="#33424D">La tripulación suelta el</text>
+  <text x="112" y="189" font-size="10.5" fill="#33424D">APU FIRE pb y descarga el</text>
+  <text x="112" y="204" font-size="10.5" fill="#33424D">AGENT.</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 340" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Humo o vapores</title>
+  <desc id="d">Procedimiento de humo o vapores, LAND ASAP. Inmediato: máscaras, BLOWER y EXTRACT en OVRD, CAB FANS OFF, GALY &amp; CAB OFF, SIGNS ON y comunicación con la cabina. Fuente: si es obvia y se puede apagar, aislarla; si no se aísla, desviación y descenso a FL 100 o MEA-MORA. Si empeora: si el humo es la mayor amenaza, sacarlo y considerar la ELEC EMER CONFIG; si es inmanejable, aterrizaje inmediato.</desc>
+  <rect x="1" y="1" width="358" height="338" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Humo o vapores</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">LAND ASAP.</text>
+  <rect x="16" y="56" width="328" height="86" rx="6" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="28" y="76" font-size="11" font-weight="800" fill="#1E2A33">Inmediato</text>
+  <text x="112" y="74" font-size="10.5" fill="#33424D">Máscaras · BLOWER y EXTRACT en OVRD</text>
+  <text x="112" y="89" font-size="10.5" fill="#33424D">CAB FANS OFF · GALY &amp; CAB OFF</text>
+  <text x="112" y="104" font-size="10.5" fill="#33424D">SIGNS ON · comunicación con la cabina</text>
+  <rect x="16" y="148" width="328" height="86" rx="6" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="28" y="168" font-size="11" font-weight="800" fill="#0E5E6F">Fuente</text>
+  <text x="112" y="166" font-size="10.5" fill="#33424D">Obvia y se puede apagar: aislarla.</text>
+  <text x="112" y="181" font-size="10.5" fill="#33424D">Si no se aísla: desviación y</text>
+  <text x="112" y="196" font-size="10.5" fill="#33424D">descenso a FL 100 o MEA-MORA.</text>
+  <rect x="16" y="240" width="328" height="86" rx="6" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="28" y="260" font-size="11" font-weight="800" fill="#C0392B">Si empeora</text>
+  <text x="112" y="258" font-size="10.5" fill="#33424D">Mayor amenaza: sacar el humo,</text>
+  <text x="112" y="273" font-size="10.5" fill="#33424D">ELEC EMER CONFIG. Inmanejable:</text>
+  <text x="112" y="288" font-size="10.5" fill="#33424D">aterrizaje inmediato.</text>
+</svg>

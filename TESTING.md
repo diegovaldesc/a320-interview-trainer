@@ -807,6 +807,15 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-22** (2026-10-22, 1.30.0) — la materia Indicación (EIS y ECAM): 9
+  estaciones con el repaso al final (pantallas y computadores, colores y niveles
+  de alerta, fases de vuelo e inhibiciones, CLR/RCL/EMER CANC, páginas/STATUS/ALL,
+  falla de pantallas, una sola pantalla ECAM, y PFD y ND). Las pantallas van por
+  MSN (CRT hasta el 02321, LCD desde el 02572), igual que el DMC (genera la imagen
+  o se la manda a la pantalla) y el botón ALL (cada 3 s desde el 02572, cada 1 s
+  antes). Ninguna estación usa la pregunta del banco que dice «a intervalos de un
+  segundo». RUTA-02 pasa a 11 materias y 115 estaciones. Mutación: con la frase
+  del ALL cambiada a «cada segundo», RUTA-22 falla.
 - **REG-28** (2026-10-22, 1.29.3) — arreglos del banco de Antihielo («aplica» de
   Diego) y revisión elemento por elemento de la materia. Las preguntas del ELEC
   EMER CONFIG y de la ignición dicen a qué aviones aplican («En un A320neo…», «En

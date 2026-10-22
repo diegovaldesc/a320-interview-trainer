@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cuando falla una pantalla</title>
+  <desc id="d">Automático: si falla el PFD, la imagen pasa sola a la pantalla del ND; si falla la ECAM de arriba, el E/WD pasa solo a la de abajo. A mano: si falla el ND, PFD/ND XFR; si falla la ECAM de abajo, ECAM/ND XFR o mantener presionado el botón de la página hasta 3 minutos; si fallan las dos ECAM, ECAM/ND XFR pone el E/WD en un ND; si falla un DMC, selector EIS DMC en CAPT 3 o F/O 3.</desc>
+  <rect x="1" y="1" width="358" height="328" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Cuando falla una pantalla</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Automático (verde) o a mano (ámbar).</text>
+  <rect x="16" y="58" width="328" height="38" rx="6" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="26" y="81" font-size="11" font-weight="800" fill="#2E9D5B">PFD</text>
+  <text x="130" y="74" font-size="10.5" fill="#33424D">La imagen pasa sola a la</text>
+  <text x="130" y="87" font-size="10.5" fill="#33424D">pantalla del ND.</text>
+  <rect x="16" y="102" width="328" height="38" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="125" font-size="11" font-weight="800" fill="#8A5300">ND</text>
+  <text x="130" y="118" font-size="10.5" fill="#33424D">PFD/ND XFR la pasa a la</text>
+  <text x="130" y="131" font-size="10.5" fill="#33424D">pantalla del PFD.</text>
+  <rect x="16" y="146" width="328" height="38" rx="6" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="26" y="169" font-size="11" font-weight="800" fill="#2E9D5B">ECAM arriba</text>
+  <text x="130" y="162" font-size="10.5" fill="#33424D">El E/WD pasa solo a la</text>
+  <text x="130" y="175" font-size="10.5" fill="#33424D">pantalla de abajo.</text>
+  <rect x="16" y="190" width="328" height="38" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="213" font-size="11" font-weight="800" fill="#8A5300">ECAM abajo</text>
+  <text x="130" y="206" font-size="10.5" fill="#33424D">El SD: ECAM/ND XFR o mantener</text>
+  <text x="130" y="219" font-size="10.5" fill="#33424D">presionado el botón (3 min).</text>
+  <rect x="16" y="234" width="328" height="38" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="257" font-size="11" font-weight="800" fill="#8A5300">Las dos ECAM</text>
+  <text x="130" y="250" font-size="10.5" fill="#33424D">ECAM/ND XFR pone el E/WD</text>
+  <text x="130" y="263" font-size="10.5" fill="#33424D">en un ND.</text>
+  <rect x="16" y="278" width="328" height="38" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="301" font-size="11" font-weight="800" fill="#8A5300">Un DMC</text>
+  <text x="130" y="294" font-size="10.5" fill="#33424D">Selector EIS DMC en</text>
+  <text x="130" y="307" font-size="10.5" fill="#33424D">CAPT 3 o F/O 3.</text>
+</svg>

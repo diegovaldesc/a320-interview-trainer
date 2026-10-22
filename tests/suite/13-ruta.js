@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego y Antihielo, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=106,"al menos las 106 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego y Antihielo");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,controles,electrico,fuego,hidraulico,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo e Indicacion, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=115,"al menos las 115 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo e Indicacion");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -612,6 +612,21 @@
     var d=G.filter(function(q){return /^ROLL CONTROL IN NORMAL LAW IS ACHIEVED WITH/.test(q.q)});eq(d.length,1,"pregunta DGAC de roll");
     if(d[0]){eq(d[0].correct,2,"clave C");ok(/La B no es falsa/.test(d[0].expl),"explica la B");}
     var b=F.filter(function(q){return /^¿Qué bank angle máximo puede comandarse/.test(q.q)})[0];ok(b&&/20°/.test(b.expl)&&/12226/.test(b.expl),"bank maximo: high speed por MSN");
+  });
+  T("15 RUTA-22 Indicacion: 9 estaciones con el repaso al final; pantallas, DMC y boton ALL por MSN, las fases con sus inhibiciones, el ND por defecto en ROSE NAV 80 NM, y ninguna estacion usa la pregunta del ALL cada un segundo",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="indicacion"});
+    eq(P.length,9,"estaciones de Indicacion");eq(P[P.length-1].id,"ind-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var b1=body("ind-1"),b3=body("ind-3"),b5=body("ind-5"),b8=body("ind-8");
+    ok((b1.indexOf("**MSN 01143 a 02321:** de tubo (CRT)")>=0)&&(b1.indexOf("**Desde el MSN 02572:** de cristal líquido (LCD)")>=0),"pantallas CRT o LCD por MSN");
+    ok((b1.indexOf("**la pantalla genera la imagen**")>=0),"DMC por MSN");
+    ok((b3.indexOf("**T.O INHIBIT:** fases 3, 4 y 5")>=0)&&(b3.indexOf("**LDG INHIBIT:** fases 7 y 8")>=0),"inhibiciones por fase");
+    ok((b5.indexOf("cada **3 segundos**")>=0),"ALL cada 3 s desde el 02572");
+    ok((b8.indexOf("**ROSE NAV, 80 NM**")>=0),"ND por defecto");
+    var I=SYSTEMS.indicating.questions,mala=I.filter(function(q){return /^¿Qué hace mantener presionado ALL/.test(q.q)}).map(function(q){return qid("indicating",q)});
+    eq(mala.length,1,"la pregunta del ALL");
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&mala.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa la pregunta del ALL cada un segundo: "+usadas.join(", "));
   });
   T("15 REG-28 banco de Antihielo: las preguntas que valen para un grupo dicen cual, las explicaciones no inventan razones ni nombran el FCOM, la de la lluvia no dice que el bleed calienta las ventanas, y la oral ov_icing distingue engine y wing anti-ice",function(){
     var I=SYSTEMS.ice_rain.questions,G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="Ice and rain protection"});

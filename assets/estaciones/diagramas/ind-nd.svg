@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 296" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Modos del ND</title>
+  <desc id="d">Los cinco modos del ND: ROSE LS, ROSE VOR, ROSE NAV y ARC muestran weather radar y bearing pointers; PLAN no muestra ninguno de los dos y presenta el plan de vuelo orientado al norte verdadero. Si fallan los datos de modo o range, el ND queda en ROSE NAV, 80 NM.</desc>
+  <rect x="1" y="1" width="358" height="294" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Modos del ND</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Qué se ve en cada uno.</text>
+  <text x="130" y="70" text-anchor="middle" font-size="10.5" font-weight="800" fill="#33424D">Weather radar</text>
+  <text x="250" y="70" text-anchor="middle" font-size="10.5" font-weight="800" fill="#33424D">Bearing pointers</text>
+  <rect x="16" y="80" width="328" height="28" rx="5" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="26" y="98" font-size="11" font-weight="800" fill="#1E2A33">ROSE LS</text>
+  <text x="130" y="98" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <text x="250" y="98" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <rect x="16" y="112" width="328" height="28" rx="5" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="26" y="130" font-size="11" font-weight="800" fill="#1E2A33">ROSE VOR</text>
+  <text x="130" y="130" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <text x="250" y="130" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <rect x="16" y="144" width="328" height="28" rx="5" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="26" y="162" font-size="11" font-weight="800" fill="#1E2A33">ROSE NAV</text>
+  <text x="130" y="162" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <text x="250" y="162" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <rect x="16" y="176" width="328" height="28" rx="5" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="26" y="194" font-size="11" font-weight="800" fill="#1E2A33">ARC</text>
+  <text x="130" y="194" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <text x="250" y="194" text-anchor="middle" font-size="11" font-weight="800" fill="#2E9D5B">sí</text>
+  <rect x="16" y="208" width="328" height="28" rx="5" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="26" y="226" font-size="11" font-weight="800" fill="#5B6B78">PLAN</text>
+  <text x="130" y="226" text-anchor="middle" font-size="11" font-weight="800" fill="#C0392B">no</text>
+  <text x="250" y="226" text-anchor="middle" font-size="11" font-weight="800" fill="#C0392B">no</text>
+  <text x="16" y="260" font-size="10.5" fill="#33424D">PLAN: el plan de vuelo, orientado al norte verdadero.</text>
+  <text x="16" y="280" font-size="10.5" font-weight="700" fill="#0E5E6F">Si fallan modo o range: ROSE NAV, 80 NM.</text>
+</svg>

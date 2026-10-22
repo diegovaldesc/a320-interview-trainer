@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 344" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Las diez fases de vuelo del FWC</title>
+  <desc id="d">Línea de tiempo con las diez fases del FWC y el perfil del vuelo. Cada fase empieza con: 1 energía eléctrica, 2 primer motor en marcha, 3 primer motor en potencia de despegue, 4 80 kt, 5 liftoff, 6 1 500 ft, 7 800 ft, 8 touchdown, 9 80 kt y 10 segundo motor apagado; cinco minutos después vuelve a la 1. T.O INHIBIT cubre las fases 3, 4 y 5, y LDG INHIBIT las 7 y 8.</desc>
+  <rect x="1" y="1" width="358" height="342" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Las diez fases de vuelo del FWC</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">T.O INHIBIT y LDG INHIBIT.</text>
+  <rect x="81.6" y="70" width="98.4" height="124" rx="4" fill="#F6E3F6" stroke="#B04CB0" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <rect x="212.8" y="70" width="65.6" height="124" rx="4" fill="#F6E3F6" stroke="#B04CB0" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <text x="130.8" y="84" text-anchor="middle" font-size="10.5" font-weight="800" fill="#8E2F8E">T.O INHIBIT</text>
+  <text x="245.6" y="84" text-anchor="middle" font-size="10.5" font-weight="800" fill="#8E2F8E">LDG</text>
+  <text x="245.6" y="97" text-anchor="middle" font-size="10.5" font-weight="800" fill="#8E2F8E">INHIBIT</text>
+  <polyline points="16,170 147.2,170 180,118 212.8,118 245.6,170 344,170" fill="none" stroke="#0E5E6F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <rect x="16" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="32.4" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">1</text>
+  <rect x="48.8" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="65.2" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">2</text>
+  <rect x="81.6" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="98" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">3</text>
+  <rect x="114.4" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="130.8" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">4</text>
+  <rect x="147.2" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="163.6" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">5</text>
+  <rect x="180" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="196.4" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">6</text>
+  <rect x="212.8" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="229.2" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">7</text>
+  <rect x="245.6" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="262" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">8</text>
+  <rect x="278.4" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="294.8" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">9</text>
+  <rect x="311.2" y="196" width="32.8" height="22" rx="0" fill="#FFFFFF" stroke="#8C99A3" stroke-width="1"/>
+  <text x="327.6" y="211" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">10</text>
+  <text x="16" y="246" font-size="10.5" fill="#33424D">1. Energía</text>
+  <text x="16" y="261" font-size="10.5" fill="#33424D">2. 1er motor</text>
+  <text x="16" y="276" font-size="10.5" fill="#33424D">3. Potencia TO</text>
+  <text x="16" y="291" font-size="10.5" fill="#33424D">4. 80 kt</text>
+  <text x="16" y="306" font-size="10.5" fill="#33424D">5. Liftoff</text>
+  <text x="188" y="246" font-size="10.5" fill="#33424D">6. 1 500 ft</text>
+  <text x="188" y="261" font-size="10.5" fill="#33424D">7. 800 ft</text>
+  <text x="188" y="276" font-size="10.5" fill="#33424D">8. Touchdown</text>
+  <text x="188" y="291" font-size="10.5" fill="#33424D">9. 80 kt</text>
+  <text x="188" y="306" font-size="10.5" fill="#33424D">10. 2º motor OFF</text>
+  <text x="16" y="330" font-size="10.5" fill="#5B6B78">5 minutos después de la fase 10, vuelve a la 1.</text>
+</svg>

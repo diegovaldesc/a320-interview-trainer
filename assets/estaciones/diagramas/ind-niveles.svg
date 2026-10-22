@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 318" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Niveles de alerta del ECAM</title>
+  <desc id="d">Nivel 3: warning roja, CRC o voz, MASTER WARN roja destellando. Nivel 2: caution ámbar, single chime, MASTER CAUT ámbar fija. Nivel 1: caution ámbar, sin sonido, solo el mensaje. Advisory: un parámetro fuera de lo normal, sin sonido, aparece la página y el valor pulsa. Memo: recordatorio sin sonido, abajo en el E/WD. Prioridad: nivel 3 sobre 2 y 2 sobre 1.</desc>
+  <rect x="1" y="1" width="358" height="316" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Niveles de alerta del ECAM</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Qué suena, qué se enciende y qué se ve.</text>
+  <rect x="16" y="58" width="328" height="40" rx="6" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="26" y="75" font-size="11" font-weight="800" fill="#C0392B">Nivel 3</text>
+  <text x="26" y="89" font-size="10" fill="#33424D">Warning roja</text>
+  <text x="112" y="82" font-size="10.5" fill="#1E2A33">CRC o voz</text>
+  <text x="196" y="82" font-size="10.5" fill="#1E2A33">MASTER WARN roja, destella</text>
+  <rect x="16" y="104" width="328" height="40" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="121" font-size="11" font-weight="800" fill="#C77700">Nivel 2</text>
+  <text x="26" y="135" font-size="10" fill="#33424D">Caution ámbar</text>
+  <text x="112" y="128" font-size="10.5" fill="#1E2A33">Single chime</text>
+  <text x="196" y="128" font-size="10.5" fill="#1E2A33">MASTER CAUT ámbar, fija</text>
+  <rect x="16" y="150" width="328" height="40" rx="6" fill="#FFFFFF" stroke="#C77700" stroke-width="1.4"/>
+  <text x="26" y="167" font-size="11" font-weight="800" fill="#C77700">Nivel 1</text>
+  <text x="26" y="181" font-size="10" fill="#33424D">Caution ámbar</text>
+  <text x="112" y="174" font-size="10.5" fill="#1E2A33">Sin sonido</text>
+  <text x="196" y="174" font-size="10.5" fill="#1E2A33">Solo el mensaje</text>
+  <rect x="16" y="196" width="328" height="40" rx="6" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="26" y="213" font-size="11" font-weight="800" fill="#2E9D5B">Advisory</text>
+  <text x="26" y="227" font-size="10" fill="#33424D">Parámetro fuera</text>
+  <text x="112" y="220" font-size="10.5" fill="#1E2A33">Sin sonido</text>
+  <text x="196" y="220" font-size="10.5" fill="#1E2A33">Página; el valor pulsa</text>
+  <rect x="16" y="242" width="328" height="40" rx="6" fill="#FFFFFF" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="26" y="259" font-size="11" font-weight="800" fill="#2E9D5B">Memo</text>
+  <text x="26" y="273" font-size="10" fill="#33424D">Recordatorio</text>
+  <text x="112" y="266" font-size="10.5" fill="#1E2A33">Sin sonido</text>
+  <text x="196" y="266" font-size="10.5" fill="#1E2A33">Abajo en el E/WD</text>
+  <text x="16" y="304" font-size="10.5" font-weight="700" fill="#0E5E6F">Prioridad: nivel 3 sobre 2, y 2 sobre 1.</text>
+</svg>

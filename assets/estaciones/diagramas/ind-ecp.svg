@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 340" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Panel de control del ECAM</title>
+  <desc id="d">El panel de control del ECAM con los botones de las páginas de sistemas y los botones CLR (avanza), RCL (recupera lo borrado; más de 3 s, también lo de EMER CANC), STS (página STATUS; vacía, NORMAL 3 s), ALL (recorre las páginas), EMER CANC (silencia una warning o cancela una caution) y T.O CONFIG (simula potencia de despegue). Si falla el panel, CLR, RCL, STS, EMER CANC y ALL siguen funcionando.</desc>
+  <rect x="1" y="1" width="358" height="338" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Panel de control del ECAM</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Qué hace cada botón.</text>
+  <rect x="16" y="56" width="328" height="70" rx="8" fill="#3B4A55" stroke="#2A353D" stroke-width="1.4"/>
+  <rect x="22" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="46" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">ENG</text>
+  <rect x="75" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="99" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">BLEED</text>
+  <rect x="128" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="152" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">PRESS</text>
+  <rect x="181" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="205" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">ELEC</text>
+  <rect x="234" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="258" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">HYD</text>
+  <rect x="287" y="64" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="311" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">FUEL</text>
+  <rect x="22" y="94" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="46" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">APU</text>
+  <rect x="75" y="94" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="99" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">COND</text>
+  <rect x="128" y="94" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="152" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">DOOR</text>
+  <rect x="181" y="94" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="205" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">WHEEL</text>
+  <rect x="234" y="94" width="48" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="258" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">F/CTL</text>
+  <text x="302" y="110" text-anchor="middle" font-size="10" fill="#C9D3DB">páginas</text>
+  <rect x="16" y="131" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="146" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">CLR</text>
+  <text x="102" y="146" font-size="10.5" fill="#33424D">avanza; encendido si hay algo que leer</text>
+  <rect x="16" y="157" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">RCL</text>
+  <text x="102" y="172" font-size="10.5" fill="#33424D">recupera lo borrado (&gt;3 s: EMER CANC)</text>
+  <rect x="16" y="183" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="198" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">STS</text>
+  <text x="102" y="198" font-size="10.5" fill="#33424D">página STATUS (vacía: NORMAL 3 s)</text>
+  <rect x="16" y="209" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="224" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">ALL</text>
+  <text x="102" y="224" font-size="10.5" fill="#33424D">recorre todas las páginas</text>
+  <rect x="16" y="235" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="250" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">EMER CANC</text>
+  <text x="102" y="250" font-size="10.5" fill="#33424D">silencia warning / cancela caution</text>
+  <rect x="16" y="261" width="78" height="21" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="55" y="276" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">T.O CONFIG</text>
+  <text x="102" y="276" font-size="10.5" fill="#33424D">simula potencia de despegue</text>
+  <text x="16" y="312" font-size="10.5" font-weight="700" fill="#0E5E6F">Si falla el panel: CLR, RCL, STS, EMER CANC y ALL</text>
+  <text x="16" y="326" font-size="10.5" font-weight="700" fill="#0E5E6F">siguen funcionando (cableados directo).</text>
+</svg>

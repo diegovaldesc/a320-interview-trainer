@@ -334,7 +334,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 106,
+  "total": 115,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -473,6 +473,22 @@
      "hid-repaso · Hydraulic review"
     ]
    },
+   "indicacion": {
+    "title": "Indicating systems",
+    "file": "data/stations/indicacion.js",
+    "count": 9,
+    "stations": [
+     "ind-1 · Six screens and their computers",
+     "ind-2 · ECAM colors and alert levels",
+     "ind-3 · Flight phases and inhibition",
+     "ind-4 · CLR, RCL and EMER CANC",
+     "ind-5 · System pages, STATUS and ALL",
+     "ind-6 · When a display fails",
+     "ind-7 · Only one ECAM screen",
+     "ind-8 · PFD and ND essentials",
+     "ind-repaso · Indicating systems review"
+    ]
+   },
    "performance": {
     "title": "Performance",
     "file": "data/stations/performance.js",
@@ -515,7 +531,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 106
+   "stations": 115
   }
  }
 }

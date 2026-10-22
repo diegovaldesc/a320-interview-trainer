@@ -613,7 +613,20 @@
     if(d[0]){eq(d[0].correct,2,"clave C");ok(/La B no es falsa/.test(d[0].expl),"explica la B");}
     var b=F.filter(function(q){return /^¿Qué bank angle máximo puede comandarse/.test(q.q)})[0];ok(b&&/20°/.test(b.expl)&&/12226/.test(b.expl),"bank maximo: high speed por MSN");
   });
-  T("15 RUTA-22 Indicacion: 9 estaciones con el repaso al final; pantallas, DMC y boton ALL por MSN, las fases con sus inhibiciones, el ND por defecto en ROSE NAV 80 NM, y ninguna estacion usa la pregunta del ALL cada un segundo",function(){
+  T("15 REG-29 banco de Indicacion: el ALL y el DMC por MSN, el EIS (no el EFIS) tiene las seis pantallas, la inhibicion abarca warnings y cautions, y ningun enunciado ni explicacion nombra el FCOM",function(){
+    var I=SYSTEMS.indicating.questions,G=SYSTEMS[DGAC_KEY].questions;
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    ok(one(I,/^¿Cuál es la función principal de los tres Display Management/).expl.indexOf("02572")>=0,"DMC por MSN");
+    ok(one(G,/^THE THREE DISPLAY MANAGEMENT COMPUTERS \(DMCS\) ACQUIRE:/).expl.indexOf("02572")>=0,"DGAC DMC por MSN");
+    ok(one(G,/^THE THREE DISPLAY MANAGEMENT COMPUTERS \(DMCS\) ACQUIRE AND PROCESS/).expl.indexOf("02572")>=0,"DGAC DMC de Autoflight por MSN");
+    ok(one(G,/^THE A-320 ELECTRONIC FLIGHT INSTRUMENT SYSTEM/).expl.indexOf("EIS completo")>=0,"seis pantallas del EIS");
+    ok(one(G,/^A "TO INHIBIT" OR "LDG INHIBIT"/).expl.indexOf("warnings y cautions")>=0,"inhibicion: warnings y cautions");
+    ok(one(I,/^Si el ND pierde datos válidos de mode\/range, ¿qué presentación de respaldo usa\?$/),"enunciado del ND sin el manual");
+    var ind=I.concat(G.filter(function(q){return q.bank_section==="Indicating and recording"}));
+    var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
+    eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
+  });
+  T("15 RUTA-22 Indicacion: 9 estaciones con el repaso al final; pantallas, DMC y boton ALL por MSN, las fases con sus inhibiciones, el ND por defecto en ROSE NAV 80 NM, y la pregunta del ALL dice el intervalo por MSN",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="indicacion"});
     eq(P.length,9,"estaciones de Indicacion");eq(P[P.length-1].id,"ind-repaso","el repaso va al final");
     function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
@@ -623,10 +636,8 @@
     ok((b3.indexOf("**T.O INHIBIT:** fases 3, 4 y 5")>=0)&&(b3.indexOf("**LDG INHIBIT:** fases 7 y 8")>=0),"inhibiciones por fase");
     ok((b5.indexOf("cada **3 segundos**")>=0),"ALL cada 3 s desde el 02572");
     ok((b8.indexOf("**ROSE NAV, 80 NM**")>=0),"ND por defecto");
-    var I=SYSTEMS.indicating.questions,mala=I.filter(function(q){return /^¿Qué hace mantener presionado ALL/.test(q.q)}).map(function(q){return qid("indicating",q)});
-    eq(mala.length,1,"la pregunta del ALL");
-    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&mala.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
-    eq(usadas.length,0,"una estacion usa la pregunta del ALL cada un segundo: "+usadas.join(", "));
+    var all=SYSTEMS.indicating.questions.filter(function(q){return /^¿Qué hace mantener presionado ALL/.test(q.q)})[0];
+    ok(all&&all.options[all.correct].indexOf("cada 3 s desde el MSN 02572")>=0,"la pregunta del ALL dice el intervalo por MSN");
   });
   T("15 REG-28 banco de Antihielo: las preguntas que valen para un grupo dicen cual, las explicaciones no inventan razones ni nombran el FCOM, la de la lluvia no dice que el bleed calienta las ventanas, y la oral ov_icing distingue engine y wing anti-ice",function(){
     var I=SYSTEMS.ice_rain.questions,G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="Ice and rain protection"});

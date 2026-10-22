@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-29** (2026-10-22, 1.30.1) — arreglos del banco de Indicación («aplica»
+  de Diego): la respuesta del botón ALL dice «cada 3 s desde el MSN 02572» (cada
+  1 s solo hasta el 02321); las explicaciones del DMC (también la DGAC de la
+  sección Autoflight) aclaran que genera la imagen solo hasta el MSN 02321; las
+  seis pantallas son del EIS (no del EFIS); las pantallas son CRT o LCD según el
+  MSN; la inhibición abarca la mayoría de las warnings y cautions; el enunciado
+  del ND ya no nombra el FCOM (QID_RENAMES 64); y se quitaron las menciones del
+  FCOM y las razones sin respaldo de otras cuatro explicaciones. RUTA-22 ahora
+  comprueba la respuesta del ALL. Mutación: con la explicación antigua de la
+  inhibición, REG-29 falla.
 - **RUTA-22** (2026-10-22, 1.30.0) — la materia Indicación (EIS y ECAM): 9
   estaciones con el repaso al final (pantallas y computadores, colores y niveles
   de alerta, fases de vuelo e inhibiciones, CLR/RCL/EMER CANC, páginas/STATUS/ALL,

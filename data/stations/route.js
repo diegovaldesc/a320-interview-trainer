@@ -107,5 +107,5 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":103,"id":"air-repaso","subject":"aire","title":"Air conditioning and pneumatic review","kind":"review","level":3,"minutes":6,"zone":"descenso","unlockAfter":"ful-repaso"},
 {"n":104,"id":"apu-repaso","subject":"apu","title":"APU and powerplant review","kind":"review","level":3,"minutes":5,"zone":"descenso","unlockAfter":"air-repaso"},
 {"n":105,"id":"fir-repaso","subject":"fuego","title":"Fire protection review","kind":"review","level":3,"minutes":6,"zone":"descenso","unlockAfter":"apu-repaso"},
-{"n":106,"id":"ice-repaso","subject":"antihielo","title":"Ice and rain protection review","kind":"review","level":3,"minutes":6,"zone":"descenso","unlockAfter":"fir-repaso"}
+{"n":106,"id":"ice-repaso","subject":"antihielo","title":"Ice and rain protection review","kind":"review","level":3,"minutes":7,"zone":"descenso","unlockAfter":"fir-repaso"}
 ],"plane":"assets/estaciones/imagenes/mapa-avion.webp"};

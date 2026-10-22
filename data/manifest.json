@@ -153,11 +153,11 @@
  "oral": {
   "aggregator": "data/oral/index.js",
   "global": "ORAL_VOICE_BANK",
-  "total": 53,
+  "total": 54,
   "groups": {
    "core": {
     "file": "data/oral/core.js",
-    "count": 23,
+    "count": 24,
     "ids": [
      "ov_microburst",
      "ov_windshear",
@@ -179,6 +179,7 @@
      "ov_elec_emer",
      "ov_hyd_arch",
      "ov_elec_arch",
+     "ov_icing",
      "ov_v1_reject",
      "ov_v1_continue",
      "ov_pan_mayday"

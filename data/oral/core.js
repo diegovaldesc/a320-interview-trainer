@@ -1,5 +1,5 @@
 /* Entrevista oral · Preguntas base de la entrevista: meteorología, CRM, pasajeros, sistemas, emergencias y V1.
-   23 preguntas (también las usa Need to know). Cada una trae su respuesta de referencia, su
+   24 preguntas (también las usa Need to know). Cada una trae su respuesta de referencia, su
    rúbrica (concepts o steps, criticalErrors) y sus fuentes internas (refs), que nunca se muestran.
    data/oral/index.js las reúne en ORAL_VOICE_BANK. */
 window.ORAL_PARTS=window.ORAL_PARTS||{};
@@ -233,6 +233,24 @@ window.ORAL_PARTS["core"]=[
   {label:"STAT INV: respaldo final (BAT 1 a AC) si tampoco hay EMER GEN",weight:1,accepted:["stat inv","inversor estatico","static inverter","invierte dc a ac","dc a ac"]}
  ],
  criticalErrors:[{accepted:["generadores en paralelo","conectan en paralelo","conectados en paralelo","trabajan en paralelo","funcionan en paralelo"],penalty:3,feedback:"Los generadores nunca se conectan en paralelo: cada barra recibe energía de una sola fuente a la vez."},{relation:"emerbus",wrong:true,penalty:3,feedback:"El EMER GEN alimenta solo lo esencial: el AC ESS BUS y, por el ESS TR, el DC ESS BUS; no el AC BUS 1 ni el AC BUS 2."},{accepted:["apu gen no puede reemplazar","apu no puede reemplazar","apu gen no reemplaza","apu no reemplaza"],penalty:3,feedback:"El APU GEN puede reemplazar a uno o a los dos generadores de motor."},{relation:"emer",wrong:true,penalty:3,feedback:"El EMER GEN lo mueve el circuito hidráulico azul (con el RAT)."},{relation:"conv",wrong:true,penalty:2,feedback:"Los TR convierten AC en DC; el STAT INV convierte DC de las baterías en AC."},{accepted:["las baterias solo se conectan si fallan los generadores","las baterias no hacen nada mientras haya generadores"],penalty:3,feedback:"Las baterías quedan conectadas permanentemente a su HOT BUS incluso con todo apagado; no es algo que se active solo cuando fallan los generadores."}]},
+
+{id:"ov_icing",question:"¿Cuándo enciendes el engine anti-ice y cuándo el wing anti-ice en el A320?",
+ reference:"Hay condiciones de engelamiento con 10 °C o menos (la OAT en tierra y después del despegue, la TAT en vuelo) y humedad visible, como nubes, lluvia o nieve. El engine anti-ice lo enciendo cuando hay o se esperan esas condiciones, también en tierra, sin esperar a ver hielo; la excepción es el ascenso y el crucero con SAT bajo -40 °C, y en el descenso lo enciendo igual aunque la SAT esté bajo -40 °C. El wing anti-ice lo puedo encender para prevenir hielo en el borde de ataque, y lo debo encender si hay evidencia de hielo: en el indicador visual, en los wipers o con la alerta SEVERE ICE DETECTED.",
+ concepts:[
+  {label:"Condiciones de engelamiento: 10 °C o menos y humedad visible",weight:2,required:true,accepted:["10 grados","diez grados","10 c","humedad visible","icing conditions","condiciones de engelamiento","engelamiento"]},
+  {label:"Engine anti-ice cuando hay o se esperan, sin esperar a ver hielo",weight:2,required:true,accepted:["sin esperar","antes de ver hielo","no esperar","se esperan","anticipadas","se anticipan","antes de que haya hielo"]},
+  {label:"Excepción: ascenso y crucero con SAT bajo -40 °C (en el descenso, ON igual)",weight:1,accepted:["40 grados","menos 40","bajo 40","sat","cuarenta"]},
+  {label:"Wing anti-ice: puede para prevenir y debe con evidencia de hielo",weight:2,accepted:["evidencia de hielo","indicador visual","wipers","limpiaparabrisas","severe ice","hielo acumulado","acumulacion de hielo","prevenir"]}
+ ],
+ refs:[
+  {src:"FCOM 15 SEP 25 · LIM-ICE_RAIN Definition of icing conditions (PDF 9947)",cite:"Icing conditions exist when the OAT (on ground or after takeoff) or the TAT (in flight) is at or"},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-09 Taxi (PDF 9016)",cite:"Turn on engine anti-ice during all ground operations, when icing conditions exist or are anticipated."},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-09 Taxi (PDF 9016)",cite:"flight crew must turn on the engine anti-ice and should not wait until seeing ice"},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-13 After takeoff (PDF 9073)",cite:"Icing Conditions) exist or are anticipated, except during climb and cruise when the SAT is below"},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-16 Descent preparation (PDF 9102)",cite:"Engine anti-ice must be set to ON before and during descent, even If the SAT is below -40 °C"},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-13 After takeoff (PDF 9074)",cite:"The flight crew may turn on the wing anti-ice to prevent ice accretion on the wing leading edge"},
+  {src:"FCOM 15 SEP 25 · PRO-NOR-SOP-13 After takeoff (PDF 9074)",cite:"The flight crew must turn on the wing anti-ice if there is evidence of ice accretion, such as ice on"}
+ ]},
 
 {id:"ov_v1_reject",question:"Durante el despegue, antes de V1, se presenta una falla o anomalía. ¿Qué consideras para decidir si rechazas el despegue?",
  reference:"Depende de la velocidad. Por debajo de 100 kt la decisión queda a criterio del comandante, y conviene considerar seriamente rechazar ante cualquier alerta ECAM. Entre 100 kt y V1 hay que estar go-minded: muy pocas condiciones justifican rechazar — básicamente fuego o daño severo, pérdida súbita de empuje de un motor, una indicación inequívoca de que el avión no volará de forma segura, o cualquier alerta ECAM. El llamado de V1 tiene precedencia sobre cualquier otro llamado, y la decisión de rechazar debe tomarse antes de V1: el comandante mantiene la mano en las palancas de empuje hasta V1, sea o no el piloto que está volando.",

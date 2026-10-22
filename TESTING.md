@@ -807,6 +807,18 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-28** (2026-10-22, 1.29.3) — arreglos del banco de Antihielo («aplica» de
+  Diego) y revisión elemento por elemento de la materia. Las preguntas del ELEC
+  EMER CONFIG y de la ignición dicen a qué aviones aplican («En un A320neo…», «En
+  un A320 con motores IAE…»; QID_RENAMES 63). Las DGAC del engine anti-ice sin
+  energía, del encendido continuo y de la potencia de las ventanas aclaran por
+  motor o por nombre (HIGH = potencia normal de vuelo); la del PROBE/WINDOW HEAT ya
+  no dice que no existe AUTO; la de la lluvia ya no dice que el bleed calienta las
+  ventanas. Se quitaron razones que no están en las fuentes (flujo de aire que
+  enfría, riesgo térmico, prioridades) y la mención del FCOM. Oral nueva ov_icing
+  (cuándo encender el engine y el wing anti-ice), en el repaso de la materia: una
+  respuesta correcta saca 8 o más y «solo cuando veo hielo» 4 o menos. Mutación:
+  con la explicación antigua de la lluvia, REG-28 falla.
 - **RUTA-21** (2026-10-22, 1.29.2) — pedido de Diego: la estación ctl-8 tiene
   una ficha «Releasing the sidestick, law by law» con su diagrama ctl-soltar.svg:
   en normal law el avión mantiene el bank hasta 33° y vuelve a 33° desde más

@@ -11,7 +11,7 @@
   function visible(el){return !!el&&el.getClientRects().length>0}
   T("11 Need to know: 31 preguntas base que existen, con idea corta, respuesta en parrafos o listas y sin citas visibles",function(){
     eq(ntkDefaults().length,31,"preguntas base");
-    eq(ORAL_VOICE_BANK.length,53,"preguntas orales");
+    eq(ORAL_VOICE_BANK.length,54,"preguntas orales");
     ntkDefaults().forEach(function(r){
       var it=ntkResolve(r);ok(it&&it.kind==="oral",r+": no resuelve a una pregunta oral");
       var q=it.q;

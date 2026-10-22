@@ -613,6 +613,24 @@
     if(d[0]){eq(d[0].correct,2,"clave C");ok(/La B no es falsa/.test(d[0].expl),"explica la B");}
     var b=F.filter(function(q){return /^¿Qué bank angle máximo puede comandarse/.test(q.q)})[0];ok(b&&/20°/.test(b.expl)&&/12226/.test(b.expl),"bank maximo: high speed por MSN");
   });
+  T("15 REG-28 banco de Antihielo: las preguntas que valen para un grupo dicen cual, las explicaciones no inventan razones ni nombran el FCOM, la de la lluvia no dice que el bleed calienta las ventanas, y la oral ov_icing distingue engine y wing anti-ice",function(){
+    var I=SYSTEMS.ice_rain.questions,G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="Ice and rain protection"});
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    var e=one(I,/^En un A320neo, en ELEC EMER CONFIG/);ok(e.expl.indexOf("IAE o CFM")>=0,"ELEC EMER: explica los IAE o CFM");
+    var g=one(I,/^En un A320 con motores IAE, ¿qué ocurre con la ignición/);ok(g.expl.indexOf("A320neo")>=0,"ignicion: explica los otros aviones");
+    ok(one(G,/^IN THE EVENT OF AN ELECTRICAL POWER LOSS:/).expl.indexOf("A320neo")>=0,"DGAC sin energia: aclara el A320neo");
+    ok(one(G,/^WITH THE LOSS OF ELECTRICAL POWER THE ENGINE ANTI-ICE VALVES/).expl.indexOf("A320neo")>=0,"DGAC valvulas sin energia: aclara el A320neo");
+    ok(one(G,/^WHAT HAPPENS WHEN EITHER ENGINE ANTI-ICE IS OPEN\?/).expl.indexOf("motores IAE")>=0,"DGAC encendido continuo: IAE");
+    ok(one(G,/^WITH REFERENCE TO THE PROBE\/WINDOW HEAT PUSHBUTTON/).expl.indexOf("sí tiene AUTO")>=0,"DGAC: el pushbutton tiene AUTO");
+    ok(one(G,/^RAIN PROTECTION IS PROVIDED BY/).expl.indexOf("se calientan con electricidad")>=0,"lluvia: las ventanas son electricas");
+    var mal=I.concat(G).filter(function(q){return /FCOM|flujo de aire|enfriamiento|riesgo térmico|priorizando|ingestión de hielo|evitando una descarga|carga aerodinámica/.test(q.expl)}).map(function(q){return q.q.slice(0,40)});
+    eq(mal.length,0,"explicaciones con razones sin respaldo o que nombran el FCOM: "+mal.join(" | "));
+    var o=ORAL_VOICE_BANK.filter(function(q){return q.id==="ov_icing"})[0];ok(o,"existe ov_icing");if(!o)return;
+    var bien=evaluateLocally(o,"Hay condiciones de engelamiento con 10 grados o menos y humedad visible. El engine anti-ice lo enciendo cuando se esperan esas condiciones, sin esperar a ver hielo, salvo en ascenso y crucero con SAT bajo menos 40. El wing anti-ice lo enciendo si hay evidencia de hielo en el indicador visual o en los wipers.");
+    ok(bien.score>=8,"respuesta correcta: puntaje "+bien.score);
+    var malr=evaluateLocally(o,"Lo enciendo solo cuando veo hielo en el parabrisas.");
+    ok(malr.score<=4,"respuesta incorrecta: puntaje "+malr.score);
+  });
   T("15 RUTA-21 ctl-8 explica que hace el avion con el bank al soltar el sidestick en cada ley: normal mantiene hasta 33 y vuelve a 33, high speed vuelve a 0, alternate y direct no corrigen el bank, abnormal attitude con roll directo",function(){
     var st=RUTA.stations["ctl-8"];ok(st,"existe ctl-8");if(!st)return;
     var c=st.cards.filter(function(x){return x.title==="Releasing the sidestick, law by law"})[0];ok(c,"ficha de soltar el sidestick");if(!c)return;
@@ -634,9 +652,9 @@
     ok((body("ice-6").indexOf("**230 kt**")>=0),"wipers hasta 230 kt");
     ok((body("ice-5").indexOf("**TAT no se calientan**")>=0),"TAT sin calefaccion en tierra");
     var I=SYSTEMS.ice_rain.questions,G=SYSTEMS[DGAC_KEY].questions;
-    var malas=I.filter(function(q){return /^En ELEC EMER CONFIG, ¿se pierde|^¿Qué ocurre con la ignición cuando la válvula de engine anti-ice/.test(q.q)}).map(function(q){return qid("ice_rain",q)})
-      .concat(G.filter(function(q){return /^IN THE EVENT OF AN ELECTRICAL POWER LOSS:/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)}));
-    eq(malas.length,3,"las 3 preguntas de un solo grupo de aviones");
+    eq(I.filter(function(q){return /^En un A320neo, en ELEC EMER CONFIG|^En un A320 con motores IAE, ¿qué ocurre con la ignición/.test(q.q)}).length,2,"las preguntas de un solo grupo dicen a que aviones aplican");
+    var malas=G.filter(function(q){return /^IN THE EVENT OF AN ELECTRICAL POWER LOSS:/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)});
+    eq(malas.length,1,"la pregunta DGAC repetida del engine anti-ice sin energia");
     var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&malas.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
     eq(usadas.length,0,"una estacion usa una pregunta que vale solo para un grupo: "+usadas.join(", "));
   });

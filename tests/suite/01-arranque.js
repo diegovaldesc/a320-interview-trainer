@@ -8,7 +8,7 @@
     eq(totalQuestions(),415,"preguntas FCOM");
     eq(dgacTotal(),573,"preguntas DGAC");
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
-    eq(ORAL_VOICE_BANK.length,53,"preguntas orales");
+    eq(ORAL_VOICE_BANK.length,54,"preguntas orales");
   });
   T("0 DGAC-01 la pregunta de la PTU con parking brake esta en el banco DGAC con respuesta TRUE (logica real de los master levers)",function(){
     var hit=rawPool(DGAC_KEY).filter(function(q){return /PRESSURIZE THE GREEN HYDRAULIC SYSTEM ON THE GROUND VIA THE PTU/i.test(q.q)});
@@ -28,7 +28,7 @@
     ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
   });
   T("0 QID-01 al corregir un enunciado (PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
-    var olds=Object.keys(QID_RENAMES);eq(olds.length,61,"ids antiguos (11 de PTU, 31 de operaciones sin los Tutorials, 1 de la presion hidraulica REG-14, 3 de Electrico REG-18 y REG-19, 7 de Aire acondicionado REG-23, 1 de APU REG-24, 6 de Fuego REG-25 y 1 de Controles REG-27)");
+    var olds=Object.keys(QID_RENAMES);eq(olds.length,63,"ids antiguos (11 de PTU, 31 de operaciones sin los Tutorials, 1 de la presion hidraulica REG-14, 3 de Electrico REG-18 y REG-19, 7 de Aire acondicionado REG-23, 1 de APU REG-24, 6 de Fuego REG-25, 1 de Controles REG-27 y 2 de Antihielo REG-28)");
     olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
     var o=olds[0],n=QID_RENAMES[o];
     var st={stats:{},bookmarks:{},oral:{},needToKnow:{added:["q:"+o],removed:["q:"+olds[1]]}};

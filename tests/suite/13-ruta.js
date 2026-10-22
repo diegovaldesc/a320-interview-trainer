@@ -599,6 +599,20 @@
     ok(/Green o Yellow/.test(c4.body),"reset del trim: necesita Green o Yellow");
     ok(/tiende a seguir/.test(todo)&&/flight mode, fuera de las protecciones/.test(todo),"ley de g: flight mode y tendencia");
   });
+  T("15 REG-27 lote 012 de Codex (ctl-5): en high speed el bank maximo es 40 o 20 grados segun el avion, el roll rate baja a 7,5 grados/s en los A320neo con proteccion de AOA o pitch, y la pregunta DGAC de roll explica por que la C es la mas precisa",function(){
+    function txt(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return [c.body,c.keyIdea||"",c.more||"",c.diagram?c.diagram.alt:""].join(" ")}).join(" "):""}
+    var c5=txt("ctl-5"),c6=txt("ctl-6");
+    ok(c5.indexOf("a **20°** en los demás A320neo")>=0&&c5.indexOf("MSN 12226")>=0,"ctl-5: high speed 40 o 20 por MSN");
+    ok(!/a 40° con la protección de high speed/.test(c5),"ctl-5: sin el 40 general");
+    ok(c6.indexOf("en los A320neo, a 20°, salvo el MSN 12226")>=0,"ctl-6: high speed 40 o 20");
+    ok(c5.indexOf("**7,5° por segundo**")>=0,"ctl-5: roll rate 7,5 en los A320neo");
+    var F=SYSTEMS.flight_control.questions,G=SYSTEMS[DGAC_KEY].questions;
+    var r=F.filter(function(q){return /^¿Cuál es el roll rate máximo aproximado/.test(q.q)});eq(r.length,1,"pregunta del roll rate");
+    if(r[0]){ok(/en condiciones normales\?$/.test(r[0].q),"roll rate: en condiciones normales");eq(r[0].options[r[0].correct],"15°/s","clave 15");ok(/7,5°\/s/.test(r[0].expl),"explica los 7,5");}
+    var d=G.filter(function(q){return /^ROLL CONTROL IN NORMAL LAW IS ACHIEVED WITH/.test(q.q)});eq(d.length,1,"pregunta DGAC de roll");
+    if(d[0]){eq(d[0].correct,2,"clave C");ok(/La B no es falsa/.test(d[0].expl),"explica la B");}
+    var b=F.filter(function(q){return /^¿Qué bank angle máximo puede comandarse/.test(q.q)})[0];ok(b&&/20°/.test(b.expl)&&/12226/.test(b.expl),"bank maximo: high speed por MSN");
+  });
   T("15 RUTA-20 Antihielo y lluvia: 8 estaciones con el repaso al final; el engine anti-ice se enseña por motor (IAE o CFM, A320neo), el encendido continuo es de los IAE, y ninguna estacion usa las preguntas que solo valen para un grupo de aviones",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="antihielo"});
     eq(P.length,8,"estaciones de Antihielo y lluvia");eq(P[P.length-1].id,"ice-repaso","el repaso va al final");

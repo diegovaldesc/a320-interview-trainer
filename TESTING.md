@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-27** (2026-10-22, 1.29.1) — lote 012 de Codex (Controles, ctl-5). H023:
+  con la high speed protection, el bank máximo es 40° en los A320 con IAE o CFM y
+  en el A320neo MSN 12226, y 20° en los demás A320neo (la página general de high
+  speed dice 40° para todos; se sigue la de bank angle, más específica); ctl-5
+  (ficha, diagrama) y ctl-6 lo dicen así. H024: en los A320neo el roll rate baja a
+  7,5°/s con la protección de AOA o de pitch; la pregunta del roll rate dice «en
+  condiciones normales» (renombrada en QID_RENAMES, 61). H025: la pregunta DGAC
+  «ROLL CONTROL IN NORMAL LAW…» queda como está escrita, con clave C y una
+  explicación de por qué la B es menos precisa. Mutación: con el 40° general de
+  vuelta en ctl-5, o sin la frase de la B, REG-27 falla.
 - **RUTA-20** (2026-10-21, 1.29.0) — la materia Antihielo y lluvia: 8 estaciones
   con el repaso al final (panorama y condiciones de engelamiento, wing anti-ice,
   engine anti-ice, ventanas, sondas, lluvia, y panel y alertas). El engine

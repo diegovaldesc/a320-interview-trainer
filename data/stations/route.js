@@ -78,7 +78,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":74,"id":"air-11","subject":"aire","title":"Avionics ventilation","kind":"lesson","level":2,"minutes":6,"zone":"mal-tiempo","unlockAfter":"air-10"},
 {"n":75,"id":"hid-6","subject":"hidraulico","title":"Valves, filters and FAULT light","kind":"lesson","level":3,"minutes":5,"zone":"tormenta","unlockAfter":"air-11"},
 {"n":76,"id":"ele-7","subject":"electrico","title":"When the batteries connect","kind":"lesson","level":3,"minutes":6,"zone":"tormenta","unlockAfter":"hid-6"},
-{"n":77,"id":"ctl-8","subject":"controles","title":"Alternate and direct law","kind":"lesson","level":3,"minutes":6,"zone":"tormenta","unlockAfter":"ele-7"},
+{"n":77,"id":"ctl-8","subject":"controles","title":"Alternate and direct law","kind":"lesson","level":3,"minutes":8,"zone":"tormenta","unlockAfter":"ele-7"},
 {"n":78,"id":"perf-9","subject":"performance","title":"Weights and CG","kind":"lesson","level":3,"minutes":11,"zone":"tormenta","unlockAfter":"ctl-8"},
 {"n":79,"id":"tren-9","subject":"tren","title":"Gear not down","kind":"lesson","level":3,"minutes":8,"zone":"tormenta","unlockAfter":"perf-9"},
 {"n":80,"id":"ful-8","subject":"combustible","title":"Fuel on the ECAM","kind":"lesson","level":3,"minutes":6,"zone":"tormenta","unlockAfter":"tren-9"},

@@ -613,6 +613,16 @@
     if(d[0]){eq(d[0].correct,2,"clave C");ok(/La B no es falsa/.test(d[0].expl),"explica la B");}
     var b=F.filter(function(q){return /^¿Qué bank angle máximo puede comandarse/.test(q.q)})[0];ok(b&&/20°/.test(b.expl)&&/12226/.test(b.expl),"bank maximo: high speed por MSN");
   });
+  T("15 RUTA-21 ctl-8 explica que hace el avion con el bank al soltar el sidestick en cada ley: normal mantiene hasta 33 y vuelve a 33, high speed vuelve a 0, alternate y direct no corrigen el bank, abnormal attitude con roll directo",function(){
+    var st=RUTA.stations["ctl-8"];ok(st,"existe ctl-8");if(!st)return;
+    var c=st.cards.filter(function(x){return x.title==="Releasing the sidestick, law by law"})[0];ok(c,"ficha de soltar el sidestick");if(!c)return;
+    var b=c.body;
+    ok((b.indexOf("lo devuelve solo a **33°**")>=0)&&(b.indexOf("lo devuelve a **0°**")>=0),"normal y high speed");
+    ok((b.indexOf("**No hay bank angle protection**")>=0)&&(b.indexOf("el sistema no mantiene ni corrige el bank")>=0),"alternate y direct: nadie corrige el bank");
+    ok((b.indexOf("**125°**")>=0),"abnormal attitude con 125");
+    ok(c.diagram&&/ctl-soltar.svg$/.test(c.diagram.src),"diagrama de soltar el sidestick");
+    var ids=st.test.map(function(t){return t.question});ok(ids.some(function(q){return /^WHAT HAPPENS IF YOU RELEASE THE STICK AT 40/.test(q)}),"pregunta DGAC de soltar a 40 grados en la prueba");
+  });
   T("15 RUTA-20 Antihielo y lluvia: 8 estaciones con el repaso al final; el engine anti-ice se enseña por motor (IAE o CFM, A320neo), el encendido continuo es de los IAE, y ninguna estacion usa las preguntas que solo valen para un grupo de aviones",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="antihielo"});
     eq(P.length,8,"estaciones de Antihielo y lluvia");eq(P[P.length-1].id,"ice-repaso","el repaso va al final");

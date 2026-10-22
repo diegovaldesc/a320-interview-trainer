@@ -807,6 +807,15 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-21** (2026-10-22, 1.29.2) — pedido de Diego: la estación ctl-8 tiene
+  una ficha «Releasing the sidestick, law by law» con su diagrama ctl-soltar.svg:
+  en normal law el avión mantiene el bank hasta 33° y vuelve a 33° desde más
+  arriba; con high speed protection vuelve a 0°; en alternate y direct law el roll
+  es directo y no hay bank angle protection, así que nadie mantiene ni corrige el
+  bank; la abnormal attitude law (por ejemplo, bank sobre 125°) también deja el
+  roll directo. La prueba de ctl-8 suma «WHAT HAPPENS IF YOU RELEASE THE STICK AT
+  40 DEGREES OF BANK?» y el bank máximo de 67°. Mutación: sin la frase de que el
+  sistema no corrige el bank, RUTA-21 falla.
 - **REG-27** (2026-10-22, 1.29.1) — lote 012 de Codex (Controles, ctl-5). H023:
   con la high speed protection, el bank máximo es 40° en los A320 con IAE o CFM y
   en el A320neo MSN 12226, y 20° en los demás A320neo (la página general de high

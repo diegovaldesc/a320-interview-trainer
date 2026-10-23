@@ -334,7 +334,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 115,
+  "total": 125,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -404,6 +404,23 @@
      "ful-8 · Fuel on the ECAM",
      "ful-9 · Imbalance, leaks and limits",
      "ful-repaso · Fuel review"
+    ]
+   },
+   "comunicaciones": {
+    "title": "Communications and oxygen",
+    "file": "data/stations/comunicaciones.js",
+    "count": 10,
+    "stations": [
+     "com-1 · Communications at a glance",
+     "com-2 · Radio Management Panel",
+     "com-3 · Audio Control Panel",
+     "com-4 · SELCAL and calls to the cockpit",
+     "com-5 · Interphones, PA and calls to the cabin",
+     "com-6 · Cockpit voice recorder",
+     "com-7 · ELT and evacuation",
+     "com-8 · Cockpit oxygen",
+     "com-9 · Passenger oxygen",
+     "com-repaso · Communications and oxygen review"
     ]
    },
    "controles": {
@@ -531,7 +548,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 115
+   "stations": 125
   }
  }
 }

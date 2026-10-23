@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo e Indicacion, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=115,"al menos las 115 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo e Indicacion");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion y Comunicaciones, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=125,"al menos las 125 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion y Comunicaciones");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,comunicaciones,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -625,6 +625,19 @@
     var ind=I.concat(G.filter(function(q){return q.bank_section==="Indicating and recording"}));
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
+  });
+  T("15 RUTA-23 Comunicaciones y oxigeno: 10 estaciones con el repaso al final; el CVR, el audio y el oxigeno de cockpit se enseñan por MSN, y ninguna estacion usa las preguntas DGAC que el manual no respalda tal como estan",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="comunicaciones"});
+    eq(P.length,10,"estaciones de Comunicaciones y oxigeno");eq(P[P.length-1].id,"com-repaso","el repaso va al final");
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var b1=body("com-1"),b6=body("com-6"),b8=body("com-8");
+    ok((b1.indexOf("Desde el **MSN 11482**, el RMP también maneja el audio")>=0),"audio en el RMP desde el MSN 11482");
+    ok((b6.indexOf("las **últimas 2 horas** hasta el **MSN 09324**")>=0)&&(b6.indexOf("las **últimas 25 horas** desde el **MSN 10949**")>=0),"CVR 2 h o 25 h por MSN");
+    ok((b8.indexOf("**A320 con motores IAE o CFM:** **una botella**")>=0)&&(b8.indexOf("**A320neo:** **dos botellas**")>=0),"oxigeno de cockpit por motor");
+    var G=SYSTEMS[DGAC_KEY].questions,malas=G.filter(function(q){return /^THE BFO KEY|^IF YOU DEPRESS THE GUARDED NAV BUTTON|^WHEN SELECTING THE GUARDED RMP NAV KEY|^YOU CAN TUNE THE ILS RECEIVERS|^WHEN LOOKING AT EITHER RMP|^HOW DO YOU ERASE THE CVR/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)});
+    eq(malas.length,6,"las 6 preguntas DGAC sin respaldo");
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&malas.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC sin respaldo: "+usadas.join(", "));
   });
   T("15 REG-30 preguntas repetidas en las estaciones (Diego, Combustible): la primera estacion de Combustible pregunta una cosa distinta por ficha, y ninguna clase junta una pregunta del banco con su gemela DGAC",function(){
     var st=RUTA.stations["ful-1"];ok(st,"existe ful-1");if(!st)return;

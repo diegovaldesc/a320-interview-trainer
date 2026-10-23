@@ -807,6 +807,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **RUTA-23** (2026-10-22, 1.31.0) — la materia Comunicaciones y oxígeno: 10
+  estaciones con el repaso al final (panorama, RMP, ACP, SELCAL y llamadas al
+  cockpit, interphones/PA/llamadas a la cabina, CVR, ELT y evacuación, oxígeno de
+  cockpit y oxígeno de pasajeros). Por MSN: desde el 11482 el RMP también maneja el
+  audio; el CVR guarda 2 h hasta el 09324 y 25 h desde el 10949; el oxígeno de
+  cockpit es una botella (IAE o CFM) o dos (A320neo); el umbral de OXY ámbar va de
+  200 a 400 PSI según el MSN. Una pregunta por dato (REG-30). Ninguna estación usa
+  6 preguntas DGAC que el manual no respalda tal como están (BFO, NAV que «inhibe»
+  el FMGC, los dos ILS, SEL «blanca», borrar el CVR sin los 2 s). RUTA-02 pasa a 12
+  materias y 125 estaciones. Mutación: con el CVR de «2 horas» para todos, RUTA-23
+  falla.
 - **REG-30** (2026-10-22, 1.30.2) — Diego notó que la primera estación de
   Combustible preguntaba casi lo mismo cuatro veces (tres sobre los 750 kg, y dos
   eran la misma pregunta en el banco y en la DGAC). La estación se reordenó

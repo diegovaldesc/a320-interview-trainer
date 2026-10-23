@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 310" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Oxígeno de los pasajeros</title>
+  <desc id="d">Tres pasos: 1, caen las máscaras, solas sobre 14 000 ft de altitud de cabina (16 000 ft con HIGH ALT LANDING) o con MASK MAN ON; 2, el pasajero tira de la máscara y recién ahí arranca el generador químico, uno cada 2, 3 o 4 máscaras; 3, oxígeno puro durante unos 13, 15 o 22 minutos según la instalación; el calor y el olor son normales. SYS ON indica que se mandó la orden de abrir las tapas.</desc>
+  <rect x="1" y="1" width="358" height="308" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Oxígeno de los pasajeros</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Desde que caen las máscaras.</text>
+  <rect x="16" y="60" width="328" height="64" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <circle cx="34" cy="80" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="34" y="83.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <text x="50" y="84" font-size="11" font-weight="800" fill="#1E2A33">Caen las máscaras</text>
+  <text x="28" y="102" font-size="10" fill="#33424D">Solas sobre 14 000 ft de cabina (16 000 ft</text>
+  <text x="28" y="115" font-size="10" fill="#33424D">con HIGH ALT LANDING), o con MASK MAN ON.</text>
+  <rect x="16" y="134" width="328" height="64" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <circle cx="34" cy="154" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="34" y="157.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <text x="50" y="158" font-size="11" font-weight="800" fill="#1E2A33">El pasajero tira de la máscara</text>
+  <text x="28" y="176" font-size="10" fill="#33424D">Recién ahí arranca el generador químico</text>
+  <text x="28" y="189" font-size="10" fill="#33424D">(uno cada 2, 3 o 4 máscaras).</text>
+  <rect x="16" y="208" width="328" height="64" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <circle cx="34" cy="228" r="8.5" fill="#0E5E6F" stroke="none" stroke-width="1"/>
+  <text x="34" y="231.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <text x="50" y="232" font-size="11" font-weight="800" fill="#1E2A33">Oxígeno puro</text>
+  <text x="28" y="250" font-size="10" fill="#33424D">Unos 13, 15 o 22 minutos, según la</text>
+  <text x="28" y="263" font-size="10" fill="#33424D">instalación. El calor y el olor son normales.</text>
+  <text x="16" y="296" font-size="10.5" fill="#5B6B78">SYS ON: se mandó la orden de abrir las tapas.</text>
+</svg>

@@ -47,7 +47,7 @@
     eq(ENGLISH.mcq.length,32,"alternativas");eq(ENGLISH.images.length,8,"imagenes");eq(ENGLISH.listening.length,16,"audios");eq(ENGLISH.roleplays.length,4,"role-plays");eq(ENGLISH.pruebas.length,4,"pruebas");
     ok(!("english_icao" in SYSTEMS),"las alternativas de ingles no deben estar en el banco tecnico");
     ok(allLookupPool().every(function(q){return q.bank!=="english_icao"}),"ni en la busqueda");
-    eq(totalQuestions(),415,"las alternativas de ingles no deben contarse como preguntas FCOM");
+    eq(totalQuestions(),429,"las alternativas de ingles no deben contarse como preguntas FCOM");
     ENGLISH.mcq.forEach(function(q){
       eq(q.options.length,4,"opciones de "+q.id);ok(q.correct>=0&&q.correct<4,"indice correcto de "+q.id);
       ok(String(q.expl).length>40,"explicacion de "+q.id);

@@ -482,7 +482,7 @@
     var P=RUTA.missions.filter(function(m){return m.subject==="combustible"});
     eq(P.length,10,"estaciones de Combustible");eq(P[P.length-1].id,"ful-repaso","el repaso va al final");
     function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
-    var uno=body("ful-1");ok(/MSN más antiguos \(hasta el 06183\):\*\* el center tank tiene \*\*dos bombas\*\*/.test(uno)&&/MSN más nuevos \(desde el 06286\):\*\* el center tank \*\*no tiene bombas\*\*/.test(uno),"panorama: el center tank por MSN");
+    var uno=body("ful-1");ok(uno.indexOf("**Hasta el MSN 06183:** el center tank tiene **dos bombas**")>=0&&uno.indexOf("**Desde el MSN 06286:** el center tank **no tiene bombas**")>=0,"panorama: el center tank por MSN");
     ok(/hasta el 06183/.test(body("ful-3"))&&/desde el 06286/.test(body("ful-4"))&&/jet pump/.test(body("ful-4")),"una clase para cada version del center tank");
     var fu=RUTA.stations["ful-8"].test.find(function(t){return /FUEL USED INDICATION/.test(t.question)});
     ok(fu&&/al arrancar el motor en tierra/.test(fu.explanation)&&!/al energizar eléctricamente/.test(fu.explanation),"fuel used: vuelve a cero al arrancar el motor en tierra");
@@ -625,6 +625,20 @@
     var ind=I.concat(G.filter(function(q){return q.bank_section==="Indicating and recording"}));
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
+  });
+  T("15 REG-30 preguntas repetidas en las estaciones (Diego, Combustible): la primera estacion de Combustible pregunta una cosa distinta por ficha, y ninguna clase junta una pregunta del banco con su gemela DGAC",function(){
+    var st=RUTA.stations["ful-1"];ok(st,"existe ful-1");if(!st)return;
+    var mcq=st.test.filter(function(t){return t.type==="mcq"});
+    ok(mcq.length>=5,"ful-1 con al menos 5 preguntas: "+mcq.length);
+    var fichas={};mcq.forEach(function(t){t.taughtIn.forEach(function(c){fichas[c]=1})});ok(Object.keys(fichas).length>=4,"ful-1: preguntas repartidas en al menos 4 fichas");
+    eq(mcq.filter(function(t){return /750/.test(t.question+" "+t.options[t.correct])}).length<=1,true,"ful-1: a lo mas una pregunta sobre los 750 kg");
+    var gemelas=[[/^¿Qué partes del A320 protege el sistema antihielo/,/^ANTI-ICE AND THE ICING PROTECTION/],[/^En vuelo, ¿qué slats de cada ala/,/^INFLIGHT THE ____ ON EACH WING/],
+      [/^¿Cuántas Display Units idénticas/,/^THE A-320 ELECTRONIC FLIGHT INSTRUMENT SYSTEM/],[/^Si falla una PFD Display Unit/,/^IF A PFD FAILS/],
+      [/^¿Qué sistemas del A320 tienen extinción automática/,/^WHICH OF THE FOLLOWING HAVE AUTOMATIC FIRE/],[/^En la arquitectura con transferencia outer/,/^FUEL TRANSFER FROM THE OUTER COMPARTMENT/],
+      [/^¿Cuál es la fuente normal del AC ESS BUS/,/^THE NUMBER 1 AC BUS CHANNEL NORMALLY SUPPLIES/],[/^¿Qué tipo de funciones concentra el FADEC/,/^THE FULL AUTHORITY DIGITAL ENGINE CONTROL \(FADEC\) CONTROLS/]];
+    var mal=[];Object.keys(RUTA.stations).forEach(function(k){var x=RUTA.stations[k];if(x.kind==="review")return;var q=x.test.map(function(t){return t.question||""});
+      gemelas.forEach(function(g){if(q.some(function(a){return g[0].test(a)})&&q.some(function(a){return g[1].test(a)}))mal.push(k+": "+g[1].source.slice(1,30))})});
+    eq(mal.length,0,"clases con una pregunta y su gemela: "+mal.join(" | "));
   });
   T("15 RUTA-22 Indicacion: 9 estaciones con el repaso al final; pantallas, DMC y boton ALL por MSN, las fases con sus inhibiciones, el ND por defecto en ROSE NAV 80 NM, y la pregunta del ALL dice el intervalo por MSN",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="indicacion"});

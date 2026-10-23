@@ -4,7 +4,7 @@
   "aggregator": "data/questions/index.js",
   "global": "window.SYSTEMS_DATA_JSON",
   "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
-  "total": 1123,
+  "total": 1137,
   "categories": {
    "procedures": {
     "name": "Procedures and emergencies",
@@ -21,13 +21,13 @@
    "fire": {
     "name": "Fire protection",
     "file": "data/questions/fire.js",
-    "count": 30,
+    "count": 31,
     "idPrefix": "fire:"
    },
    "ice_rain": {
     "name": "Ice and rain protection",
     "file": "data/questions/ice_rain.js",
-    "count": 30,
+    "count": 31,
     "idPrefix": "ice_rain:"
    },
    "comms_oxygen": {
@@ -39,7 +39,7 @@
    "indicating": {
     "name": "Indicating and recording",
     "file": "data/questions/indicating.js",
-    "count": 31,
+    "count": 37,
     "idPrefix": "indicating:"
    },
    "dgac_bank": {
@@ -133,7 +133,7 @@
    "fuel": {
     "name": "Fuel",
     "file": "data/questions/fuel.js",
-    "count": 31,
+    "count": 37,
     "idPrefix": "fuel:"
    },
    "operations_airbus": {

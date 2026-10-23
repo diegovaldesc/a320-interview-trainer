@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-30** (2026-10-22, 1.30.2) — Diego notó que la primera estación de
+  Combustible preguntaba casi lo mismo cuatro veces (tres sobre los 750 kg, y dos
+  eran la misma pregunta en el banco y en la DGAC). La estación se reordenó
+  (dónde está el combustible → cómo llega al motor → orden de uso → las dos
+  versiones por MSN → otras funciones) y su prueba tiene 6 preguntas nuevas del
+  banco, una por tema. En toda la ruta se quitaron 70 preguntas que repetían en la
+  misma clase el dato de otra (casi siempre la versión del banco en español de
+  una pregunta DGAC; se dejó la DGAC), y se agregaron 8 preguntas nuevas (Indicación,
+  Antihielo, Fuego) donde una clase quedaba corta. REG-30 comprueba ful-1 y ocho
+  pares gemelos. Mutación: con la pregunta gemela de vuelta en ice-1, REG-30 falla.
 - **REG-29** (2026-10-22, 1.30.1) — arreglos del banco de Indicación («aplica»
   de Diego): la respuesta del botón ALL dice «cada 3 s desde el MSN 02572» (cada
   1 s solo hasta el 02321); las explicaciones del DMC (también la DGAC de la

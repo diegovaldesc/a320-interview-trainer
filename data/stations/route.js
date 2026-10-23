@@ -66,7 +66,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":62,"id":"com-4","subject":"comunicaciones","title":"SELCAL and calls to the cockpit","kind":"lesson","level":2,"minutes":5,"zone":"crucero","unlockAfter":"ind-5"},
 {"n":63,"id":"hid-5","subject":"hidraulico","title":"Reservoirs, accumulators and priority valves","kind":"lesson","level":2,"minutes":4,"zone":"crucero","unlockAfter":"com-4"},
 {"n":64,"id":"ele-6","subject":"electrico","title":"Batteries","kind":"lesson","level":2,"minutes":6,"zone":"crucero","unlockAfter":"hid-5"},
-{"n":65,"id":"ctl-6","subject":"controles","title":"Protections","kind":"lesson","level":2,"minutes":7,"zone":"crucero","unlockAfter":"ele-6"},
+{"n":65,"id":"ctl-6","subject":"controles","title":"Protections","kind":"lesson","level":2,"minutes":8,"zone":"crucero","unlockAfter":"ele-6"},
 {"n":66,"id":"perf-7","subject":"performance","title":"FLEX and derated takeoff","kind":"lesson","level":2,"minutes":11,"zone":"mal-tiempo","unlockAfter":"ctl-6"},
 {"n":67,"id":"tren-7","subject":"tren","title":"Autobrake","kind":"lesson","level":2,"minutes":8,"zone":"mal-tiempo","unlockAfter":"perf-7"},
 {"n":68,"id":"ful-5","subject":"combustible","title":"Without tank pumps","kind":"lesson","level":2,"minutes":5,"zone":"mal-tiempo","unlockAfter":"tren-7"},

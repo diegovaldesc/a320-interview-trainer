@@ -807,6 +807,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-32** (2026-10-22, 1.31.2) — lote 013 de Codex (Controles, ctl-6). H026:
+  alpha floor está disponible solo desde el lift-off hasta 100 ft RA en la
+  aproximación, en normal law y con el A/THR disponible (mantener más de 15 s el
+  botón de desconexión lo pierde el resto del vuelo); la DGAC «WHEN IS ALPHA FLOOR
+  NOT AVAILABLE?» pasa a D (ALL THE ABOVE) en el banco y en la estación, que tenía
+  su propia explicación. H027: la high speed protection se activa en VMO/MMO o por
+  encima según las condiciones y no impide todo overspeed. La ficha «Alpha floor
+  and high speed» se dividió en dos; al despegue alpha prot = alpha max 5 s; refs
+  internas de PDF 3073 (A321neo) pasan a 3075/3078. Mutación: con la clave A de
+  vuelta, REG-32 falla.
 - **REG-31** (2026-10-22, 1.31.1) — arreglos del banco de Comunicaciones y
   oxígeno («aplica» de Diego): la DGAC «HOW DO YOU ERASE THE CVR?» pasa a la
   alternativa de los 2 segundos; cuatro enunciados ya no nombran el FCOM (el del

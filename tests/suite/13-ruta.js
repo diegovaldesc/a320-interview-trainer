@@ -626,6 +626,16 @@
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
   });
+  T("15 REG-32 lote 013 de Codex (ctl-6): alpha floor no esta disponible bajo 100 ft RA en aproximacion ni con el A/THR inutilizado (clave D), y la high speed protection se activa en VMO/MMO o por encima segun las condiciones",function(){
+    var G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return /^WHEN IS ALPHA FLOOR NOT AVAILABLE/.test(q.q)});eq(G.length,1,"pregunta DGAC de alpha floor");
+    if(G[0]){eq(G[0].options[G[0].correct],"ALL THE ABOVE.","clave D");ok(G[0].expl.indexOf("100 ft")>=0&&G[0].expl.indexOf("inutilizado")>=0,"explicacion del banco");}
+    var st=RUTA.stations["ctl-6"];ok(st,"existe ctl-6");if(!st)return;
+    var t=st.test.filter(function(x){return /^WHEN IS ALPHA FLOOR NOT AVAILABLE/.test(x.question)})[0];ok(t&&t.options[t.correct]==="ALL THE ABOVE."&&t.explanation.indexOf("100 ft")>=0,"la estacion tambien con D y su explicacion");
+    var todo=st.cards.map(function(c){return c.body}).join(" ");
+    ok(todo.indexOf("**desde el lift-off hasta los 100 ft RA**")>=0,"alpha floor: disponibilidad");
+    ok(todo.indexOf("**en VMO/MMO o por encima**")>=0&&todo.indexOf("no impide todo overspeed")>=0,"high speed: en VMO/MMO o por encima");
+    ok(!/bajo 100 ft no se inhibe/.test(JSON.stringify(st)),"sin la frase antigua");
+  });
   T("15 REG-31 banco de Comunicaciones y oxigeno: borrar el CVR pide 2 s (clave corregida), el CVR de 2 h dice hasta que MSN, las preguntas de un solo grupo de aviones lo aclaran, y ningun texto nombra el FCOM",function(){
     var C=SYSTEMS.comms_oxygen.questions,G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="Communications and oxygen"});
     function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}

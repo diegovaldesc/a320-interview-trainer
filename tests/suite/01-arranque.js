@@ -22,8 +22,8 @@
     var s=one(/^WHICH OF THE FOLLOWING CONTROLS AND MONITORS FLAPS AND SLATS/);
     eq(correctText(s),"TWO SLAT FLAP CONTROL COMPUTER (SFCC'S).","respuesta: dos SFCC");
     ok(/los dos a la vez/.test(s.expl)&&/media velocidad/.test(s.expl)&&!/uno solo/.test(s.expl),"la explicacion dice que trabajan los dos y que con uno van a media velocidad");
-    var a=one(/^WHEN IS ALPHA FLOOR NOT AVAILABLE/);eq(correctText(a),"OUT OF NORMAL LAW.","alpha floor: fuera de normal law");
-    ok(!/cualquiera de estas tres/.test(a.expl)&&/solo en normal law/.test(a.expl),"la explicacion de alpha floor no contradice su respuesta");
+    var a=one(/^WHEN IS ALPHA FLOOR NOT AVAILABLE/);eq(correctText(a),"ALL THE ABOVE.","alpha floor: las tres condiciones (REG-32, lote 013)");
+    ok(/fuera de normal law/.test(a.expl)&&/100 ft/.test(a.expl)&&/Por eso corresponde D/.test(a.expl),"la explicacion de alpha floor calza con su respuesta");
     var e=one(/^WHICH OF THE FOLLOWING STATEMENTS IS CORRECT CONCERNING THE ELEVATOR AILERON/);
     ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
   });

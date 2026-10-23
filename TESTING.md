@@ -807,6 +807,15 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-31** (2026-10-22, 1.31.1) — arreglos del banco de Comunicaciones y
+  oxígeno («aplica» de Diego): la DGAC «HOW DO YOU ERASE THE CVR?» pasa a la
+  alternativa de los 2 segundos; cuatro enunciados ya no nombran el FCOM (el del
+  CVR dice «hasta el MSN 09324»; el del umbral de OXY se reescribió para que calce
+  con sus respuestas; QID_RENAMES 69); las DGAC de un solo grupo de aviones aclaran
+  por motor o MSN (botellas, umbral de OXY, tolerancia de las máscaras, duración,
+  galleys, luz SEL ámbar); y las DGAC que la documentación no respalda tal como
+  están conservan su clave con una explicación de lo que sí se confirma. Mutación:
+  con la clave antigua del CVR, REG-31 falla.
 - **RUTA-23** (2026-10-22, 1.31.0) — la materia Comunicaciones y oxígeno: 10
   estaciones con el repaso al final (panorama, RMP, ACP, SELCAL y llamadas al
   cockpit, interphones/PA/llamadas a la cabina, CVR, ELT y evacuación, oxígeno de

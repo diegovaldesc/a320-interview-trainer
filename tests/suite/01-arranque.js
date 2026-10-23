@@ -28,7 +28,7 @@
     ok(/stabilizer/.test(e.expl)&&!/no asumen el control normal del THS/.test(e.expl),"la explicacion de los ELAC incluye el stabilizer");
   });
   T("0 QID-01 al corregir un enunciado (PTU) el progreso, las guardadas, la autoevaluacion y Need to know pasan al id nuevo",function(){
-    var olds=Object.keys(QID_RENAMES);eq(olds.length,65,"ids antiguos (11 de PTU, 31 de operaciones sin los Tutorials, 1 de la presion hidraulica REG-14, 3 de Electrico REG-18 y REG-19, 7 de Aire acondicionado REG-23, 1 de APU REG-24, 6 de Fuego REG-25, 1 de Controles REG-27, 2 de Antihielo REG-28, 1 de Indicacion REG-29 y 1 de Combustible REG-30)");
+    var olds=Object.keys(QID_RENAMES);eq(olds.length,69,"ids antiguos (11 de PTU, 31 de operaciones sin los Tutorials, 1 de la presion hidraulica REG-14, 3 de Electrico REG-18 y REG-19, 7 de Aire acondicionado REG-23, 1 de APU REG-24, 6 de Fuego REG-25, 1 de Controles REG-27, 2 de Antihielo REG-28, 1 de Indicacion REG-29, 1 de Combustible REG-30 y 4 de Comunicaciones REG-31)");
     olds.forEach(function(k){ok(findById(QID_RENAMES[k]),"existe "+QID_RENAMES[k]);ok(!findById(k),"ya no existe "+k)});
     var o=olds[0],n=QID_RENAMES[o];
     var st={stats:{},bookmarks:{},oral:{},needToKnow:{added:["q:"+o],removed:["q:"+olds[1]]}};

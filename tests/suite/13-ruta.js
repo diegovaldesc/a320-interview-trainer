@@ -626,6 +626,17 @@
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
   });
+  T("15 REG-31 banco de Comunicaciones y oxigeno: borrar el CVR pide 2 s (clave corregida), el CVR de 2 h dice hasta que MSN, las preguntas de un solo grupo de aviones lo aclaran, y ningun texto nombra el FCOM",function(){
+    var C=SYSTEMS.comms_oxygen.questions,G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return q.bank_section==="Communications and oxygen"});
+    function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
+    var e=one(G,/^HOW DO YOU ERASE THE CVR?/);ok(/FOR 2 SECONDS/.test(e.options[e.correct]||""),"borrar el CVR: 2 s");
+    ok(one(C,/^En los A320 hasta el MSN 09324, ¿cuánto audio conserva/).expl.indexOf("25 horas")>=0,"CVR por MSN");
+    ok(one(G,/^COCKPIT CREW OXYGEN IS PROVIDED BY/).expl.indexOf("A320neo")>=0,"botellas por motor");
+    ok(one(G,/^WHAT DOES AN AMBER OXY ON THE ECAM DOORS MEAN/).expl.indexOf("200 PSI")>=0,"umbral de OXY por MSN");
+    ok(one(G,/^WHEN LOOKING AT EITHER RMP/).expl.indexOf("ámbar")>=0,"SEL ambar");
+    var mal=C.concat(G).filter(function(q){return /FCOM|del manual|según el manual/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
+    eq(mal.length,0,"textos que nombran el manual: "+mal.join(" | "));
+  });
   T("15 RUTA-23 Comunicaciones y oxigeno: 10 estaciones con el repaso al final; el CVR, el audio y el oxigeno de cockpit se enseñan por MSN, y ninguna estacion usa las preguntas DGAC que el manual no respalda tal como estan",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="comunicaciones"});
     eq(P.length,10,"estaciones de Comunicaciones y oxigeno");eq(P[P.length-1].id,"com-repaso","el repaso va al final");

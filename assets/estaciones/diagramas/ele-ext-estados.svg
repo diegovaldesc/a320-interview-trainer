@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 276" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">EXT PWR pb: AVAIL y ON</title>
+  <desc id="d">Tres estados del EXT PWR pb. 1: external power conectado y normal, AVAIL verde, line contactor abierto, todavía no alimenta. 2: al presionarlo, ON azul y el contactor cerrado, alimenta la red. 3: al presionarlo otra vez, vuelve AVAIL y el contactor se abre; AVAIL sigue hasta que lo desconectan. ON sigue encendida aunque los engine generators tomen la red.</desc>
+  <rect x="1" y="1" width="358" height="274" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <rect x="8" y="12" width="108" height="178" rx="10" fill="#F6F8FA" stroke="#DDE3E8"/>
+  <circle cx="28" cy="30" r="9" fill="#33424D"/>
+  <text x="28" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">1</text>
+  <text x="70" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#33424D">Conectado</text>
+  <text x="62" y="58" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">EXT PWR</text>
+  <rect x="42" y="64" width="40" height="36" rx="4" fill="#2C363F"/>
+  <line x1="46" y1="82" x2="78" y2="82" stroke="#46525C" stroke-width="1"/>
+  <text x="62" y="77.5" text-anchor="middle" font-size="10" font-weight="700" fill="#62D394">AVAIL</text>
+  <text x="62" y="95" text-anchor="middle" font-size="10" font-weight="700" fill="#8A949C">ON</text>
+  <path d="M28 124 L55 124" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M69 124 L96 124" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="57.5" y="119.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="62" y="146" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">line contactor</text>
+  <text x="62" y="159" text-anchor="middle" font-size="11" font-weight="700" fill="#5B6B78">abierto</text>
+  <text x="62" y="172" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">no alimenta</text>
+  <rect x="126" y="12" width="108" height="178" rx="10" fill="#F6F8FA" stroke="#DDE3E8"/>
+  <circle cx="146" cy="30" r="9" fill="#33424D"/>
+  <text x="146" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">2</text>
+  <text x="188" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#33424D">Presionado</text>
+  <text x="180" y="58" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">EXT PWR</text>
+  <rect x="160" y="64" width="40" height="36" rx="4" fill="#2C363F"/>
+  <line x1="164" y1="82" x2="196" y2="82" stroke="#46525C" stroke-width="1"/>
+  <text x="180" y="77.5" text-anchor="middle" font-size="10" font-weight="700" fill="#8A949C">AVAIL</text>
+  <text x="180" y="95" text-anchor="middle" font-size="10" font-weight="700" fill="#62B4FF">ON</text>
+  <path d="M146 124 L173 124" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M187 124 L214 124" fill="none" stroke="#2E9D5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="175.5" y="119.5" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="180" y="146" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">line contactor</text>
+  <text x="180" y="159" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6E41">cerrado</text>
+  <text x="180" y="172" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">alimenta la red</text>
+  <rect x="244" y="12" width="108" height="178" rx="10" fill="#F6F8FA" stroke="#DDE3E8"/>
+  <circle cx="264" cy="30" r="9" fill="#33424D"/>
+  <text x="264" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">3</text>
+  <text x="306" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#33424D">Otra vez</text>
+  <text x="298" y="58" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">EXT PWR</text>
+  <rect x="278" y="64" width="40" height="36" rx="4" fill="#2C363F"/>
+  <line x1="282" y1="82" x2="314" y2="82" stroke="#46525C" stroke-width="1"/>
+  <text x="298" y="77.5" text-anchor="middle" font-size="10" font-weight="700" fill="#62D394">AVAIL</text>
+  <text x="298" y="95" text-anchor="middle" font-size="10" font-weight="700" fill="#8A949C">ON</text>
+  <path d="M264 124 L291 124" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M305 124 L332 124" fill="none" stroke="#A9B4BD" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="293.5" y="119.5" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="298" y="146" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">line contactor</text>
+  <text x="298" y="159" text-anchor="middle" font-size="11" font-weight="700" fill="#5B6B78">abierto</text>
+  <text x="298" y="172" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">AVAIL hasta</text>
+  <text x="298" y="185" text-anchor="middle" font-size="10.5" font-weight="400" fill="#33424D">desconectar</text>
+  <path d="M125.5 82 L117.4 77.5 L117.4 86.5 Z" fill="#5B6B78"/>
+  <path d="M243.5 82 L235.4 77.5 L235.4 86.5 Z" fill="#5B6B78"/>
+  <rect x="8" y="200" width="344" height="40" rx="8" fill="#EAF1FC" stroke="#2F6FD6" stroke-width="1.2"/>
+  <text x="180" y="216" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">ON sigue encendida aunque los engine generators</text>
+  <text x="180" y="230" text-anchor="middle" font-size="10.5" font-weight="600" fill="#33424D">tomen la red: qué fuente alimenta se ve en la página ELEC</text>
+  <rect x="23.5" y="254" width="9" height="9" rx="2" fill="#2E9D5B" stroke="#2E9D5B" stroke-width="1.6"/>
+  <text x="43" y="262" font-size="10.5" fill="#5B6B78">contactor cerrado</text>
+  <rect x="157.7" y="254" width="9" height="9" rx="2" fill="#FFFFFF" stroke="#A9B4BD" stroke-width="1.6"/>
+  <text x="177.2" y="262" font-size="10.5" fill="#5B6B78">abierto</text>
+  <text x="342" y="262" text-anchor="end" font-size="10.5" fill="#5B6B78">AVAIL verde · ON azul</text>
+</svg>

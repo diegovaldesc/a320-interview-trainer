@@ -41,7 +41,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":37,"id":"ice-4","subject":"antihielo","title":"Window heat","kind":"lesson","level":1,"minutes":5,"zone":"nubes","unlockAfter":"air-4"},
 {"n":38,"id":"ice-5","subject":"antihielo","title":"Probe heat","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"ice-4"},
 {"n":39,"id":"hid-3","subject":"hidraulico","title":"Blue system and RAT","kind":"lesson","level":2,"minutes":5,"zone":"crucero","unlockAfter":"ice-5"},
-{"n":40,"id":"ele-4","subject":"electrico","title":"External power, APU GEN and galleys","kind":"lesson","level":2,"minutes":6,"zone":"crucero","unlockAfter":"hid-3"},
+{"n":40,"id":"ele-4","subject":"electrico","title":"External power, APU GEN and galleys","kind":"lesson","level":2,"minutes":21,"zone":"crucero","unlockAfter":"hid-3"},
 {"n":41,"id":"ctl-4","subject":"controles","title":"Normal law: pitch","kind":"lesson","level":2,"minutes":8,"zone":"crucero","unlockAfter":"ele-4"},
 {"n":42,"id":"perf-5","subject":"performance","title":"Reject or continue","kind":"lesson","level":2,"minutes":11,"zone":"crucero","unlockAfter":"ctl-4"},
 {"n":43,"id":"tren-5","subject":"tren","title":"Braking modes","kind":"lesson","level":2,"minutes":7,"zone":"crucero","unlockAfter":"perf-5"},

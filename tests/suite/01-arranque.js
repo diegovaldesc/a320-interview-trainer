@@ -5,7 +5,7 @@
   });
   T("0 el banco reporta integridad estructural OK",function(){
     var h=bankIntegrity();ok(h.ok,"bankIntegrity: "+JSON.stringify(h));
-    eq(totalQuestions(),438,"preguntas FCOM");
+    eq(totalQuestions(),441,"preguntas FCOM");
     eq(dgacTotal(),573,"preguntas DGAC");
     eq(interviewTechnicalTotal(),93,"preguntas entrevista tecnica");
     eq(ORAL_VOICE_BANK.length,54,"preguntas orales");

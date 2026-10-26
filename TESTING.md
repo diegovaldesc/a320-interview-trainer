@@ -807,6 +807,12 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-33** (2026-10-26, 1.33.0) — la intro de una estación se mostraba como
+  texto plano: las viñetas («- ») de ele-4 salían en una sola línea con guiones.
+  Ahora la intro usa el mismo formato que las fichas (párrafos, viñetas y
+  negrita). La prueba abre ele-4 y pide al menos tres puntos de lista en el
+  copiloto, sin «; - » suelto. Mutación: con la intro de vuelta a `esc()` en un
+  párrafo, REG-33 falla.
 - **REG-32** (2026-10-22, 1.31.2) — lote 013 de Codex (Controles, ctl-6). H026:
   alpha floor está disponible solo desde el lift-off hasta 100 ft RA en la
   aproximación, en normal law y con el A/THR disponible (mantener más de 15 s el

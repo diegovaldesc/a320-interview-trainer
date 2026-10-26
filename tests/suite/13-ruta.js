@@ -414,7 +414,7 @@
     var st=RUTA.stations["ele-5"].test.filter(function(t){return t.question.indexOf("IF BOTH ENGINE GENERATORS")===0})[0];ok(st&&/DC BUS Ent/.test(st.explanation),"H010: y en la estacion");
     var h11=bq(DGAC_KEY,"AN AC ESS FEED SWITCH").expl;ok(!/no al revés/.test(h11)&&/vuelve|de nuevo energía del AC BUS 1/.test(h11),"H011: al volver a normal, de nuevo el AC BUS 1");
     ok(/C\/B TRIPPED/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl)&&/En tierra/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl),"H012: vuelo y tierra separados");
-    ok(/sobre 50 kt/.test(rtCard("ele-1","Loss of all main generators").diagram.alt)&&/sobre 50 kt/.test(rtCard("ele-1","Generate, distribute, convert").diagram.alt),"BAT 1 al AC ESS BUS: sobre 50 kt");
+    ok(/sobre 50 kt/.test(rtCard("ele-1","Batteries: the last source").diagram.alt)&&/sobre 50 kt/.test(rtCard("ele-1","Generate, distribute, convert").diagram.alt),"BAT 1 al AC ESS BUS: sobre 50 kt");
     ok(/BAT pb en OFF, voltaje sobre 25\.5 V, y de nuevo en AUTO/.test(rtCard("ele-6","Low battery charge").body),"el segundo chequeo tambien con BAT en OFF");
     ok(/N2 bajo 14 %/.test(rtCard("ele-5","IDG FAULT light").body),"FAULT del IDG: N2 bajo 14 %");
     ok(/No quiere decir que la batería quede cargada al 100 %/.test(bq(DGAC_KEY,"BOTH BATTERIES ARE CHARGED BY THE EXTERNAL").expl),"20 min: ciclo de carga, no carga completa");
@@ -434,7 +434,7 @@
     nada(/(conecta|conectarla)[^.]{0,30}(después de|tras) 30 min|espera media hora|en vuelo, después de 30 min/i,"30 min aplicados a la conexion");
     nada(/se shed /,"«se shed» mezcla idiomas");
     nada(/Así se evita mantener|Esto evita usar innecesariamente|energía aerodinámica suficiente|participa en la generación AC/,"causas sin fuente o «generacion» de la BAT 1");
-    var c=rtCard("ele-1","The sources and what they can power");
+    var c=rtCard("ele-1","One source can power it all");
     ok(/La única excepción es el \*\*DC BUS Ent\*\*/.test(c.body)&&!/Si queda un solo engine generator, alimenta todo menos/.test(c.body),"fuentes: una sola regla con su excepcion");
     var r=bq("interview_technical","¿Qué puede provocar que el RAT");ok(/125 kt/.test(correctText(r))&&!/^Volar por debajo de aproximadamente 140 kt/.test(correctText(r)),"RAT: 140 kt es el minimo, alimenta hasta unos 125 kt");
     ok(/C\/B TRIPPED/.test(bq(DGAC_KEY,"HOW MANY TIMES CAN YOU RESET A CIRCUIT BREAKER?").expl),"C/B: la explicacion cita la regla del procedimiento");
@@ -625,6 +625,12 @@
     var ind=I.concat(G.filter(function(q){return q.bank_section==="Indicating and recording"}));
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
+  });
+  T("15 REG-33 la intro de una estacion respeta las vinetas (\"- \") como las fichas: antes salia todo en una linea con guiones (ele-4, v1.32.0)",function(){
+    var i=-1;RUTA.missions.forEach(function(m,k){if(m.id==="ele-4")i=k});ok(i>=0,"existe ele-4");if(i<0)return;
+    RUTA.startMission(i);var box=byId("rtPlayer").querySelector(".rt-copilot");ok(box,"se ve el copiloto");if(!box)return;
+    ok(box.querySelectorAll("li").length>=3,"la intro de ele-4 muestra sus puntos como lista");
+    ok(!/; - /.test(box.textContent),"sin guiones sueltos en el texto");
   });
   T("15 REG-32 lote 013 de Codex (ctl-6): alpha floor no esta disponible bajo 100 ft RA en aproximacion ni con el A/THR inutilizado (clave D), y la high speed protection se activa en VMO/MMO o por encima segun las condiciones",function(){
     var G=SYSTEMS[DGAC_KEY].questions.filter(function(q){return /^WHEN IS ALPHA FLOOR NOT AVAILABLE/.test(q.q)});eq(G.length,1,"pregunta DGAC de alpha floor");

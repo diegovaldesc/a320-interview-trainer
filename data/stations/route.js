@@ -3,7 +3,7 @@
    la fuente está en Escritorio\APP\Estaciones\ruta.json. */
 window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"assets/estaciones/imagenes/mapa-1-aeropuerto-salida.webp"},{"id":"nubes","title":"Clouds","bg":"assets/estaciones/imagenes/mapa-2-nubes.webp"},{"id":"crucero","title":"Cruise","bg":"assets/estaciones/imagenes/mapa-3-crucero.webp"},{"id":"mal-tiempo","title":"Bad weather","bg":"assets/estaciones/imagenes/mapa-4-mal-tiempo.webp"},{"id":"tormenta","title":"Thunderstorms","bg":"assets/estaciones/imagenes/mapa-5-tormentas.webp"},{"id":"descenso","title":"Descent","bg":"assets/estaciones/imagenes/mapa-6-atardecer.webp"},{"id":"llegada","title":"Arrival runway","bg":"assets/estaciones/imagenes/mapa-7-aeropuerto-llegada.webp"}],"missions":[
 {"n":1,"id":"hid-1","subject":"hidraulico","title":"Three independent systems","kind":"lesson","level":1,"minutes":5,"zone":"pista","unlockAfter":null},
-{"n":2,"id":"ele-1","subject":"electrico","title":"Power sources","kind":"lesson","level":1,"minutes":9,"zone":"pista","unlockAfter":"hid-1"},
+{"n":2,"id":"ele-1","subject":"electrico","title":"Power sources","kind":"lesson","level":1,"minutes":11,"zone":"pista","unlockAfter":"hid-1"},
 {"n":3,"id":"ctl-1","subject":"controles","title":"Fly-by-wire","kind":"lesson","level":1,"minutes":8,"zone":"pista","unlockAfter":"ele-1"},
 {"n":4,"id":"perf-1","subject":"performance","title":"Performance at a glance","kind":"lesson","level":1,"minutes":8,"zone":"nubes","unlockAfter":"ctl-1"},
 {"n":5,"id":"tren-1","subject":"tren","title":"Landing gear at a glance","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"perf-1"},
@@ -15,7 +15,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":11,"id":"ind-1","subject":"indicacion","title":"Six screens and their computers","kind":"lesson","level":1,"minutes":5,"zone":"nubes","unlockAfter":"ice-1"},
 {"n":12,"id":"com-1","subject":"comunicaciones","title":"Communications at a glance","kind":"lesson","level":1,"minutes":4,"zone":"nubes","unlockAfter":"ind-1"},
 {"n":13,"id":"hid-2","subject":"hidraulico","title":"PTU","kind":"lesson","level":1,"minutes":4,"zone":"nubes","unlockAfter":"com-1"},
-{"n":14,"id":"ele-2","subject":"electrico","title":"Who powers what","kind":"lesson","level":1,"minutes":7,"zone":"nubes","unlockAfter":"hid-2"},
+{"n":14,"id":"ele-2","subject":"electrico","title":"Who powers what","kind":"lesson","level":1,"minutes":9,"zone":"nubes","unlockAfter":"hid-2"},
 {"n":15,"id":"ctl-2","subject":"controles","title":"The seven computers","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"ele-2"},
 {"n":16,"id":"perf-2","subject":"performance","title":"Takeoff speeds","kind":"lesson","level":1,"minutes":9,"zone":"nubes","unlockAfter":"ctl-2"},
 {"n":17,"id":"tren-2","subject":"tren","title":"Gear extension and retraction","kind":"lesson","level":1,"minutes":5,"zone":"nubes","unlockAfter":"perf-2"},
@@ -26,7 +26,7 @@ window.STATION_ROUTE={"zones":[{"id":"pista","title":"Departure runway","bg":"as
 {"n":22,"id":"ice-2","subject":"antihielo","title":"Wing anti-ice","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"fir-2"},
 {"n":23,"id":"ind-2","subject":"indicacion","title":"ECAM colors and alert levels","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"ice-2"},
 {"n":24,"id":"com-2","subject":"comunicaciones","title":"Radio Management Panel","kind":"lesson","level":1,"minutes":7,"zone":"nubes","unlockAfter":"ind-2"},
-{"n":25,"id":"ele-3","subject":"electrico","title":"Bus tie and generator failure","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"com-2"},
+{"n":25,"id":"ele-3","subject":"electrico","title":"Bus tie and generator failure","kind":"lesson","level":1,"minutes":7,"zone":"nubes","unlockAfter":"com-2"},
 {"n":26,"id":"ctl-3","subject":"controles","title":"Sidesticks and priority","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"ele-3"},
 {"n":27,"id":"perf-3","subject":"performance","title":"Runway distances","kind":"lesson","level":1,"minutes":6,"zone":"nubes","unlockAfter":"ctl-3"},
 {"n":28,"id":"tren-3","subject":"tren","title":"LGCIUs and gear indications","kind":"lesson","level":1,"minutes":5,"zone":"nubes","unlockAfter":"perf-3"},

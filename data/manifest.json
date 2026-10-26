@@ -4,7 +4,7 @@
   "aggregator": "data/questions/index.js",
   "global": "window.SYSTEMS_DATA_JSON",
   "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
-  "total": 1139,
+  "total": 1141,
   "categories": {
    "procedures": {
     "name": "Procedures and emergencies",
@@ -103,7 +103,7 @@
    "electrical": {
     "name": "Electrical",
     "file": "data/questions/electrical.js",
-    "count": 32,
+    "count": 34,
     "idPrefix": "electrical:"
    },
    "flight_control": {

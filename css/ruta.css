@@ -165,6 +165,7 @@
 .rt-av{flex:0 0 42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--rt-navy)}
 .rt-av svg{width:28px;height:28px}
 .rt-copilot p{margin:0}
+.rt-copilot .rt-prose{flex:1;min-width:0}
 .rt-card{padding:18px;border-radius:18px;background:var(--rt-surface);border:1px solid var(--rt-line);display:grid;gap:12px;min-width:0}
 .rt-card h2{font-size:26px;line-height:1.05}
 .rt-prose p{margin:0 0 10px}.rt-prose p:last-child{margin-bottom:0}

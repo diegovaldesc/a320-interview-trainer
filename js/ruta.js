@@ -350,7 +350,7 @@
       '<span class="rt-eyebrow">Station ' + m.n + ' · ' + (st.kind === 'review' ? 'Review' : 'Level ' + st.level) + '</span>' +
       '<h1>' + esc(st.title) + '</h1>' +
       '<div class="rt-row-meta" style="margin-top:0"><span class="rt-chip">' + st.cards.length + (st.cards.length === 1 ? ' card' : ' cards') + '</span><span class="rt-chip">' + st.test.length + ' questions</span><span class="rt-chip">' + st.minutes + ' min</span></div>' +
-      '<div class="rt-copilot"><span class="rt-av">' + planeSvg('#E9C46A', '#1E3A4C') + '</span><p>' + esc(st.intro) + '</p></div>' +
+      '<div class="rt-copilot"><span class="rt-av">' + planeSvg('#E9C46A', '#1E3A4C') + '</span><div class="rt-prose">' + prose(st.intro) + '</div></div>' +
       '<p style="margin:0"><strong>Goal:</strong> ' + esc(st.goal) + '</p>' +
       '<button class="rt-btn rt-btn-primary" data-act="start">Start lesson</button></div>';
   }

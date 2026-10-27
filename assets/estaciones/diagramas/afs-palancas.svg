@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 298" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Thrust levers y A/THR</title>
+  <desc id="d">Detents IDLE, CL, FLX-MCT y TOGA. Entre IDLE y CL, rango activo: el A/THR manda el empuje, CL es la posición normal y bajo CL aparece A/THR LIMITED. Sobre CL, el A/THR queda armado y el empuje sigue a las palancas (MAN THR); al despegue, TOGA o FLX arman el A/THR. Con un motor, el rango activo llega a MCT. Todas las palancas en IDLE desconectan el A/THR.</desc>
+  <rect x="1" y="1" width="358" height="296" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Thrust levers y A/THR</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Con los dos motores funcionando</text>
+  <rect x="64" y="66" width="12" height="182" rx="6" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <line x1="56" y1="240" x2="84" y2="240" stroke="#1E2A33" stroke-width="2.2"/>
+  <text x="50" y="244" text-anchor="end" font-size="10" font-weight="700" fill="#1E2A33">IDLE</text>
+  <line x1="56" y1="170" x2="84" y2="170" stroke="#1E2A33" stroke-width="2.2"/>
+  <text x="50" y="174" text-anchor="end" font-size="10" font-weight="700" fill="#1E2A33">CL</text>
+  <line x1="56" y1="120" x2="84" y2="120" stroke="#1E2A33" stroke-width="2.2"/>
+  <text x="50" y="124" text-anchor="end" font-size="10" font-weight="700" fill="#1E2A33">FLX-MCT</text>
+  <line x1="56" y1="76" x2="84" y2="76" stroke="#1E2A33" stroke-width="2.2"/>
+  <text x="50" y="80" text-anchor="end" font-size="10" font-weight="700" fill="#1E2A33">TOGA</text>
+  <rect x="96" y="174" width="248" height="74" rx="6" fill="#E5F4EA" stroke="#2E9D5B" stroke-width="1.4"/>
+  <text x="106" y="194" font-size="10.5" font-weight="700" fill="#2E9D5B">Sobre IDLE y hasta CL: rango activo</text>
+  <text x="106" y="210" font-size="10" fill="#33424D">El A/THR manda el empuje.</text>
+  <text x="106" y="225" font-size="10" fill="#33424D">En CL: posición normal.</text>
+  <text x="106" y="240" font-size="10" fill="#33424D">Bajo CL: A/THR LIMITED, LVR CLB.</text>
+  <rect x="96" y="80" width="248" height="76" rx="6" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="106" y="98" font-size="10.5" font-weight="700" fill="#C77700">Sobre CL: A/THR armado</text>
+  <text x="106" y="113" font-size="10" fill="#33424D">El empuje sigue a las palancas (MAN THR).</text>
+  <text x="106" y="128" font-size="10" fill="#33424D">Al despegue, TOGA o FLX arman el</text>
+  <text x="106" y="142" font-size="10" fill="#33424D">A/THR y enganchan SRS y RWY.</text>
+  <text x="18" y="268" font-size="10" fill="#33424D">Con un motor, el rango activo llega a MCT.</text>
+  <text x="18" y="284" font-size="10" fill="#33424D">Todas las palancas en IDLE: desconecta el A/THR (normal).</text>
+</svg>

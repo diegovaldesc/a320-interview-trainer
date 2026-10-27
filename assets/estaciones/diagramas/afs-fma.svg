@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Las columnas del FMA</title>
+  <desc id="d">FMA de ejemplo con cinco columnas: SPEED (A/THR), ALT enganchado en verde y G/S armado en azul (vertical), LOC en verde con una caja blanca (lateral), CAT 3 DUAL (capacidad) y AP1+2, 1FD2, A/THR (estado). Línea 1 enganchado en verde, línea 2 armado en azul (ALT CST en magenta), línea 3 mensajes; la caja blanca indica un cambio reciente.</desc>
+  <rect x="1" y="1" width="358" height="238" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Las columnas del FMA</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Ejemplo: ALT enganchado, G/S armado, LOC</text>
+  <text x="49" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">1 A/THR</text>
+  <text x="114" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">2 Vert.</text>
+  <text x="178" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">3 Lat.</text>
+  <text x="243" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">4 Capac.</text>
+  <text x="310" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#33424D">5 Estado</text>
+  <rect x="16" y="78" width="328" height="70" rx="6" fill="#0F1A22" stroke="#0F1A22" stroke-width="1.4"/>
+  <line x1="82" y1="84" x2="82" y2="142" stroke="#55636E" stroke-width="1"/>
+  <line x1="146" y1="84" x2="146" y2="142" stroke="#55636E" stroke-width="1"/>
+  <line x1="210" y1="84" x2="210" y2="142" stroke="#55636E" stroke-width="1"/>
+  <line x1="276" y1="84" x2="276" y2="142" stroke="#55636E" stroke-width="1"/>
+  <text x="49" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#3DDC84">SPEED</text>
+  <text x="114" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#3DDC84">ALT</text>
+  <text x="114" y="116" text-anchor="middle" font-size="11" font-weight="700" fill="#5AC8E6">G/S</text>
+  <text x="178" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#3DDC84">LOC</text>
+  <text x="243" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#E9EEF2">CAT 3</text>
+  <text x="243" y="116" text-anchor="middle" font-size="11" font-weight="700" fill="#E9EEF2">DUAL</text>
+  <text x="310" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#E9EEF2">AP1+2</text>
+  <text x="310" y="116" text-anchor="middle" font-size="11" font-weight="700" fill="#E9EEF2">1FD2</text>
+  <text x="310" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#E9EEF2">A/THR</text>
+  <rect x="154" y="82" width="48" height="19" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+  <text x="18" y="170" font-size="10" fill="#33424D">Línea 1: enganchado</text>
+  <rect x="140" y="161" width="12" height="10" rx="2" fill="#3DDC84" stroke="#3DDC84" stroke-width="1.4"/>
+  <text x="158" y="170" font-size="10" fill="#33424D">verde</text>
+  <text x="18" y="188" font-size="10" fill="#33424D">Línea 2: armado</text>
+  <rect x="140" y="179" width="12" height="10" rx="2" fill="#5AC8E6" stroke="#5AC8E6" stroke-width="1.4"/>
+  <text x="158" y="188" font-size="10" fill="#33424D">azul</text>
+  <rect x="196" y="179" width="12" height="10" rx="2" fill="#E36BD8" stroke="#E36BD8" stroke-width="1.4"/>
+  <text x="214" y="188" font-size="10" fill="#33424D">magenta: ALT CST</text>
+  <text x="18" y="206" font-size="10" fill="#33424D">Línea 3: mensajes</text>
+  <rect x="140" y="216" width="26" height="12" rx="2" fill="#0F1A22" stroke="#FFFFFF" stroke-width="1.2"/>
+  <text x="18" y="226" font-size="10" fill="#33424D">Caja blanca 10 s:</text>
+  <text x="172" y="226" font-size="10" fill="#33424D">algo acaba de cambiar</text>
+</svg>

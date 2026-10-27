@@ -169,7 +169,7 @@
 .rt-card{padding:18px;border-radius:18px;background:var(--rt-surface);border:1px solid var(--rt-line);display:grid;gap:12px;min-width:0}
 .rt-card h2{font-size:26px;line-height:1.05}
 .rt-prose p{margin:0 0 10px}.rt-prose p:last-child{margin-bottom:0}
-.rt-prose ul{margin:0 0 10px;padding-left:20px}.rt-prose li{margin:3px 0}
+.rt-prose ul,.rt-prose ol{margin:0 0 10px;padding-left:20px}.rt-prose li{margin:3px 0}
 .rt-figure{margin:0;border-radius:14px;overflow:hidden;background:#FFFFFF;border:1px solid var(--rt-line)}
 .rt-figure img{display:block;width:100%;height:auto}
 .rt-example{padding:12px 14px;border-radius:12px;background:var(--rt-sunken);font-size:15px}

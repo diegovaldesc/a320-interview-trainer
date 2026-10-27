@@ -807,6 +807,12 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-34** (2026-10-27, 1.37.0) — las listas numeradas («1. », «2. »…) de las
+  fichas salían en una sola línea, con los números sueltos dentro del párrafo
+  (Auto flight, Combustible e Indicación). Ahora se muestran como lista ordenada.
+  La prueba abre la ficha «Five columns» de afs-4 y pide una lista ordenada de 5
+  elementos, sin «2. modos» suelto en el texto. Mutación: sin la regla de los
+  números, REG-34 falla.
 - **REG-33** (2026-10-26, 1.33.0) — la intro de una estación se mostraba como
   texto plano: las viñetas («- ») de ele-4 salían en una sola línea con guiones.
   Ahora la intro usa el mismo formato que las fichas (párrafos, viñetas y
@@ -832,6 +838,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   galleys, luz SEL ámbar); y las DGAC que la documentación no respalda tal como
   están conservan su clave con una explicación de lo que sí se confirma. Mutación:
   con la clave antigua del CVR, REG-31 falla.
+- **RUTA-24** (2026-10-27, 1.37.0) — la materia nueva Auto flight: 15 estaciones
+  con el repaso al final, en niveles que no bajan (panorama del FMGS, FCU, AP y FD,
+  FMA, despegue y go-around, modos laterales, subida y descenso, nivelación, V/S y
+  EXPED, A/THR, velocidad, aproximación, capacidad y autoland, FAC). Revisa que el
+  FMGC tenga dos partes (FM y FG), que CAT 3 DUAL pida los dos AP y que CAT 1 sea
+  aterrizaje manual. Ninguna estación usa 6 preguntas DGAC que el FCOM actual
+  contradice: autoland con los dos AP, AP en tierra, «tres funciones» del FMGC,
+  vertical managed con managed speed, FD2 en la columna 5 y colores de los modos
+  enganchados. RUTA-02 pasa a 13 materias y 140 estaciones. La prueba falló una vez
+  por un patrón mal escrito (contaba 5 de las 6), así que puede fallar.
 - **RUTA-23** (2026-10-22, 1.31.0) — la materia Comunicaciones y oxígeno: 10
   estaciones con el repaso al final (panorama, RMP, ACP, SELCAL y llamadas al
   cockpit, interphones/PA/llamadas a la cabina, CVR, ELT y evacuación, oxígeno de

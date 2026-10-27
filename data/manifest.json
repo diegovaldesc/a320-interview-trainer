@@ -4,7 +4,7 @@
   "aggregator": "data/questions/index.js",
   "global": "window.SYSTEMS_DATA_JSON",
   "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
-  "total": 1149,
+  "total": 1182,
   "categories": {
    "procedures": {
     "name": "Procedures and emergencies",
@@ -121,7 +121,7 @@
    "autoflight": {
     "name": "Autoflight and FMGS",
     "file": "data/questions/autoflight.js",
-    "count": 30,
+    "count": 63,
     "idPrefix": "autoflight:"
    },
    "apu_powerplant": {
@@ -334,7 +334,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 125,
+  "total": 140,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -387,6 +387,28 @@
      "apu-8 · Automatic engine start",
      "apu-9 · Manual start and ignition",
      "apu-repaso · APU and powerplant review"
+    ]
+   },
+   "autoflight": {
+    "title": "Auto flight",
+    "file": "data/stations/autoflight.js",
+    "count": 15,
+    "stations": [
+     "afs-1 · The FMGS at a glance",
+     "afs-2 · FCU: push, pull, turn",
+     "afs-3 · Autopilot and flight director",
+     "afs-4 · Reading the FMA",
+     "afs-5 · Takeoff and go-around modes",
+     "afs-6 · Lateral modes: NAV and HDG/TRK",
+     "afs-7 · Open and managed climb and descent",
+     "afs-8 · Level off: ALT*, ALT, ALT CST, ALT CRZ",
+     "afs-9 · V/S, FPA and EXPED",
+     "afs-10 · Autothrust",
+     "afs-11 · Managed and selected speed",
+     "afs-12 · Approach modes",
+     "afs-13 · Landing capability and autoland",
+     "afs-14 · FAC: speeds, low energy and windshear",
+     "afs-repaso · Auto flight review"
     ]
    },
    "combustible": {
@@ -548,7 +570,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 125
+   "stations": 140
   }
  }
 }

@@ -3,10 +3,10 @@
    Lo exporta Escritorio\APP\Estaciones\_herramientas\exportar_app.js: no se edita a mano;
    la fuente está en Escritorio\APP\Estaciones\_fuente\. */
 (function(){
-  var SUBJECTS=["aire","antihielo","apu","combustible","comunicaciones","controles","electrico","fuego","hidraulico","indicacion","performance","tren"];
+  var SUBJECTS=["aire","antihielo","apu","autoflight","combustible","comunicaciones","controles","electrico","fuego","hidraulico","indicacion","performance","tren"];
   var parts=window.STATION_PARTS||{},subjects=[];
   SUBJECTS.forEach(function(id){if(parts[id])subjects.push(parts[id]);else console.error("Falta la materia "+id)});
   Object.keys(parts).forEach(function(id){if(SUBJECTS.indexOf(id)<0)console.error("Materia sin registrar en SUBJECTS: "+id)});
-  window.ESTACIONES_DATA={format:1,generated:"2026-10-26",subjects:subjects,route:window.STATION_ROUTE};
+  window.ESTACIONES_DATA={format:1,generated:"2026-10-27",subjects:subjects,route:window.STATION_ROUTE};
   delete window.STATION_PARTS;delete window.STATION_ROUTE;
 })();

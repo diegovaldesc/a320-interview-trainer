@@ -33,11 +33,17 @@
 
   // ---------- piezas comunes ----------
   function inline(s){ return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+  // Párrafos, viñetas ("- ") y listas numeradas ("1. ").
   function prose(text){
     return String(text || '').split(/\n\s*\n/).map(function(block){
-      var head = [], items = [];
-      block.split('\n').forEach(function(l){ if (/^- /.test(l)) items.push(l.slice(2)); else head.push(l); });
-      return (head.length ? '<p>' + inline(head.join(' ')) + '</p>' : '') + (items.length ? '<ul>' + items.map(function(i){ return '<li>' + inline(i) + '</li>'; }).join('') + '</ul>' : '');
+      var head = [], items = [], ordered = false;
+      block.split('\n').forEach(function(l){
+        if (/^- /.test(l)) items.push(l.slice(2));
+        else if (/^\d+\. /.test(l)) { items.push(l.replace(/^\d+\. /, '')); ordered = true; }
+        else head.push(l);
+      });
+      var tag = ordered ? 'ol' : 'ul';
+      return (head.length ? '<p>' + inline(head.join(' ')) + '</p>' : '') + (items.length ? '<' + tag + '>' + items.map(function(i){ return '<li>' + inline(i) + '</li>'; }).join('') + '</' + tag + '>' : '');
     }).join('');
   }
   var STAR_PATH = 'M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z';

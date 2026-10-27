@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion y Comunicaciones, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=125,"al menos las 125 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion y Comunicaciones");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,combustible,comunicaciones,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones y Auto flight, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=140,"al menos las 140 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones y Auto flight");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,autoflight,combustible,comunicaciones,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -626,6 +626,14 @@
     var mal=ind.filter(function(q){return /FCOM/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos de Indicacion que nombran el FCOM: "+mal.join(" | "));
   });
+  T("15 REG-34 las fichas muestran las listas numeradas (\"1. \") como lista ordenada: antes salian en una sola linea (afs-4, combustible, indicacion; v1.37.0)",function(){
+    var i=-1;RUTA.missions.forEach(function(m,k){if(m.id==="afs-4")i=k});ok(i>=0,"existe afs-4");if(i<0)return;
+    RUTA.startMission(i);var S=RUTA.state();S.view="card";S.card=0;RUTA.render();
+    var card=byId("rtPlayer").querySelector(".rt-prose");ok(card,"se ve la ficha");if(!card)return;
+    var ol=card.querySelector("ol");ok(ol&&ol.querySelectorAll("li").length===5,"la ficha Five columns muestra sus 5 columnas como lista ordenada");
+    ok(!/\b2\. modos/.test(card.textContent),"sin numeros sueltos en el texto");
+    RUTA.showBank();
+  });
   T("15 REG-33 la intro de una estacion respeta las vinetas (\"- \") como las fichas: antes salia todo en una linea con guiones (ele-4, v1.32.0)",function(){
     var i=-1;RUTA.missions.forEach(function(m,k){if(m.id==="ele-4")i=k});ok(i>=0,"existe ele-4");if(i<0)return;
     RUTA.startMission(i);var box=byId("rtPlayer").querySelector(".rt-copilot");ok(box,"se ve el copiloto");if(!box)return;
@@ -652,6 +660,18 @@
     ok(one(G,/^WHEN LOOKING AT EITHER RMP/).expl.indexOf("ámbar")>=0,"SEL ambar");
     var mal=C.concat(G).filter(function(q){return /FCOM|del manual|según el manual/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos que nombran el manual: "+mal.join(" | "));
+  });
+  T("15 RUTA-24 Auto flight: 15 estaciones con el repaso al final, niveles que no bajan, el FMGC con dos partes (FM y FG), CAT 3 DUAL con los dos AP y CAT 1 con aterrizaje manual, y ninguna estacion usa las preguntas DGAC que el FCOM actual contradice",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="autoflight"});
+    eq(P.length,15,"estaciones de Auto flight");eq(P[P.length-1].id,"afs-repaso","el repaso va al final");
+    var lv=P.filter(function(m){return m.kind!=="review"}).map(function(m){return m.level});ok(lv.every(function(v,i){return i===0||v>=lv[i-1]}),"niveles en orden: "+lv.join(","));
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    ok(body("afs-1").indexOf("Cada FMGC tiene dos partes")>=0,"FMGC: FM y FG");
+    var b13=body("afs-13");ok(b13.indexOf("**CAT 3 DUAL necesita los dos AP**")>=0&&b13.indexOf("**CAT 1**: hasta CAT I, con aterrizaje manual")>=0,"capacidad: CAT 3 DUAL con dos AP, CAT 1 manual");
+    var G=SYSTEMS[DGAC_KEY].questions,malas=G.filter(function(q){return /^FOR AUTOLAND, BOTH A\/PS MUST BE CONNECTED|^ONE A\/P CAN BE ENGAGED ON THE GROUND|^THE FMGC HAVE THREE FUNCTIONS|^WHEN CAN MANAGED VERTICAL NAVIGATION BE ENGAGED|^THE CAPTAIN.{1,2}S FMA INDICATES - FD2|^THE ENGAGED VERTICAL MODES ARE DISPLAYED/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)});
+    eq(malas.length,6,"las 6 preguntas DGAC que el FCOM contradice");
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&malas.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC contradicha: "+usadas.join(", "));
   });
   T("15 RUTA-23 Comunicaciones y oxigeno: 10 estaciones con el repaso al final; el CVR, el audio y el oxigeno de cockpit se enseñan por MSN, y ninguna estacion usa las preguntas DGAC que el manual no respalda tal como estan",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="comunicaciones"});

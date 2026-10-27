@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 262" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Los knobs del FCU</title>
+  <desc id="d">Cuatro knobs del FCU: SPD con rayas y punto blanco (managed), HDG con 090 (selected), ALT con 35000 y punto (siempre muestra un valor) y V/S con rayas (sin función managed; empujar = nivelar). Un valor girado sin tirar se borra a los 10 s en SPD y a los 45 s en HDG y V/S.</desc>
+  <rect x="1" y="1" width="358" height="260" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Los knobs del FCU</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Empujar = managed · girar y tirar = selected</text>
+  <rect x="14" y="54" width="332" height="104" rx="10" fill="#2A3640" stroke="#2A3640" stroke-width="1.4"/>
+  <text x="55" y="72" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E9EEF2">SPD</text>
+  <rect x="25" y="78" width="60" height="22" rx="4" fill="#0F1A22" stroke="#55636E" stroke-width="1.4"/>
+  <text x="55" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#F2A93B">---</text>
+  <circle cx="79" cy="112" r="3.6" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <circle cx="55" cy="134" r="15" fill="#5B6873" stroke="#8C99A3" stroke-width="1.4"/>
+  <circle cx="55" cy="134" r="6" fill="#3D4952" stroke="none" stroke-width="1"/>
+  <text x="135" y="72" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E9EEF2">HDG</text>
+  <rect x="105" y="78" width="60" height="22" rx="4" fill="#0F1A22" stroke="#55636E" stroke-width="1.4"/>
+  <text x="135" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#F2A93B">090</text>
+  <circle cx="159" cy="112" r="3.6" fill="#55636E" stroke="none" stroke-width="1"/>
+  <circle cx="135" cy="134" r="15" fill="#5B6873" stroke="#8C99A3" stroke-width="1.4"/>
+  <circle cx="135" cy="134" r="6" fill="#3D4952" stroke="none" stroke-width="1"/>
+  <text x="215" y="72" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E9EEF2">ALT</text>
+  <rect x="185" y="78" width="60" height="22" rx="4" fill="#0F1A22" stroke="#55636E" stroke-width="1.4"/>
+  <text x="215" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#F2A93B">35000</text>
+  <circle cx="239" cy="112" r="3.6" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <circle cx="215" cy="134" r="15" fill="#5B6873" stroke="#8C99A3" stroke-width="1.4"/>
+  <circle cx="215" cy="134" r="6" fill="#3D4952" stroke="none" stroke-width="1"/>
+  <text x="295" y="72" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E9EEF2">V/S</text>
+  <rect x="265" y="78" width="60" height="22" rx="4" fill="#0F1A22" stroke="#55636E" stroke-width="1.4"/>
+  <text x="295" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#F2A93B">-----</text>
+  <circle cx="319" cy="112" r="3.6" fill="#55636E" stroke="none" stroke-width="1"/>
+  <circle cx="295" cy="134" r="15" fill="#5B6873" stroke="#8C99A3" stroke-width="1.4"/>
+  <circle cx="295" cy="134" r="6" fill="#3D4952" stroke="none" stroke-width="1"/>
+  <text x="55" y="178" text-anchor="middle" font-size="10" fill="#33424D">managed:</text>
+  <text x="55" y="191" text-anchor="middle" font-size="10" fill="#33424D">rayas y punto</text>
+  <text x="135" y="178" text-anchor="middle" font-size="10" fill="#33424D">selected:</text>
+  <text x="135" y="191" text-anchor="middle" font-size="10" fill="#33424D">valor elegido</text>
+  <text x="215" y="178" text-anchor="middle" font-size="10" fill="#33424D">siempre un</text>
+  <text x="215" y="191" text-anchor="middle" font-size="10" fill="#33424D">valor</text>
+  <text x="295" y="178" text-anchor="middle" font-size="10" fill="#33424D">sin managed;</text>
+  <text x="295" y="191" text-anchor="middle" font-size="10" fill="#33424D">push = nivelar</text>
+  <circle cx="24" cy="226" r="3.6" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+  <circle cx="24" cy="226" r="4.6" fill="none" stroke="#8C99A3" stroke-width="1"/>
+  <text x="34" y="230" font-size="10" fill="#33424D">Punto blanco encendido: guía managed</text>
+  <text x="18" y="250" font-size="10" fill="#5B6B78">Valor girado sin tirar: se borra a los 10 s (SPD) o 45 s (V/S)</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 306" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Las unidades del FMGS</title>
+  <desc id="d">El FCU arriba manda a los dos FMGC. Cada FMGC tiene una parte FM (navegación, plan de vuelo, performance) y una FG (AP, FD, A/THR), y se comunican por crosstalk. Debajo, MCDU 1 y 2 para planificar y FAC 1 y 2 para guiñada y velocidades. Salidas: PFD y ND, flight controls y FADEC.</desc>
+  <rect x="1" y="1" width="358" height="304" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Las unidades del FMGS</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Dos de cada una, salvo el FCU</text>
+  <rect x="90" y="56" width="180" height="34" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="180" y="70.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">FCU</text>
+  <text x="180" y="83.5" text-anchor="middle" font-size="10" fill="#33424D">corto plazo: knobs, AP, A/THR</text>
+  <rect x="18" y="112" width="150" height="92" rx="8" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="93" y="128" text-anchor="middle" font-size="11.5" font-weight="800" fill="#1E2A33">FMGC 1</text>
+  <rect x="26" y="136" width="64" height="58" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="58" y="156" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">FM</text>
+  <text x="58" y="169" text-anchor="middle" font-size="10" fill="#33424D">navegación</text>
+  <text x="58" y="181" text-anchor="middle" font-size="10" fill="#33424D">plan, perf.</text>
+  <rect x="96" y="136" width="64" height="58" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="128" y="156" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">FG</text>
+  <text x="128" y="169" text-anchor="middle" font-size="10" fill="#33424D">AP, FD</text>
+  <text x="128" y="181" text-anchor="middle" font-size="10" fill="#33424D">A/THR</text>
+  <rect x="192" y="112" width="150" height="92" rx="8" fill="#F3F5F7" stroke="#8C99A3" stroke-width="1.4"/>
+  <text x="267" y="128" text-anchor="middle" font-size="11.5" font-weight="800" fill="#1E2A33">FMGC 2</text>
+  <rect x="200" y="136" width="64" height="58" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="232" y="156" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">FM</text>
+  <text x="232" y="169" text-anchor="middle" font-size="10" fill="#33424D">navegación</text>
+  <text x="232" y="181" text-anchor="middle" font-size="10" fill="#33424D">plan, perf.</text>
+  <rect x="270" y="136" width="64" height="58" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="302" y="156" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">FG</text>
+  <text x="302" y="169" text-anchor="middle" font-size="10" fill="#33424D">AP, FD</text>
+  <text x="302" y="181" text-anchor="middle" font-size="10" fill="#33424D">A/THR</text>
+  <line x1="168" y1="158" x2="192" y2="158" stroke="#33424D" stroke-width="1.6"/>
+  <text x="180" y="218" text-anchor="middle" font-size="10" fill="#5B6B78">crosstalk</text>
+  <line x1="180" y1="210" x2="180" y2="162" stroke="#C9D3DB" stroke-width="1"/>
+  <line x1="140" y1="90" x2="93" y2="110" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <line x1="220" y1="90" x2="267" y2="110" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <rect x="18" y="230" width="70" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="53" y="247.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">MCDU 1</text>
+  <text x="53" y="260.5" text-anchor="middle" font-size="10" fill="#33424D">planificar</text>
+  <rect x="98" y="230" width="70" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="133" y="247.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">FAC 1</text>
+  <text x="133" y="260.5" text-anchor="middle" font-size="10" fill="#33424D">guiñada, vel.</text>
+  <line x1="53" y1="230" x2="53" y2="207" stroke="#33424D" stroke-width="1.4" marker-end="url(#a33424D)"/>
+  <rect x="192" y="230" width="70" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="227" y="247.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">MCDU 2</text>
+  <text x="227" y="260.5" text-anchor="middle" font-size="10" fill="#33424D">planificar</text>
+  <rect x="272" y="230" width="70" height="40" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="307" y="247.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">FAC 2</text>
+  <text x="307" y="260.5" text-anchor="middle" font-size="10" fill="#33424D">guiñada, vel.</text>
+  <line x1="227" y1="230" x2="227" y2="207" stroke="#33424D" stroke-width="1.4" marker-end="url(#a33424D)"/>
+  <text x="180" y="294" text-anchor="middle" font-size="10" fill="#33424D">Salidas: PFD y ND, flight controls (AP) y FADEC (A/THR)</text>
+</svg>

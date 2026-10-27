@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones y Auto flight, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=140,"al menos las 140 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones y Auto flight");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,autoflight,combustible,comunicaciones,controles,electrico,fuego,hidraulico,indicacion,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight y FMGS, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=153,"al menos las 153 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight y FMGS");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,autoflight,combustible,comunicaciones,controles,electrico,fmgs,fuego,hidraulico,indicacion,performance,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -660,6 +660,18 @@
     ok(one(G,/^WHEN LOOKING AT EITHER RMP/).expl.indexOf("ámbar")>=0,"SEL ambar");
     var mal=C.concat(G).filter(function(q){return /FCOM|del manual|según el manual/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos que nombran el manual: "+mal.join(" | "));
+  });
+  T("15 RUTA-25 FMGS: 13 estaciones con el repaso al final, niveles que no bajan, la prioridad de los modos de navegacion, la alineacion completa y la rapida, y ninguna estacion usa las preguntas DGAC que el FCOM actual no respalda",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="fmgs"});
+    eq(P.length,13,"estaciones de FMGS");eq(P[P.length-1].id,"fms-repaso","el repaso va al final");
+    var lv=P.filter(function(m){return m.kind!=="review"}).map(function(m){return m.level});ok(lv.every(function(v,i){return i===0||v>=lv[i-1]}),"niveles en orden: "+lv.join(","));
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    var b5=body("fms-5");ok(b5.indexOf("1. **IRS-GPS**;\n2. **IRS-DME/DME**;\n3. **IRS-VOR/DME**;\n4. **IRS solo**.")>=0,"prioridad de los modos de navegacion");
+    var b3=body("fms-3");ok(b3.indexOf("**OFF más de 5 s**")>=0&&b3.indexOf("**OFF y de vuelta a NAV dentro de 5 s**")>=0,"alineacion completa y rapida");
+    var G=SYSTEMS[DGAC_KEY].questions,malas=G.filter(function(q){return /^HOW DOES THE FMGC COMPUTE RADIO POSITION|^WHILE TAXIING ON THE GROUND, THE FMGS DISPLAYS|^CAN THE CREW DEPRESS THE RMP ON NAV PUSHBUTTON|^THE IR ALIGNMENT COUNT DOWN STOPS/.test(q.q)}).map(function(q){return qid(DGAC_KEY,q)});
+    eq(malas.length,4,"las 4 preguntas DGAC sin respaldo");
+    var usadas=[];Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(x){if(x.source&&malas.indexOf(x.source.appId)>=0)usadas.push(k+"/"+x.id)})});
+    eq(usadas.length,0,"una estacion usa una pregunta DGAC sin respaldo: "+usadas.join(", "));
   });
   T("15 RUTA-24 Auto flight: 15 estaciones con el repaso al final, niveles que no bajan, el FMGC con dos partes (FM y FG), CAT 3 DUAL con los dos AP y CAT 1 con aterrizaje manual, y ninguna estacion usa las preguntas DGAC que el FCOM actual contradice",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="autoflight"});

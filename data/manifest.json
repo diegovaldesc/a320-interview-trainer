@@ -4,7 +4,7 @@
   "aggregator": "data/questions/index.js",
   "global": "window.SYSTEMS_DATA_JSON",
   "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
-  "total": 1182,
+  "total": 1220,
   "categories": {
    "procedures": {
     "name": "Procedures and emergencies",
@@ -121,7 +121,7 @@
    "autoflight": {
     "name": "Autoflight and FMGS",
     "file": "data/questions/autoflight.js",
-    "count": 63,
+    "count": 101,
     "idPrefix": "autoflight:"
    },
    "apu_powerplant": {
@@ -334,7 +334,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 140,
+  "total": 153,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -481,6 +481,26 @@
      "ele-repaso · Electrical review"
     ]
    },
+   "fmgs": {
+    "title": "FMGS",
+    "file": "data/stations/fmgs.js",
+    "count": 13,
+    "stations": [
+     "fms-1 · Flight management at a glance",
+     "fms-2 · Using the MCDU",
+     "fms-3 · ADIRS and IRS alignment",
+     "fms-4 · Preparing the FMGS",
+     "fms-5 · Where am I: the FM position",
+     "fms-6 · Navigation accuracy",
+     "fms-7 · Radio navigation tuning",
+     "fms-8 · The lateral flight plan",
+     "fms-9 · Vertical flight plan and flight phases",
+     "fms-10 · Optimization and predictions",
+     "fms-11 · Engine out",
+     "fms-12 · FMGC failures and back-up navigation",
+     "fms-repaso · FMGS review"
+    ]
+   },
    "fuego": {
     "title": "Fire protection",
     "file": "data/stations/fuego.js",
@@ -570,7 +590,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 140
+   "stations": 153
   }
  }
 }

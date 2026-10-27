@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 284" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cómo calcula su posición cada FMGC</title>
+  <desc id="d">Los tres IRS dan la MIX IRS, un promedio ponderado. El GPS (como GPIRS) o las radioayudas (DME/DME, VOR/DME) dan el bias, la corrección entre la MIX IRS y esas fuentes. La FM position es la MIX IRS más el bias. Prioridad: IRS-GPS, IRS-DME/DME, IRS-VOR/DME e IRS solo; sin GPS ni radio, se usa el último bias memorizado.</desc>
+  <rect x="1" y="1" width="358" height="282" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Cómo calcula su posición cada FMGC</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Siempre parte de la inercia</text>
+  <rect x="18" y="58" width="106" height="44" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="71" y="77.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">IRS 1, 2, 3</text>
+  <text x="71" y="90.5" text-anchor="middle" font-size="10" fill="#33424D">promedio ponderado</text>
+  <rect x="18" y="122" width="106" height="44" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="71" y="141.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">GPS</text>
+  <text x="71" y="154.5" text-anchor="middle" font-size="10" fill="#33424D">GPIRS (IRS + GPS)</text>
+  <rect x="18" y="186" width="106" height="44" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="71" y="205.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#1E2A33">Radioayudas</text>
+  <text x="71" y="218.5" text-anchor="middle" font-size="10" fill="#33424D">DME/DME, VOR/DME</text>
+  <rect x="150" y="58" width="90" height="44" rx="7" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="195" y="84" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">MIX IRS</text>
+  <line x1="124" y1="80" x2="148" y2="80" stroke="#33424D" stroke-width="1.5" marker-end="url(#a33424D)"/>
+  <rect x="150" y="154" width="90" height="44" rx="7" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="195" y="167" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">Bias</text>
+  <text x="195" y="180" text-anchor="middle" font-size="10" fill="#33424D">de la MIX IRS</text>
+  <text x="195" y="192" text-anchor="middle" font-size="10" fill="#33424D">al GPS o radio</text>
+  <line x1="124" y1="144" x2="148" y2="170" stroke="#33424D" stroke-width="1.5" marker-end="url(#a33424D)"/>
+  <line x1="124" y1="208" x2="148" y2="184" stroke="#33424D" stroke-width="1.5" marker-end="url(#a33424D)"/>
+  <line x1="195" y1="102" x2="195" y2="152" stroke="#C9D3DB" stroke-width="1.2"/>
+  <rect x="262" y="104" width="82" height="60" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="303" y="125" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">FM position</text>
+  <text x="303" y="138" text-anchor="middle" font-size="10" fill="#33424D">MIX IRS</text>
+  <text x="303" y="150" text-anchor="middle" font-size="10" fill="#33424D">+ bias</text>
+  <line x1="240" y1="80" x2="268" y2="102" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <line x1="240" y1="176" x2="268" y2="166" stroke="#0E5E6F" stroke-width="1.6" marker-end="url(#a0E5E6F)"/>
+  <text x="18" y="254" font-size="10" fill="#33424D">Prioridad: 1 IRS-GPS · 2 IRS-DME/DME · 3 IRS-VOR/DME · 4 IRS solo</text>
+  <text x="18" y="270" font-size="10" fill="#5B6B78">Sin GPS ni radio: MIX IRS + el último bias memorizado.</text>
+</svg>

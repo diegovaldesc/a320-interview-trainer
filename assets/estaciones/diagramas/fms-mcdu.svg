@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 320" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">La pantalla del MCDU</title>
+  <desc id="d">Página INIT A de ejemplo: CO RTE, FROM/TO y FLT NBR con cajas ámbar (datos obligatorios), COST INDEX y CRZ FL/TEMP con rayas (los calculará el FMGC), TROPO 36090 en azul (modificable) y el scratchpad abajo. Leyenda de colores: azul modificable, verde del FMS, magenta límites, amarillo plan temporal.</desc>
+  <rect x="1" y="1" width="358" height="318" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">La pantalla del MCDU</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Ejemplo: página INIT A</text>
+  <rect x="40" y="56" width="280" height="196" rx="8" fill="#0F1A22" stroke="#2A3640" stroke-width="1.4"/>
+  <text x="180" y="74" text-anchor="middle" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="12" font-weight="700" fill="#E9EEF2">INIT</text>
+  <text x="52" y="92" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">CO RTE</text>
+  <text x="308" y="92" text-anchor="end" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">FROM/TO</text>
+  <rect x="52" y="97" width="70" height="13" rx="1" fill="none" stroke="#F2A93B" stroke-width="1.3"/>
+  <rect x="222" y="97" width="86" height="13" rx="1" fill="none" stroke="#F2A93B" stroke-width="1.3"/>
+  <text x="52" y="128" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">FLT NBR</text>
+  <rect x="52" y="133" width="70" height="13" rx="1" fill="none" stroke="#F2A93B" stroke-width="1.3"/>
+  <text x="52" y="164" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">COST INDEX</text>
+  <text x="52" y="180" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="11" fill="#E9EEF2">---</text>
+  <text x="308" y="164" text-anchor="end" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">TROPO</text>
+  <text x="308" y="180" text-anchor="end" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#5AC8E6">36090</text>
+  <text x="52" y="200" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">CRZ FL/TEMP</text>
+  <text x="52" y="216" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="11" fill="#E9EEF2">-----/---</text>
+  <line x1="48" y1="228" x2="312" y2="228" stroke="#3A4752" stroke-width="1"/>
+  <text x="52" y="244" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="10" fill="#E9EEF2">scratchpad</text>
+  <rect x="18" y="262" width="18" height="11" rx="1" fill="none" stroke="#C77700" stroke-width="1.4"/>
+  <text x="50" y="272" font-size="10" fill="#33424D">Cajas ámbar: dato obligatorio</text>
+  <text x="18" y="290" font-family="ui-monospace, 'Cascadia Mono', Consolas, monospace" font-size="11" font-weight="700" fill="#33424D">- - -</text>
+  <text x="50" y="290" font-size="10" fill="#33424D">Rayas: lo calculará el FMGC</text>
+  <rect x="196" y="263" width="12" height="10" rx="2" fill="#5AC8E6" stroke="#5AC8E6" stroke-width="1.4"/>
+  <text x="212" y="272" font-size="10" fill="#33424D">azul: modificable</text>
+  <rect x="196" y="281" width="12" height="10" rx="2" fill="#3DDC84" stroke="#3DDC84" stroke-width="1.4"/>
+  <text x="212" y="290" font-size="10" fill="#33424D">verde: del FMS</text>
+  <rect x="196" y="299" width="12" height="10" rx="2" fill="#E36BD8" stroke="#E36BD8" stroke-width="1.4"/>
+  <text x="212" y="308" font-size="10" fill="#33424D">magenta: límites</text>
+  <rect x="18" y="299" width="12" height="10" rx="2" fill="#F2D23B" stroke="#F2D23B" stroke-width="1.4"/>
+  <text x="50" y="308" font-size="10" fill="#33424D">amarillo: plan temporal</text>
+</svg>

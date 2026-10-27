@@ -838,6 +838,17 @@ botón «Portada» para volver). Ningún módulo cambió.
   galleys, luz SEL ámbar); y las DGAC que la documentación no respalda tal como
   están conservan su clave con una explicación de lo que sí se confirma. Mutación:
   con la clave antigua del CVR, REG-31 falla.
+- **RUTA-25** (2026-10-27, 1.38.0) — la materia nueva FMGS: 13 estaciones con el
+  repaso al final, en niveles que no bajan (panorama y bases de datos, MCDU, ADIRS y
+  alineación de los IRS, preparación del FMGS, FM position, precisión de la
+  navegación, sintonía de radioayudas, plan lateral, plan vertical y fases,
+  optimización y predicciones, engine out, fallas del FMGC y back-up nav). Revisa la
+  prioridad de los modos de navegación (IRS-GPS, IRS-DME/DME, IRS-VOR/DME, IRS solo)
+  y las dos alineaciones (OFF más de 5 s; OFF y NAV dentro de 5 s). Ninguna estación
+  usa 4 preguntas DGAC que el FCOM actual no respalda (radio position «IRS,
+  DME/DME», posición en el taxi «IRS only», RMP NAV junto con la sintonía
+  automática, CDU antiguo que se detiene un minuto antes). RUTA-02 pasa a 14 materias
+  y 153 estaciones.
 - **RUTA-24** (2026-10-27, 1.37.0) — la materia nueva Auto flight: 15 estaciones
   con el repaso al final, en niveles que no bajan (panorama del FMGS, FCU, AP y FD,
   FMA, despegue y go-around, modos laterales, subida y descenso, nivelación, V/S y

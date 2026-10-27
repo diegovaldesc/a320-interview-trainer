@@ -4,12 +4,12 @@
   "aggregator": "data/questions/index.js",
   "global": "window.SYSTEMS_DATA_JSON",
   "idFormat": "<category key>:<hash of the normalized stem> (tools/buscar.js finds it)",
-  "total": 1220,
+  "total": 1269,
   "categories": {
    "procedures": {
     "name": "Procedures and emergencies",
     "file": "data/questions/procedures.js",
-    "count": 53,
+    "count": 102,
     "idPrefix": "procedures:"
    },
    "hydraulic": {
@@ -334,7 +334,7 @@
   "aggregator": "data/stations/index.js",
   "global": "window.ESTACIONES_DATA",
   "generatedBy": "Escritorio\\APP\\Estaciones\\_herramientas\\exportar_app.js (source: Escritorio\\APP\\Estaciones\\_fuente, outside this repo)",
-  "total": 153,
+  "total": 169,
   "subjects": {
    "aire": {
     "title": "Air conditioning and pneumatic",
@@ -568,6 +568,29 @@
      "perf-repaso · Performance review"
     ]
    },
+   "procedures": {
+    "title": "Procedures and emergencies",
+    "file": "data/stations/procedures.js",
+    "count": 16,
+    "stations": [
+     "prc-1 · Golden rules",
+     "prc-2 · Handling the ECAM",
+     "prc-3 · After the ECAM",
+     "prc-4 · Declaring an emergency",
+     "prc-5 · Memory items",
+     "prc-6 · Engine failure",
+     "prc-7 · All engines failure",
+     "prc-8 · Unreliable speed",
+     "prc-9 · Stall",
+     "prc-10 · Windshear",
+     "prc-11 · Terrain warnings",
+     "prc-12 · TCAS",
+     "prc-13 · Emergency descent",
+     "prc-14 · Volcanic ash",
+     "prc-15 · Evacuation and incapacitation",
+     "prc-repaso · Procedures and emergencies review"
+    ]
+   },
    "tren": {
     "title": "Landing gear and brakes",
     "file": "data/stations/tren.js",
@@ -590,7 +613,7 @@
   },
   "route": {
    "file": "data/stations/route.js",
-   "stations": 153
+   "stations": 169
   }
  }
 }

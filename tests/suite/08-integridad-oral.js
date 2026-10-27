@@ -1,5 +1,14 @@
 /* Fragmento de la batería de regresión: tests/run.ps1 une tests/suite/*.js en orden de nombre dentro de una sola función (la abre 00-arnes.js, con los ayudantes T, ok, eq, reset…, y la cierra 99-ejecucion.js). */
   /* ---------- 7. Integridad del banco oral ---------- */
+  T("7 REG-35 ninguna oral muestra el nombre de un manual (ov_ecam_after y ov_ecam_priorities decian «revisa el FCOM»)",function(){
+    var REF=/(FCOM|FCTM|AFM|PDF)|DSC-d|PRO-[A-Z]{3}|§/,mal=[];
+    ORAL_VOICE_BANK.forEach(function(o){
+      var vis=[o.question,o.short||"",o.reference||""].concat((o.concepts||o.steps||[]).map(function(c){return (c&&(c.label||c.concept))||""}));
+      vis.forEach(function(s){if(REF.test(s))mal.push(o.id+": "+String(s).match(REF)[0])});
+    });
+    eq(mal.length,0,"orales que nombran un manual: "+mal.join(" | "));
+    var a=ORAL_VOICE_BANK.find(function(o){return o.id==="ov_ecam_after"});ok(a&&a.reference.indexOf("documentación del procedimiento")>=0,"ov_ecam_after: revisar la documentación del procedimiento");
+  });
   T("7 A15 la integridad oral detecta items nulos, terminos vacios, ids repetidos y pesos invalidos",function(){
     var base=oralBankIntegrity(),added=0;
     function probe(item,label){

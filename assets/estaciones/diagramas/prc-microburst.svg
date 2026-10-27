@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 328" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Un microburst en la aproximación</title>
+  <desc id="d">Una corriente descendente baja desde la nube y se abre hacia los lados al llegar al suelo. El avión en la aproximación encuentra primero viento de frente (la IAS sube y queda sobre la senda), después la corriente hacia abajo y al final viento de cola (la IAS y la sustentación caen). La trampa es reducir el empuje en la primera etapa; el escape es TOGA y SRS.</desc>
+  <rect x="1" y="1" width="358" height="326" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <defs><marker id="a0E5E6F" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E5E6F"/></marker><marker id="aC77700" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C77700"/></marker><marker id="a33424D" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33424D"/></marker></defs>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Un microburst en la aproximación</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Corriente descendente que se abre al llegar al suelo</text>
+  <line x1="14" y1="262" x2="346" y2="262" stroke="#8C99A3" stroke-width="1.6"/>
+  <text x="20" y="278" font-size="10" fill="#5B6B78">suelo</text>
+  <ellipse cx="180" cy="74" rx="78" ry="20" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <line x1="150" y1="96" x2="150" y2="210" stroke="#33424D" stroke-width="1.8" marker-end="url(#a33424D)"/>
+  <line x1="180" y1="96" x2="180" y2="210" stroke="#33424D" stroke-width="1.8" marker-end="url(#a33424D)"/>
+  <line x1="210" y1="96" x2="210" y2="210" stroke="#33424D" stroke-width="1.8" marker-end="url(#a33424D)"/>
+  <text x="72" y="176" font-size="10" fill="#33424D">corriente</text>
+  <text x="72" y="188" font-size="10" fill="#33424D">descendente</text>
+  <path d="M150 214 Q140 248 80 252" fill="none" stroke="#33424D" stroke-width="1.8" marker-end="url(#a33424D)"/>
+  <path d="M210 214 Q220 248 280 252" fill="none" stroke="#33424D" stroke-width="1.8" marker-end="url(#a33424D)"/>
+  <path d="M22 128 Q90 114 130 134 Q180 190 250 214 L330 236" fill="none" stroke="#0E5E6F" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#a0E5E6F)"/>
+  <line x1="22" y1="142" x2="330" y2="226" stroke="#C9D3DB" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <text x="250" y="196" font-size="10" fill="#5B6B78">senda</text>
+  <text x="18" y="92" font-size="10.5" font-weight="700" fill="#2E9D5B">1 Viento de frente</text>
+  <text x="18" y="105" font-size="10" fill="#33424D">la IAS sube, sobre la senda</text>
+  <text x="222" y="150" font-size="10.5" font-weight="700" fill="#1E2A33">2 Corriente hacia abajo</text>
+  <text x="200" y="280" font-size="10.5" font-weight="700" fill="#C77700">3 Viento de cola</text>
+  <text x="200" y="293" font-size="10" fill="#33424D">la IAS y la sustentación caen</text>
+  <text x="18" y="314" font-size="10" fill="#33424D">Trampa: reducir el empuje en la etapa 1. Escape: TOGA y SRS.</text>
+</svg>

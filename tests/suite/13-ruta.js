@@ -13,9 +13,9 @@
     ok(!c.hidden,"el boton Portada vuelve a la portada");
     RUTA.showBank();
   });
-  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight y FMGS, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
-    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=153,"al menos las 153 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight y FMGS");
-    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,autoflight,combustible,comunicaciones,controles,electrico,fmgs,fuego,hidraulico,indicacion,performance,tren","materias");
+  T("14 RUTA-02 contenido: las estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight, FMGS y Procedures and emergencies, cada pregunta se enseña en su estacion, es la del banco y nada visible cita un manual",function(){
+    eq(RUTA.missions.length,window.ESTACIONES_DATA.route.missions.length,"estaciones de la ruta");ok(RUTA.missions.length>=169,"al menos las 169 estaciones de Hidraulico, Electrico, Controles de vuelo, Performance, Tren de aterrizaje, Combustible, Aire acondicionado, APU, Fuego, Antihielo, Indicacion, Comunicaciones, Auto flight y FMGS");
+    var subj={};RUTA.missions.forEach(function(m){subj[m.subject]=1});eq(Object.keys(subj).sort().join(),"aire,antihielo,apu,autoflight,combustible,comunicaciones,controles,electrico,fmgs,fuego,hidraulico,indicacion,performance,procedures,tren","materias");
     var cards={};Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].cards.forEach(function(c){cards[c.id]=k})});
     var REF=/\b(FCOM|FCTM|AFM|PDF)\b|DSC-\d|PRO-[A-Z]{3}|§/;
     Object.keys(RUTA.stations).forEach(function(k){
@@ -660,6 +660,19 @@
     ok(one(G,/^WHEN LOOKING AT EITHER RMP/).expl.indexOf("ámbar")>=0,"SEL ambar");
     var mal=C.concat(G).filter(function(q){return /FCOM|del manual|según el manual/.test(q.q+" "+q.options.join(" ")+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos que nombran el manual: "+mal.join(" | "));
+  });
+  T("15 RUTA-26 Procedures and emergencies: 16 estaciones con el repaso al final, niveles que no bajan, el orden de los procedimientos, los 10 memory items, el pitch y empuje de la velocidad no confiable, y sin preguntas que nombran el manual en el enunciado",function(){
+    var P=RUTA.missions.filter(function(m){return m.subject==="procedures"});
+    eq(P.length,16,"estaciones de Procedures and emergencies");eq(P[P.length-1].id,"prc-repaso","el repaso va al final");
+    var lv=P.filter(function(m){return m.kind!=="review"}).map(function(m){return m.level});ok(lv.every(function(v,i){return i===0||v>=lv[i-1]}),"niveles en orden: "+lv.join(","));
+    function body(id){var st=RUTA.stations[id];ok(st,"existe "+id);return st?st.cards.map(function(c){return c.body}).join(" "):""}
+    ok(body("prc-2").indexOf("1. **memory items** u OEB immediate actions;\n2. **OEB**;\n3. **ECAM**;\n4. **QRH**.")>=0,"orden: memory items, OEB, ECAM, QRH");
+    var b5=body("prc-5"),mem=["LOSS OF BRAKING","EMER DESCENT","STALL RECOVERY","STALL WARNING AT LIFT OFF","UNRELIABLE SPEED INDICATION","TAWS CAUTION","TAWS WARNING","TCAS CAUTION","TCAS WARNING","WINDSHEAR WARNING"];
+    mem.forEach(function(m){ok(b5.indexOf("**"+m+"**")>=0,"memory item "+m)});ok(b5.indexOf("ENG FIRE")<0,"ENG FIRE no esta en la lista de memory items");
+    ok(body("prc-8").indexOf("**15° / TOGA**; sobre ella y bajo FL 100, **10° / CLB**; sobre FL 100, **5° / CLB**")>=0,"velocidad no confiable: 15/TOGA, 10/CLB, 5/CLB");
+    ok(body("prc-7").indexOf("**280 kt / M 0.77** o **300 kt / M 0.77**")>=0,"optimum relight speed segun el motor");
+    var stems=[];P.forEach(function(m){RUTA.stations[m.id].test.forEach(function(x){if(x.type==="mcq")stems.push(x.question)})});
+    ok(stems.length>=60,"preguntas de alternativas: "+stems.length);ok(stems.every(function(s){return !/FCOM|FCTM/.test(s)}),"ningun enunciado nombra el manual");
   });
   T("15 RUTA-25 FMGS: 13 estaciones con el repaso al final, niveles que no bajan, la prioridad de los modos de navegacion, la alineacion completa y la rapida, y ninguna estacion usa las preguntas DGAC que el FCOM actual no respalda",function(){
     var P=RUTA.missions.filter(function(m){return m.subject==="fmgs"});

@@ -106,15 +106,15 @@ window.ORAL_PARTS["automation_procedures"]=[
  ]},
 
 {id:"ov_ecam_priorities",question:"Ante una falla en vuelo, ¿qué procedimientos usa la tripulación, en qué orden los aplica y qué hace al terminarlos?",
- short:"Primero volar. Después: memory items u OEB immediate actions, luego el OEB, luego el ECAM y después el QRH (las QRH summaries en ELEC EMER CONFIG o doble falla hidráulica). Al terminar, si hay tiempo, el FCOM.",
- reference:"Primero volar: mantener una trayectoria segura antes de leer nada. En el despegue o en un go-around, las acciones READ & DO empiezan desde 400 ft AGL; antes, solo si la trayectoria es segura.\n\nEl orden básico es:\n1. MEMORY ITEMS u OEB immediate actions, de memoria.\n2. OEB.\n3. ECAM: el procedimiento, las páginas de sistema y el STATUS.\n4. QRH. Las QRH summaries se usan después de “ECAM ACTIONS COMPLETE”, en ELEC EMER CONFIG o en una doble falla hidráulica.\n\nSe aplica un procedimiento a la vez: se termina, salvo que pida otro o aparezca algo que obligue a reevaluar, como humo en cabina. Al terminar, se vuelve al reparto normal de tareas y, si hay tiempo, se revisa el FCOM, sin alargar el vuelo para eso.\n\nEs la secuencia básica: la tripulación usa su criterio y la adapta a la situación real.",
+ short:"Primero volar. Después: memory items u OEB immediate actions, luego el OEB, luego el ECAM y después el QRH (las QRH summaries en ELEC EMER CONFIG o doble falla hidráulica). Al terminar, si hay tiempo, la documentación del procedimiento.",
+ reference:"Primero volar: mantener una trayectoria segura antes de leer nada. En el despegue o en un go-around, las acciones READ & DO empiezan desde 400 ft AGL; antes, solo si la trayectoria es segura.\n\nEl orden básico es:\n1. MEMORY ITEMS u OEB immediate actions, de memoria.\n2. OEB.\n3. ECAM: el procedimiento, las páginas de sistema y el STATUS.\n4. QRH. Las QRH summaries se usan después de “ECAM ACTIONS COMPLETE”, en ELEC EMER CONFIG o en una doble falla hidráulica.\n\nSe aplica un procedimiento a la vez: se termina, salvo que pida otro o aparezca algo que obligue a reevaluar, como humo en cabina. Al terminar, se vuelve al reparto normal de tareas y, si hay tiempo, se revisa la documentación del procedimiento, sin alargar el vuelo para eso.\n\nEs la secuencia básica: la tripulación usa su criterio y la adapta a la situación real.",
  steps:[
   {concept:"Primero volar: trayectoria segura (desde 400 ft AGL en despegue o go-around)",order:1,weight:2,accepted:["primero volar","fly the aircraft","volar el avion","trayectoria segura","400 ft","400 pies"]},
   {concept:"Memory items u OEB immediate actions",order:2,weight:2,required:true,accepted:["memory items","memory item","acciones de memoria","recall items","immediate actions","acciones inmediatas"]},
   {concept:"OEB",order:3,weight:1,accepted:["oeb"]},
   {concept:"ECAM",order:4,weight:2,required:true,accepted:["ecam"]},
   {concept:"QRH (summaries en ELEC EMER CONFIG o doble falla hidráulica)",order:5,weight:2,accepted:["qrh","summaries"]},
-  {concept:"FCOM si hay tiempo, sin alargar el vuelo",order:6,weight:1,accepted:["fcom","si hay tiempo","si el tiempo lo permite","sin alargar"]}
+  {concept:"Revisar la documentación si hay tiempo, sin alargar el vuelo",order:6,weight:1,accepted:["fcom","si hay tiempo","si el tiempo lo permite","sin alargar"]}
  ],
  refs:[
   {src:"FCTM 25 NOV 24 · AOP-30-10 · Sequence of procedure (PDF 154)",cite:"In the case of abnormal or emergency situations, the flight crew should apply the procedures in the following sequence, as appropriate:"},
@@ -151,11 +151,11 @@ window.ORAL_PARTS["automation_procedures"]=[
  ]},
 
 {id:"ov_ecam_after",question:"Una vez completadas las acciones ECAM/QRH/OEB, ¿qué hace la tripulación?",
- short:"Vuelve al reparto normal de tareas, revisa el FCOM si hay tiempo (sin alargar el vuelo), evalúa la situación con el STATUS (combustible, landing distance y otros aspectos), decide e informa a ATC, cabina, pasajeros y operaciones.",
- reference:"- Vuelve al reparto normal de tareas (normal operations task sharing).\n- Si hay tiempo, revisa el FCOM para buscar información adicional, pero sin alargar el vuelo para eso.\n- Evalúa la situación llamando el STATUS cuando convenga: la penalidad de combustible (cuánto queda en destino o en el alternativo), la penalidad de landing distance (calcularla para destino o alternativo) y los aspectos operacionales, de mantenimiento y comerciales.\n- Toma la decisión.\n- Informa a ATC, a la tripulación de cabina, a los pasajeros y a operaciones de la aerolínea, según corresponda.",
+ short:"Vuelve al reparto normal de tareas, revisa la documentación del procedimiento si hay tiempo (sin alargar el vuelo), evalúa la situación con el STATUS (combustible, landing distance y otros aspectos), decide e informa a ATC, cabina, pasajeros y operaciones.",
+ reference:"- Vuelve al reparto normal de tareas (normal operations task sharing).\n- Si hay tiempo, revisa la documentación del procedimiento para buscar información adicional, pero sin alargar el vuelo para eso.\n- Evalúa la situación llamando el STATUS cuando convenga: la penalidad de combustible (cuánto queda en destino o en el alternativo), la penalidad de landing distance (calcularla para destino o alternativo) y los aspectos operacionales, de mantenimiento y comerciales.\n- Toma la decisión.\n- Informa a ATC, a la tripulación de cabina, a los pasajeros y a operaciones de la aerolínea, según corresponda.",
  concepts:[
   {label:"Volver al reparto normal de tareas",weight:2,required:true,accepted:["reparto normal","task sharing","tareas normales","reparto de tareas","normal operations"]},
-  {label:"FCOM si hay tiempo, sin alargar el vuelo",weight:1,accepted:["fcom","si hay tiempo","si el tiempo lo permite","sin alargar","sin prolongar"]},
+  {label:"Revisar la documentación si hay tiempo, sin alargar el vuelo",weight:1,accepted:["fcom","si hay tiempo","si el tiempo lo permite","sin alargar","sin prolongar"]},
   {label:"Evaluar con el STATUS: combustible y landing distance",weight:2,required:true,accepted:["status","combustible","fuel","landing distance","distancia de aterrizaje","evaluar","evalua la situacion"]},
   {label:"Aspectos operacionales, de mantenimiento y comerciales",weight:1,accepted:["mantenimiento","comerciales","comercial","operacionales"]},
   {label:"Tomar la decisión",weight:2,accepted:["decision","decidir","decide"]},

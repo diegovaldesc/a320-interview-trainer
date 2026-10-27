@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 350" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">CLR, RCL y EMER CANC</title>
+  <desc id="d">CLR: encendida si hay una warning, una caution o un status; presionarla hace avanzar el ECAM y apaga MASTER WARN y MASTER CAUT, salvo en algunas warnings rojas como OVERSPEED y STALL. RCL: vuelve a mostrar lo borrado con CLR que sigue activo y suspende la inhibición por fase hasta la fase siguiente; más de 3 s, también lo cancelado con EMER CANC; si no hay nada, NORMAL durante 3 s. EMER CANC: en una warning corta el sonido y MASTER WARN, pero el mensaje queda; en una caution la cancela el resto del vuelo. Lo cancelado vuelve con RCL más de 3 s, o solo en la fase 1 o 2 después de alinear los IR 1 y 2. Se usa solo para MASTER CAUTION espurias, presionándolo al menos 1 s.</desc>
+  <rect x="1" y="1" width="358" height="348" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">CLR, RCL y EMER CANC</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Tres teclas del panel del ECAM</text>
+  <rect x="16" y="60" width="80" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="56" y="76" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">CLR</text>
+  <text x="106" y="72" font-size="10.5" font-weight="700" fill="#1E2A33">Encendida: warning, caution o status</text>
+  <text x="106" y="85" font-size="10" font-weight="400" fill="#33424D">Presionarla hace avanzar el ECAM.</text>
+  <text x="106" y="98" font-size="10" font-weight="400" fill="#33424D">Apaga MASTER WARN y MASTER CAUT,</text>
+  <text x="106" y="111" font-size="10" font-weight="400" fill="#33424D">salvo algunas rojas: OVERSPEED, STALL.</text>
+  <line x1="16" y1="124" x2="344" y2="124" stroke="#C9D3DB" stroke-width="1"/>
+  <rect x="16" y="134" width="80" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="56" y="150" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">RCL</text>
+  <text x="106" y="146" font-size="10.5" font-weight="700" fill="#1E2A33">Vuelve a mostrar lo borrado con CLR</text>
+  <text x="106" y="159" font-size="10" font-weight="400" fill="#33424D">que sigue activo, y suspende la inhibición</text>
+  <text x="106" y="172" font-size="10" font-weight="400" fill="#33424D">por fase hasta la fase siguiente.</text>
+  <text x="106" y="185" font-size="10" font-weight="400" fill="#33424D">Más de 3 s: también lo de EMER CANC.</text>
+  <text x="106" y="198" font-size="10" font-weight="400" fill="#33424D">Nada que mostrar: NORMAL durante 3 s.</text>
+  <line x1="16" y1="211" x2="344" y2="211" stroke="#C9D3DB" stroke-width="1"/>
+  <rect x="16" y="221" width="80" height="24" rx="3" fill="#1E272E" stroke="#9AA6AF" stroke-width="1.4"/>
+  <text x="56" y="237" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">EMER CANC</text>
+  <rect x="106" y="221" width="116" height="62" rx="7" fill="#F8E1DE" stroke="#C0392B" stroke-width="1.4"/>
+  <text x="114" y="236" font-size="10.5" font-weight="800" fill="#C0392B">Warning</text>
+  <text x="114" y="250" font-size="10" fill="#33424D">corta el sonido y</text>
+  <text x="114" y="263" font-size="10" fill="#33424D">MASTER WARN;</text>
+  <text x="114" y="276" font-size="10" fill="#33424D">el mensaje queda.</text>
+  <rect x="228" y="221" width="116" height="62" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="236" y="236" font-size="10.5" font-weight="800" fill="#C77700">Caution</text>
+  <text x="236" y="250" font-size="10" fill="#33424D">la cancela el resto</text>
+  <text x="236" y="263" font-size="10" fill="#33424D">del vuelo: chime,</text>
+  <text x="236" y="276" font-size="10" fill="#33424D">luz y mensaje.</text>
+  <text x="16" y="304" font-size="10" fill="#33424D">Lo cancelado vuelve con RCL más de 3 s, o solo en la</text>
+  <text x="16" y="317" font-size="10" fill="#33424D">fase 1 o 2, después de alinear los IR 1 y 2.</text>
+  <text x="16" y="334" font-size="10.5" font-weight="700" fill="#0E5E6F">EMER CANC: solo para MASTER CAUTION espurias (1 s).</text>
+</svg>

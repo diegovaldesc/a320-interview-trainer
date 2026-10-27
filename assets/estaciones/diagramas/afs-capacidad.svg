@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 320" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Capacidad de aterrizaje</title>
+  <desc id="d">En una ILS, la columna 4 del FMA muestra la capacidad. CAT 3 DUAL, con los dos AP: mínimos hasta CAT III B, autoland, fail-operational (si algo falla bajo la alert height, lo que queda completa la aproximación, el flare y el aterrizaje). CAT 3 SINGLE: hasta CAT III A, autoland, fail-passive. CAT 2: hasta CAT II, autoland, fail-passive. CAT 1: hasta CAT I, aterrizaje manual, fail-passive. En una falla fail-passive el avión no se sale bruscamente de la trayectoria, pero la tripulación toma el control.</desc>
+  <rect x="1" y="1" width="358" height="318" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">Capacidad de aterrizaje</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Lo que muestra la columna 4 del FMA en una ILS</text>
+  <text x="18" y="66" font-size="10" font-weight="700" fill="#5B6B78">Capacidad</text>
+  <text x="114" y="66" font-size="10" font-weight="700" fill="#5B6B78">Mínimos</text>
+  <text x="180" y="66" font-size="10" font-weight="700" fill="#5B6B78">Aterrizaje</text>
+  <text x="242" y="66" font-size="10" font-weight="700" fill="#5B6B78">Con una falla</text>
+  <rect x="14" y="74" width="332" height="38" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="22" y="90" font-size="10.5" font-weight="800" fill="#0E5E6F">CAT 3 DUAL</text>
+  <text x="22" y="104" font-size="10" fill="#33424D">con los dos AP</text>
+  <text x="114" y="90" font-size="10" fill="#5B6B78">hasta</text>
+  <text x="114" y="104" font-size="10.5" font-weight="700" fill="#1E2A33">CAT III B</text>
+  <text x="180" y="97" font-size="10.5" font-weight="700" fill="#1E2A33">autoland</text>
+  <text x="242" y="90" font-size="10.5" font-weight="700" fill="#2E9D5B">fail-operational</text>
+  <text x="242" y="104" font-size="10" fill="#33424D">lo completa solo</text>
+  <rect x="14" y="116" width="332" height="38" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="22" y="139" font-size="10.5" font-weight="800" fill="#1E2A33">CAT 3 SINGLE</text>
+  <text x="114" y="132" font-size="10" fill="#5B6B78">hasta</text>
+  <text x="114" y="146" font-size="10.5" font-weight="700" fill="#1E2A33">CAT III A</text>
+  <text x="180" y="139" font-size="10.5" font-weight="700" fill="#1E2A33">autoland</text>
+  <text x="242" y="132" font-size="10.5" font-weight="700" fill="#1E2A33">fail-passive</text>
+  <text x="242" y="146" font-size="10" fill="#33424D">toma la tripulación</text>
+  <rect x="14" y="158" width="332" height="38" rx="7" fill="#F3F5F7" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="22" y="181" font-size="10.5" font-weight="800" fill="#1E2A33">CAT 2</text>
+  <text x="114" y="174" font-size="10" fill="#5B6B78">hasta</text>
+  <text x="114" y="188" font-size="10.5" font-weight="700" fill="#1E2A33">CAT II</text>
+  <text x="180" y="181" font-size="10.5" font-weight="700" fill="#1E2A33">autoland</text>
+  <text x="242" y="174" font-size="10.5" font-weight="700" fill="#1E2A33">fail-passive</text>
+  <text x="242" y="188" font-size="10" fill="#33424D">toma la tripulación</text>
+  <rect x="14" y="200" width="332" height="38" rx="7" fill="#FFFFFF" stroke="#C9D3DB" stroke-width="1.4"/>
+  <text x="22" y="223" font-size="10.5" font-weight="800" fill="#1E2A33">CAT 1</text>
+  <text x="114" y="216" font-size="10" fill="#5B6B78">hasta</text>
+  <text x="114" y="230" font-size="10.5" font-weight="700" fill="#1E2A33">CAT I</text>
+  <text x="180" y="223" font-size="10.5" font-weight="700" fill="#C77700">manual</text>
+  <text x="242" y="216" font-size="10.5" font-weight="700" fill="#1E2A33">fail-passive</text>
+  <text x="242" y="230" font-size="10" fill="#33424D">toma la tripulación</text>
+  <text x="18" y="260" font-size="10" fill="#33424D">Fail-operational: si algo falla bajo la alert height, lo que</text>
+  <text x="18" y="273" font-size="10" fill="#33424D">queda completa la aproximación, el flare y el aterrizaje.</text>
+  <text x="18" y="290" font-size="10" fill="#33424D">Fail-passive: el avión no se sale bruscamente de la</text>
+  <text x="18" y="303" font-size="10" fill="#33424D">trayectoria, pero la tripulación toma el control.</text>
+</svg>

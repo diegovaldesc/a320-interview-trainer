@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 378" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">El orden de la preparación del FMGS</title>
+  <desc id="d">La preparación sigue este orden: 1 DATA, 2 INIT A (ruta, posición y ALIGN IRS), 3 F-PLN (pista, SID, restricciones y distancia), 4 SEC F-PLN (otra pista, regreso o alternativa), 5 RAD NAV (radioayudas), 6 INIT B (ZFW, ZFWCG y combustible de bloque) y 7 PERF (V1, VR, V2, FLX, THR RED y ACC). Las cinco primeras son de navegación y las dos últimas de performance. INIT B va casi al final porque, con pesos y combustible, el FMGS empieza a calcular y lo demás entra más lento. Al terminar, el PM revisa todo en el mismo orden.</desc>
+  <rect x="1" y="1" width="358" height="376" rx="14" fill="#FFFFFF" stroke="#DDE3E8"/>
+  <text x="18" y="27" font-size="13" font-weight="800" fill="#0E5E6F">El orden de la preparación</text>
+  <text x="18" y="44" font-size="10.5" fill="#5B6B78">Primero navegación, después performance</text>
+  <rect x="40" y="58" width="220" height="32" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="150" y="78" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">DATA</text>
+  <circle cx="24" cy="74" r="8.5" fill="#0E5E6F"/>
+  <text x="24" y="77.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">1</text>
+  <rect x="40" y="96" width="220" height="32" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="150" y="109.5" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">INIT A</text>
+  <text x="150" y="122.5" text-anchor="middle" font-size="10" fill="#33424D">ruta, posición y ALIGN IRS</text>
+  <circle cx="24" cy="112" r="8.5" fill="#0E5E6F"/>
+  <text x="24" y="115.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">2</text>
+  <rect x="40" y="134" width="220" height="32" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="150" y="147.5" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">F-PLN</text>
+  <text x="150" y="160.5" text-anchor="middle" font-size="10" fill="#33424D">pista, SID, restricciones y distancia</text>
+  <circle cx="24" cy="150" r="8.5" fill="#0E5E6F"/>
+  <text x="24" y="153.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">3</text>
+  <rect x="40" y="172" width="220" height="32" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="150" y="185.5" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">SEC F-PLN</text>
+  <text x="150" y="198.5" text-anchor="middle" font-size="10" fill="#33424D">otra pista, regreso o alternativa</text>
+  <circle cx="24" cy="188" r="8.5" fill="#0E5E6F"/>
+  <text x="24" y="191.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">4</text>
+  <rect x="40" y="210" width="220" height="32" rx="7" fill="#DCEEF1" stroke="#0E5E6F" stroke-width="1.4"/>
+  <text x="150" y="223.5" text-anchor="middle" font-size="11" font-weight="800" fill="#0E5E6F">RAD NAV</text>
+  <text x="150" y="236.5" text-anchor="middle" font-size="10" fill="#33424D">radioayudas</text>
+  <circle cx="24" cy="226" r="8.5" fill="#0E5E6F"/>
+  <text x="24" y="229.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">5</text>
+  <rect x="40" y="248" width="220" height="32" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="150" y="261.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">INIT B</text>
+  <text x="150" y="274.5" text-anchor="middle" font-size="10" fill="#33424D">ZFW, ZFWCG y combustible de bloque</text>
+  <circle cx="24" cy="264" r="8.5" fill="#C77700"/>
+  <text x="24" y="267.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">6</text>
+  <rect x="40" y="286" width="220" height="32" rx="7" fill="#FCEBD3" stroke="#C77700" stroke-width="1.4"/>
+  <text x="150" y="299.5" text-anchor="middle" font-size="11" font-weight="800" fill="#1E2A33">PERF</text>
+  <text x="150" y="312.5" text-anchor="middle" font-size="10" fill="#33424D">V1, VR, V2, FLX, THR RED y ACC</text>
+  <circle cx="24" cy="302" r="8.5" fill="#C77700"/>
+  <text x="24" y="305.8" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">7</text>
+  <line x1="268" y1="58" x2="268" y2="242" stroke="#0E5E6F" stroke-width="2"/>
+  <line x1="264" y1="58" x2="268" y2="58" stroke="#0E5E6F" stroke-width="2"/>
+  <line x1="264" y1="242" x2="268" y2="242" stroke="#0E5E6F" stroke-width="2"/>
+  <text x="274" y="154" font-size="10" font-weight="700" fill="#0E5E6F">navegación</text>
+  <line x1="268" y1="248" x2="268" y2="318" stroke="#C77700" stroke-width="2"/>
+  <line x1="264" y1="248" x2="268" y2="248" stroke="#C77700" stroke-width="2"/>
+  <line x1="264" y1="318" x2="268" y2="318" stroke="#C77700" stroke-width="2"/>
+  <text x="274" y="287" font-size="10" font-weight="700" fill="#C77700">performance</text>
+  <text x="18" y="338" font-size="10" fill="#33424D">INIT B va casi al final: con pesos y combustible, el</text>
+  <text x="18" y="351" font-size="10" fill="#33424D">FMGS empieza a calcular y lo demás entra más lento.</text>
+  <text x="18" y="368" font-size="10.5" font-weight="700" fill="#0E5E6F">Al terminar, el PM revisa todo en el mismo orden.</text>
+</svg>

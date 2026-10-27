@@ -807,6 +807,13 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-35** (2026-10-27, 1.39.0) — dos orales de Procedimientos mostraban el
+  nombre del manual: `ov_ecam_priorities` y `ov_ecam_after` decían «revisa el FCOM»
+  en la respuesta corta, la referencia y un criterio. Ahora dicen «la documentación del
+  procedimiento», y una alternativa de la pregunta P42 ya no dice «del FCOM». La prueba
+  revisa que ninguna oral muestre FCOM, FCTM, AFM, PDF, un código de sección ni «§» en
+  el enunciado, la respuesta corta, la referencia o los criterios. Con el texto
+  anterior, REG-35 falla.
 - **REG-34** (2026-10-27, 1.37.0) — las listas numeradas («1. », «2. »…) de las
   fichas salían en una sola línea, con los números sueltos dentro del párrafo
   (Auto flight, Combustible e Indicación). Ahora se muestran como lista ordenada.
@@ -838,6 +845,16 @@ botón «Portada» para volver). Ningún módulo cambió.
   galleys, luz SEL ámbar); y las DGAC que la documentación no respalda tal como
   están conservan su clave con una explicación de lo que sí se confirma. Mutación:
   con la clave antigua del CVR, REG-31 falla.
+- **RUTA-26** (2026-10-27, 1.39.0) — la materia nueva Procedures and emergencies:
+  16 estaciones con el repaso al final, en niveles que no bajan (golden rules, manejo
+  del ECAM, después del ECAM, declarar una emergencia, memory items, falla de motor,
+  falla de todos los motores, velocidad no confiable, stall, windshear, TAWS, TCAS,
+  emergency descent, ceniza volcánica, evacuación). Revisa el orden de los
+  procedimientos (memory items u OEB immediate actions, OEB, ECAM, QRH), los 10 memory
+  items (sin ENG FIRE, que no está en esa lista), el pitch y empuje de la velocidad no
+  confiable (15°/TOGA, 10°/CLB, 5°/CLB) y la optimum relight speed según el motor, y que
+  ningún enunciado de sus pruebas nombre el manual. RUTA-02 pasa a 15 materias y 169
+  estaciones.
 - **RUTA-25** (2026-10-27, 1.38.0) — la materia nueva FMGS: 13 estaciones con el
   repaso al final, en niveles que no bajan (panorama y bases de datos, MCDU, ADIRS y
   alineación de los IRS, preparación del FMGS, FM position, precisión de la

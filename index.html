@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Barlow+Semi+Condensed:wght@500;600;700&amp;display=swap" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-<link href="css/app.css?v=1.39.1" rel="stylesheet"/>
-<link href="css/ruta.css?v=1.39.1" rel="stylesheet"/>
+<link href="css/app.css?v=1.40.0" rel="stylesheet"/>
+<link href="css/ruta.css?v=1.40.0" rel="stylesheet"/>
 </head>
 <body>
 <div class="app">
@@ -74,7 +74,7 @@
   <span class="module-chevron">›</span>
 </button>
 
-<button class="module-card dgac" onclick="openSystem(DGAC_KEY)" type="button">
+<button class="module-card dgac" onclick="openDgacFolder()" type="button">
   <span class="module-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 19 6v5c0 4.7-2.8 8-7 10-4.2-2-7-5.3-7-10V6l7-3Z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
   </span>
@@ -149,8 +149,18 @@
 <div class="folder-summary"><span>Available content</span><b id="folderSystemsCount">—</b></div>
 <div id="systemsList"></div>
 </section>
-<section class="hidden" id="detail">
+<section class="hidden" id="dgacFolder">
 <button class="back" onclick="goHome()">‹ Bank</button>
+<div class="hero folder-head">
+<div class="eyebrow">HISTORICAL BANK · DGAC 2018</div>
+<h1>DGAC bank</h1>
+<p>The exam's sections, in the same order as the original document. Pick one to study or take a test.</p>
+</div>
+<div class="folder-summary"><span>Available content</span><b id="folderDgacCount">—</b></div>
+<div id="dgacList"></div>
+</section>
+<section class="hidden" id="detail">
+<button class="back" onclick="detailBack()">‹ Bank</button>
 <div class="hero">
 <div class="eyebrow" id="detailAta"></div>
 <h1 id="detailTitle"></h1>
@@ -355,66 +365,66 @@
 <div aria-labelledby="rtSheetTitle" aria-modal="true" class="rt-sheet" hidden="" id="rtSheet" role="dialog"></div>
 <div aria-label="Station" aria-modal="true" class="rt-player" hidden="" id="rtPlayer" role="dialog"></div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-<script src="data/questions/procedures.js?v=1.39.1"></script>
-<script src="data/questions/hydraulic.js?v=1.39.1"></script>
-<script src="data/questions/fire.js?v=1.39.1"></script>
-<script src="data/questions/ice_rain.js?v=1.39.1"></script>
-<script src="data/questions/comms_oxygen.js?v=1.39.1"></script>
-<script src="data/questions/indicating.js?v=1.39.1"></script>
-<script src="data/questions/dgac_bank.js?v=1.39.1"></script>
-<script src="data/questions/dgac/air_conditioning_and_pneumatic.js?v=1.39.1"></script>
-<script src="data/questions/dgac/autoflight_and_fms.js?v=1.39.1"></script>
-<script src="data/questions/dgac/communications_and_oxygen.js?v=1.39.1"></script>
-<script src="data/questions/dgac/electrical.js?v=1.39.1"></script>
-<script src="data/questions/dgac/fire_protection.js?v=1.39.1"></script>
-<script src="data/questions/dgac/fuel_and_hydraulic.js?v=1.39.1"></script>
-<script src="data/questions/dgac/indicating_and_recording.js?v=1.39.1"></script>
-<script src="data/questions/dgac/apu_and_powerplant.js?v=1.39.1"></script>
-<script src="data/questions/dgac/flight_controls.js?v=1.39.1"></script>
-<script src="data/questions/dgac/ice_and_rain_protection.js?v=1.39.1"></script>
-<script src="data/questions/dgac/landing_gear_lights_and_doors.js?v=1.39.1"></script>
-<script src="data/questions/air_cond.js?v=1.39.1"></script>
-<script src="data/questions/electrical.js?v=1.39.1"></script>
-<script src="data/questions/flight_control.js?v=1.39.1"></script>
-<script src="data/questions/landing_gear.js?v=1.39.1"></script>
-<script src="data/questions/autoflight.js?v=1.39.1"></script>
-<script src="data/questions/apu_powerplant.js?v=1.39.1"></script>
-<script src="data/questions/fuel.js?v=1.39.1"></script>
-<script src="data/questions/operations_airbus.js?v=1.39.1"></script>
-<script src="data/questions/interview_technical.js?v=1.39.1"></script>
-<script src="data/questions/index.js?v=1.39.1"></script>
-<script src="data/english/mcq.js?v=1.39.1"></script>
-<script src="data/english/images.js?v=1.39.1"></script>
-<script src="data/english/listening.js?v=1.39.1"></script>
-<script src="data/english/roleplays.js?v=1.39.1"></script>
-<script src="data/english/pruebas.js?v=1.39.1"></script>
-<script src="data/english/index.js?v=1.39.1"></script>
-<script src="data/oral/core.js?v=1.39.1"></script>
-<script src="data/oral/performance.js?v=1.39.1"></script>
-<script src="data/oral/automation_procedures.js?v=1.39.1"></script>
-<script src="data/oral/index.js?v=1.39.1"></script>
-<script src="data/stations/aire.js?v=1.39.1"></script>
-<script src="data/stations/antihielo.js?v=1.39.1"></script>
-<script src="data/stations/apu.js?v=1.39.1"></script>
-<script src="data/stations/autoflight.js?v=1.39.1"></script>
-<script src="data/stations/combustible.js?v=1.39.1"></script>
-<script src="data/stations/comunicaciones.js?v=1.39.1"></script>
-<script src="data/stations/controles.js?v=1.39.1"></script>
-<script src="data/stations/electrico.js?v=1.39.1"></script>
-<script src="data/stations/fmgs.js?v=1.39.1"></script>
-<script src="data/stations/fuego.js?v=1.39.1"></script>
-<script src="data/stations/hidraulico.js?v=1.39.1"></script>
-<script src="data/stations/indicacion.js?v=1.39.1"></script>
-<script src="data/stations/performance.js?v=1.39.1"></script>
-<script src="data/stations/procedures.js?v=1.39.1"></script>
-<script src="data/stations/tren.js?v=1.39.1"></script>
-<script src="data/stations/route.js?v=1.39.1"></script>
-<script src="data/stations/index.js?v=1.39.1"></script>
-<script src="js/app.js?v=1.39.1"></script>
-<script src="js/oral.js?v=1.39.1"></script>
-<script src="js/needtoknow.js?v=1.39.1"></script>
-<script src="js/ingles.js?v=1.39.1"></script>
-<script src="js/inicio.js?v=1.39.1"></script>
-<script src="js/ruta.js?v=1.39.1"></script>
+<script src="data/questions/procedures.js?v=1.40.0"></script>
+<script src="data/questions/hydraulic.js?v=1.40.0"></script>
+<script src="data/questions/fire.js?v=1.40.0"></script>
+<script src="data/questions/ice_rain.js?v=1.40.0"></script>
+<script src="data/questions/comms_oxygen.js?v=1.40.0"></script>
+<script src="data/questions/indicating.js?v=1.40.0"></script>
+<script src="data/questions/dgac_bank.js?v=1.40.0"></script>
+<script src="data/questions/dgac/air_conditioning_and_pneumatic.js?v=1.40.0"></script>
+<script src="data/questions/dgac/autoflight_and_fms.js?v=1.40.0"></script>
+<script src="data/questions/dgac/communications_and_oxygen.js?v=1.40.0"></script>
+<script src="data/questions/dgac/electrical.js?v=1.40.0"></script>
+<script src="data/questions/dgac/fire_protection.js?v=1.40.0"></script>
+<script src="data/questions/dgac/fuel_and_hydraulic.js?v=1.40.0"></script>
+<script src="data/questions/dgac/indicating_and_recording.js?v=1.40.0"></script>
+<script src="data/questions/dgac/apu_and_powerplant.js?v=1.40.0"></script>
+<script src="data/questions/dgac/flight_controls.js?v=1.40.0"></script>
+<script src="data/questions/dgac/ice_and_rain_protection.js?v=1.40.0"></script>
+<script src="data/questions/dgac/landing_gear_lights_and_doors.js?v=1.40.0"></script>
+<script src="data/questions/air_cond.js?v=1.40.0"></script>
+<script src="data/questions/electrical.js?v=1.40.0"></script>
+<script src="data/questions/flight_control.js?v=1.40.0"></script>
+<script src="data/questions/landing_gear.js?v=1.40.0"></script>
+<script src="data/questions/autoflight.js?v=1.40.0"></script>
+<script src="data/questions/apu_powerplant.js?v=1.40.0"></script>
+<script src="data/questions/fuel.js?v=1.40.0"></script>
+<script src="data/questions/operations_airbus.js?v=1.40.0"></script>
+<script src="data/questions/interview_technical.js?v=1.40.0"></script>
+<script src="data/questions/index.js?v=1.40.0"></script>
+<script src="data/english/mcq.js?v=1.40.0"></script>
+<script src="data/english/images.js?v=1.40.0"></script>
+<script src="data/english/listening.js?v=1.40.0"></script>
+<script src="data/english/roleplays.js?v=1.40.0"></script>
+<script src="data/english/pruebas.js?v=1.40.0"></script>
+<script src="data/english/index.js?v=1.40.0"></script>
+<script src="data/oral/core.js?v=1.40.0"></script>
+<script src="data/oral/performance.js?v=1.40.0"></script>
+<script src="data/oral/automation_procedures.js?v=1.40.0"></script>
+<script src="data/oral/index.js?v=1.40.0"></script>
+<script src="data/stations/aire.js?v=1.40.0"></script>
+<script src="data/stations/antihielo.js?v=1.40.0"></script>
+<script src="data/stations/apu.js?v=1.40.0"></script>
+<script src="data/stations/autoflight.js?v=1.40.0"></script>
+<script src="data/stations/combustible.js?v=1.40.0"></script>
+<script src="data/stations/comunicaciones.js?v=1.40.0"></script>
+<script src="data/stations/controles.js?v=1.40.0"></script>
+<script src="data/stations/electrico.js?v=1.40.0"></script>
+<script src="data/stations/fmgs.js?v=1.40.0"></script>
+<script src="data/stations/fuego.js?v=1.40.0"></script>
+<script src="data/stations/hidraulico.js?v=1.40.0"></script>
+<script src="data/stations/indicacion.js?v=1.40.0"></script>
+<script src="data/stations/performance.js?v=1.40.0"></script>
+<script src="data/stations/procedures.js?v=1.40.0"></script>
+<script src="data/stations/tren.js?v=1.40.0"></script>
+<script src="data/stations/route.js?v=1.40.0"></script>
+<script src="data/stations/index.js?v=1.40.0"></script>
+<script src="js/app.js?v=1.40.0"></script>
+<script src="js/oral.js?v=1.40.0"></script>
+<script src="js/needtoknow.js?v=1.40.0"></script>
+<script src="js/ingles.js?v=1.40.0"></script>
+<script src="js/inicio.js?v=1.40.0"></script>
+<script src="js/ruta.js?v=1.40.0"></script>
 </body>
 </html>

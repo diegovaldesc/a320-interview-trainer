@@ -8,7 +8,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.39.1";
+const APP_VERSION="1.40.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -36,9 +36,13 @@ function totalQuestions(){return SYSTEM_ORDER.reduce((n,k)=>n+(SYSTEMS[k]?.quest
 function operationsQuestions(){return OPERATIONS_ORDER.reduce((n,k)=>n+(SYSTEMS[k]?.questions||[]).length,0)}
 function dgacTotal(){return (SYSTEMS[DGAC_KEY]?.questions||[]).length}
 function interviewTechnicalTotal(){return (SYSTEMS[INTERVIEW_TECH_KEY]?.questions||[]).length}
-function isDgacKey(k){return k===DGAC_KEY}
+/* Una sección del banco DGAC se abre con la clave "dgac_bank|<sección>": usa las mismas preguntas
+   (mismo _sys y mismo id), solo filtradas por bank_section, así el progreso no cambia. */
+function isDgacKey(k){return k===DGAC_KEY||(typeof k==="string"&&k.indexOf(DGAC_KEY+"|")===0)}
+function dgacSectionOf(k){return typeof k==="string"&&k.indexOf(DGAC_KEY+"|")===0?k.slice(DGAC_KEY.length+1):null}
+function dgacSections(){const out=[];(SYSTEMS[DGAC_KEY]?.questions||[]).forEach(q=>{const s=q.bank_section;if(s&&!out.includes(s))out.push(s)});return out}
 function isInterviewTechKey(k){return k===INTERVIEW_TECH_KEY}
-function systemName(k){return k===null?"All systems":(SYSTEMS[k]?.name||k)}
+function systemName(k){const sec=dgacSectionOf(k);return k===null?"All systems":sec?"DGAC · "+sec:(SYSTEMS[k]?.name||k)}
 function systemAta(k){return k===null?"ALL":(SYSTEMS[k]?.ata||"—")}
 function correctText(q){return q.options?.[q.correct] ?? ""}
 function isStructurallyValid(q){
@@ -261,12 +265,14 @@ function orderedKeys(){return SYSTEM_ORDER.filter(k=>SYSTEMS[k])}
 function operationsKeys(){return OPERATIONS_ORDER.filter(k=>SYSTEMS[k])}
 function allVerifiedPool(){return safePool([...rawPool(null),...operationsKeys().flatMap(k=>rawPool(k)),...rawPool(INTERVIEW_TECH_KEY)])}
 function rawPool(key){
+  const sec=dgacSectionOf(key);
+  if(sec)return rawPool(DGAC_KEY).filter(q=>q.bank_section===sec);
   if(key===null)return orderedKeys().flatMap(k=>(SYSTEMS[k].questions||[]).map(q=>({...q,_sys:k,_id:qid(k,q)})));
   return (SYSTEMS[key]?.questions||[]).map(q=>({...q,_sys:key,_id:qid(key,q)}));
 }
 function allLookupPool(){return [...allVerifiedPool(),...rawPool(DGAC_KEY)]}
 function trainingPool(key){
-  if(key===DGAC_KEY)return safePool(rawPool(DGAC_KEY));
+  if(isDgacKey(key))return safePool(rawPool(key));
   const base=safePool(key===null?rawPool(null):rawPool(key));
   const seen=new Set();
   return base.filter(q=>{
@@ -306,7 +312,7 @@ function weakQuestions(key=null){
   });
 }
 function toast(t){const e=$("toast");e.textContent=t;e.classList.remove("hidden");clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.classList.add("hidden"),2200)}
-function screens(){return["home","systemsFolder","detail","quiz","interview","oralVoice","results","weak","englishHub","englishPractice","ntk","ntkCard"]}
+function screens(){return["home","systemsFolder","dgacFolder","detail","quiz","interview","oralVoice","results","weak","englishHub","englishPractice","ntk","ntkCard"]}
 function show(id){
   if(id!=="englishPractice")stopEnglishMedia();
   screens().forEach(s=>$(s).classList.toggle("hidden",s!==id));
@@ -322,6 +328,19 @@ function show(id){
 }
 function goHome(){stopEverythingOral();ntkRestoreOralBox();ntkSession=null;session=null;show("home");renderHome()}
 function openSystemsFolder(){session=null;renderHome();show("systemsFolder")}
+function openDgacFolder(){
+  session=null;renderHome();
+  const secs=dgacSections(),all=systemStats(DGAC_KEY);
+  $("folderDgacCount").textContent=dgacTotal()+" questions · "+secs.length+" sections";
+  let html=`<button type="button" class="system-card all" onclick="openSystem(DGAC_KEY)"><div class="ata">ALL</div><div class="sys-info"><h3>All sections</h3><p>${dgacTotal()} questions · in the order of the exam${all.a?` · ${all.p}% accuracy`:""}</p>${all.best?`<div class="sys-score">Best test: ${finiteNum(all.best.score)}/${finiteNum(all.best.total)}</div>`:""}</div><div class="chev">›</div></button>`;
+  html+=secs.map((s,i)=>{
+    const k=DGAC_KEY+"|"+s,st=systemStats(k),count=rawPool(k).length;
+    return `<button type="button" class="system-card" data-dgac-section="${esc(s)}" onclick="openSystem(${esc(JSON.stringify(k))})"><div class="ata">${i+1}</div><div class="sys-info"><h3>${esc(s)}</h3><p>${count} questions${st.a?` · ${st.p}% accuracy`:""}</p>${st.best?`<div class="sys-score">Best test: ${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</div>`:""}</div><div class="chev">›</div></button>`
+  }).join("");
+  $("dgacList").innerHTML=html;
+  show("dgacFolder");
+}
+function detailBack(){if(isDgacKey(currentSystemKey))openDgacFolder();else goHome()}
 function exitSession(){stopEverythingOral();if(session)persistResume();goHome()}
 
 let currentSystemKey=null;
@@ -370,12 +389,14 @@ function openSystem(k){
   const st=systemStats(k),pool=rawPool(k);
   const dgac=isDgacKey(k),ops=operationsKeys().includes(k),interviewTech=isInterviewTechKey(k);
   $("detailAta").textContent=dgac?"HISTORICAL BANK · DGAC 2018":interviewTech?"INTERVIEW · GENERAL TECHNICAL BANK":ops?"OPERATIONS · AIRBUS TUTORIALS REV 15":(k===null?"TECHNICAL BANK · FCOM":`ATA ${systemAta(k)} · FCOM`);
-  $("detailTitle").textContent=systemName(k);
+  const dgacSec=dgacSectionOf(k);
+  $("detailTitle").textContent=dgacSec||systemName(k);
+  if(dgacSec){const secs=dgacSections();$("detailAta").textContent=`HISTORICAL BANK · DGAC 2018 · SECTION ${secs.indexOf(dgacSec)+1} OF ${secs.length}`}
   if(dgac){
     const explained=pool.filter(q=>q.expl).length;
     $("detailDesc").textContent=explained>=pool.length?`${pool.length} real questions from the DGAC A320 exam (2018), with their original options unchanged. All ${pool.length} have a verified technical explanation and reference.`:explained?`${pool.length} real questions from the DGAC A320 exam (2018), with their original options unchanged. ${explained} of ${pool.length} already have a verified technical explanation; we keep completing the rest.`:`${pool.length} questions from the DGAC A320 exam (2018). This bank is kept to practice the format and the historical questions. It is not part of the validated technical bank and deliberately shows no explanations.`;
     $("detailStats").innerHTML=`<span class="pill"><b>${pool.length}</b> DGAC questions</span><span class="pill"><b>${st.a?st.p+"%":"—"}</b> accuracy</span><span class="pill"><b>${explained}</b> explained</span>${st.best?`<span class="pill"><b>${finiteNum(st.best.score)}/${finiteNum(st.best.total)}</b> best test</span>`:""}`;
-    $("studyModeDesc").textContent=explained?"Shows the answer marked in the exam; if it has been audited, it includes a technical explanation and an FCOM quote.":"Shows the answer marked in the exam after you answer. No explanation.";
+    $("studyModeDesc").textContent=explained?"Questions in the order of the exam. Shows the answer marked in the exam; if it has been audited, it includes a technical explanation and an FCOM quote.":"Questions in the order of the exam. Shows the answer marked in the exam after you answer. No explanation.";
     $("interviewModeCard").classList.add("hidden");
     $("systemWeakBtn").classList.add("hidden");
   }else if(interviewTech){
@@ -455,7 +476,7 @@ function buildSessionQ(q){
 function startTechnical(type,provided=null){
   let pool=provided?provided:trainingPool(currentSystemKey);
   if(type==="test")pool=shuffle(pool).slice(0,Math.min(TEST_SIZE,pool.length));
-  else if(type==="study"&&!provided)pool=shuffle(pool);
+  else if(type==="study"&&!provided&&!isDgacKey(currentSystemKey))pool=shuffle(pool);
   else if(type==="weak"||type==="saved")pool=shuffle(pool);
   if(!pool.length){toast("No questions available");return}
   session={type,systemKey:currentSystemKey,questions:pool.map(buildSessionQ),answers:new Array(pool.length).fill(null),index:0,counted:new Array(pool.length).fill(false),completed:false};
@@ -600,7 +621,7 @@ function finishTest(){
   const total=session.questions.length,pct=Math.round(correct/total*100),wrong=total-correct;
   $("resultPct").textContent=pct+"%";$("resultPct").style.color=pct>=90?"var(--green)":pct>=75?"var(--amber)":"var(--red)";$("resultRaw").textContent=`${correct} / ${total}`;
   $("resultSummary").textContent=wrong===0?"Perfect score. Repeat the test in a few days to confirm it sticks.":pct>=90?"Solid level. Review the few mistakes before closing the topic.":pct>=75?"Good level, but some associations still need to settle.":"There are clear gaps. Repeat only the mistakes before taking another test.";
-  if(session.systemKey===DGAC_KEY)$("resultSummary").textContent="DGAC 2018 bank result. It serves as historical practice and doesn't change your accuracy or your weak areas in the FCOM bank.";
+  if(isDgacKey(session.systemKey))$("resultSummary").textContent="DGAC 2018 bank result. It serves as historical practice and doesn't change your accuracy or your weak areas in the FCOM bank.";
   const bySys={};session.questions.forEach((q,i)=>{const k=q._sys||"general";bySys[k]??={c:0,t:0};bySys[k].t++;if(session.answers[i]===q.correct)bySys[k].c++});
   $("resultBreakdown").innerHTML=Object.entries(bySys).sort((a,b)=>b[1].t-a[1].t).map(([k,v])=>`<span class="breakdown-pill">${esc(systemName(k))} · <b>${v.c}/${v.t}</b></span>`).join("");
   $("retryWrongBtn").disabled=wrong===0;

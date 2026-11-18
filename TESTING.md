@@ -1232,6 +1232,22 @@ una IA abre solo la parte que necesita (instrucciones para agentes en
   igual que el navegador; también lo usan `construir.js` y los verificadores
   de citas de `Escritorio\APP`.
 
+## 18. Banco DGAC por secciones, como el examen (DGAC-03, 2026-11-18, 1.40.0)
+
+Pedido de Diego: ordenar el banco DGAC por secciones, tal como está en el examen
+original (por sistema). Al tocar «DGAC bank» se abre una lista con «All sections»
+y las 11 secciones del documento, en su orden y con su número de preguntas. Cada
+sección abre su ficha con Study (las preguntas en el orden del documento) y Test
+(20 al azar de esa sección). Una sección usa la clave `dgac_bank|<sección>`, pero
+sus preguntas conservan el mismo id del banco completo, así que el progreso y los
+errores no cambian. «‹ Bank» en una sección vuelve a la lista DGAC.
+
+**DGAC-03** revisa el orden de las 11 secciones, que sumen las 573 preguntas, que
+la tarjeta abra su sección, que Study siga el orden del documento (la primera de
+Landing gear es la de los cabin signs), que los ids sean los mismos, el regreso a
+la lista y que el test use solo esa sección. Mutación: con Study mezclado otra
+vez, DGAC-03 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

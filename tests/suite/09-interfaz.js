@@ -67,3 +67,25 @@
     ok(/93 questions/.test(txt),"la descripcion perdio el conteo: "+txt);
   });
 
+  T("8 DGAC-03 el banco DGAC se abre por las 11 secciones del examen, en el orden del documento; Study sigue ese orden y el progreso usa los mismos ids",function(){
+    reset();openDgacFolder();
+    ok(!byId("dgacFolder").classList.contains("hidden"),"se ve la lista de secciones DGAC");
+    var secs=dgacSections(),want=["Air conditioning and pneumatic","Autoflight and FMS","Communications and oxygen","Electrical","Fire protection","Fuel and hydraulic","Indicating and recording","APU and powerplant","Flight controls","Ice and rain protection","Landing gear, lights and doors"];
+    eq(secs.join("|"),want.join("|"),"secciones en el orden del examen");
+    eq(byId("dgacList").querySelectorAll("[data-dgac-section]").length,11,"una tarjeta por seccion");
+    var sum=0;secs.forEach(function(s){sum+=rawPool(DGAC_KEY+"|"+s).length});eq(sum,dgacTotal(),"las secciones suman todo el banco");
+    var k=DGAC_KEY+"|Landing gear, lights and doors";
+    byId("dgacList").querySelector('[data-dgac-section="Landing gear, lights and doors"]').click();
+    eq(currentSystemKey,k,"la tarjeta abre su seccion");eq(byId("detailTitle").textContent,"Landing gear, lights and doors","titulo de la seccion");
+    currentSystemKey=k;startTechnical("study");
+    var file=rawPool(k).map(function(q){return q.q}),ses=session.questions.map(function(q){return q.q});
+    eq(ses.join("\n"),file.join("\n"),"Study va en el orden del documento");
+    ok(/^ALL CABIN SIGNS COME ON AUTOMATICALLY/.test(ses[0]),"primera pregunta de la seccion: "+ses[0]);
+    var all=rawPool(DGAC_KEY).filter(function(q){return q.bank_section==="Landing gear, lights and doors"});
+    eq(session.questions[0]._id,all[0]._id,"mismo id que en el banco completo (no se pierde el progreso)");
+    exitSession();openSystem(DGAC_KEY+"|Electrical");detailBack();
+    ok(!byId("dgacFolder").classList.contains("hidden"),"volver desde una seccion lleva a la lista DGAC");
+    currentSystemKey=DGAC_KEY+"|Electrical";startTechnical("test");
+    ok(session.questions.length===20&&session.questions.every(function(q){return q.bank_section==="Electrical"}),"el test de una seccion solo usa esa seccion");
+    reset();
+  });

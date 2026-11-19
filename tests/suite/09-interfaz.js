@@ -89,3 +89,22 @@
     ok(session.questions.length===20&&session.questions.every(function(q){return q.bank_section==="Electrical"}),"el test de una seccion solo usa esa seccion");
     reset();
   });
+  T("8 DGAC-04 una pregunta se puede reportar (motivos y nota), queda guardada, sale en My mistakes y en el texto para enviar; se puede borrar",function(){
+    reset();var id="dgac_bank:2q5dyv";startSingle(id);
+    ok(byId("reportPanel").classList.contains("hidden"),"el panel parte cerrado");
+    openReport();ok(!byId("reportPanel").classList.contains("hidden"),"el boton abre el panel");
+    eq(byId("reportPanel").querySelectorAll(".report-chip").length,5,"cinco motivos");
+    saveReport();ok(!appState.reports[id],"sin motivo ni nota no se guarda");
+    byId("reportPanel").querySelector("[data-reason=\"key\"]").click();byId("reportNote").value="AVAIL del APU";saveReport();
+    var r=appState.reports[id];ok(r&&r.r.join()==="key"&&r.n==="AVAIL del APU","reporte guardado: "+JSON.stringify(r));
+    ok(byId("reportBtn").classList.contains("active"),"la bandera queda marcada");
+    var back=sanitizeState(JSON.parse(JSON.stringify(appState)));ok(back.reports[id]&&back.reports[id].n==="AVAIL del APU","el reporte sobrevive a guardar y cargar");
+    exitSession();renderHome();ok(/1 reported/.test(byId("homeWeakCount").textContent),"la portada cuenta el reporte: "+byId("homeWeakCount").textContent);
+    showWeak();ok(!byId("reportsWrap").classList.contains("hidden"),"se ve la lista de reportados");
+    eq(byId("reportsList").querySelectorAll(".report-item").length,1,"un reporte en la lista");
+    var txt=reportsText();
+    ok(txt.indexOf("DGAC · APU and powerplant · "+id)>=0&&txt.indexOf("Problem: Wrong answer")>=0&&txt.indexOf("Note: AVAIL del APU")>=0&&txt.indexOf("App answer: THE APU.")>=0,"texto para enviar: "+txt);
+    byId("reportsList").querySelector(".report-del").click();
+    ok(!appState.reports[id]&&byId("reportsWrap").classList.contains("hidden"),"borrar quita el reporte");
+    reset();
+  });

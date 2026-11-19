@@ -8,7 +8,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.40.0";
+const APP_VERSION="1.41.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -137,6 +137,20 @@ function sanitizeEnglishTests(v){
   }
   return out;
 }
+/* Reportes de errores (DGAC-04): por id de pregunta, los motivos marcados, una nota y una copia del
+   enunciado, para que la lista copiada se entienda aunque la pregunta cambie después. */
+const REPORT_REASONS=[["dup","Duplicate question"],["key","Wrong answer"],["expl","Wrong explanation"],["text","Wrong or confusing wording"],["other","Other"]];
+function sanitizeReports(obj){
+  const out={},codes=REPORT_REASONS.map(r=>r[0]);
+  if(isPlainObject(obj))Object.keys(obj).forEach(k=>{
+    const v=obj[k];if(k.length>200||!isPlainObject(v))return;
+    const r=Array.isArray(v.r)?[...new Set(v.r.filter(c=>codes.includes(c)))]:[];
+    const n=typeof v.n==="string"?v.n.slice(0,1000):"";
+    if(!r.length&&!n.trim())return;
+    out[k]={r,n,q:typeof v.q==="string"?v.q.slice(0,400):"",s:typeof v.s==="string"?v.s.slice(0,200):"",t:Math.max(0,finiteNum(v.t))};
+  });
+  return out;
+}
 function sanitizeBookmarks(obj){
   const out={};
   if(isPlainObject(obj))Object.keys(obj).forEach(k=>{if(typeof k==="string"&&k.length<=200&&obj[k])out[k]=true});
@@ -211,7 +225,8 @@ function sanitizeState(raw){
     resume:sanitizeResume(raw.resume),
     lastSystem:typeof raw.lastSystem==="string"?raw.lastSystem.slice(0,200):null,
     needToKnow:renameNtkRefs(sanitizeNeedToKnow(raw.needToKnow)),
-    ruta:sanitizeRuta(raw.ruta)
+    ruta:sanitizeRuta(raw.ruta),
+    reports:renameQidKeys(sanitizeReports(raw.reports))
   };
 }
 /* Ruta de entrenamiento (js/ruta.js): estrellas por estación (1 a 3), racha de días y la opción de abrir
@@ -231,14 +246,14 @@ function sanitizeRuta(v){
    silencio). */
 function looksLikeValidBackup(raw){
   if(!isPlainObject(raw))return false;
-  for(const f of["stats","best","bookmarks","oral","oralVoice","english","englishTests","needToKnow","ruta"]){
+  for(const f of["stats","best","bookmarks","oral","oralVoice","english","englishTests","needToKnow","ruta","reports"]){
     if(f in raw&&!isPlainObject(raw[f]))return false;
   }
   if("resume" in raw&&raw.resume!==null&&!isPlainObject(raw.resume))return false;
   if("lastSystem" in raw&&raw.lastSystem!==null&&typeof raw.lastSystem!=="string")return false;
   return true;
 }
-function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},oralVoice:{},english:{},englishTests:{done:[],current:null,cycle:0,last:null},resume:null,lastSystem:null,needToKnow:{added:[],removed:[]},ruta:{stars:{},streak:{last:"",days:0},unlockAll:false}}}
+function defaultState(){return{schema:STATE_SCHEMA,stats:{},best:{},bookmarks:{},oral:{},oralVoice:{},english:{},englishTests:{done:[],current:null,cycle:0,last:null},resume:null,lastSystem:null,needToKnow:{added:[],removed:[]},ruta:{stars:{},streak:{last:"",days:0},unlockAll:false},reports:{}}}
 function loadState(){
   try{
     const current=localStorage.getItem(KEY),legacy=localStorage.getItem(LEGACY_KEY);
@@ -356,7 +371,7 @@ function renderHome(){
   $("homeInterviewCount").textContent=interviewTechnicalTotal()+" questions · curated interview bank";
   const dgacExplained=(SYSTEMS[DGAC_KEY]?.questions||[]).filter(q=>q.expl).length;
   $("homeDgacCount").textContent=dgacTotal()+(dgacExplained>=dgacTotal()?" historical questions · explained":` historical questions · ${dgacExplained} explained`);
-  $("homeWeakCount").textContent=ov.wq?`${ov.wq} ${plural(ov.wq,"question","questions")} to review`:"No questions pending";
+  {const nr=Object.keys(reportsMap()).length;$("homeWeakCount").textContent=(ov.wq?`${ov.wq} ${plural(ov.wq,"question","questions")} to review`:"No questions pending")+(nr?` · ${nr} reported`:"")}
   {const nk=ntkRefs(),nd=nk.filter(r=>ntkPracticed(r)).length;$("homeNtkCount").textContent=nk.length?`${nk.length} ${plural(nk.length,"key question","key questions")}${nd?` · ${nd} practiced`:" · answer by voice or read the answer"}`:"Add the questions you can't forget"}
   {
     const tt=enTests(),dn=enTestState().done.filter(n=>tt.some(t=>t.n===n)).length;
@@ -460,6 +475,14 @@ function showWeak(){
     $("savedActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="startSavedSession()">Practice ${Math.min(30,saved.length)} saved</button>`;
     $("savedList").innerHTML=saved.slice(0,80).map(q=>`<button type="button" class="weak-item" onclick="startSingle('${q._id}')"><div class="wmeta saved-badge">★ ${esc(systemName(q._sys))}</div><div class="wq">${esc(q.q)}</div></button>`).join("");
   }
+  renderReports();
+}
+function renderReports(){
+  const list=reportedList(),w=$("reportsWrap");if(!w)return;
+  w.classList.toggle("hidden",list.length===0);if(!list.length)return;
+  const label=c=>(REPORT_REASONS.find(r=>r[0]===c)||[c,c])[1];
+  $("reportsActions").innerHTML=`<button type="button" class="btn" style="width:100%;margin-bottom:9px" onclick="copyReports()">Copy the ${list.length} ${plural(list.length,"report","reports")} to send</button>`;
+  $("reportsList").innerHTML=list.map(([id,v])=>{const q=findById(id);return `<div class="weak-item report-item" data-report="${esc(id)}"><button type="button" class="report-open" ${q?`onclick="startSingle('${esc(id)}')"`:"disabled"}><div class="wmeta">⚑ ${esc(q?reportSys(q):v.s)}</div><div class="wq">${esc(q?q.q:v.q)}</div><div class="wstats">${esc(v.r.map(label).join(" · "))}${v.n?` — ${esc(v.n)}`:""}</div></button><button type="button" class="report-del" aria-label="Delete report" onclick="deleteReport('${esc(id)}')">×</button></div>`}).join("");
 }
 function startSavedSession(){const p=savedQuestions(null);if(!p.length){toast("You have no saved questions");return}currentSystemKey=null;startTechnical("saved",p.slice(0,Math.min(30,p.length)))}
 
@@ -569,7 +592,7 @@ function renderQuestion(){
     }
     return `<button type="button" class="${cls}" onclick="selectOption(${i})" aria-pressed="${i===ans?"true":"false"}"${locked?" disabled":""}><div class="letter">${LETTERS[i]||i+1}</div><div class="otxt">${esc(o)}</div></button>`
   }).join("");
-  $("dontKnowBtn").classList.toggle("hidden",ans!==null);$("dontKnowBtn").textContent=session.type==="test"?"I don't know · continue":"I don't know · show answer";renderBookmark(q);renderNtkToggle("ntkQuizBtn",q._id?"q:"+q._id:null);
+  renderReportBtn(q);closeReport();$("dontKnowBtn").classList.toggle("hidden",ans!==null);$("dontKnowBtn").textContent=session.type==="test"?"I don't know · continue":"I don't know · show answer";renderBookmark(q);renderNtkToggle("ntkQuizBtn",q._id?"q:"+q._id:null);
   $("answerWrap").innerHTML="";
   if(session.type!=="test"&&ans!==null)$("answerWrap").innerHTML=answerHtml(q,ans===q.correct);
 
@@ -584,6 +607,52 @@ function renderQuestion(){
   $("nextBtn").disabled=ans===null;
 }
 function renderBookmark(q){const b=$("bookmarkBtn");const on=!!appState.bookmarks[q._id];b.classList.toggle("active",on);b.textContent=on?"★":"☆";b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?"Remove from saved":"Save question")}
+function reportsMap(){if(!isPlainObject(appState.reports))appState.reports={};return appState.reports}
+function renderReportBtn(q){const b=$("reportBtn");if(!b)return;const on=!!(q&&reportsMap()[q._id]);b.classList.toggle("active",on);b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?"Edit report":"Report a problem")}
+function closeReport(){const p=$("reportPanel");if(p){p.classList.add("hidden");p.innerHTML=""}}
+function openReport(){
+  const q=sessionQuestion();if(!q)return;const p=$("reportPanel");
+  if(!p.classList.contains("hidden")){closeReport();return}
+  const cur=reportsMap()[q._id]||{r:[],n:""};
+  p.innerHTML=`<div class="report-title">Report a problem with this question</div><div class="report-chips">${REPORT_REASONS.map(([c,l])=>`<button type="button" class="report-chip${cur.r.includes(c)?" active":""}" data-reason="${c}" aria-pressed="${cur.r.includes(c)?"true":"false"}" onclick="toggleReportChip(this)">${esc(l)}</button>`).join("")}</div><textarea id="reportNote" class="report-note" maxlength="1000" placeholder="What is wrong? (optional)">${esc(cur.n)}</textarea><div class="report-actions">${reportsMap()[q._id]?'<button type="button" class="btn ghost" onclick="deleteReport()">Delete report</button>':'<button type="button" class="btn ghost" onclick="closeReport()">Cancel</button>'}<button type="button" class="btn primary" onclick="saveReport()">Save report</button></div>`;
+  p.classList.remove("hidden");
+}
+function toggleReportChip(b){const on=!b.classList.contains("active");b.classList.toggle("active",on);b.setAttribute("aria-pressed",on?"true":"false")}
+function saveReport(){
+  const q=sessionQuestion();if(!q)return;
+  const r=[...document.querySelectorAll("#reportPanel .report-chip.active")].map(b=>b.dataset.reason),n=($("reportNote")?.value||"").trim();
+  if(!r.length&&!n){toast("Pick a reason or write a note");return}
+  reportsMap()[q._id]={r,n,q:String(q.q||"").slice(0,400),s:reportSys(q),t:Date.now()};
+  saveState();closeReport();renderReportBtn(q);toast("Report saved · see My mistakes");
+}
+function deleteReport(id){
+  const q=id?null:sessionQuestion(),k=id||q?._id;if(!k)return;
+  delete reportsMap()[k];saveState();
+  if(id)showWeak();else{closeReport();renderReportBtn(q)}
+  toast("Report deleted");
+}
+function reportSys(q){return q.bank==="dgac"&&q.bank_section?"DGAC · "+q.bank_section:systemName(q._sys)}
+function reportedList(){return Object.entries(reportsMap()).sort((a,b)=>a[1].t-b[1].t)}
+function reportsText(){
+  const list=reportedList(),label=c=>(REPORT_REASONS.find(r=>r[0]===c)||[c,c])[1];
+  let t=`A320 Interview Trainer · reported questions (${list.length}) · v${typeof APP_VERSION!=="undefined"?APP_VERSION:""}\n`;
+  list.forEach(([id,v],i)=>{
+    const q=findById(id);
+    t+=`\n${i+1}. ${q?reportSys(q):v.s} · ${id}\nQ: ${q?q.q:v.q}\n`;
+    if(q)t+=`App answer: ${q.options[q.correct]}\n`;
+    if(v.r.length)t+=`Problem: ${v.r.map(label).join("; ")}\n`;
+    if(v.n)t+=`Note: ${v.n}\n`;
+  });
+  return t;
+}
+async function copyReports(){
+  const t=reportsText();
+  try{if(navigator.share){await navigator.share({title:"Reported questions",text:t});return}}catch(e){if(e&&e.name==="AbortError")return}
+  try{await navigator.clipboard.writeText(t);toast("List copied · paste it in the chat");return}catch(e){}
+  const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();
+  try{document.execCommand("copy");toast("List copied · paste it in the chat")}catch(e){toast("Could not copy")}
+  a.remove();
+}
 function toggleBookmark(){const q=sessionQuestion();if(!q)return;if(appState.bookmarks[q._id]){delete appState.bookmarks[q._id];toast("Removed from saved")}else{appState.bookmarks[q._id]=true;toast("Question saved")}saveState();renderBookmark(q)}
 
 function answerHtml(q,isOk){

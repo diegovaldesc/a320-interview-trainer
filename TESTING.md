@@ -1248,6 +1248,21 @@ Landing gear es la de los cabin signs), que los ids sean los mismos, el regreso 
 la lista y que el test use solo esa sección. Mutación: con Study mezclado otra
 vez, DGAC-03 falla.
 
+## 19. Reportar errores en una pregunta (DGAC-04, 2026-11-19, 1.41.0)
+
+Pedido de Diego: una forma de marcar una pregunta con error (repetida, respuesta
+equivocada…). En la pantalla de la pregunta, el botón ⚑ abre un panel con cinco
+motivos (Duplicate question, Wrong answer, Wrong explanation, Wrong or confusing
+wording, Other) y una nota. El reporte se guarda en el teléfono (`appState.reports`,
+por id de pregunta, también en el respaldo). La portada lo cuenta en «My mistakes»,
+y esa pantalla trae la sección «Reported» con el botón para copiar o compartir la
+lista y pegarla en el chat. Cada reporte se puede abrir o borrar.
+
+**DGAC-04** revisa que el panel abra, que sin motivo ni nota no se guarde, que el
+reporte quede guardado y sobreviva a guardar y cargar, el conteo de la portada, la
+lista, el texto para enviar (sección DGAC, id, respuesta de la app, motivo y nota) y
+el borrado. Mutación: sin `reports` en `sanitizeState`, DGAC-04 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

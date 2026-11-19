@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Barlow+Semi+Condensed:wght@500;600;700&amp;display=swap" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-<link href="css/app.css?v=1.40.0" rel="stylesheet"/>
-<link href="css/ruta.css?v=1.40.0" rel="stylesheet"/>
+<link href="css/app.css?v=1.41.0" rel="stylesheet"/>
+<link href="css/ruta.css?v=1.41.0" rel="stylesheet"/>
 </head>
 <body>
 <div class="app">
@@ -176,8 +176,9 @@
 </section>
 <section class="hidden" id="quiz">
 <button class="back" onclick="exitSession()">‹ Exit</button>
-<div class="qtop"><div class="qmeta" id="qMeta"></div><div class="qtop-actions"><button class="ntk-toggle hidden" id="ntkQuizBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button><button aria-label="Save question" class="star" id="bookmarkBtn" onclick="toggleBookmark()" title="Save question" type="button">☆</button></div></div>
+<div class="qtop"><div class="qmeta" id="qMeta"></div><div class="qtop-actions"><button class="ntk-toggle hidden" id="ntkQuizBtn" onclick="ntkToggleFromBtn(this)" type="button">+ Need to know</button><button aria-label="Report a problem" aria-pressed="false" class="star report-flag" id="reportBtn" onclick="openReport()" title="Report a problem" type="button">⚑</button><button aria-label="Save question" class="star" id="bookmarkBtn" onclick="toggleBookmark()" title="Save question" type="button">☆</button></div></div>
 <div class="progress"><div id="qProgress"></div></div>
+<div class="report-panel hidden" id="reportPanel"></div>
 <div class="source-tag" id="qSource"></div>
 <h2 class="question" id="qText"></h2>
 <div id="options"></div>
@@ -297,7 +298,7 @@
 <div class="hero"><div class="eyebrow">ADAPTIVE REVIEW</div><h1>My mistakes</h1><p>Sorted by frequency. You don't have to choose what to study: the app brings you back to what you've missed most.</p></div>
 <div id="weakActions"></div>
 <div class="section-label">Questions</div>
-<div class="weak-list" id="weakList"></div><div class="hidden" id="savedWrap"><div class="section-label">Saved</div><div id="savedActions"></div><div class="weak-list" id="savedList"></div></div>
+<div class="weak-list" id="weakList"></div><div class="hidden" id="savedWrap"><div class="section-label">Saved</div><div id="savedActions"></div><div class="weak-list" id="savedList"></div></div><div class="hidden" id="reportsWrap"><div class="section-label">Reported</div><div id="reportsActions"></div><div class="weak-list" id="reportsList"></div></div>
 </section>
 <section class="hidden" id="englishHub">
 <button class="back" onclick="goHome()" type="button">‹ Bank</button>
@@ -365,66 +366,66 @@
 <div aria-labelledby="rtSheetTitle" aria-modal="true" class="rt-sheet" hidden="" id="rtSheet" role="dialog"></div>
 <div aria-label="Station" aria-modal="true" class="rt-player" hidden="" id="rtPlayer" role="dialog"></div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-<script src="data/questions/procedures.js?v=1.40.0"></script>
-<script src="data/questions/hydraulic.js?v=1.40.0"></script>
-<script src="data/questions/fire.js?v=1.40.0"></script>
-<script src="data/questions/ice_rain.js?v=1.40.0"></script>
-<script src="data/questions/comms_oxygen.js?v=1.40.0"></script>
-<script src="data/questions/indicating.js?v=1.40.0"></script>
-<script src="data/questions/dgac_bank.js?v=1.40.0"></script>
-<script src="data/questions/dgac/air_conditioning_and_pneumatic.js?v=1.40.0"></script>
-<script src="data/questions/dgac/autoflight_and_fms.js?v=1.40.0"></script>
-<script src="data/questions/dgac/communications_and_oxygen.js?v=1.40.0"></script>
-<script src="data/questions/dgac/electrical.js?v=1.40.0"></script>
-<script src="data/questions/dgac/fire_protection.js?v=1.40.0"></script>
-<script src="data/questions/dgac/fuel_and_hydraulic.js?v=1.40.0"></script>
-<script src="data/questions/dgac/indicating_and_recording.js?v=1.40.0"></script>
-<script src="data/questions/dgac/apu_and_powerplant.js?v=1.40.0"></script>
-<script src="data/questions/dgac/flight_controls.js?v=1.40.0"></script>
-<script src="data/questions/dgac/ice_and_rain_protection.js?v=1.40.0"></script>
-<script src="data/questions/dgac/landing_gear_lights_and_doors.js?v=1.40.0"></script>
-<script src="data/questions/air_cond.js?v=1.40.0"></script>
-<script src="data/questions/electrical.js?v=1.40.0"></script>
-<script src="data/questions/flight_control.js?v=1.40.0"></script>
-<script src="data/questions/landing_gear.js?v=1.40.0"></script>
-<script src="data/questions/autoflight.js?v=1.40.0"></script>
-<script src="data/questions/apu_powerplant.js?v=1.40.0"></script>
-<script src="data/questions/fuel.js?v=1.40.0"></script>
-<script src="data/questions/operations_airbus.js?v=1.40.0"></script>
-<script src="data/questions/interview_technical.js?v=1.40.0"></script>
-<script src="data/questions/index.js?v=1.40.0"></script>
-<script src="data/english/mcq.js?v=1.40.0"></script>
-<script src="data/english/images.js?v=1.40.0"></script>
-<script src="data/english/listening.js?v=1.40.0"></script>
-<script src="data/english/roleplays.js?v=1.40.0"></script>
-<script src="data/english/pruebas.js?v=1.40.0"></script>
-<script src="data/english/index.js?v=1.40.0"></script>
-<script src="data/oral/core.js?v=1.40.0"></script>
-<script src="data/oral/performance.js?v=1.40.0"></script>
-<script src="data/oral/automation_procedures.js?v=1.40.0"></script>
-<script src="data/oral/index.js?v=1.40.0"></script>
-<script src="data/stations/aire.js?v=1.40.0"></script>
-<script src="data/stations/antihielo.js?v=1.40.0"></script>
-<script src="data/stations/apu.js?v=1.40.0"></script>
-<script src="data/stations/autoflight.js?v=1.40.0"></script>
-<script src="data/stations/combustible.js?v=1.40.0"></script>
-<script src="data/stations/comunicaciones.js?v=1.40.0"></script>
-<script src="data/stations/controles.js?v=1.40.0"></script>
-<script src="data/stations/electrico.js?v=1.40.0"></script>
-<script src="data/stations/fmgs.js?v=1.40.0"></script>
-<script src="data/stations/fuego.js?v=1.40.0"></script>
-<script src="data/stations/hidraulico.js?v=1.40.0"></script>
-<script src="data/stations/indicacion.js?v=1.40.0"></script>
-<script src="data/stations/performance.js?v=1.40.0"></script>
-<script src="data/stations/procedures.js?v=1.40.0"></script>
-<script src="data/stations/tren.js?v=1.40.0"></script>
-<script src="data/stations/route.js?v=1.40.0"></script>
-<script src="data/stations/index.js?v=1.40.0"></script>
-<script src="js/app.js?v=1.40.0"></script>
-<script src="js/oral.js?v=1.40.0"></script>
-<script src="js/needtoknow.js?v=1.40.0"></script>
-<script src="js/ingles.js?v=1.40.0"></script>
-<script src="js/inicio.js?v=1.40.0"></script>
-<script src="js/ruta.js?v=1.40.0"></script>
+<script src="data/questions/procedures.js?v=1.41.0"></script>
+<script src="data/questions/hydraulic.js?v=1.41.0"></script>
+<script src="data/questions/fire.js?v=1.41.0"></script>
+<script src="data/questions/ice_rain.js?v=1.41.0"></script>
+<script src="data/questions/comms_oxygen.js?v=1.41.0"></script>
+<script src="data/questions/indicating.js?v=1.41.0"></script>
+<script src="data/questions/dgac_bank.js?v=1.41.0"></script>
+<script src="data/questions/dgac/air_conditioning_and_pneumatic.js?v=1.41.0"></script>
+<script src="data/questions/dgac/autoflight_and_fms.js?v=1.41.0"></script>
+<script src="data/questions/dgac/communications_and_oxygen.js?v=1.41.0"></script>
+<script src="data/questions/dgac/electrical.js?v=1.41.0"></script>
+<script src="data/questions/dgac/fire_protection.js?v=1.41.0"></script>
+<script src="data/questions/dgac/fuel_and_hydraulic.js?v=1.41.0"></script>
+<script src="data/questions/dgac/indicating_and_recording.js?v=1.41.0"></script>
+<script src="data/questions/dgac/apu_and_powerplant.js?v=1.41.0"></script>
+<script src="data/questions/dgac/flight_controls.js?v=1.41.0"></script>
+<script src="data/questions/dgac/ice_and_rain_protection.js?v=1.41.0"></script>
+<script src="data/questions/dgac/landing_gear_lights_and_doors.js?v=1.41.0"></script>
+<script src="data/questions/air_cond.js?v=1.41.0"></script>
+<script src="data/questions/electrical.js?v=1.41.0"></script>
+<script src="data/questions/flight_control.js?v=1.41.0"></script>
+<script src="data/questions/landing_gear.js?v=1.41.0"></script>
+<script src="data/questions/autoflight.js?v=1.41.0"></script>
+<script src="data/questions/apu_powerplant.js?v=1.41.0"></script>
+<script src="data/questions/fuel.js?v=1.41.0"></script>
+<script src="data/questions/operations_airbus.js?v=1.41.0"></script>
+<script src="data/questions/interview_technical.js?v=1.41.0"></script>
+<script src="data/questions/index.js?v=1.41.0"></script>
+<script src="data/english/mcq.js?v=1.41.0"></script>
+<script src="data/english/images.js?v=1.41.0"></script>
+<script src="data/english/listening.js?v=1.41.0"></script>
+<script src="data/english/roleplays.js?v=1.41.0"></script>
+<script src="data/english/pruebas.js?v=1.41.0"></script>
+<script src="data/english/index.js?v=1.41.0"></script>
+<script src="data/oral/core.js?v=1.41.0"></script>
+<script src="data/oral/performance.js?v=1.41.0"></script>
+<script src="data/oral/automation_procedures.js?v=1.41.0"></script>
+<script src="data/oral/index.js?v=1.41.0"></script>
+<script src="data/stations/aire.js?v=1.41.0"></script>
+<script src="data/stations/antihielo.js?v=1.41.0"></script>
+<script src="data/stations/apu.js?v=1.41.0"></script>
+<script src="data/stations/autoflight.js?v=1.41.0"></script>
+<script src="data/stations/combustible.js?v=1.41.0"></script>
+<script src="data/stations/comunicaciones.js?v=1.41.0"></script>
+<script src="data/stations/controles.js?v=1.41.0"></script>
+<script src="data/stations/electrico.js?v=1.41.0"></script>
+<script src="data/stations/fmgs.js?v=1.41.0"></script>
+<script src="data/stations/fuego.js?v=1.41.0"></script>
+<script src="data/stations/hidraulico.js?v=1.41.0"></script>
+<script src="data/stations/indicacion.js?v=1.41.0"></script>
+<script src="data/stations/performance.js?v=1.41.0"></script>
+<script src="data/stations/procedures.js?v=1.41.0"></script>
+<script src="data/stations/tren.js?v=1.41.0"></script>
+<script src="data/stations/route.js?v=1.41.0"></script>
+<script src="data/stations/index.js?v=1.41.0"></script>
+<script src="js/app.js?v=1.41.0"></script>
+<script src="js/oral.js?v=1.41.0"></script>
+<script src="js/needtoknow.js?v=1.41.0"></script>
+<script src="js/ingles.js?v=1.41.0"></script>
+<script src="js/inicio.js?v=1.41.0"></script>
+<script src="js/ruta.js?v=1.41.0"></script>
 </body>
 </html>

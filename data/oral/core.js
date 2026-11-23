@@ -127,7 +127,7 @@ window.ORAL_PARTS["core"]=[
   {label:"Se adapta a condiciones reales",weight:1,accepted:["se adapta","condiciones de pista","ajusta la presion","ajustandose","condiciones reales"]}
  ]},
 
-{id:"ov_engfire",question:"Camina conmigo por la secuencia de memory items ante un ENG 1(2) FIRE en vuelo, y explica por qué es ese orden.",
+{id:"ov_engfire",question:"Camina conmigo por la secuencia de acciones ante un ENG 1(2) FIRE en vuelo, y explica por qué es ese orden.",
  reference:"Primero se lleva el thrust lever del motor afectado a IDLE, luego ENG MASTER a OFF, después se presiona el ENG FIRE pushbutton para armar el extintor, y se descarga el AGENT 1 tras esperar unos 10 segundos, tiempo que permite que el N1 disminuya, reduciendo la ventilación de la góndola y así mejorando la eficacia del agente extintor.",
  steps:[
   {concept:"Thrust lever a IDLE primero",weight:2,required:true,order:1,accepted:["thrust lever idle","thrust lever a idle","palanca a idle","reducir empuje","a idle","ralenti","ralentí","palanca a ralenti"]},

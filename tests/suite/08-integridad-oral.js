@@ -9,6 +9,13 @@
     eq(mal.length,0,"orales que nombran un manual: "+mal.join(" | "));
     var a=ORAL_VOICE_BANK.find(function(o){return o.id==="ov_ecam_after"});ok(a&&a.reference.indexOf("documentación del procedimiento")>=0,"ov_ecam_after: revisar la documentación del procedimiento");
   });
+  T("7 REG-36 ENG FIRE no es un memory item: ninguna pregunta ni oral llama memory items a sus pasos (P9, P12 y ov_engfire lo decian)",function(){
+    var mal=[],MI=/memory item|memoriz|memorístic/i,FIRE=/ENG(INE)? ?(1(2) )?FIRE/i;
+    allLookupPool().forEach(function(q){var s=[q.q].concat(q.options||[],[q.expl||""]).join(" ");if(FIRE.test(s)&&MI.test(s)&&!/no es un memory item/i.test(s))mal.push(q._id)});
+    ORAL_VOICE_BANK.forEach(function(o){var s=[o.question,o.short||"",o.reference||""].join(" ");if(FIRE.test(s)&&MI.test(s))mal.push(o.id)});
+    eq(mal.length,0,"llaman memory items a ENG FIRE: "+mal.join(" | "));
+    ok(QID_RENAMES["procedures:1bu4ldt"]==="procedures:14935q1","el progreso de P9 pasa a su nuevo id");
+  });
   T("7 A15 la integridad oral detecta items nulos, terminos vacios, ids repetidos y pesos invalidos",function(){
     var base=oralBankIntegrity(),added=0;
     function probe(item,label){

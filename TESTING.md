@@ -807,6 +807,14 @@ botón «Portada» para volver). Ningún módulo cambió.
   la estación hid-1), el criterio oral con «2500 psi», «La presión normal es
   2500 psi», «3000 psi», «normal 3000 PSI; Blue con RAT 2500 PSI» y «No
   recuerdo la presión», y la explicación.
+- **REG-36** (2026-11-23, 1.41.1) — ENG FIRE no es un memory item (decisión de
+  Diego, y así lo dice la lista del FCOM), pero la pregunta P9 decía «secuencia correcta
+  de memory items ante un ENG 1(2) FIRE», su alternativa D hablaba de «acciones
+  memorísticas», la explicación de P12 decía «el memory item establece» y la oral
+  `ov_engfire` pedía «la secuencia de memory items». Ahora dicen «acciones» o «el
+  procedimiento» (P9 cambió de id, con su `QID_RENAMES`, y la estación fir-8 usa el nuevo
+  enunciado). La prueba revisa que ninguna pregunta ni oral junte ENG FIRE con memory
+  items, salvo para decir que no lo es. Con el texto anterior, REG-36 falla.
 - **REG-35** (2026-10-27, 1.39.0) — dos orales de Procedimientos mostraban el
   nombre del manual: `ov_ecam_priorities` y `ov_ecam_after` decían «revisa el FCOM»
   en la respuesta corta, la referencia y un criterio. Ahora dicen «la documentación del

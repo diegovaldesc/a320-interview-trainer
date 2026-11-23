@@ -8,7 +8,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.42.0";
+const APP_VERSION="1.43.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -655,13 +655,18 @@ async function copyReports(){
 }
 function toggleBookmark(){const q=sessionQuestion();if(!q)return;if(appState.bookmarks[q._id]){delete appState.bookmarks[q._id];toast("Removed from saved")}else{appState.bookmarks[q._id]=true;toast("Question saved")}saveState();renderBookmark(q)}
 
+/* Fuente visible de una pregunta DGAC revisada: la parte del manual, sin la fecha de revisión ni la nota del examen. */
+function dgacSourceLabel(q){if(!q||!q.fcom_review||typeof q.src!=="string"||/^Examen/.test(q.src))return "";return q.src.replace(/ \u00b7 examen oficial DGAC A320 \(2018\)/g,"").replace(/\b(FCOM|FCTM) \d{1,2} [A-Z]{3} \d{2}\b/g,"$1").trim()}
 function answerHtml(q,isOk){
   let h=`<div class="feedback-head ${isOk?"ok":"bad"}"><div class="status">${isOk?"Correct":"Correct answer"}</div><strong>${esc(q._correctText||q.options[q.correct])}</strong></div>`;
   if(q.bank==="dgac"){
     if(q.expl){
       h=`<div class="verified-line">ADDED EXPLANATION · DGAC EXAM 2018</div>`+h;
       h+=`<div class="explain"><div class="label">Why</div><p>${esc(q.expl)}</p></div>`;
-      /* La cita y la fuente (cite, src) quedan como datos internos: nada visible nombra un manual (DGAC-05). */
+      /* Decisión de Diego (2026-11-23): sin citas textuales, pero se muestra de qué parte del manual sale
+         la explicación, para que se vea que no es inventada. La cita (cite) queda interna (DGAC-06). */
+      const srcLine=dgacSourceLabel(q);
+      if(srcLine)h+=`<div class="src-line"><span class="label">Source</span> ${esc(srcLine)}</div>`;
       return h;
     }
     h+=`<div class="dgac-warning"><b>DGAC A320 bank (2018).</b> Only the answer marked in the original exam is shown here. We haven't added an explanation because this question hasn't been audited against the current FCOM yet.</div>`;

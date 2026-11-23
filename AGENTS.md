@@ -45,10 +45,13 @@ Never open every file, read everything, and only then look for the problem.
 - Report potential technical inaccuracies separately, for human review.
 - Every lesson fact must come from the source documents in `C:\Users\yodie\Desktop\APP`, not from
   general knowledge.
-- DGAC questions are the official exam: keep their stems as written. The key marks the answer that is
-  right for the real aircraft.
-- Nothing user-visible in new content may cite a manual, section, page or document (FCOM, FCTM, PDF, §,
-  AIP…). Sources go in internal fields (`cite`, `src`, `refs`) that are never shown.
+- DGAC questions are the official exam: keep their stems and alternatives as written. The key marks the
+  answer that the APP sources support (FCOM first, then FCTM, DAN 121, Getting to Grips and the other APP
+  documents), not the answer highlighted in the exam PDF. If no alternative is right, key the closest and
+  explain it. A changed key keeps the exam's one in `exam_key`; a reviewed question gets `fcom_review`.
+- Never show verbatim manual quotes. Verbatim text goes in the internal field `cite`. A reviewed DGAC answer
+  shows one "Source" line with the manual part (built from `src` by `dgacSourceLabel()`). Lessons,
+  explanations and orals still name no manual, section, page or document in their text.
 
 ## Language and style
 

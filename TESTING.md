@@ -1287,6 +1287,26 @@ respuesta DGAC ya no muestra el recuadro «Technical reference» con la fuente.
 `fcom_review`, que ninguna explicación nombre un manual y que la respuesta no
 muestre la cita. Mutación: con el recuadro de vuelta, DGAC-05 falla.
 
+## 21. Banco DGAC: Air conditioning revisada y fuente visible sin cita (DGAC-06, 2026-11-23, 1.43.0)
+
+Las 85 preguntas de Air conditioning and pneumatic se revisaron contra las fuentes de
+Desktop\APP con las mismas reglas que Autoflight (sección 20). Cambia de clave A40:
+la presurización se ve en las páginas CRUISE y CAB PRESS, no en BLEED (la del examen
+queda en `exam_key`). Las explicaciones por MSN de los pack controllers y del zone
+controller se conservan, y la fuente indica los dos rangos.
+
+Decisión de Diego: no mostrar citas textuales del manual, pero sí de qué parte sale la
+explicación, para que se vea que no es inventada. La respuesta DGAC revisada muestra
+una línea «Source» (por ejemplo «FCOM · DSC-21-20-40 · ECAM CRUISE and CAB PRESS
+pages»), sin la fecha de revisión ni la nota del examen. Si no hay respaldo, no se
+muestra ninguna fuente.
+
+**DGAC-06** revisa que las 85 estén revisadas y sin manuales en la explicación, la
+clave de A40 con su `exam_key`, que la respuesta muestre la línea de fuente sin fecha,
+sin nota y sin cita textual, y que una pregunta sin respaldo no muestre fuente.
+**DGAC-05** ahora exige que no aparezca la cita textual (antes exigía que no apareciera
+ninguna fuente). Mutación: sin la línea de fuente, DGAC-06 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

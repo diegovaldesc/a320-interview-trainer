@@ -116,6 +116,19 @@
     var REF=/FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/,mal=sec.filter(function(q){return (!q.fcom_review&&q.q.indexOf("DISPLAY MANAGEMENT COMPUTERS")<0)||REF.test(q.expl)});
     eq(mal.length,0,"sin revisar o con manual visible: "+mal.map(function(q){return q.q.slice(0,40)}).join(" | "));
     var h=answerHtml(by("FOR AUTOLAND, BOTH A/PS"),true);
-    ok(h.indexOf("citation")<0&&!/FCOM|DSC-|TECHNICAL REFERENCE/.test(h),"la respuesta DGAC no muestra la cita ni la fuente");
+    var qa=by("FOR AUTOLAND, BOTH A/PS");ok(h.indexOf("citation")<0&&h.indexOf("TECHNICAL REFERENCE")<0&&h.indexOf(qa.cite.slice(0,30))<0,"la respuesta DGAC no muestra la cita textual");
+    reset();
+  });  T("8 DGAC-06 Air conditioning revisada (A40: CRUISE y CAB PRESS) y la respuesta DGAC muestra de que parte del manual sale, sin cita textual ni fecha de revision",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Air conditioning and pneumatic");eq(sec.length,85,"85 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    var REF=/FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/;eq(sec.filter(function(q){return REF.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    var q=sec.find(function(x){return x.q.indexOf("PRESSURIZATION INDICATIONS ARE FOUND")===0});
+    ok(q&&q.options[q.correct].indexOf("THE INFLIGHT ECAM CRUISE PAGE AND THE CAB PRESS PAGE")===0&&q.exam_key===3,"A40 marca CRUISE y CAB PRESS: "+(q&&q.options[q.correct]));
+    var h=answerHtml(q,true);
+    ok(/class="src-line"/.test(h)&&h.indexOf("FCOM · DSC-21-20-40")>=0,"muestra la parte del manual: "+h.slice(-200));
+    ok(!/15 SEP 25|examen oficial/.test(h)&&h.indexOf(q.cite.slice(0,30))<0&&h.indexOf("blockquote")<0,"sin fecha de revision, sin nota del examen y sin cita textual");
+    var sinFuente=rawPool(DGAC_KEY).find(function(x){return x.q.indexOf("THE STANDBY ATTITUDE INDICATION")===0});
+    ok(sinFuente&&!/src-line/.test(answerHtml(sinFuente,true)),"sin respaldo no se inventa una fuente");
     reset();
   });
+

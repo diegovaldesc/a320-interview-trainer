@@ -428,3 +428,7 @@ button.system-card,button.search-item,button.resume-card,button.weak-item{appear
 .report-item{display:flex;align-items:flex-start;gap:6px;padding:0!important}
 .report-item .report-open{flex:1;min-width:0;text-align:left;background:none;border:0;padding:12px 4px 12px 13px;color:inherit;font:inherit;cursor:pointer}
 .report-item .report-del{flex:0 0 44px;height:44px;border:0;background:none;color:var(--muted);font-size:20px;cursor:pointer}
+
+/* Fuente visible de las preguntas DGAC revisadas (DGAC-06) */
+.src-line{margin-top:9px;font-size:11px;line-height:1.45;color:var(--muted)}
+.src-line .label{font:700 9.5px/1 var(--sans);letter-spacing:.8px;text-transform:uppercase;margin-right:4px}

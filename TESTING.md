@@ -1307,6 +1307,21 @@ sin nota y sin cita textual, y que una pregunta sin respaldo no muestre fuente.
 **DGAC-05** ahora exige que no aparezca la cita textual (antes exigía que no apareciera
 ninguna fuente). Mutación: sin la línea de fuente, DGAC-06 falla.
 
+## 22. Banco DGAC: Communications and oxygen revisada (DGAC-07, 2026-11-23, 1.44.0)
+
+Las 51 preguntas se revisaron con las reglas de la sección 20. Ninguna cambia de
+clave. Se conservan las explicaciones de la auditoría v1.31.1. Se completan las que
+decían que la documentación no detallaba un punto que sí describe:
+- el NAV del RMP quita la sintonía de radioayudas de los dos FMGC;
+- el RMP en ELEC EMER CONFIG depende del MSN: solo el RMP 1 en los MSN 01143 a 11293,
+  y el RMP 1 y el RMP 2 en los MSN 11482 a 12910;
+- los dos receptores LS deben tener los mismos parámetros.
+
+**DGAC-07** revisa que las 51 estén revisadas y sin manuales en la explicación, la
+explicación por MSN del RMP en emergencia, la del NAV del RMP con su clave, y que se
+conserve una explicación de la auditoría anterior. Mutación: con la explicación
+anterior del RMP en emergencia (solo RMP 1), DGAC-07 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

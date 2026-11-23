@@ -130,5 +130,15 @@
     var sinFuente=rawPool(DGAC_KEY).find(function(x){return x.q.indexOf("THE STANDBY ATTITUDE INDICATION")===0});
     ok(sinFuente&&!/src-line/.test(answerHtml(sinFuente,true)),"sin respaldo no se inventa una fuente");
     reset();
+  });  T("8 DGAC-07 Communications and oxygen revisada: todas con fuente, el RMP en ELEC EMER CONFIG por MSN y el NAV del RMP quita la sintonia de los dos FMGC",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Communications and oxygen");eq(sec.length,51,"51 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var e=by("WHEN THE AIRCRAFTT IS IN THE EMERGENCY ELECTRICAL");ok(e&&/01143 a 11293/.test(e.expl)&&/11482 a 12910/.test(e.expl),"RMP en ELEC EMER CONFIG explicado por MSN");
+    var n=by("WHEN SELECTING THE GUARDED RMP NAV KEY");ok(n&&/dos FMGC/.test(n.expl)&&n.options[n.correct].indexOf("FMGC AUTO TUNING IS INHIBITED")===0,"NAV del RMP: inhibe el autotuning de los dos FMGC");
+    var c=by("APPROXIMATELY HOW LONG ARE THE PASSENGER OXYGEN");ok(c&&/13, 15 o hasta 22/.test(c.expl),"se conserva la explicacion auditada antes (v1.31.1)");
+    reset();
   });
+
 

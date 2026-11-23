@@ -108,3 +108,14 @@
     ok(!appState.reports[id]&&byId("reportsWrap").classList.contains("hidden"),"borrar quita el reporte");
     reset();
   });
+  T("8 DGAC-05 Autoflight and FMS revisada contra las fuentes: claves corregidas (D20, D22, D39, D68), explicaciones sin nombres de manuales y sin el recuadro de referencia",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Autoflight and FMS");eq(sec.length,78,"78 preguntas en la seccion");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var want=[["FOR AUTOLAND, BOTH A/PS","FALSE."],["HOW DOES THE FMGC COMPUTE RADIO POSITION","VOR/DME AND DME/DME."],["THE CAPTAIN","THE CAPTAIN"],["WHEN CAN MANAGED VERTICAL NAVIGATION","ONLY AFTER MANAGED LATERAL NAVIGATION HAS BEEN ENGAGED."]];
+    want.forEach(function(w){var q=by(w[0]);ok(q&&q.options[q.correct].indexOf(w[1])===0&&Number.isInteger(q.exam_key)&&q.exam_key!==q.correct,"clave de «"+w[0]+"»: "+(q&&q.options[q.correct]))});
+    var REF=/FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/,mal=sec.filter(function(q){return (!q.fcom_review&&q.q.indexOf("DISPLAY MANAGEMENT COMPUTERS")<0)||REF.test(q.expl)});
+    eq(mal.length,0,"sin revisar o con manual visible: "+mal.map(function(q){return q.q.slice(0,40)}).join(" | "));
+    var h=answerHtml(by("FOR AUTOLAND, BOTH A/PS"),true);
+    ok(h.indexOf("citation")<0&&!/FCOM|DSC-|TECHNICAL REFERENCE/.test(h),"la respuesta DGAC no muestra la cita ni la fuente");
+    reset();
+  });

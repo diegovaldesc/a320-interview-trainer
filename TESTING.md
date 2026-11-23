@@ -1271,6 +1271,22 @@ reporte quede guardado y sobreviva a guardar y cargar, el conteo de la portada, 
 lista, el texto para enviar (sección DGAC, id, respuesta de la app, motivo y nota) y
 el borrado. Mutación: sin `reports` en `sanitizeState`, DGAC-04 falla.
 
+## 20. Banco DGAC: Autoflight and FMS revisada contra las fuentes (DGAC-05, 2026-11-23, 1.42.0)
+
+Regla de Diego: las respuestas destacadas del PDF las marcó una persona y pueden
+estar mal. El FCOM manda, y también valen el FCTM, la DAN 121, Getting to Grips y
+todos los documentos de Desktop\APP. Las alternativas no se tocan: si ninguna es
+correcta, se marca la más cercana y se explica. Las 77 preguntas revisadas de la
+sección tienen una explicación nueva, con su cita textual (interna) y `fcom_review`;
+la del DMC ya estaba explicada por MSN. Cambian de clave D20 (autoland con un AP:
+FALSE), D22 (radio position: VOR/DME and DME/DME), D39 («-FD2» = FD1 desenganchado)
+y D68 (CLB y DES solo con NAV), y cada una guarda la del examen en `exam_key`. La
+respuesta DGAC ya no muestra el recuadro «Technical reference» con la fuente.
+
+**DGAC-05** revisa las cuatro claves y su `exam_key`, que todas tengan
+`fcom_review`, que ninguna explicación nombre un manual y que la respuesta no
+muestre la cita. Mutación: con el recuadro de vuelta, DGAC-05 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

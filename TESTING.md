@@ -1359,6 +1359,22 @@ botellas de las bodegas por MSN). Se agregan:
 
 Mutación: con la explicación anterior de la bodega trasera (sin MSN), DGAC-09 falla.
 
+## 25. Banco DGAC: Fuel and hydraulic revisada (DGAC-10, 2026-11-23, 1.47.0)
+
+Las 43 preguntas se revisaron con las reglas de la sección 20. Ninguna cambia de
+clave. Se conservan las explicaciones de las auditorías v1.23.2 y v1.25.1. Se agregan:
+- en las preguntas de las bombas del center tank, que solo aplican hasta el MSN 06183
+  (desde el MSN 06286 el center tank pasa el combustible por transfer valves);
+- que la safety valve del tren corta sobre 264 kt (la cifra antigua era 260 kt).
+
+**DGAC-10** revisa:
+- que las 43 estén revisadas, sin manuales en la explicación y sin cambios de clave;
+- la nota por MSN en tres preguntas del center tank;
+- los 264 kt de la safety valve;
+- que se conserve una explicación de la auditoría anterior.
+
+Mutación: sin la nota por MSN en el memo CTR TK FEEDG, DGAC-10 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

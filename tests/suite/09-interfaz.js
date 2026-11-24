@@ -159,7 +159,18 @@
     var f=by("IF THERE IS AN APU FIRE IN FLIGHT");ok(f&&/solo en tierra/.test(f.expl),"APU en vuelo: apagado y descarga manuales");
     var c=by("WILL AN APU FIRE TEST SHUT");ok(c&&/marcaba/.test(c.expl),"se conserva la explicacion auditada antes (v1.28.1)");
     reset();
+  });  T("8 DGAC-10 Fuel and hydraulic revisada: todas con fuente, la logica del center tank por MSN y la safety valve del tren a 264 kt",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Fuel and hydraulic");eq(sec.length,43,"43 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,0,"ninguna cambia de clave");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    ["AFTER ENGINE START, CENTER TANK FUEL PUMPS","THE MESSAGE CTR TK FEEDG","WHY DO THE CENTER TANK PUPS STOP"].forEach(function(s){var q=by(s);ok(q&&/06183/.test(q.expl)&&/06286/.test(q.expl),"center tank por MSN: "+s.slice(0,28))});
+    var v=by("AS LONG AS THE LANDING GEAR LEVER IS UP");ok(v&&/264 kt/.test(v.expl),"safety valve del tren: 264 kt");
+    var c=by("THERE ARE ________ FUEL PUMPS");ok(c&&/06183/.test(c.expl)&&/Respuesta del examen/.test(c.expl),"se conserva la explicacion auditada antes (v1.25.1)");
+    reset();
   });
+
 
 
 

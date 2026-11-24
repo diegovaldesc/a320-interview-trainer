@@ -1389,6 +1389,20 @@ siguen funcionando CLR, RCL, STS, EMER CANC y ALL, porque van cableados.
 
 Mutación: con la explicación anterior de la falla del ECAM control panel, DGAC-11 falla.
 
+## 27. Banco DGAC: APU and powerplant revisada (DGAC-12, 2026-11-24, 1.49.0)
+
+Las 43 preguntas se revisaron con las reglas de la sección 20. Ninguna cambia de
+clave. La pregunta del APU AVAIL ya tenía la clave «THE APU» y ahora guarda la del
+examen («EXTERNAL POWER») en `exam_key`. El límite de arranque del APU sale del gráfico
+de la envolvente: 25 000 ft solo con baterías, 41 000 ft con la energía normal.
+
+**DGAC-12** revisa:
+- que las 43 estén revisadas, sin manuales en la explicación y con una fuente real;
+- que solo la pregunta del APU AVAIL tenga otra clave en el examen;
+- las explicaciones del límite de arranque y de la luz FAULT del MASTER SW con fuego.
+
+Mutación: sin los 41 000 ft en la explicación del arranque del APU, DGAC-12 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

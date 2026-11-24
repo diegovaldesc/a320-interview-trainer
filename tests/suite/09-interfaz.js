@@ -178,7 +178,19 @@
     var p=by("FOLLOWING A FAILURE OF THE ECAM CONTROL PANEL");ok(p&&/EMER CANC/.test(p.expl)&&/cableados/.test(p.expl),"ECAM control panel: pb cableados que siguen funcionando");
     var c=by("THE ELECTRONIC CENTRALIZED AIRPLANE MONITORING");ok(c&&/02321/.test(c.expl),"se conserva la explicacion auditada antes (v1.30.1)");
     reset();
+  });  T("8 DGAC-12 APU and powerplant revisada: todas con fuente, APU AVAIL con clave del examen guardada, arranque con baterias a 25 000 ft",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|APU and powerplant");eq(sec.length,43,"43 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada|[Ee]l manual/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    eq(sec.filter(function(q){return /^Examen/.test(q.src)}).length,0,"ninguna fuente queda solo como examen");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var a=by("WITH THE ENGINES OFF, IF THE AVAIL LIGHT");ok(a&&a.options[a.correct].indexOf("THE APU")===0&&a.exam_key===3,"APU AVAIL: clave el APU, la del examen (external power) guardada");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,1,"solo esa tiene otra clave en el examen");
+    var b=by("THE APU MAY BE STARTED UP TO WHAT ALTITUDE");ok(b&&/25 000 ft/.test(b.expl)&&/41 000 ft/.test(b.expl),"arranque del APU: 41 000 ft normal, 25 000 ft solo baterias");
+    var f=by("FIRE ON GROUND OR IN FLIGHT WILL CAUSE");ok(f&&/en vuelo/.test(f.expl)&&/APU FIRE pb/.test(f.expl),"FAULT del MASTER SW: en vuelo el fuego no apaga el APU solo");
+    reset();
   });
+
 
 
 

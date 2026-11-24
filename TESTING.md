@@ -1440,6 +1440,21 @@ se nombran como tales, no como «depende del MSN».
 
 Mutación: sin la protección de bank angle en la explicación del trim automático, DGAC-13 falla.
 
+## 30. Banco DGAC: Ice and rain protection revisada (DGAC-14, 2026-11-24, 1.52.0)
+
+Las 27 preguntas se revisaron con las reglas de la sección 20 y la redacción de la sección 28. Ninguna
+cambia de clave. Los grupos de MSN de la documentación se cruzaron con la tabla de aviones: las válvulas
+del engine anti-ice que abren solas en ELEC EMER CONFIG son las de todos los aviones con CFM56 o IAE
+V2500; las dos PRSOV que siguen controlables son las de todos los A320neo y A321neo (PW1100G); el
+encendido continuo con el engine anti-ice es de todos los IAE V2500. Las explicaciones nombran el motor.
+
+**DGAC-14** revisa:
+- que las 27 estén revisadas, con fuente real, sin manuales ni el examen en la explicación y sin cambios de clave;
+- las dos preguntas de pérdida eléctrica del engine anti-ice, explicadas por motor;
+- el encendido continuo (IAE V2500) y el límite de los wipers (230 kt mientras barren).
+
+Mutación: con la explicación anterior («A320neo», sin nombrar el PW1100G), DGAC-14 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

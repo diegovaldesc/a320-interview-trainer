@@ -216,7 +216,19 @@
     var f=by("WHEN IS THE FLIGHT MODE ACTIVE");ok(f&&/50 ft/.test(f.expl)&&/A321neo/.test(f.expl)&&!/Depende del MSN/.test(f.expl),"flight mode: 50 ft en los A320, 100 ft en los A321neo");
     var d=by("WHEN DO YOU GET FLARE MODE IN ALTERNATE LAW");ok(d&&/direct law/.test(d.expl),"flare en alternate law: pasa a direct law con el tren abajo");
     reset();
+  });  T("8 DGAC-14 Ice and rain revisada: todas con fuente, las valvulas del engine anti-ice en ELEC EMER CONFIG se explican por motor (CFM56 o IAE V2500 frente a PW1100G)",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Ice and rain protection");eq(sec.length,27,"27 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|LIM-|PDF|§|respuesta verificada|[Ee]l manual|examen|mayor parte/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual ni el examen");
+    eq(sec.filter(function(q){return /^Examen/.test(q.src)}).length,0,"ninguna fuente queda solo como examen");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,0,"ninguna cambia de clave");
+    var el=sec.filter(function(q){return /ENGINE ANTI-ICE VALVES/.test(q.q+q.options.join())&&/ELECTRICAL POWER/.test(q.q)});eq(el.length,2,"las dos de perdida electrica");
+    el.forEach(function(q){ok(/CFM56 o IAE V2500/.test(q.expl)&&/PW1100G/.test(q.expl)&&/PRSOV/.test(q.expl),"por motor: "+q.q)});
+    var ig=sec.find(function(q){return q.q.indexOf("WHAT HAPPENS WHEN EITHER ENGINE ANTI-ICE IS OPEN")===0});ok(ig&&/IAE V2500/.test(ig.expl)&&/encendido continuo/.test(ig.expl),"encendido continuo solo con IAE V2500");
+    var w=sec.find(function(q){return q.q.indexOf("WHAT IS THE SPEED LIMIT TO OPERATE THE WINDSCREEN WIPERS")===0});ok(w&&w.options[w.correct]==="230 KTS."&&/barriendo/.test(w.expl),"wipers 230 kt, mientras barren");
+    reset();
   });
+
 
   T("8 REV-02 Try again repite la misma prueba (mismas preguntas y orden) como practica que no cuenta en las estadisticas; Mistakes only tampoco cuenta",function(){
     reset();currentSystemKey=null;startQuickTest();

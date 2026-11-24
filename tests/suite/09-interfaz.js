@@ -169,7 +169,17 @@
     var v=by("AS LONG AS THE LANDING GEAR LEVER IS UP");ok(v&&/264 kt/.test(v.expl),"safety valve del tren: 264 kt");
     var c=by("THERE ARE ________ FUEL PUMPS");ok(c&&/06183/.test(c.expl)&&/Respuesta del examen/.test(c.expl),"se conserva la explicacion auditada antes (v1.25.1)");
     reset();
+  });  T("8 DGAC-11 Indicating and recording revisada: todas con fuente, los pb que siguen sin el ECAM control panel",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Indicating and recording");eq(sec.length,14,"14 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,0,"ninguna cambia de clave");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var p=by("FOLLOWING A FAILURE OF THE ECAM CONTROL PANEL");ok(p&&/EMER CANC/.test(p.expl)&&/cableados/.test(p.expl),"ECAM control panel: pb cableados que siguen funcionando");
+    var c=by("THE ELECTRONIC CENTRALIZED AIRPLANE MONITORING");ok(c&&/02321/.test(c.expl),"se conserva la explicacion auditada antes (v1.30.1)");
+    reset();
   });
+
 
 
 

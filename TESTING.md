@@ -1375,6 +1375,20 @@ clave. Se conservan las explicaciones de las auditorías v1.23.2 y v1.25.1. Se a
 
 Mutación: sin la nota por MSN en el memo CTR TK FEEDG, DGAC-10 falla.
 
+## 26. Banco DGAC: Indicating and recording revisada (DGAC-11, 2026-11-23, 1.48.0)
+
+Las 14 preguntas se revisaron con las reglas de la sección 20. Ninguna cambia de
+clave. Se conservan las explicaciones de la auditoría v1.30.1 (EIS, ECAM y DMC por MSN,
+inhibiciones, radar en el ND). Se agrega, entre otras, que sin el ECAM control panel
+siguen funcionando CLR, RCL, STS, EMER CANC y ALL, porque van cableados.
+
+**DGAC-11** revisa:
+- que las 14 estén revisadas, sin manuales en la explicación y sin cambios de clave;
+- la explicación de la falla del ECAM control panel;
+- que se conserve una explicación de la auditoría anterior.
+
+Mutación: con la explicación anterior de la falla del ECAM control panel, DGAC-11 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

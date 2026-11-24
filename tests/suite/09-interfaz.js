@@ -139,6 +139,17 @@
     var n=by("WHEN SELECTING THE GUARDED RMP NAV KEY");ok(n&&/dos FMGC/.test(n.expl)&&n.options[n.correct].indexOf("FMGC AUTO TUNING IS INHIBITED")===0,"NAV del RMP: inhibe el autotuning de los dos FMGC");
     var c=by("APPROXIMATELY HOW LONG ARE THE PASSENGER OXYGEN");ok(c&&/13, 15 o hasta 22/.test(c.expl),"se conserva la explicacion auditada antes (v1.31.1)");
     reset();
+  });  T("8 DGAC-08 Electrical revisada: todas con fuente, el EMER GEN no depende del tren y las del estandar antiguo quedan explicadas",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Electrical");eq(sec.length,63,"63 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var g=by("FOR THE A-320 THE EMERGENCY GENERATOR SUPPLIES POWER");ok(g&&g.options[g.correct].indexOf("IF THE RAT STALLS")===0&&g.exam_key===2,"EMER GEN: clave B (stall del RAT o bajo 100 kt), la del examen queda en exam_key");
+    var f=by("WHEN WILL THE RAT & EMER GEN RED FAULT");ok(f&&/est.ndar antiguo/.test(f.expl)&&f.correct===0,"luz FAULT: la mas cercana, explicada como estandar antiguo");
+    ["WHICH FLIGHT CONTROL COMPUTER WILL BE INOPERATIVE","WHICH RADIOS ARE INOPERATIVE WITH GEAR"].forEach(function(s){var q=by(s);ok(q&&/est.ndar antiguo/.test(q.expl),"tren en ELEC EMER: "+s.slice(0,30))});
+    var c=by("HOW MANY TIMES CAN YOU RESET");ok(c&&/C\/B TRIPPED/.test(c.expl),"se conserva la explicacion auditada antes (v1.36.0)");
+    reset();
   });
+
 
 

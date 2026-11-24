@@ -1322,6 +1322,27 @@ explicación por MSN del RMP en emergencia, la del NAV del RMP con su clave, y q
 conserve una explicación de la auditoría anterior. Mutación: con la explicación
 anterior del RMP en emergencia (solo RMP 1), DGAC-07 falla.
 
+## 23. Banco DGAC: Electrical revisada (DGAC-08, 2026-11-23, 1.45.0)
+
+Las 63 preguntas se revisaron con las reglas de la sección 20. Se conservan las
+explicaciones de la auditoría de Eléctrico (v1.33.0 a v1.36.0).
+
+Una cambia de clave:
+- el EMER GEN alimenta mientras el RAT no entra en stall y, en tierra, sobre 100 kt.
+  La alternativa «gear up» venía de un estándar antiguo. La del examen queda en `exam_key`.
+
+Las preguntas del tren en ELEC EMER CONFIG (luz FAULT con tren de nariz arriba, FAC 1,
+DME 1 y transponder 1, NAV del RMP antes de bajar el tren) mantienen la alternativa
+más cercana. La explicación dice que vienen de un estándar antiguo.
+
+**DGAC-08** revisa:
+- que las 63 estén revisadas y que ninguna explicación nombre un manual;
+- la nueva clave del EMER GEN, con su `exam_key`;
+- las explicaciones de estándar antiguo;
+- que se conserve una explicación de la auditoría anterior.
+
+Mutación: con la clave anterior del EMER GEN («gear up»), DGAC-08 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

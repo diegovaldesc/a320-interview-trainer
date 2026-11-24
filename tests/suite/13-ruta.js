@@ -88,7 +88,21 @@
     var shown=[].map.call(byId("rtPlayer").querySelectorAll(".rt-opt span:last-child"),function(e){return e.textContent});
     eq(shown.join("|"),st2.test[0].options.join("|"),"alternativas en su orden");
     RUTA.showCover();
+  });  T("14 REV-04 la pantalla final de una estacion revisa todas las preguntas: alternativas con su letra, la marcada y la correcta",function(){
+    reset();
+    var st=RUTA.stations[RUTA.missions[0].id];RUTA.startMission(0);var S=RUTA.state();S.view="question";
+    var t0=st.test[0],bad=(t0.correct+1)%t0.options.length;S.q=0;RUTA.answer(bad);
+    for(var i=1;i<st.test.length;i++){S.q=i;if(st.test[i].type==="mcq")RUTA.answer(st.test[i].correct);else RUTA.answerOral(st.test[i].reference,false)}
+    S.q=st.test.length-1;RUTA.nextQuestion();
+    var d=byId("rtPlayer").querySelectorAll(".rt-rev");eq(d.length,st.test.length,"una por pregunta");
+    ok(d[0].open,"la errada abierta");
+    var o=d[0].querySelectorAll(".rt-opt");eq(o.length,t0.options.length,"todas las alternativas");
+    ok(d[0].querySelector(".rt-opt.rt-bad").textContent.indexOf(t0.options[bad])>=0,"la marcada");
+    ok(d[0].querySelector(".rt-opt.rt-ok").textContent.indexOf(t0.options[t0.correct])>=0,"la correcta");
+    ok(d[0].textContent.indexOf(t0.explanation)>=0,"con la explicacion");
+    RUTA.showCover();
   });
+
   T("14 RUTA-07 la portada muestra avance, racha y estrellas; el mapa dibuja 18 misiones con candados, la actual y el avion",function(){
     reset();appState.ruta=sanitizeRuta({stars:{"hid-1":3},streak:{last:today(),days:2}});
     RUTA.showCover();
@@ -282,7 +296,7 @@
     function one(re){var h=Q.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]}
     var a=one(/WHAT OTHER SYSTEMS WILL BE INOPERATIVE/),b=one(/WILL NOSE WHEEL STEERING BE AVAILABLE/),c=one(/SUPPLIES PRESSURE TO THE NOSE WHEEL STEERING/);
     eq(a.options[a.correct],"NOSE WHEEL STEERING ONLY.","clave de la 1");eq(b.options[b.correct],"NO.","clave de la 2");eq(c.options[c.correct],"GREEN.","clave de la 3");
-    [a,b,c].forEach(function(q){ok(/MSN más antiguos/.test(q.expl)&&/MSN más nuevos/.test(q.expl)&&/Yellow/.test(q.expl)&&!/flota/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
+    [a,b,c].forEach(function(q){ok(/MSN 01143 al 02321/.test(q.expl)&&/MSN 02572/.test(q.expl)&&/Yellow/.test(q.expl)&&!/flota/.test(q.expl),"explicacion: "+q.expl.slice(0,70))});
   });
 
   T("14 REG-09 ninguna pregunta del banco menciona los Tutorials (enunciado, alternativas ni explicacion) y las estaciones muestran el enunciado del banco tal cual",function(){
@@ -375,7 +389,7 @@
     ORAL_VOICE_BANK.forEach(function(q){corpus.push(q.id+": "+q.reference+" "+(q.short||""))});
     var flota=corpus.filter(function(s){return /(mayor parte|mayoría|buena parte|parte) de la flota|flota actual|aviones de la flota|antiguos de la flota/i.test(s)});
     eq(flota.length,0,"afirmaciones sobre la flota: "+flota.join(" | ").slice(0,220));
-    var nws=corpus.filter(function(s){return /steering/i.test(s)&&/(usa|da|alimenta)\W+(\w+\W+){0,3}\**Yellow/i.test(s)&&!/más nuevos/.test(s)});
+    var nws=corpus.filter(function(s){return /steering/i.test(s)&&/(usa|da|alimenta)\W+(\w+\W+){0,3}\**Yellow/i.test(s)&&!/más nuevos|MSN 02572/.test(s)});
     eq(nws.length,0,"el steering con Yellow sin decir que es en los MSN mas nuevos: "+nws.join(" | ").slice(0,220));
     var c=rtCard("tren-9","After a gravity extension");
     ok(/MSN más antiguos/.test(c.body)&&/se pierde/.test(c.body)&&/más nuevos/.test(c.body)&&/sigue disponible/.test(c.body),"despues de la gravedad: el steering se pierde en los MSN antiguos y sigue en los nuevos");
@@ -502,7 +516,7 @@
     ok(/500 kg/.test(st.expl)&&!/ni por una condición de sobrellenado/.test(st.expl),"inner lleno: detiene la bomba hasta gastar unos 500 kg");
     var nb=one(/FUEL PUMPS IN EACH A-320 FUEL TANK/);
     eq(nb.options[nb.correct],"2","clave de las bombas por tanque");
-    ok(/06183/.test(nb.expl)&&/06286/.test(nb.expl)&&/outer tanks no tienen bombas/.test(nb.expl),"bombas por tanque explicadas por MSN");
+    ok(/06183/.test(nb.expl)&&/06286/.test(nb.expl)&&/outer tanks nunca tienen bombas/.test(nb.expl),"bombas por tanque explicadas por MSN");
     var au=one(/CENTER TANK PUMP MODE SEL SWITCH IN AUTO/);
     ok(/nivel bajo/.test(au.expl)&&/06183/.test(au.expl),"logica AUTO: 5 minutos despues del nivel bajo");
     var act=SYSTEMS.fuel.questions.find(function(q){return q.q.indexOf("En una configuración de combustible equipada con ACT")===0});
@@ -558,7 +572,7 @@
     var e=one(G,/^THE NORMAL MODE TO SET THRUST IS/);eq(e.options[e.correct],"EPR.","clave del EPR sin cambio");ok(/IAE/.test(e.expl)&&/N1/.test(e.expl)&&!/CEO/.test(e.expl),"EPR: solo los IAE");
     ok(/IAE/.test(one(G,/^CONTINUOUS IGNITION IS AUTOMATICALLY PROVIDED/).expl),"ignicion continua: lista de los IAE");
     var b=one(G,/^MAXIMUM ALTITUDE FOR APU BLEED OPERATION/).expl;ok(/22 500/.test(b)&&/15 000/.test(b),"APU bleed: los tres techos");
-    ok(/no describe/.test(one(G,/^THE APU BLEED VALVE IS AUTOMATICALLY CLOSED ABOVE/).expl),"23 000 ft: el manual no lo describe");
+    ok(/no aparece en la documentación del fabricante/.test(one(G,/^THE APU BLEED VALVE IS AUTOMATICALLY CLOSED ABOVE/).expl),"23 000 ft: el manual no lo describe");
     ok(/ENG MODE/.test(one(G,/^DURING AN AUTOMATIC START SEQUENCE, SELECTING THE ENG MASTER/).expl),"ENG MASTER: las pack valves las cierra el ENG MODE");
     var mal=G.concat(A).filter(function(q){return /FCOM|choque térmico|tren de nariz|certificado|pérdida eléctrica total|estrés térmico/.test(q.q+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});
     eq(mal.length,0,"textos con el FCOM o razones sin respaldo: "+mal.join(" | "));
@@ -581,9 +595,9 @@
     var G=SYSTEMS[DGAC_KEY].questions,F=SYSTEMS.fire.questions,P=SYSTEMS.procedures.questions;
     function one(L,re){var h=L.filter(function(q){return re.test(q.q)});eq(h.length,1,"pregunta "+re);return h[0]||{q:"",options:[],expl:""}}
     var t=one(G,/^WILL AN APU FIRE TEST SHUT/);eq(t.options[t.correct],"YES.","test del APU: puede apagarlo");ok(/3 segundos/.test(t.expl),"explicacion con los 3 s");
-    ok(/no lo explica/.test(one(G,/^WHEN THE AIRCRAFT IS ON THE GROUND AND THE APU IS STARTED ON BETTERY/).expl),"APU con baterias: lo que dice el manual");
-    ok(/No menciona la página ENGINE/.test(one(G,/^IN ADDITION TO THE CRC AND RED MASTER WARN LIGHT/).expl),"test de motor: sin la pagina ENGINE");
-    ok(/no detalla el MASTER WARN/.test(one(G,/^IN THE EVENT THAT THE AFT CARGO COMPARTMENT SMOKE DETECTOR, DETECTS/).expl),"humo de bodega: luz SMOKE y ECAM");
+    ok(/no aparece en la documentación del fabricante/.test(one(G,/^WHEN THE AIRCRAFT IS ON THE GROUND AND THE APU IS STARTED ON BETTERY/).expl),"APU con baterias: lo que dice el manual");
+    ok(/página ENGINE del ECAM inferior no aparece/.test(one(G,/^IN ADDITION TO THE CRC AND RED MASTER WARN LIGHT/).expl),"test de motor: sin la pagina ENGINE");
+    ok(/MASTER WARN y el CRC de este caso no se detallan/.test(one(G,/^IN THE EVENT THAT THE AFT CARGO COMPARTMENT SMOKE DETECTOR, DETECTS/).expl),"humo de bodega: luz SMOKE y ECAM");
     var b=one(G,/^WITH REFERENCE TO CARGO COMPARTMENT FIRE EXTINGUISHING/).expl;ok(/11597/.test(b)&&/11629/.test(b),"botellas de carga por MSN");
     var fuego=F.concat(G.filter(function(q){return q.bank_section==="Fire protection"})).concat([4,5,6,7,8,15,16,17,18].map(function(i){return P[i]}));
     var mal=fuego.filter(function(q){return /FCOM|DSC-\d|circuito esencial|sistemas alimentados por AC/.test(q.q+" "+q.expl)}).map(function(q){return q.q.slice(0,40)});

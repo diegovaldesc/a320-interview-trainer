@@ -419,8 +419,23 @@
     h += '<button class="rt-btn rt-btn-primary" data-act="tomap">Back to map</button>';
     if (wrong.length) h += '<button class="rt-btn" data-act="retry">Retry the ones you missed</button>';
     h += '<div class="rt-card rt-recap"><span class="rt-eyebrow">What you learned</span><ul>' + st.cards.map(function(c){ return '<li>' + inline(c.keyIdea) + '</li>'; }).join('') + '</ul></div>';
-    h += wrong.map(function(x){ return '<div class="rt-miss"><strong>' + esc(x.t.question) + '</strong>' + seenHtml(x.t) + '</div>'; }).join('');
+    // Revisión: cada pregunta con todas sus alternativas, la elegida y la correcta (las erradas, abiertas).
+    h += '<div class="rt-review"><span class="rt-eyebrow">Review your answers</span>' + st.test.map(function(t, i){ return reviewItem(t, S.answers[i]); }).join('') + '</div>';
     return h + '</div>';
+  }
+  function reviewItem(t, ans){
+    var ok = !!(ans && ans.ok), body;
+    if (t.type === 'mcq'){
+      body = '<div class="rt-opts">' + t.options.map(function(o, i){
+        var right = i === t.correct, mine = ans && i === ans.choice;
+        var tag = right && mine ? 'Your answer · correct' : right ? 'Correct' : mine ? 'Your answer' : '';
+        return '<div class="rt-opt' + (right ? ' rt-ok' : mine ? ' rt-bad' : '') + '"><span class="rt-l">' + String.fromCharCode(65 + i) + '</span><span>' + esc(o) + (tag ? '<span class="rt-tag">' + tag + '</span>' : '') + '</span></div>';
+      }).join('') + '</div><div class="rt-fb"><span class="rt-h">Why</span><p>' + esc(t.explanation) + '</p>' + seenHtml(t) + '</div>';
+    } else {
+      body = (ans && ans.text ? '<div class="rt-fb"><span class="rt-h">Your answer</span><p>' + esc(ans.text) + '</p></div>' : '') +
+        '<div class="rt-fb"><span class="rt-h">Reference answer</span><div class="rt-prose">' + prose(t.reference) + '</div>' + seenHtml(t) + '</div>';
+    }
+    return '<details class="rt-rev"' + (ok ? '' : ' open') + '><summary><span class="rt-badge ' + (ok ? 'rt-ok' : 'rt-bad') + '">' + (ok ? 'OK' : 'Missed') + '</span><span>' + esc(t.question) + '</span></summary><div class="rt-rev-body">' + body + '</div></details>';
   }
   // La primera respuesta de cada pregunta cuenta en las estadísticas de la app (menos las del banco DGAC).
   function recordMcq(t, ok){

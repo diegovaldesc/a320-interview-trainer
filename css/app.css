@@ -195,6 +195,16 @@ main{padding:18px 18px calc(92px + env(safe-area-inset-bottom))}
 .rq{font-size:12.7px;line-height:1.4}
 .rbody{border-top:1px solid var(--line);padding:12px 13px;font-size:12.5px;line-height:1.5}
 .rbody .your{color:var(--red);margin-bottom:6px}.rbody .right{color:var(--green);margin-bottom:8px}
+.ropts{display:grid;gap:6px;margin-bottom:10px}
+.ropt{display:flex;gap:9px;align-items:flex-start;padding:8px 9px;border:1px solid var(--line);border-radius:8px}
+.ropt .rl{font:11px var(--mono);flex:none;width:20px;height:20px;border-radius:5px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center}
+.ropt .rt{flex:1;min-width:0}
+.ropt .rtag{display:block;margin-top:3px;font:10px var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.ropt.right{border-color:var(--green2);background:rgba(77,107,88,.07)}.ropt.right .rl{background:var(--green);border-color:var(--green);color:#FFFFFF}.ropt.right .rtag{color:var(--green)}
+.ropt.wrong{border-color:var(--red2);background:rgba(140,80,80,.07)}.ropt.wrong .rl{background:var(--red);border-color:var(--red);color:#FFFFFF}.ropt.wrong .rtag{color:var(--red)}
+.rnote{color:var(--muted);margin-bottom:8px}
+.rwhy .label{font:10px var(--mono);letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
+.rsrc{margin-top:8px;color:var(--muted);font-size:11px}
 .weak-list .weak-item{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:12px 13px;margin-bottom:8px}
 .weak-item .wmeta{font:9.5px var(--mono);color:var(--red);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
 .weak-item .wq{font-size:12.8px;line-height:1.4}

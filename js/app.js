@@ -8,7 +8,7 @@ const OPERATIONS_ORDER=["operations_airbus"];
 const INTERVIEW_TECH_KEY="interview_technical";
 const DGAC_KEY="dgac_bank";
 const TEST_SIZE=20, INTERVIEW_SIZE=10;
-const APP_VERSION="1.49.0";
+const APP_VERSION="1.50.0";
 const BANK_VERSION="2026.10.05 · DGAC 573";
 const STATE_SCHEMA=1;
 const LETTERS="ABCDEFGH".split("");
@@ -496,13 +496,16 @@ function buildSessionQ(q){
   const shuffled=shuffle(q.options.map((t,i)=>({t,orig:i})));
   return{...q,options:shuffled.map(o=>o.t),correct:shuffled.findIndex(o=>o.orig===q.correct),_correctText:correctText(q)};
 }
-function startTechnical(type,provided=null){
+/* opts.repeat: repetir la misma prueba (mismas preguntas, mismo orden). opts.practice: no cuenta en las
+   estadísticas ni en el mejor resultado (decisión de Diego, 2026-11-24). */
+function startTechnical(type,provided=null,opts={}){
   let pool=provided?provided:trainingPool(currentSystemKey);
-  if(type==="test")pool=shuffle(pool).slice(0,Math.min(TEST_SIZE,pool.length));
+  if(type==="test"&&opts.repeat)pool=[...pool];
+  else if(type==="test")pool=shuffle(pool).slice(0,Math.min(TEST_SIZE,pool.length));
   else if(type==="study"&&!provided&&!isDgacKey(currentSystemKey))pool=shuffle(pool);
   else if(type==="weak"||type==="saved")pool=shuffle(pool);
   if(!pool.length){toast("No questions available");return}
-  session={type,systemKey:currentSystemKey,questions:pool.map(buildSessionQ),answers:new Array(pool.length).fill(null),index:0,counted:new Array(pool.length).fill(false),completed:false};
+  session={type,systemKey:currentSystemKey,questions:pool.map(buildSessionQ),answers:new Array(pool.length).fill(null),index:0,counted:new Array(pool.length).fill(false),completed:false,practice:!!opts.practice};
   show("quiz");renderQuestion();persistResume();
 }
 function persistResume(){
@@ -518,7 +521,7 @@ function persistResume(){
   }else{
     appState.resume={
       mode:"technical",type:session.type,systemKey:session.systemKey,
-      questions:session.questions,answers:session.answers,index:session.index,counted:session.counted,
+      questions:session.questions,answers:session.answers,index:session.index,counted:session.counted,practice:!!session.practice,
       total:session.questions.length,
       label:`${session.type==="test"?"Test":session.type==="weak"?"Mistake review":session.type==="saved"?"Saved":"Study"} · ${systemName(session.systemKey)}`,
       bankFingerprint:BANK_FINGERPRINT
@@ -550,7 +553,7 @@ function resumeSession(){
     answers:Array.isArray(r.answers)?r.answers:new Array(qs.length).fill(null),
     index:Math.min(r.index||0,qs.length-1),
     counted:Array.isArray(r.counted)?r.counted:new Array(qs.length).fill(false),
-    completed:false
+    completed:false,practice:!!r.practice
   };
   show("quiz");renderQuestion();
 }
@@ -567,14 +570,14 @@ function selectOption(i){
   if(session.type!=="test"&&session.answers[session.index]!==null)return;
   session.answers[session.index]=i;
   if(session.type!=="test"&&!session.counted[session.index]){
-    if(q.bank!=="dgac")recordTechnical(q,i===q.correct);session.counted[session.index]=true;
+    if(q.bank!=="dgac"&&!session.practice)recordTechnical(q,i===q.correct);session.counted[session.index]=true;
   }
   renderQuestion();persistResume();
 }
 function answerDontKnow(){
   const q=sessionQuestion();if(session.answers[session.index]!==null)return;
   session.answers[session.index]=-1;
-  if(session.type!=="test"&&!session.counted[session.index]){if(q.bank!=="dgac")recordTechnical(q,false);session.counted[session.index]=true}
+  if(session.type!=="test"&&!session.counted[session.index]){if(q.bank!=="dgac"&&!session.practice)recordTechnical(q,false);session.counted[session.index]=true}
   renderQuestion();persistResume();
 }
 function renderQuestion(){
@@ -688,29 +691,51 @@ function finishTest(){
   if(session.completed)return;
   session.completed=true;appState.resume=null;
   let correct=0;
-  session.questions.forEach((q,i)=>{const ok=session.answers[i]===q.correct;if(ok)correct++;if(q.bank!=="dgac")recordTechnical(q,ok)});
+  session.questions.forEach((q,i)=>{const ok=session.answers[i]===q.correct;if(ok)correct++;if(q.bank!=="dgac"&&!session.practice)recordTechnical(q,ok)});
   const key=session.systemKey===null?"all":session.systemKey,prev=appState.best[key];
-  if(!prev||correct>prev.score||session.questions.length!==prev.total)appState.best[key]={score:correct,total:session.questions.length,date:Date.now()};
+  if(!session.practice&&(!prev||correct>prev.score||session.questions.length!==prev.total))appState.best[key]={score:correct,total:session.questions.length,date:Date.now()};
   saveState();
   const total=session.questions.length,pct=Math.round(correct/total*100),wrong=total-correct;
   $("resultPct").textContent=pct+"%";$("resultPct").style.color=pct>=90?"var(--green)":pct>=75?"var(--amber)":"var(--red)";$("resultRaw").textContent=`${correct} / ${total}`;
   $("resultSummary").textContent=wrong===0?"Perfect score. Repeat the test in a few days to confirm it sticks.":pct>=90?"Solid level. Review the few mistakes before closing the topic.":pct>=75?"Good level, but some associations still need to settle.":"There are clear gaps. Repeat only the mistakes before taking another test.";
   if(isDgacKey(session.systemKey))$("resultSummary").textContent="DGAC 2018 bank result. It serves as historical practice and doesn't change your accuracy or your weak areas in the FCOM bank.";
+  if(session.practice)$("resultSummary").textContent+=" This was a repeat of the same test: it's practice only and doesn't change your statistics.";
   const bySys={};session.questions.forEach((q,i)=>{const k=q._sys||"general";bySys[k]??={c:0,t:0};bySys[k].t++;if(session.answers[i]===q.correct)bySys[k].c++});
   $("resultBreakdown").innerHTML=Object.entries(bySys).sort((a,b)=>b[1].t-a[1].t).map(([k,v])=>`<span class="breakdown-pill">${esc(systemName(k))} · <b>${v.c}/${v.t}</b></span>`).join("");
   $("retryWrongBtn").disabled=wrong===0;
-  $("review").innerHTML=session.questions.map((q,i)=>{
-    const ans=session.answers[i],ok=ans===q.correct;
-    return `<details ${ok?"":"open"}><summary><span class="rbadge ${ok?"ok":"bad"}">${ok?"OK":"ERROR"}</span><span class="rq">${esc(q.q)}</span></summary><div class="rbody">${ok?`<div class="right">Your answer: ${esc(q.options[ans])}</div>`:`<div class="your">Your answer: ${ans===-1?"I don't know":esc(q.options[ans]||"Not answered")}</div><div class="right">Correct: ${esc(q.options[q.correct])}</div>`}${q.bank==="dgac"?(q.expl?`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">DGAC · ${esc(q.src||"")}</div>`:`<div class="dgac-warning">No explanation: question from the original DGAC bank, not yet audited against the FCOM.</div>`):`<div>${esc(q.expl)}</div><div style="margin-top:8px;color:var(--muted);font-size:11px">${q.bank==="interview_technical"?"Interview · ":q.bank==="airbus_tutorials"?"Airbus · ":"FCOM · "}${esc(q.src||"")}</div>`}</div></details>`
-  }).join("");
+  $("review").innerHTML=session.questions.map((q,i)=>reviewItemHtml(q,session.answers[i])).join("");
   show("results");
 }
-function retrySession(){currentSystemKey=session?.systemKey??currentSystemKey;startTechnical("test")}
+/* Revisión al terminar: cada pregunta muestra todas sus alternativas, en el orden y con la letra que tuvo en la
+   prueba, marcando la que eligió el usuario y la correcta, y debajo la explicación (pedido de Diego, 2026-11-24). */
+function reviewItemHtml(q,ans){
+  const ok=ans===q.correct;
+  const opts=q.options.map((o,j)=>{
+    const isRight=j===q.correct,isMine=j===ans;
+    const cls=isRight?" right":isMine?" wrong":"";
+    const tag=isRight&&isMine?"Your answer · correct":isRight?"Correct":isMine?"Your answer":"";
+    return `<div class="ropt${cls}"><span class="rl">${LETTERS[j]||j+1}</span><span class="rt">${esc(o)}${tag?`<span class="rtag">${tag}</span>`:""}</span></div>`;
+  }).join("");
+  const none=ans===-1?`<div class="rnote">You answered «I don't know».</div>`:ans===null||ans===undefined?`<div class="rnote">Not answered.</div>`:"";
+  let why;
+  if(q.bank==="dgac"){
+    const srcLine=dgacSourceLabel(q);
+    why=q.expl?`<div class="rwhy"><div class="label">Why</div>${esc(q.expl)}</div>${srcLine?`<div class="src-line"><span class="label">Source</span> ${esc(srcLine)}</div>`:""}`:`<div class="dgac-warning">No explanation: question from the original DGAC bank, not yet audited against the FCOM.</div>`;
+  }else why=`<div class="rwhy"><div class="label">Why</div>${esc(q.expl)}</div><div class="rsrc">${q.bank==="interview_technical"?"Interview · ":q.bank==="airbus_tutorials"?"Airbus · ":"FCOM · "}${esc(q.src||"")}</div>`;
+  return `<details ${ok?"":"open"}><summary><span class="rbadge ${ok?"ok":"bad"}">${ok?"OK":"ERROR"}</span><span class="rq">${esc(q.q)}</span></summary><div class="rbody"><div class="ropts">${opts}</div>${none}${why}</div></details>`;
+}
+/* Try again: la misma prueba (mismas preguntas y orden), como práctica que no cuenta. Para preguntas nuevas
+   al azar, el usuario sale y empieza otra prueba. */
+function retrySession(){
+  if(!session)return;currentSystemKey=session.systemKey;
+  const same=session.questions.map(q=>findById(q._id)||q);
+  startTechnical("test",same,{repeat:true,practice:true});
+}
 function retryWrong(){
   if(!session)return;const wrong=session.questions.filter((q,i)=>session.answers[i]!==q.correct).map(q=>{
     const orig=findById(q._id);return orig||q
   });
-  if(!wrong.length)return;currentSystemKey=session.systemKey;startTechnical("weak",wrong);
+  if(!wrong.length)return;currentSystemKey=session.systemKey;startTechnical("weak",wrong,{practice:true});
 }
 
 function startInterview(k=null){

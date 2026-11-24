@@ -1403,6 +1403,28 @@ de la envolvente: 25 000 ft solo con baterías, 41 000 ft con la energía normal
 
 Mutación: sin los 41 000 ft en la explicación del arranque del APU, DGAC-12 falla.
 
+## 28. Revisión al terminar, Try again y explicaciones propias (REV-01 a REV-04, 2026-11-24, 1.50.0)
+
+Pedidos de Diego después de usar la app:
+
+- Al terminar una prueba del banco, cada pregunta de la revisión muestra **todas** sus alternativas, con
+  la letra y en el orden de la prueba, marcando la elegida y la correcta, más la explicación y la línea
+  Source. Las pruebas de las estaciones tienen la misma revisión en su pantalla final.
+- **Try again** repite la misma prueba (mismas preguntas y orden). Es práctica: no cambia las
+  estadísticas ni el mejor resultado. **Mistakes only** también es práctica. Para preguntas nuevas, se
+  sale y se empieza otra prueba.
+- Las explicaciones nunca se apoyan en el examen («respuesta del examen», «la hoja marcaba») ni en «el
+  avión actual»: nombran el motor, el MSN o el equipo, y cuando ninguna alternativa es exacta terminan
+  con la razón propia («Se marca X porque…»). Lo que no está en los documentos se dice así.
+
+**REV-01** revisa la revisión del banco con la pregunta DGAC de «A y B»; **REV-02**, el Try again y
+Mistakes only como práctica; **REV-03**, que ninguna explicación del banco ni de las estaciones use el
+examen o el avión actual como razón; **REV-04**, la revisión de la pantalla final de una estación.
+
+Mutaciones: con la revisión anterior (solo la respuesta y la correcta), REV-01 y REV-04 fallan; con
+Try again armando una prueba al azar, REV-02 falla; con una explicación que vuelve a decir «Respuesta del
+examen», REV-03 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

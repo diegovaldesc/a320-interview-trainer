@@ -135,9 +135,9 @@
     eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
     eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
     function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
-    var e=by("WHEN THE AIRCRAFTT IS IN THE EMERGENCY ELECTRICAL");ok(e&&/01143 a 11293/.test(e.expl)&&/11482 a 12910/.test(e.expl),"RMP en ELEC EMER CONFIG explicado por MSN");
+    var e=by("WHEN THE AIRCRAFTT IS IN THE EMERGENCY ELECTRICAL");ok(e&&/01143 al 11293/.test(e.expl)&&/11482 al 12910/.test(e.expl),"RMP en ELEC EMER CONFIG explicado por MSN");
     var n=by("WHEN SELECTING THE GUARDED RMP NAV KEY");ok(n&&/dos FMGC/.test(n.expl)&&n.options[n.correct].indexOf("FMGC AUTO TUNING IS INHIBITED")===0,"NAV del RMP: inhibe el autotuning de los dos FMGC");
-    var c=by("APPROXIMATELY HOW LONG ARE THE PASSENGER OXYGEN");ok(c&&/13, 15 o hasta 22/.test(c.expl),"se conserva la explicacion auditada antes (v1.31.1)");
+    var c=by("APPROXIMATELY HOW LONG ARE THE PASSENGER OXYGEN");ok(c&&/13, 15 o 22 minutos/.test(c.expl),"la duracion depende de la instalacion (13, 15 o 22 min)");
     reset();
   });  T("8 DGAC-08 Electrical revisada: todas con fuente, el EMER GEN no depende del tren y las del estandar antiguo quedan explicadas",function(){
     reset();var sec=rawPool(DGAC_KEY+"|Electrical");eq(sec.length,63,"63 preguntas");
@@ -145,8 +145,8 @@
     eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
     function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
     var g=by("FOR THE A-320 THE EMERGENCY GENERATOR SUPPLIES POWER");ok(g&&g.options[g.correct].indexOf("IF THE RAT STALLS")===0&&g.exam_key===2,"EMER GEN: clave B (stall del RAT o bajo 100 kt), la del examen queda en exam_key");
-    var f=by("WHEN WILL THE RAT & EMER GEN RED FAULT");ok(f&&/est.ndar antiguo/.test(f.expl)&&f.correct===0,"luz FAULT: la mas cercana, explicada como estandar antiguo");
-    ["WHICH FLIGHT CONTROL COMPUTER WILL BE INOPERATIVE","WHICH RADIOS ARE INOPERATIVE WITH GEAR"].forEach(function(s){var q=by(s);ok(q&&/est.ndar antiguo/.test(q.expl),"tren en ELEC EMER: "+s.slice(0,30))});
+    var f=by("WHEN WILL THE RAT & EMER GEN RED FAULT");ok(f&&/versión anterior del sistema/.test(f.expl)&&f.correct===0,"luz FAULT: explicada como version anterior del sistema");
+    ["WHICH FLIGHT CONTROL COMPUTER WILL BE INOPERATIVE","WHICH RADIOS ARE INOPERATIVE WITH GEAR"].forEach(function(s){var q=by(s);ok(q&&/versión anterior del sistema/.test(q.expl),"tren en ELEC EMER: "+s.slice(0,30))});
     var c=by("HOW MANY TIMES CAN YOU RESET");ok(c&&/C\/B TRIPPED/.test(c.expl),"se conserva la explicacion auditada antes (v1.36.0)");
     reset();
   });  T("8 DGAC-09 Fire protection revisada: todas con fuente, detectores de la bodega trasera por MSN y APU en vuelo sin extincion automatica",function(){
@@ -157,7 +157,7 @@
     function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
     var a=by("THE AFT CARGO COMPARTMENT SMOKE DETECTION SYSTEM");ok(a&&/cuatro/.test(a.expl)&&/seis/.test(a.expl)&&/MSN/.test(a.expl),"bodega trasera: cuatro o seis detectores segun MSN");
     var f=by("IF THERE IS AN APU FIRE IN FLIGHT");ok(f&&/solo en tierra/.test(f.expl),"APU en vuelo: apagado y descarga manuales");
-    var c=by("WILL AN APU FIRE TEST SHUT");ok(c&&/marcaba/.test(c.expl),"se conserva la explicacion auditada antes (v1.28.1)");
+    var c=by("WILL AN APU FIRE TEST SHUT");ok(c&&/3 segundos/.test(c.expl)&&!/marcaba/.test(c.expl),"se conserva la explicacion auditada antes (v1.28.1), sin la nota del examen");
     reset();
   });  T("8 DGAC-10 Fuel and hydraulic revisada: todas con fuente, la logica del center tank por MSN y la safety valve del tren a 264 kt",function(){
     reset();var sec=rawPool(DGAC_KEY+"|Fuel and hydraulic");eq(sec.length,43,"43 preguntas");
@@ -167,7 +167,7 @@
     function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
     ["AFTER ENGINE START, CENTER TANK FUEL PUMPS","THE MESSAGE CTR TK FEEDG","WHY DO THE CENTER TANK PUPS STOP"].forEach(function(s){var q=by(s);ok(q&&/06183/.test(q.expl)&&/06286/.test(q.expl),"center tank por MSN: "+s.slice(0,28))});
     var v=by("AS LONG AS THE LANDING GEAR LEVER IS UP");ok(v&&/264 kt/.test(v.expl),"safety valve del tren: 264 kt");
-    var c=by("THERE ARE ________ FUEL PUMPS");ok(c&&/06183/.test(c.expl)&&/Respuesta del examen/.test(c.expl),"se conserva la explicacion auditada antes (v1.25.1)");
+    var c=by("THERE ARE ________ FUEL PUMPS");ok(c&&/06183/.test(c.expl)&&/Se marca 2/.test(c.expl),"se conserva la explicacion auditada antes (v1.25.1)");
     reset();
   });  T("8 DGAC-11 Indicating and recording revisada: todas con fuente, los pb que siguen sin el ECAM control panel",function(){
     reset();var sec=rawPool(DGAC_KEY+"|Indicating and recording");eq(sec.length,14,"14 preguntas");
@@ -189,7 +189,53 @@
     var b=by("THE APU MAY BE STARTED UP TO WHAT ALTITUDE");ok(b&&/25 000 ft/.test(b.expl)&&/41 000 ft/.test(b.expl),"arranque del APU: 41 000 ft normal, 25 000 ft solo baterias");
     var f=by("FIRE ON GROUND OR IN FLIGHT WILL CAUSE");ok(f&&/en vuelo/.test(f.expl)&&/APU FIRE pb/.test(f.expl),"FAULT del MASTER SW: en vuelo el fuego no apaga el APU solo");
     reset();
+  });  T("8 REV-01 revision al terminar la prueba: cada pregunta muestra todas sus alternativas con su letra, la marcada y la correcta",function(){
+    reset();currentSystemKey=DGAC_KEY+"|APU and powerplant";
+    var pool=rawPool(currentSystemKey),ab=pool.filter(function(q){return /^DURING AN AUTOMATIC START SEQUENCE/.test(q.q)});
+    startTechnical("test",ab.concat(pool.slice(0,3)),{repeat:true});
+    var q0=session.questions[0];eq(q0.options[q0.correct],"BOTH A AND B.","la pregunta de A y B");
+    session.answers[0]=1;for(var i=1;i<session.questions.length;i++)session.answers[i]=session.questions[i].correct;
+    finishTest();
+    var d=byId("review").querySelectorAll("details");eq(d.length,session.questions.length,"una por pregunta");
+    ok(d[0].open&&!d[1].open,"la errada abierta, las buenas cerradas");
+    var o=d[0].querySelectorAll(".ropt");eq(o.length,4,"las 4 alternativas");
+    eq([].map.call(o,function(e){return e.querySelector(".rl").textContent}).join(""),"ABCD","con su letra");
+    ok(/INITIATES THE START SEQUENCE/.test(d[0].querySelector(".ropt.wrong").textContent)&&/Your answer/.test(d[0].querySelector(".ropt.wrong").textContent),"la marcada, en rojo");
+    ok(/BOTH A AND B/.test(d[0].querySelector(".ropt.right").textContent),"la correcta, en verde");
+    ok(/CLOSES THE PACK VALVES/.test(d[0].textContent),"se ve la alternativa A, que la respuesta nombra");
+    ok(d[0].querySelector(".src-line")&&/DSC-70/.test(d[0].querySelector(".src-line").textContent),"con la linea Source");
+    reset();
   });
+  T("8 REV-02 Try again repite la misma prueba (mismas preguntas y orden) como practica que no cuenta en las estadisticas; Mistakes only tampoco cuenta",function(){
+    reset();currentSystemKey=null;startQuickTest();
+    var ids=session.questions.map(function(q){return q._id});
+    for(var i=0;i<session.questions.length;i++)session.answers[i]=session.questions[i].correct;
+    finishTest();
+    var stats=JSON.stringify(appState.stats),best=JSON.stringify(appState.best);
+    retrySession();
+    eq(session.questions.map(function(q){return q._id}).join(),ids.join(),"las mismas preguntas, en el mismo orden");
+    ok(session.practice,"es practica");
+    for(var j=0;j<session.questions.length;j++)session.answers[j]=(session.questions[j].correct+1)%session.questions[j].options.length;
+    session.answers[0]=session.questions[0].correct;
+    finishTest();
+    eq(JSON.stringify(appState.stats),stats,"las estadisticas no cambian");eq(JSON.stringify(appState.best),best,"el mejor resultado no cambia");
+    ok(/practice only/.test(byId("resultSummary").textContent),"el resumen dice que es practica");
+    retryWrong();ok(session.practice,"Mistakes only es practica");
+    selectOption((session.questions[0].correct+1)%session.questions[0].options.length);
+    eq(JSON.stringify(appState.stats),stats,"Mistakes only no cambia las estadisticas");
+    reset();currentSystemKey=null;startQuickTest();ok(!session.practice,"una prueba nueva si cuenta");
+    reset();
+  });
+  T("8 REV-03 ninguna explicacion se apoya en el examen ni habla del avion actual: se nombra el motor, el MSN o el equipo",function(){
+    var corpus=[];
+    Object.keys(SYSTEMS).forEach(function(k){(SYSTEMS[k].questions||[]).forEach(function(q,i){corpus.push(k+"#"+i+": "+(q.expl||""))})});
+    Object.keys(RUTA.stations).forEach(function(k){RUTA.stations[k].test.forEach(function(t){corpus.push(t.id+": "+(t.explanation||""))})});
+    var mal=corpus.filter(function(s){return /respuesta del examen|hoja del examen|examen marcaba|la del examen|es la más cercana|alternativa más cercana|avión actual|documentación actual|actual del avión|estándar antiguo|(MSN|A320) más (antiguos|nuevos) \(/i.test(s)});
+    eq(mal.length,0,"explicaciones que se apoyan en el examen o en el avion actual: "+mal.join(" | ").slice(0,300));
+    var e=SYSTEMS[DGAC_KEY].questions.find(function(q){return /^THE NORMAL MODE TO SET THRUST IS/.test(q.q)});
+    ok(/Se marca EPR/.test(e.expl)&&/CFM56 o PW1100G la respuesta sería N1/.test(e.expl),"EPR: se dice por que se marca y que con otros motores seria N1");
+  });
+
 
 
 

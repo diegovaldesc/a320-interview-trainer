@@ -1425,6 +1425,21 @@ Mutaciones: con la revisión anterior (solo la respuesta y la correcta), REV-01 
 Try again armando una prueba al azar, REV-02 falla; con una explicación que vuelve a decir «Respuesta del
 examen», REV-03 falla.
 
+## 29. Banco DGAC: Flight controls revisada (DGAC-13, 2026-11-24, 1.51.0)
+
+Las 64 preguntas se revisaron con las reglas de la sección 20 y la redacción de la sección 28. Ninguna
+cambia de clave. El trim automático se detiene bajo 50 ft (100 ft con AP) y con la protección de bank
+angle activa (más de 33°), así que «A y B» es correcta. Las diferencias del grupo de MSN 11524… (flare a
+100 ft, droop de 10°) son de los A321neo de la flota, según la tabla de aviones de la documentación, y
+se nombran como tales, no como «depende del MSN».
+
+**DGAC-13** revisa:
+- que las 64 estén revisadas, con fuente real, sin manuales ni el examen en la explicación y sin cambios de clave;
+- la pregunta del trim automático y la del flight mode (A320 frente a A321neo);
+- la del flare en alternate law.
+
+Mutación: sin la protección de bank angle en la explicación del trim automático, DGAC-13 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

@@ -205,7 +205,19 @@
     ok(/CLOSES THE PACK VALVES/.test(d[0].textContent),"se ve la alternativa A, que la respuesta nombra");
     ok(d[0].querySelector(".src-line")&&/DSC-70/.test(d[0].querySelector(".src-line").textContent),"con la linea Source");
     reset();
+  });  T("8 DGAC-13 Flight controls revisada: todas con fuente, el bank sobre 33 grados si detiene el trim automatico y lo del A321neo va aparte",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Flight controls");eq(sec.length,64,"64 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada|[Ee]l manual|examen|mayor parte/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual ni el examen");
+    eq(sec.filter(function(q){return /^Examen/.test(q.src)}).length,0,"ninguna fuente queda solo como examen");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,0,"ninguna cambia de clave");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var a=by("AUTOMATIC PITCH TRIM IS INHIBITED");ok(a&&a.options[a.correct]==="BOTH A AND B."&&/protección de bank angle/.test(a.expl),"trim automatico: A y B, por la proteccion de bank angle");
+    var f=by("WHEN IS THE FLIGHT MODE ACTIVE");ok(f&&/50 ft/.test(f.expl)&&/A321neo/.test(f.expl)&&!/Depende del MSN/.test(f.expl),"flight mode: 50 ft en los A320, 100 ft en los A321neo");
+    var d=by("WHEN DO YOU GET FLARE MODE IN ALTERNATE LAW");ok(d&&/direct law/.test(d.expl),"flare en alternate law: pasa a direct law con el tren abajo");
+    reset();
   });
+
   T("8 REV-02 Try again repite la misma prueba (mismas preguntas y orden) como practica que no cuenta en las estadisticas; Mistakes only tampoco cuenta",function(){
     reset();currentSystemKey=null;startQuickTest();
     var ids=session.questions.map(function(q){return q._id});

@@ -1343,6 +1343,22 @@ más cercana. La explicación dice que vienen de un estándar antiguo.
 
 Mutación: con la clave anterior del EMER GEN («gear up»), DGAC-08 falla.
 
+## 24. Banco DGAC: Fire protection revisada (DGAC-09, 2026-11-23, 1.46.0)
+
+Las 33 preguntas se revisaron con las reglas de la sección 20. Ninguna cambia de
+clave. Se conservan las explicaciones de la auditoría v1.28.1 (test de fuego del APU,
+botellas de las bodegas por MSN). Se agregan:
+- los detectores de humo de la bodega trasera por MSN (cuatro o seis);
+- que en vuelo el APU se apaga y se descarga a mano (lo automático es solo en tierra).
+
+**DGAC-09** revisa:
+- que las 33 estén revisadas, sin manuales en la explicación y sin cambios de clave;
+- la explicación por MSN de los detectores de la bodega trasera;
+- la del fuego del APU en vuelo;
+- que se conserve una explicación de la auditoría anterior.
+
+Mutación: con la explicación anterior de la bodega trasera (sin MSN), DGAC-09 falla.
+
 ## Límite explícito de esta batería
 
 Todo lo anterior prueba que el *motor de coincidencia de palabras/frases* se

@@ -149,7 +149,18 @@
     ["WHICH FLIGHT CONTROL COMPUTER WILL BE INOPERATIVE","WHICH RADIOS ARE INOPERATIVE WITH GEAR"].forEach(function(s){var q=by(s);ok(q&&/est.ndar antiguo/.test(q.expl),"tren en ELEC EMER: "+s.slice(0,30))});
     var c=by("HOW MANY TIMES CAN YOU RESET");ok(c&&/C\/B TRIPPED/.test(c.expl),"se conserva la explicacion auditada antes (v1.36.0)");
     reset();
+  });  T("8 DGAC-09 Fire protection revisada: todas con fuente, detectores de la bodega trasera por MSN y APU en vuelo sin extincion automatica",function(){
+    reset();var sec=rawPool(DGAC_KEY+"|Fire protection");eq(sec.length,33,"33 preguntas");
+    eq(sec.filter(function(q){return !q.fcom_review}).length,0,"todas revisadas");
+    eq(sec.filter(function(q){return /FCOM|FCTM|DSC-|PRO-[A-Z]|PDF|§|respuesta verificada/.test(q.expl)}).length,0,"ninguna explicacion nombra un manual");
+    eq(sec.filter(function(q){return q.exam_key!==undefined}).length,0,"ninguna cambia de clave");
+    function by(s){return sec.find(function(q){return q.q.indexOf(s)===0})}
+    var a=by("THE AFT CARGO COMPARTMENT SMOKE DETECTION SYSTEM");ok(a&&/cuatro/.test(a.expl)&&/seis/.test(a.expl)&&/MSN/.test(a.expl),"bodega trasera: cuatro o seis detectores segun MSN");
+    var f=by("IF THERE IS AN APU FIRE IN FLIGHT");ok(f&&/solo en tierra/.test(f.expl),"APU en vuelo: apagado y descarga manuales");
+    var c=by("WILL AN APU FIRE TEST SHUT");ok(c&&/marcaba/.test(c.expl),"se conserva la explicacion auditada antes (v1.28.1)");
+    reset();
   });
+
 
 
 
